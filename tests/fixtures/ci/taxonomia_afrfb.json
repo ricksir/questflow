@@ -1,0 +1,27 @@
+{
+  "schema": "questflow.taxonomy.v1",
+  "schema_version": 1,
+  "generated_at": "2026-09-04T00:00:00+00:00",
+  "source": {
+    "title": "Taxonomia sanitizada para CI",
+    "spreadsheet_id": "CI",
+    "url": ""
+  },
+  "materias": [
+    "AUDITORIA",
+    "CONTABILIDADE GERAL E AVANÇADA",
+    "DIREITO TRIBUTÁRIO",
+    "FLUÊNCIA EM DADOS"
+  ],
+  "aliases": {},
+  "regras_manuais": {},
+  "tarefas_referencia": [],
+  "spreadsheet_logic": {
+    "mapa_sheet": "MAPA_AF",
+    "ciclo_sheet": "CICLO_REG"
+  },
+  "course_catalog": {
+    "schema": "questflow.course-catalog.v1",
+    "lessons": []
+  }
+}
