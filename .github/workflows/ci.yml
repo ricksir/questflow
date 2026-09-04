@@ -29,10 +29,10 @@ jobs:
         with:
           python-version: "3.12"
           cache: pip
-          cache-dependency-path: requirements.lock.txt
+          cache-dependency-path: requirements.lock
 
       - name: Install Python dependencies
-        run: python -m pip install --disable-pip-version-check -r requirements.lock.txt
+        run: python -m pip install --disable-pip-version-check -r requirements.lock
 
       - name: Run Python tests
         run: python run_tests.py

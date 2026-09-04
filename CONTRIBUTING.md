@@ -13,14 +13,14 @@ O repositório contém o código-fonte do QuestFlow Studio e do QuestFlow Mobile
 
 - Python 3.11 ou superior; a CI usa Python 3.12.
 - Node.js 24 e `npm` para Mobile e módulos web.
-- Dependências Python fixadas em `requirements.lock.txt`.
+- Dependências Python fixadas em `requirements.lock`.
 - Dependências JavaScript fixadas em `mobile/package-lock.json`.
 
 Instale as dependências sem copiar dados da instalação real:
 
 ```powershell
 python -m venv .venv
-.venv\Scripts\python.exe -m pip install -r requirements.lock.txt
+.venv\Scripts\python.exe -m pip install -r requirements.lock
 Set-Location mobile
 npm ci
 ```
