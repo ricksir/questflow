@@ -1,0 +1,65 @@
+{
+  "schema": "questflow.questions.v1",
+  "schema_version": 1,
+  "question_count": 1,
+  "questions": [
+    {
+      "codigo_origem": "EXEMPLO-001",
+      "numero_origem": 1,
+      "materia": "AUDITORIA",
+      "aula_planilha": "Aula 03",
+      "assunto": "EVIDÊNCIAS, PROCEDIMENTOS, TESTES E DOCUMENTAÇÃO DE AUDITORIA",
+      "assuntos": [
+        "EVIDÊNCIAS, PROCEDIMENTOS, TESTES E DOCUMENTAÇÃO DE AUDITORIA",
+        "Evidência de Auditoria"
+      ],
+      "trilha_assuntos": [
+        "AUDITORIA",
+        "Aula 03",
+        "EVIDÊNCIAS, PROCEDIMENTOS, TESTES E DOCUMENTAÇÃO DE AUDITORIA"
+      ],
+      "materia_origem": "Auditoria",
+      "assuntos_origem": ["Evidência de Auditoria"],
+      "classificacao_planilha": {
+        "status": "classificado",
+        "confianca": 0.93,
+        "metodo": "regra_manual",
+        "referencia": "",
+        "fonte": "Trilhas00a18_AFRFB_Planilha de Controle",
+        "categoria_origem": "Auditoria > Auditoria, Evidência de Auditoria",
+        "assuntos_origem": ["Evidência de Auditoria"]
+      },
+      "banca": "Exemplo",
+      "ano": 2026,
+      "orgao": "Órgão fictício",
+      "prova": "Prova fictícia",
+      "cargo": "Auditor",
+      "area": "Controle",
+      "especialidade": "Auditoria",
+      "turno": "Manhã",
+      "tipo": "multipla_escolha",
+      "enunciado": "Em um processo de auditoria, qual procedimento aumenta a confiabilidade das conclusões?",
+      "alternativas": [
+        {"chave": "A", "texto": "Ignorar evidências contraditórias."},
+        {"chave": "B", "texto": "Documentar e avaliar evidências suficientes e apropriadas."},
+        {"chave": "C", "texto": "Eliminar a revisão dos papéis de trabalho."},
+        {"chave": "D", "texto": "Basear a conclusão somente em opinião pessoal."}
+      ],
+      "gabarito": "B",
+      "explicacao": "A conclusão deve estar apoiada em evidências suficientes e apropriadas.",
+      "fingerprint": "exemplo-sintetico",
+      "revisao": {"status": "aprovado", "confianca": 1.0, "alertas": []},
+      "telegram": {
+        "modo": "quiz",
+        "pergunta": "Em um processo de auditoria, qual procedimento aumenta a confiabilidade das conclusões?",
+        "opcoes": [
+          "Ignorar evidências contraditórias.",
+          "Documentar e avaliar evidências suficientes e apropriadas.",
+          "Eliminar a revisão dos papéis de trabalho.",
+          "Basear a conclusão somente em opinião pessoal."
+        ],
+        "indice_correto": 1
+      }
+    }
+  ]
+}

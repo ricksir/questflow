@@ -1,0 +1,23 @@
+QUESTFLOW STUDIO 5.7.1 - CORRECAO DE INSTALACAO NO WINDOWS
+
+Esta versao corrige a falha de instalacao do PyTorch/FSRS Optimizer em pastas
+longas do Windows (por exemplo, Downloads\QuestFlow_Studio_...\.venv\...).
+
+O ambiente Python nao fica mais dentro da pasta extraida. Agora ele e criado em:
+
+  %LOCALAPPDATA%\QFS\venv
+
+Esse caminho e curto, reutilizavel entre versoes do QuestFlow e evita somar o
+nome da pasta do ZIP aos caminhos internos muito profundos do PyTorch.
+
+O cache do pip tambem foi movido para:
+
+  %LOCALAPPDATA%\QFS\pip-cache
+
+Todos os atalhos auxiliares foram alinhados ao mesmo runtime: inicializacao,
+diagnostico, reparo, interface classica, validacao do banco, Cloud Sync e testes.
+
+NAO e necessario ativar manualmente o Windows Long Path Support para a falha
+observada na instalacao 5.7.0. Basta usar os BATs desta versao.
+
+Seu banco permanece na pasta data do programa e nao e movido pelo instalador.

@@ -1,0 +1,30 @@
+QUESTFLOW STUDIO 6.5.2 — CORREÇÃO DE CLOUD SYNC E DIAGNÓSTICO DA OUTBOX
+
+Esta versão é um patch corretivo sobre a 6.5.1. Não altera os seis motores nem os schemas funcionais de question_bank/study/ai_governance.
+
+CORREÇÕES PRINCIPAIS
+
+1. O painel Saúde e sincronização deixa de mostrar apenas “X pendentes”. Agora informa quais grupos de dados estão aguardando o Turso (questões, FSRS, tentativas, edital, KT, simulados etc.) e exibe uma amostra identificável dos registros.
+2. O último erro real de sincronização aparece no painel, com data da última tentativa. O estado não fica mais genericamente em “Conectado, conferindo” quando a última tentativa falhou.
+3. “Questões locais = Questões no Turso” passa a ser descrito corretamente como comparação da quantidade de questões, não como prova de sincronização de todos os demais dados.
+4. O botão “Sincronizar agora” drena a outbox em rodadas limitadas, em vez de depender de uma única passagem de até 250 eventos.
+5. O serviço de sincronização em segundo plano também tenta escoar a fila em rodadas limitadas, sem bloquear a interface.
+6. Eventos legados estruturalmente impossíveis de enviar (por exemplo, tabela de uma versão antiga que deixou de fazer parte do contrato de sync) são movidos para uma dead-letter local. Eles ficam preservados para auditoria e deixam de bloquear a fila ativa para sempre.
+7. Erros HTTP do Turso agora preservam, quando disponível, a mensagem retornada pelo serviço, facilitando descobrir falha SQL/configuração/proxy.
+8. Nova API local get_cloud_sync_pending para diagnóstico detalhado da fila.
+
+SEGURANÇA DOS DADOS
+
+- Nenhum evento válido é apagado por causa de falha de rede.
+- A quarentena automática só recebe eventos estruturalmente não transmissíveis pela versão atual.
+- A dead-letter fica no mesmo SQLite local, com event_id, tabela, chave, operação, tentativas, erro anterior e motivo da quarentena.
+- O modo local-first permanece inalterado: sem internet, alterações continuam duráveis na qf_sync_outbox.
+
+VALIDAÇÃO
+
+324/324 testes aprovados em regressão particionada.
+Upgrade real simulado 6.5.1 → 6.5.2 com uma alteração válida + um evento legado travado:
+- alteração válida enviada ao remoto;
+- evento legado preservado em dead-letter;
+- fila ativa terminou em zero;
+- PRAGMA quick_check = ok.

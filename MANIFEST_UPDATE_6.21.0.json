@@ -1,0 +1,23 @@
+{
+  "schema": "questflow.update-manifest.v1",
+  "release": "6.21.0",
+  "from_version": "6.18.2",
+  "package_root": "QuestFlow",
+  "preserves": ["data", ".venv", "venv", "runtime", "backups"],
+  "excludes": ["data", "node_modules", ".expo", "__pycache__", ".pytest_cache", "*.pyc"],
+  "changed_focus": [
+    "web/index.html",
+    "web/questflow621.css",
+    "web/questflow621.js",
+    "core/mobile_foundation.py",
+    "web_api.py",
+    "web_server.py",
+    "mobile"
+  ],
+  "database_migration": "additive-only",
+  "mobile_version": "0.14.0",
+  "mobile_changed": true,
+  "learning_engine_changed": false,
+  "cloud_sync_changed": false,
+  "feature": "Responsive decision-first Studio dashboards and real-data Mobile analytics"
+}

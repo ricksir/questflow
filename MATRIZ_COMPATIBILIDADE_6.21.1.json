@@ -1,0 +1,13 @@
+{
+  "studio": "6.21.1",
+  "mobile": "0.14.0",
+  "upgrade_from": ["6.21.0"],
+  "api_contract": "questflow.analytics.v2",
+  "database_migration": "none",
+  "notes": [
+    "Mantém /api/v1/mobile/progress e analytics v2 compatíveis.",
+    "Uma janela real gera linha de base; duas geram direção inicial.",
+    "Oito janelas elevam a confiança, mas não bloqueiam a visualização.",
+    "Mobile 0.14.0, banco, respostas, runtime e backups são preservados."
+  ]
+}

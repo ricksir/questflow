@@ -1,0 +1,23 @@
+{
+  "release": "QuestFlow Studio 6.12.0 + Mobile 0.8.0",
+  "package_type": "safe-update",
+  "sha256": "9f74dc8799a1843792302ff8efdfa045f22c0cede3c2094376ce753dadc0fe2a",
+  "size_bytes": 2831088,
+  "members": 757,
+  "contains_node_modules": false,
+  "contains_data": false,
+  "contains_expo": false,
+  "max_member_path_length": 71,
+  "unsafe_paths": [],
+  "architecture": {
+    "retrieval_health_service": "qf-retrieval-health-service-1",
+    "mobile_ai_health_contract": "questflow.mobile.ai_health.v1",
+    "mobile_ai_health_read_only": true,
+    "pedagogical_metrics_separated": true,
+    "cloud_bridge_projection": true,
+    "commands_exposed_to_mobile": false,
+    "canonical_snapshot_reused": true,
+    "six_pedagogical_engines_preserved": true
+  },
+  "mobile_version": "0.8.0"
+}

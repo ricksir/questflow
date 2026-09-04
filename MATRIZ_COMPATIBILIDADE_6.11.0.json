@@ -1,0 +1,70 @@
+{
+  "app_version": "6.11.0",
+  "generated_at": "2026-08-19T16:09:34Z",
+  "current_python": "3.13.5",
+  "matrix": [
+    {
+      "python": "3.11",
+      "tier": "validated",
+      "executable": null,
+      "available": false,
+      "smoke": null
+    },
+    {
+      "python": "3.12",
+      "tier": "validated",
+      "executable": null,
+      "available": false,
+      "smoke": null
+    },
+    {
+      "python": "3.13",
+      "tier": "validated",
+      "executable": "/opt/pyvenv/bin/python3.13",
+      "available": true,
+      "smoke": {
+        "ok": true,
+        "commands": [
+          {
+            "command": [
+              "/opt/pyvenv/bin/python3.13",
+              "-m",
+              "compileall",
+              "-q",
+              "core",
+              "app_shared.py",
+              "web_api.py",
+              "installer.py",
+              "release_tools.py"
+            ],
+            "returncode": 0,
+            "detail": ""
+          },
+          {
+            "command": [
+              "/opt/pyvenv/bin/python3.13",
+              "-c",
+              "import app_shared, sqlite3; assert app_shared.APP_VERSION; print(app_shared.APP_VERSION)"
+            ],
+            "returncode": 0,
+            "detail": "6.11.0"
+          }
+        ],
+        "database": {
+          "ok": true,
+          "detail": "sem banco no pacote de teste",
+          "path": "/mnt/data/qf_6104_work/QuestFlow/data/questflow_questions.sqlite"
+        },
+        "tested_at": "2026-08-19T16:09:34Z"
+      }
+    },
+    {
+      "python": "3.14",
+      "tier": "controlled_experimental",
+      "executable": null,
+      "available": false,
+      "smoke": null
+    }
+  ],
+  "policy": "3.11–3.13 validados; 3.14 é validação controlada/experimental até a pilha completa passar no CI."
+}

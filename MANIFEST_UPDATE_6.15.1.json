@@ -1,0 +1,36 @@
+{
+  "schema": "questflow.update-manifest.v1",
+  "release": "6.15.1",
+  "from_version": "6.15.0",
+  "generated_at": "2026-08-20T16:17:00Z",
+  "package_root": "QuestFlow",
+  "preserves": [
+    "data",
+    ".venv",
+    "venv",
+    "runtime",
+    "backups"
+  ],
+  "excludes": [
+    "data",
+    "node_modules",
+    ".expo",
+    "__pycache__",
+    ".pytest_cache",
+    "*.pyc"
+  ],
+  "changed_focus": [
+    "VERSION.txt",
+    "pyproject.toml",
+    "web/index.html",
+    "web/app.js",
+    "web/styles.css",
+    "web_api.py",
+    "web_server.py",
+    "tests/test_web_catalog_settings_6151.py"
+  ],
+  "database_migration": "none",
+  "mobile_version": "0.10.1",
+  "mobile_changed": false,
+  "feature": "Estudos e Trilhas na interface Web principal com dry-run e mesclagem segura"
+}

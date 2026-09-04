@@ -1,0 +1,32 @@
+QUESTFLOW STUDIO 5.1.0 — PACOTE COMPLETO OTIMIZADO
+
+INSTALAÇÃO RECOMENDADA
+1. Feche qualquer instância do QuestFlow Studio.
+2. Faça uma cópia de segurança da pasta data da instalação que você utiliza atualmente.
+3. Extraia este ZIP em uma pasta própria.
+4. Para continuar usando sua base atual, copie para esta versão os arquivos da sua pasta data, especialmente:
+   - questflow_questions.sqlite
+   - config.json, quando existir
+   - question_images
+   - markdown_cache
+   - google_browser_profile, quando existir
+5. Execute INSTALAR_E_DIAGNOSTICAR.bat uma vez.
+6. Depois, abra pelo INICIAR_QUESTFLOW_STUDIO.bat.
+
+O QUE FOI CORRIGIDO
+- carregamento pesado deslocado para segundo plano;
+- sincronização da ponte pywebview/bootstrap_shell;
+- inicializador rápido após a primeira preparação da versão;
+- índices e consultas SQLite otimizados;
+- Mapa de aulas preenchido com campos e filtros compatíveis;
+- checkboxes gigantes substituídos por controles compactos;
+- textos, colunas, menu lateral, painéis e altura útil da janela corrigidos;
+- remoção da linha de foco que atravessava a interface.
+
+VALIDAÇÃO
+- 111 testes automatizados aprovados;
+- diagnóstico integrado sem falhas locais;
+- sintaxe Python e JavaScript validada;
+- telas Revisar banco, Fluxo Telegram e Mapa de aulas inspecionadas visualmente.
+
+A primeira abertura prepara o ambiente e pode demorar mais. As aberturas seguintes usam o ambiente já validado e iniciam diretamente o aplicativo.

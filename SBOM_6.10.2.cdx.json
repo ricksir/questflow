@@ -1,0 +1,154 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.5",
+  "serialNumber": "urn:uuid:5d36649d069c460107e04a3b6a617d08",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2026-08-19T14:00:44Z",
+    "component": {
+      "type": "application",
+      "name": "QuestFlow Studio",
+      "version": "6.10.2"
+    },
+    "properties": [
+      {
+        "name": "questflow:dependency-lock-sha256",
+        "value": "0e0588f1bd1a27967194f151de6b0bebcfc994c94a79fc5bdd022dd130865152"
+      },
+      {
+        "name": "questflow:lock-integrity",
+        "value": "valid"
+      }
+    ]
+  },
+  "components": [
+    {
+      "type": "library",
+      "name": "PyMuPDF",
+      "version": "1.28.2",
+      "purl": "pkg:pypi/PyMuPDF@1.28.2",
+      "properties": [
+        {
+          "name": "questflow:lock-entry",
+          "value": "PyMuPDF==1.28.2"
+        },
+        {
+          "name": "questflow:lock-entry-sha256",
+          "value": "ae396254b26ceb57c6302d5e7783a1f6ca7a63f402cac9e7de32ea05e460c1f2"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "Pillow",
+      "version": "12.3.0",
+      "purl": "pkg:pypi/Pillow@12.3.0",
+      "properties": [
+        {
+          "name": "questflow:lock-entry",
+          "value": "Pillow==12.3.0"
+        },
+        {
+          "name": "questflow:lock-entry-sha256",
+          "value": "f18ba9a6dfe955035cedca70a2d96f54a76cc5cd408808552ab6032fd278bc70"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "pytesseract",
+      "version": "0.3.13",
+      "purl": "pkg:pypi/pytesseract@0.3.13",
+      "properties": [
+        {
+          "name": "questflow:lock-entry",
+          "value": "pytesseract==0.3.13"
+        },
+        {
+          "name": "questflow:lock-entry-sha256",
+          "value": "bebc8d4e2c32cd389c39caa7c62d707d4ed37b80506089f59863fbdbf282f33f"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "opencv-python-headless",
+      "version": "4.13.0.92",
+      "purl": "pkg:pypi/opencv-python-headless@4.13.0.92",
+      "properties": [
+        {
+          "name": "questflow:lock-entry",
+          "value": "opencv-python-headless==4.13.0.92"
+        },
+        {
+          "name": "questflow:lock-entry-sha256",
+          "value": "8fb17af00bee703821a31a91d35c0c6d198478a7b0c24fbbdbe2d84d6ae2f5b9"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "pymupdf4llm",
+      "version": "1.28.2",
+      "purl": "pkg:pypi/pymupdf4llm@1.28.2",
+      "properties": [
+        {
+          "name": "questflow:lock-entry",
+          "value": "pymupdf4llm==1.28.2"
+        },
+        {
+          "name": "questflow:lock-entry-sha256",
+          "value": "e64161172a74946992f22056e62d12a6637a069e0557c868948404ab786bfd37"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "selenium",
+      "version": "4.47.0",
+      "purl": "pkg:pypi/selenium@4.47.0",
+      "properties": [
+        {
+          "name": "questflow:lock-entry",
+          "value": "selenium==4.47.0"
+        },
+        {
+          "name": "questflow:lock-entry-sha256",
+          "value": "3ca521ee1c23a36942970a467c339f3a16bd35fe40f375bbe7b885e63403a5ad"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "fsrs",
+      "version": "6.3.2",
+      "purl": "pkg:pypi/fsrs@6.3.2",
+      "properties": [
+        {
+          "name": "questflow:lock-entry",
+          "value": "fsrs[optimizer]==6.3.2"
+        },
+        {
+          "name": "questflow:lock-entry-sha256",
+          "value": "1306ac91ee566ba8a2c6a53fb16f6c23c3c57c96a9ced6de25dacfeb22e8e8d8"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "qrcode",
+      "version": "8.2",
+      "purl": "pkg:pypi/qrcode@8.2",
+      "properties": [
+        {
+          "name": "questflow:lock-entry",
+          "value": "qrcode==8.2"
+        },
+        {
+          "name": "questflow:lock-entry-sha256",
+          "value": "32c968da7c2e54ff362be33b818d6f0e1bb4db6842576171868220adce18c152"
+        }
+      ]
+    }
+  ]
+}

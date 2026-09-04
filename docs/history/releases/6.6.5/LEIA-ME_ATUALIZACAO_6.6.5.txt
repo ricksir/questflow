@@ -1,0 +1,16 @@
+QUESTFLOW STUDIO 6.6.5 — CURADORIA COM CONCLUSÃO VALIDADA
+
+Esta versão corrige a situação em que uma questão era editada/revisada, mas continuava aparecendo na contagem da Curadoria sem uma explicação clara.
+
+O que mudou:
+- “Aprovada auto.” é tratada como aprovação automática, não como revisão humana concluída.
+- Ao abrir uma questão pela Curadoria, os botões passam a deixar claro:
+  * Salvar rascunho (mantém pendente)
+  * Concluir revisão e retirar da pendência
+- A conclusão só é confirmada depois que o backend verifica o status real.
+- Se houver bloqueio crítico, o editor mostra o motivo (enunciado, gabarito, alternativas, matéria ou assunto).
+- O painel Inteligência e curadoria mostra por que a questão ainda está pendente.
+- A decisão humana fica registrada no JSON da Curadoria com data/revisor.
+
+IMPORTANTE
+Adicionar comentário ou origem melhora a qualidade editorial, mas uma questão B autoaprovada pode continuar aguardando sua conclusão humana. Use o botão verde de conclusão. Se ela não puder sair, o QuestFlow agora explica exatamente por quê.

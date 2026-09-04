@@ -1,0 +1,13 @@
+QUESTFLOW STUDIO 6.9.3 — STUDY INSIGHTS & CHANNEL CONTROL
+
+Esta atualização não exige novo APK do QuestFlow Mobile.
+
+Principais mudanças:
+1. Quality Gates explicam corretamente quando falta amostra Ouro.
+2. Visão Geral passa a responder: o que aconteceu, por que importa e o que fazer agora.
+3. Respostas do aplicativo e Telegram aparecem no mesmo histórico de estudo.
+4. Tempo médio usa apenas tempo ativo confiável.
+5. Painel Visual começa pela decisão de estudo e deixa FSRS/KT/IRT avançados recolhidos.
+6. Novo controle persistente para pausar/retomar apenas o envio de questões do Telegram.
+
+Para aplicar sobre 6.9.2, use o PATCH_6.9.2_PARA_6.9.3_STUDY_INSIGHTS.zip com o QuestFlow fechado.

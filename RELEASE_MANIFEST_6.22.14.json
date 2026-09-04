@@ -1,0 +1,13 @@
+{
+  "release": "QuestFlow Studio 6.22.14 + Mobile 0.15.4",
+  "studio_version": "6.22.14",
+  "mobile_version": "0.15.4",
+  "mobile_version_code": 19,
+  "package_type": "safe-studio-update",
+  "from_versions_targeted": ["6.22.13"],
+  "purpose": "Render the fourth focused subject and keep the displayed count consistent",
+  "database_migration": "none",
+  "learning_engine_changed": false,
+  "mobile_changed": false,
+  "cloud_sync_changed": false
+}

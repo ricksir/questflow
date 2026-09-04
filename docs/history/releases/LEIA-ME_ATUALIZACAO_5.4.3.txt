@@ -1,0 +1,49 @@
+QUESTFLOW STUDIO 5.4.3 — FECHAMENTO SEGURO E SAÚDE TURSO
+===========================================================
+
+ATUALIZAÇÃO A PARTIR DA 5.4.2
+-----------------------------
+1. Feche a 5.4.2.
+2. Extraia a 5.4.3 em uma pasta nova.
+3. Copie a pasta data da instalação 5.4.2 em uso para a 5.4.3.
+   Isso preserva banco, fila Cloud Sync, configuração CASA, URL Turso e,
+   no mesmo usuário do Windows, a credencial protegida por DPAPI.
+4. Execute INSTALAR_E_DIAGNOSTICAR.bat.
+5. Abra INICIAR_QUESTFLOW_STUDIO.bat.
+
+NOVO BOTÃO FECHAR
+-----------------
+O botão com símbolo de energia no canto superior direito solicita uma rotina
+protegida de encerramento. O QuestFlow:
+- para novos trabalhos;
+- interrompe o fluxo Telegram;
+- tenta a sincronização final com o Turso;
+- preserva pendências na outbox se não houver Internet;
+- executa checkpoint WAL;
+- executa PRAGMA quick_check;
+- grava data/last_clean_shutdown.json;
+- só então encerra a janela do Chrome.
+
+Fechar diretamente no X/Alt+F4 também usa a mesma rotina. A ausência de
+heartbeat da interface é detectada pelo motor Python e o fechamento protegido
+é executado antes do processo ser finalizado.
+
+VISÃO GERAL — SAÚDE E SINCRONIZAÇÃO
+-----------------------------------
+A Visão Geral agora compara o SQLite local e o estado lógico do Turso. Exibe:
+- saúde do banco local (quick_check e chaves estrangeiras);
+- quantidade de questões locais;
+- quantidade de questões representadas no Turso;
+- igualdade das quantidades;
+- pendências e conflitos;
+- última sincronização;
+- status final de banco saudável/atualizado/sincronizado.
+
+O status "totalmente sincronizado" só é mostrado quando:
+- SQLite local está saudável;
+- quantidade local = quantidade Turso;
+- gerações local e remota coincidem;
+- sequência remota foi completamente recebida;
+- pendências = 0;
+- conflitos = 0;
+- não existe erro de sincronização registrado.

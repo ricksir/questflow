@@ -1,0 +1,44 @@
+QUESTFLOW STUDIO 6.1.0 — TUTOR IA + SEIS MOTORES
+
+Esta versão conclui a Etapa 3 da evolução técnica.
+
+O QUE MUDOU
+
+1. Foi criada uma nova aba "Tutor IA".
+2. O Tutor usa contexto do aluno (FSRS + Knowledge Tracing + IRT), tentativa recente, diagnóstico do erro, RAG híbrido e grafo de conhecimento.
+3. Há quatro modos: Rápido, Professor, Socrático e Banca.
+4. O diagnóstico de erro trabalha com hipóteses: desconhecimento, confusão conceitual, regra/exceção, interpretação, cálculo, desatenção, chute, esquecimento, leitura incompleta ou indeterminado.
+5. O sistema deixa claro que o diagnóstico é probabilístico e não uma certeza causal.
+6. Toda saída de IA passa a ser um RASCUNHO.
+7. Um motor independente avalia fundamentação, alinhamento ao gabarito, cobertura das fontes e qualidade pedagógica.
+8. Prompt, hash, provedor/modelo, fontes, contexto, resposta, avaliação e revisão humana são auditáveis.
+9. A antiga assistência de comentários da Curadoria também foi integrada ao AI Engine e ao Governance Engine.
+10. O modo local continua funcionando sem internet. IA online é opcional.
+
+ARQUITETURA CONFIRMADA
+
+O QuestFlow agora possui seis motores explicitamente registrados:
+
+- Banco Editorial
+- Learner Model
+- Learning Engine
+- Knowledge Engine
+- AI Engine
+- Evaluation & Governance Engine
+
+A independência é de responsabilidade e arquitetura. Eles permanecem no mesmo processo local, em vez de seis microserviços, para manter velocidade, simplicidade, consistência do SQLite e funcionamento offline.
+
+COMPATIBILIDADE
+
+- Banco de questões preservado.
+- Histórico de tentativas preservado.
+- FSRS preservado como autoridade de agendamento.
+- KT/IRT preservados.
+- Curadoria 2.0 e RAG preservados.
+- Turso, Telegram e importadores preservados.
+- Nova migração: ai_governance v1.
+
+SEGURANÇA DA IA
+
+Nenhuma resposta do Tutor ou comentário editorial é publicada automaticamente. O fluxo é:
+GERAR -> FUNDAMENTAR -> AVALIAR -> AUDITAR -> REVISÃO HUMANA.

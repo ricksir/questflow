@@ -1,0 +1,37 @@
+QUESTFLOW STUDIO 6.9.6 - HOTFIX1 WINDOWS
+=========================================
+
+Problema corrigido
+------------------
+Em algumas instalações Windows, especialmente quando o QuestFlow estava em
+pastas longas/nestedas dentro de Downloads, o atualizador da 6.9.5 podia falhar
+na criação do backup pré-atualização com:
+
+  OSError: [WinError 123]
+
+O erro ocorria ANTES da aplicação do novo pacote.
+
+Correções deste pacote
+----------------------
+1. O backup pré-atualização do atualizador seguro passa a ser criado fora da
+   árvore data/, em QuestFlow_Backups, com fallback para uma pasta temporária
+   curta e gravável do Windows.
+2. Foi adicionada a ferramenta MIGRAR_DADOS_DA_VERSAO_ANTERIOR.bat, destinada
+   justamente ao cenário em que o atualizador da versão antiga já está quebrado.
+3. A migração cria um backup independente, valida o SQLite antes e depois e não
+   modifica a pasta da versão anterior.
+
+Procedimento recomendado para quem encontrou WinError 123
+----------------------------------------------------------
+1. Não rode novamente o atualizador da 6.9.5.
+2. Extraia este ZIP para uma pasta NOVA e curta, por exemplo:
+     C:\QuestFlow\QuestFlow_6.9.6
+3. Localize MIGRAR_DADOS_DA_VERSAO_ANTERIOR.bat na pasta nova.
+4. Arraste a PASTA da instalação 6.9.5 para cima desse arquivo BAT.
+5. Aguarde a mensagem MIGRACAO CONCLUIDA.
+6. Execute INICIAR_QUESTFLOW_STUDIO.bat na pasta 6.9.6.
+7. Só apague a versão 6.9.5 depois de confirmar banco, questões, progresso,
+   Telegram e Mobile.
+
+A pasta antiga é preservada como rollback e a migração também cria um backup
+separado dos dados.

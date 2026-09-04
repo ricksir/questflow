@@ -1,0 +1,18 @@
+QUESTFLOW STUDIO 5.5.0 — IDENTIDADE VISUAL CONCURSO LIGHT/DARK
+
+Principais mudanças:
+- Nova identidade visual original voltada a banco de questões de concurso de alto nível.
+- Arte clara e arte escura coordenadas, trocadas automaticamente conforme o tema do QuestFlow.
+- Tema Sistema acompanha em tempo real a aparência do Windows.
+- Logo, favicon, Importar e estados vazios usam ativos específicos por tema.
+- Paleta refinada para maior legibilidade, seriedade e aparência premium.
+- Nenhuma imagem de Pinterest, Dribbble ou Behance foi incorporada: foram usados apenas como pesquisa de referência.
+
+ATUALIZAÇÃO SEM PERDER DADOS
+1. Feche o QuestFlow com o botão de encerramento seguro.
+2. Extraia a 5.5.0 em uma pasta nova.
+3. Copie a pasta data da sua instalação em uso para a nova pasta.
+4. Execute INSTALAR_E_DIAGNOSTICAR.bat.
+5. Abra INICIAR_QUESTFLOW_STUDIO.bat.
+
+O banco, Turso, proxy e configurações continuam preservados quando a pasta data da instalação em uso é copiada.

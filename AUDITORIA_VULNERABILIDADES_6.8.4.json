@@ -1,0 +1,16 @@
+{
+  "ok": true,
+  "status": "unavailable",
+  "strict": false,
+  "detail": "pip-audit não instalado",
+  "command": [
+    "/opt/pyvenv/bin/python",
+    "-m",
+    "pip_audit",
+    "-r",
+    "/mnt/data/qf684/QuestFlow_Studio_6.8.3_HOTFIX1_ROADMAP_UI_AUDIT/requirements.lock",
+    "-f",
+    "json"
+  ],
+  "generated_at": "2026-08-17T14:33:25Z"
+}

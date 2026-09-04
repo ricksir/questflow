@@ -1,0 +1,40 @@
+{
+  "schema": "questflow.update-manifest.v1",
+  "release": "6.18.1",
+  "from_version": "6.18.0+",
+  "generated_at": "2026-08-21T18:15:00Z",
+  "package_root": "QuestFlow",
+  "preserves": [
+    "data",
+    ".venv",
+    "venv",
+    "runtime",
+    "backups",
+    "mobile"
+  ],
+  "excludes": [
+    "data",
+    "mobile",
+    "node_modules",
+    ".expo",
+    "__pycache__",
+    ".pytest_cache",
+    "*.pyc"
+  ],
+  "changed_focus": [
+    "VERSION.txt",
+    "pyproject.toml",
+    "web/index.html",
+    "web/app.js",
+    "web/styles.css",
+    "web_api.py",
+    "aplicar_mobile_update_0_13_1.py",
+    "mobile_update_payload_0.13.1/mobile/app/(tabs)/questions.tsx"
+  ],
+  "database_migration": "none",
+  "mobile_version": "0.13.1",
+  "mobile_changed": true,
+  "learning_engine_changed": false,
+  "cloud_sync_changed": false,
+  "feature": "Corrections split and explicit offline session summary"
+}

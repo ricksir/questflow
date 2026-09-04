@@ -1,0 +1,58 @@
+QUESTFLOW STUDIO 6.7.3 — PRODUCTION HARDENING / BUILD REPRODUTÍVEL
+
+OBJETIVO
+--------
+A 6.7.3 não cria um sétimo motor nem muda a lógica pedagógica. Ela endurece a
+entrega, instalação, backup e atualização do QuestFlow para reduzir risco de
+ambientes divergentes, corrupção e atualização incompleta.
+
+NOVIDADES
+---------
+1. requirements.lock com versões exatas e requirements.lock.sha256.
+2. O instalador recusa lock alterado ou não exato antes de instalar dependências.
+3. SBOM CycloneDX 1.5 gerável por release_tools.py.
+4. Auditoria de vulnerabilidades via pip-audit quando disponível, sem instalação
+   silenciosa e com modo estrito para CI conectado.
+5. Matriz automatizada de Python 3.11, 3.12 e 3.13 validados + Python 3.14 em
+   validação controlada/experimental.
+6. Backup consistente de SQLite via API sqlite3.backup, com SHA-256 por arquivo.
+7. Verificação PRAGMA quick_check + foreign_key_check no backup/restauração.
+8. Teste de restauração em pasta temporária antes de considerar o backup confiável.
+9. Política de retenção configurável: diário/semanal/mensal.
+10. Atualizador seguro: hash opcional do pacote, staging, proteção contra ZIP Slip,
+    backup prévio, smoke test, quick_check pós-atualização e rollback automático.
+11. CI local reprodutível: lock, compileall, node --check, SBOM, auditoria,
+    matriz de compatibilidade e testes.
+
+COMANDOS PRINCIPAIS
+-------------------
+python release_tools.py lock-check
+python release_tools.py sbom
+python release_tools.py audit
+python release_tools.py backup --label manual --test-restore --retention
+python release_tools.py compat
+python release_tools.py smoke
+python release_tools.py ci
+python release_tools.py ci --full
+python release_tools.py update NOVA_VERSAO.zip --sha256 <HASH>
+
+ARQUIVOS .BAT
+-------------
+- VALIDAR_RELEASE_6.7.3.bat
+- GERAR_SBOM_6.7.3.bat
+- BACKUP_TESTAR_RESTAURACAO.bat
+- ATUALIZAR_QUESTFLOW_SEGURO.bat
+
+OBSERVAÇÃO DE SEGURANÇA
+-----------------------
+O atualizador seguro deve ser executado com a interface do QuestFlow fechada.
+O diretório data local é preservado. Caso o smoke test ou quick_check falhe,
+o código anterior é restaurado automaticamente; se o banco também falhar no
+quick_check, o backup prévio é restaurado.
+
+SCHEMAS
+-------
+Nenhuma nova migração de dados.
+question_bank: v8
+study: v11
+ai_governance: v4

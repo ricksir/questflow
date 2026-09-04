@@ -1,0 +1,38 @@
+{
+  "schema": "questflow.update-manifest.v1",
+  "release": "6.16.1",
+  "from_version": "6.16.0",
+  "generated_at": "2026-08-21T12:15:00Z",
+  "package_root": "QuestFlow",
+  "preserves": [
+    "data",
+    ".venv",
+    "venv",
+    "runtime",
+    "backups",
+    "mobile"
+  ],
+  "excludes": [
+    "data",
+    "mobile",
+    "node_modules",
+    ".expo",
+    "__pycache__",
+    ".pytest_cache",
+    "*.pyc"
+  ],
+  "changed_focus": [
+    "VERSION.txt",
+    "pyproject.toml",
+    "core/engines/ai_engine.py",
+    "core/mobile_cloud_bridge.py",
+    "web/index.html",
+    "web/app.js",
+    "web/styles.css",
+    "tests/test_tutor_question_selector_6161.py"
+  ],
+  "database_migration": "none",
+  "mobile_version": "0.11.0",
+  "mobile_changed": false,
+  "feature": "Tutor IA: seleção de questões com identidade humana, busca por conteúdo e UUID somente interno"
+}

@@ -1,0 +1,37 @@
+QUESTFLOW STUDIO 6.12.0 + MOBILE 0.8.0
+=====================================
+
+OBJETIVO
+-------
+Esta atualização expõe a Saúde da IA no aplicativo Mobile sem misturar essas informações com as métricas pedagógicas do aluno.
+
+INSTALAÇÃO
+----------
+1. Não extraia o ZIP de atualização manualmente.
+2. Execute C:\Users\user\QuestFlow\QUESTFLOW.bat.
+3. Use a opção de atualização do QuestFlow.
+4. Selecione QuestFlow_Studio_6.12.0_Mobile_0.8.0_UPDATE.zip.
+5. Confirme a atualização 6.11.0 -> 6.12.0.
+6. Aguarde a conclusão e abra o Studio normalmente.
+
+NO APLICATIVO
+-------------
+Abra Perfil > Sistema > Saúde da IA.
+
+A nova tela mostra somente a saúde técnica do retrieval/base de conhecimento:
+- estado do serviço;
+- Score/Recall/Grounding técnicos;
+- cobertura/chunks/fontes;
+- drift;
+- Quality Gate;
+- data da última avaliação.
+
+Esses valores NÃO entram em acerto, progresso, FSRS, memória, prioridade de estudo ou recomendações do aluno.
+
+SEGURANÇA
+---------
+O Mobile recebe apenas um contrato read-only. Reavaliar, promover, override e rollback continuam exclusivos do Studio.
+
+MOBILE
+------
+As dependências nativas não mudaram. No fluxo atual com Expo/Dev Client, reinicie/recarregue o Mobile após atualizar o Studio para receber o bundle 0.8.0.

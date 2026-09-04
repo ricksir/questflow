@@ -1,0 +1,16 @@
+{
+  "ok": true,
+  "status": "unavailable",
+  "strict": false,
+  "detail": "pip-audit não instalado",
+  "command": [
+    "C:\\Users\\user\\OneDrive\\UNB\\ChatGPT\\Rick\\QuestFlow\\.venv\\Scripts\\python.exe",
+    "-m",
+    "pip_audit",
+    "-r",
+    "C:\\Users\\user\\OneDrive\\UNB\\ChatGPT\\Rick\\QuestFlow\\requirements.lock",
+    "-f",
+    "json"
+  ],
+  "generated_at": "2026-08-28T12:07:29Z"
+}

@@ -1,0 +1,36 @@
+{
+  "app_version": "6.9.0",
+  "generated_at": "2026-08-17T15:40:30Z",
+  "current_python": "3.13.5",
+  "matrix": [
+    {
+      "python": "3.11",
+      "tier": "validated",
+      "executable": null,
+      "available": false,
+      "smoke": null
+    },
+    {
+      "python": "3.12",
+      "tier": "validated",
+      "executable": null,
+      "available": false,
+      "smoke": null
+    },
+    {
+      "python": "3.13",
+      "tier": "validated",
+      "executable": "/opt/pyvenv/bin/python3.13",
+      "available": true,
+      "smoke": null
+    },
+    {
+      "python": "3.14",
+      "tier": "controlled_experimental",
+      "executable": null,
+      "available": false,
+      "smoke": null
+    }
+  ],
+  "policy": "3.11–3.13 validados; 3.14 é validação controlada/experimental até a pilha completa passar no CI."
+}

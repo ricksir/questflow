@@ -1,0 +1,38 @@
+QUESTFLOW STUDIO 5.3.1 — IDENTIDADE VISUAL, RESET SEGURO E REDE CORPORATIVA
+
+PRINCIPAL NOVIDADE
+- Configurações > Rede e Proxy.
+- Modos: Automático, Proxy do Windows, Proxy manual, PAC/WPAD e Sem proxy.
+- O canal local 127.0.0.1 nunca utiliza proxy.
+- Telegram, Google, Google Sheets, Selenium e instalador utilizam a configuração central.
+
+USO RECOMENDADO EM REDE CORPORATIVA
+1. Abra Configurações > Rede e Proxy.
+2. Escolha Automático.
+3. Clique Detectar proxy.
+4. Clique Testar conexão.
+5. Caso necessário, informe servidor/porta ou URL PAC fornecida pela equipe de rede.
+6. Salve a configuração.
+
+SEGURANÇA
+- Senha de proxy não é gravada em config.json.
+- No Windows, ela é protegida com DPAPI para o usuário atual.
+- localhost, 127.0.0.1 e ::1 são sempre preservados no bypass.
+
+MIGRAÇÃO
+Copie apenas seus dados atuais para a nova pasta data: questflow_questions.sqlite, config.json, question_images e markdown_cache. Não copie chrome_runtime antigo.
+
+
+IDENTIDADE VISUAL
+- Nova arte oficial aplicada ao logo, favicon, importação e estados vazios.
+- O programa usa variantes menores para reduzir memória e manter alta definição.
+
+REINICIAR ESTUDOS DO ZERO
+1. Abra Configurações > Reiniciar ciclo de estudos.
+2. Clique Reiniciar estudos do zero.
+3. Leia o resumo e digite REINICIAR.
+4. O QuestFlow cria primeiro um backup em data\backups.
+5. O progresso volta ao estado inicial sem apagar as questões.
+
+São zerados: envios, respostas, acertos, erros, ciclos, FSRS/repetição espaçada, prioridades adaptativas, aprendizado por tópico, XP e sequências.
+São preservados: questões, códigos, matérias, aulas, assuntos, aprovações, imagens, configurações, proxy e solicitações de correção.

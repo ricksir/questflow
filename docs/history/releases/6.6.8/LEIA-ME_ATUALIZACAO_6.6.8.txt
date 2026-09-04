@@ -1,0 +1,36 @@
+QUESTFLOW STUDIO 6.6.8 — RUNTIME WATCHDOG & SELF-HEALING
+
+O QUE MUDOU
+- Supervisor central dos serviços internos.
+- Autorrecuperação segura e limitada para serviços isolados recuperáveis.
+- Ausência de internet tratada como OFFLINE NORMAL.
+- Event loop assíncrono único e supervisionado para operações de I/O.
+- Concorrência configurável e limitada.
+- Rate limiting local para APIs de IA, Turso e monitor de atualizações.
+- Histórico de tarefas limitado, journal rotativo de incidentes e rotação do log de startup.
+- Painel de saúde em Configurações.
+- Relatório de compatibilidade de Python, SQLite, schemas e dependências.
+
+COMO USAR
+1. Extraia todo o ZIP em uma pasta local.
+2. Execute INICIAR_QUESTFLOW_STUDIO.bat.
+3. Vá em Configurações > Watchdog central e autorrecuperação.
+4. Mantenha Autorrecuperação segura ativada, salvo durante diagnóstico específico.
+5. Use Verificar agora para executar uma checagem manual dos serviços.
+
+IMPORTANTE
+- O Watchdog não é um sétimo motor.
+- Ele não apaga filas e não reinicia o SQLite durante falhas.
+- O Cloud Sync continua offline-first.
+- Se a internet cair, o programa continua localmente e o Watchdog mostra “Offline normal”.
+- Não há migração de schema na 6.6.8.
+
+CONFIGURAÇÕES PADRÃO
+- intervalo do Watchdog: 5 s;
+- tarefa suspeita após: 240 s;
+- concorrência I/O assíncrona: 4;
+- histórico de tarefas: 160;
+- IA: 30 requisições/minuto (limite local);
+- Turso: 120 requisições/minuto (limite local).
+
+Todos estes limites são conservadores e podem ser ajustados na interface.

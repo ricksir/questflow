@@ -1,0 +1,3 @@
+QuestFlow Studio 5.5.4
+Diagnóstico local concluído sem falhas.
+Avisos esperados no ambiente de montagem: Chrome, Selenium e pymupdf4llm não disponíveis; o programa mantém os fallbacks previstos.

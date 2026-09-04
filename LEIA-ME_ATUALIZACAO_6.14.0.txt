@@ -1,0 +1,31 @@
+QUESTFLOW STUDIO 6.14.0 + MOBILE 0.10.0
+ATUALIZACAO INCREMENTAL A PARTIR DA 6.13.0
+
+PRINCIPAL NOVIDADE
+- Adaptive Session Orchestrator.
+- Sessoes usam micro-lotes adaptativos de 3 questoes por padrao.
+- O QuestFlow pode replanejar os proximos micro-lotes com base nas respostas, confianca e eventos da sessao.
+- Prefetch reduz a latencia e pode ser invalidado quando surgir evidencia pedagogica relevante.
+- O Mobile continua apenas como experiencia de estudo e nao recalcula FSRS, KT, IRT ou prioridade.
+- Painel de explicabilidade "Por que esta questao?" permanece no Studio.
+
+COMO ATUALIZAR
+1. NAO extraia este ZIP manualmente.
+2. Execute C:\Users\user\QuestFlow\QUESTFLOW.bat.
+3. Escolha Atualizar QuestFlow.
+4. Selecione QuestFlow_Studio_6.14.0_Mobile_0.10.0_UPDATE.zip.
+5. Confirme a transicao 6.13.0 -> 6.14.0.
+6. Aguarde o Manager concluir backup, staging, smoke e verificacao do banco.
+7. Reinicie/recarregue o Mobile.
+
+PRESERVACAO
+- O pacote nao contem data, node_modules ou .expo.
+- O atualizador preserva o banco local e restaura as dependencias/cache do Mobile.
+- Nenhuma dependencia nativa nova foi adicionada ao Expo nesta release.
+
+VALIDACAO ESPERADA APOS INSTALAR
+- Mobile mostra 0.10.0.
+- Uma sessao recomendada inicia normalmente.
+- A experiencia continua fluida ao atravessar os limites dos micro-lotes.
+- Questao pulada/correcao/topico nao estudado nao deve criar loop artificial.
+- Informacoes tecnicas permanecem no Studio, nao no Mobile.

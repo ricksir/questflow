@@ -1,0 +1,29 @@
+QUESTFLOW STUDIO 5.5.2 — TRILHAS E PLANILHA INTELIGENTES
+
+O que foi incorporado
+---------------------
+- Base de conhecimento derivada dos PDFs explicativos das Trilhas 00, 01, 02, 03, 04 e 05.
+- Lógica de preenchimento da planilha baseada nos documentos fornecidos e na aba Instruções do Google Sheets.
+- CICLO_REG: DATA, CH EFETIVA, TOT QUEST FEITAS e TOT ACERTOS são evidências de execução/estudo; DESEMPENHO é resultado derivado.
+- MAPA_AF: T+R = SIM quando teoria e revisão da aula estiverem concluídas; QTD EXE e ACERTOS alimentam desempenho/evolução.
+
+Documentação das trilhas
+------------------------
+As explicações incorporadas atualmente vão somente da TRILHA 00 à TRILHA 05.
+O próximo documento esperado é a TRILHA 06. Conforme o curso avançar, use o botão
+"Adicionar PDF explicativo da trilha" para incorporar os novos documentos.
+
+Aviso automático
+----------------
+Se o QuestFlow encontrar estudo registrado no CICLO_REG de uma trilha cujo PDF explicativo ainda não foi incorporado, ele gera um aviso. A verificação acontece:
+- ao carregar/sincronizar a cobertura;
+- enquanto o programa está aberto;
+- quando você volta para a janela do QuestFlow.
+
+No snapshot atual da planilha já há registros de estudo nas TRILHAS 06 e 07. Como os PDFs disponíveis terminam na TRILHA 05, a versão 5.5.2 já sinaliza as duas pendências.
+
+Importante
+----------
+Os PDFs originais fornecidos não são redistribuídos dentro do ZIP. O QuestFlow armazena apenas conhecimento operacional derivado, metadados estruturais e hashes, e permite que novos PDFs sejam incorporados localmente.
+
+Antes de substituir uma instalação existente, faça backup da pasta data, especialmente questflow_questions.sqlite.

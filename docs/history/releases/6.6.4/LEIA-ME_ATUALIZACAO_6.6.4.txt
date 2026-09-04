@@ -1,0 +1,33 @@
+QuestFlow Studio 6.6.4 — Curadoria Humana Soberana
+
+PROBLEMA CORRIGIDO
+Nas versões anteriores, o status final da Curadoria era derivado diretamente da nota de qualidade. Isso criava uma inconsistência: uma questão podia estar explicitamente aprovada por uma pessoa e continuar em "Revisar" por permanecer na faixa B.
+
+NOVA REGRA
+- A nota A/B/C/D mede enriquecimento editorial.
+- O status Pronta/Revisar/Incompleta/Bloqueada mede conclusão da Curadoria.
+- Uma revisão humana explicitamente aprovada pode concluir uma questão B quando os campos críticos estão íntegros.
+- A aprovação humana não encobre campos críticos ausentes.
+
+CAMPOS CRÍTICOS
+- enunciado íntegro;
+- gabarito consistente;
+- alternativas estruturadas;
+- matéria informada;
+- assunto informado.
+
+ENRIQUECIMENTOS QUE CONTINUAM VISÍVEIS NA NOTA
+Banca, ano, prova/órgão, proveniência, fonte detalhada e comentário continuam contribuindo para a qualidade. Eles podem manter a nota em B sem prender indefinidamente uma questão já revisada na fila.
+
+NOVO FLUXO
+Curadoria inteligente > Revisar curadoria > Concluir revisão.
+Quando uma questão está apta, o QuestFlow mostra que os campos críticos estão íntegros e oferece conclusão explícita da revisão.
+
+CLOUD SYNC
+A abertura/reindexação de inteligência não cria eventos por alterações exclusivamente derivadas de tags, referências legais ou índice semântico.
+
+BANCO
+Nenhuma nova migração de schema foi necessária.
+question_bank = v8
+study = v10
+ai_governance = v4

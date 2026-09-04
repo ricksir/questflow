@@ -1,0 +1,16 @@
+{
+  "ok": true,
+  "status": "unavailable",
+  "strict": false,
+  "detail": "pip-audit não instalado",
+  "command": [
+    "/opt/pyvenv/bin/python3",
+    "-m",
+    "pip_audit",
+    "-r",
+    "/mnt/data/qf682/QuestFlow_Studio_6.8.2_RERANKING_REGRESSION/requirements.lock",
+    "-f",
+    "json"
+  ],
+  "generated_at": "2026-08-16T19:01:18Z"
+}

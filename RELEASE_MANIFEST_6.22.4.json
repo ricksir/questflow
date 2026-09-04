@@ -1,0 +1,12 @@
+{
+  "release": "QuestFlow Studio 6.22.4 + Mobile 0.15.1",
+  "studio_version": "6.22.4",
+  "mobile_version": "0.15.1",
+  "package_type": "safe-studio-only-hotfix",
+  "from_versions_targeted": ["6.22.3"],
+  "purpose": "Import scanned/vector resolved-and-commented PDFs through page-preserving OCR",
+  "database_migration": "none",
+  "learning_engine_changed": false,
+  "mobile_changed": false,
+  "cloud_sync_changed": false
+}

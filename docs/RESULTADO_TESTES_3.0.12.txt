@@ -1,0 +1,54 @@
+test_annulled_question_leaves_active_bank_and_is_not_reimported (test_archive_annulled.ArchiveAnnulledTests.test_annulled_question_leaves_active_bank_and_is_not_reimported) ... ok
+test_pending_question_relocates_and_rereads_pdf (test_deep_analysis_integration.DeepAnalysisIntegrationTests.test_pending_question_relocates_and_rereads_pdf) ... ok
+test_missing_filename_returns_empty (test_deep_source_resolution.DeepSourceResolutionTests.test_missing_filename_returns_empty) ... ok
+test_resolve_missing_original_path_by_filename (test_deep_source_resolution.DeepSourceResolutionTests.test_resolve_missing_original_path_by_filename) ... ok
+test_parse_bing_rss (test_enrichment.BingRssTests.test_parse_bing_rss) ... ok
+test_code_and_statement_queries_are_never_combined (test_enrichment.EnrichmentTests.test_code_and_statement_queries_are_never_combined) ... ok
+test_first_query_contains_only_code (test_enrichment.EnrichmentTests.test_first_query_contains_only_code) ... ok
+test_google_parser (test_enrichment.EnrichmentTests.test_google_parser) ... ok
+test_invalid_local_code_uses_statement_first (test_enrichment.EnrichmentTests.test_invalid_local_code_uses_statement_first) ... ok
+test_parse_bing_html (test_enrichment.EnrichmentTests.test_parse_bing_html) ... ok
+test_parse_duckduckgo_html (test_enrichment.EnrichmentTests.test_parse_duckduckgo_html) ... ok
+test_parse_duckduckgo_lite (test_enrichment.EnrichmentTests.test_parse_duckduckgo_lite) ... ok
+test_parse_exact_question_and_answer_requires_board_and_year (test_enrichment.EnrichmentTests.test_parse_exact_question_and_answer_requires_board_and_year) ... ok
+test_safe_suggestions_only_fill_empty_fields (test_enrichment.EnrichmentTests.test_safe_suggestions_only_fill_empty_fields) ... ok
+test_same_code_and_statement_wrong_board_is_rejected (test_enrichment.EnrichmentTests.test_same_code_and_statement_wrong_board_is_rejected) ... ok
+test_scoring_exact_code (test_enrichment.EnrichmentTests.test_scoring_exact_code) ... ok
+test_snippet_cannot_confirm_question_or_answer (test_enrichment.EnrichmentTests.test_snippet_cannot_confirm_question_or_answer) ... ok
+test_ai_mode_page_extracts_alternatives (test_enrichment.GoogleVisibleSearchTests.test_ai_mode_page_extracts_alternatives) ... ok
+test_enrichment_uses_rendered_google_page_without_opening_links (test_enrichment.GoogleVisibleSearchTests.test_enrichment_uses_rendered_google_page_without_opening_links) ... ok
+test_google_page_parser_confirms_and_extracts (test_enrichment.GoogleVisibleSearchTests.test_google_page_parser_confirms_and_extracts) ... ok
+test_incomplete_ai_page_never_opens_external_links (test_enrichment.GoogleVisibleSearchTests.test_incomplete_ai_page_never_opens_external_links) ... ok
+test_safe_application_fills_answer_and_explanation (test_enrichment.GoogleVisibleSearchTests.test_safe_application_fills_answer_and_explanation) ... ok
+test_selected_candidate_can_be_applied (test_enrichment.GoogleVisibleSearchTests.test_selected_candidate_can_be_applied) ... ok
+test_verified_google_page_stops_even_when_answer_is_missing (test_enrichment.GoogleVisibleSearchTests.test_verified_google_page_stops_even_when_answer_is_missing) ... ok
+test_native_bank_validation (test_extractor_exporter.ExtractorExporterTests.test_native_bank_validation) ... ok
+test_textual_list_and_true_false (test_extractor_exporter.ExtractorExporterTests.test_textual_list_and_true_false) ... ok
+test_retry_resolves_failed_delivery (test_flow_retry.FlowRetryTests.test_retry_resolves_failed_delivery) ... ok
+test_parser_accepts_icons_and_alternative_prefix (test_google_ai_optimized.GoogleAIOptimizedTests.test_parser_accepts_icons_and_alternative_prefix) ... ok
+test_parser_uses_banca_and_year_even_with_markdown_headings (test_google_ai_optimized.GoogleAIOptimizedTests.test_parser_uses_banca_and_year_even_with_markdown_headings) ... ok
+test_semantic_dom_snapshot_prefers_answer_block (test_google_ai_optimized.GoogleAIOptimizedTests.test_semantic_dom_snapshot_prefers_answer_block) ... ok
+test_keeps_browser_waiting_until_timeout (test_google_captcha_wait.GoogleCaptchaWaitTests.test_keeps_browser_waiting_until_timeout) ... ok
+test_waits_until_user_resolves_captcha (test_google_captcha_wait.GoogleCaptchaWaitTests.test_waits_until_user_resolves_captcha) ... ok
+test_clicks_show_more_and_returns_expanded_text (test_google_expand.GoogleExpandTests.test_clicks_show_more_and_returns_expanded_text) ... ok
+test_expanded_google_text_is_fully_parsed (test_google_expand.GoogleExpandTests.test_expanded_google_text_is_fully_parsed) ... ok
+test_pdf_to_markdown_and_cache (test_markdown_pipeline.MarkdownPipelineTests.test_pdf_to_markdown_and_cache) ... ok
+test_source_pdf_is_released_after_conversion (test_markdown_pipeline.MarkdownPipelineTests.test_source_pdf_is_released_after_conversion) ... ok
+test_adaptive_interval (test_study_retry_math.StudyRetryMathTests.test_adaptive_interval) ... ok
+test_bayesian_error_probability (test_study_retry_math.StudyRetryMathTests.test_bayesian_error_probability) ... ok
+test_failed_delivery_lifecycle (test_study_retry_math.StudyRetryMathTests.test_failed_delivery_lifecycle) ... ok
+test_recency_priority (test_study_retry_math.StudyRetryMathTests.test_recency_priority) ... ok
+test_local_validation_classification (test_telegram.TelegramTests.test_local_validation_classification) ... ok
+test_long_question_uses_context (test_telegram.TelegramTests.test_long_question_uses_context) ... ok
+test_non_retryable_error_stops (test_telegram.TelegramTests.test_non_retryable_error_stops) ... ok
+test_quiz_payload (test_telegram.TelegramTests.test_quiz_payload) ... ok
+test_retry_transient_error (test_telegram.TelegramTests.test_retry_transient_error) ... ok
+test_callback_creates_queue_item_and_emits_event (test_telegram_review_queue.TelegramReviewQueueTests.test_callback_creates_queue_item_and_emits_event) ... ok
+test_poll_contains_review_button (test_telegram_review_queue.TelegramReviewQueueTests.test_poll_contains_review_button) ... ok
+test_resolve_requests_for_question (test_telegram_review_queue.TelegramReviewQueueTests.test_resolve_requests_for_question) ... ok
+test_review_request_is_persistent_and_deduplicated (test_telegram_review_queue.TelegramReviewQueueTests.test_review_request_is_persistent_and_deduplicated) ... ok
+
+----------------------------------------------------------------------
+Ran 49 tests in 6.173s
+
+OK

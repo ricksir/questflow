@@ -1,0 +1,35 @@
+QUESTFLOW STUDIO 6.7.2 — PESQUISA GOOGLE PARA COMENTÁRIOS
+
+NOVIDADE PRINCIPAL
+------------------
+No editor de questões, em “Explicação após a resposta”, existe agora o botão:
+
+    Pesquisar resposta no Google com IA
+
+Ao utilizá-lo, o QuestFlow pesquisa a questão no Google Modo IA. A pesquisa tenta primeiro o código da questão e usa o enunciado como fallback quando necessário.
+
+SE A PESQUISA FOR BEM-SUCEDIDA
+------------------------------
+1. O texto encontrado é colocado em “Explicação após a resposta”.
+2. “Origem do comentário” passa para “IA assistida + revisão humana”.
+3. A questão fica com alterações não salvas para que o usuário revise o conteúdo.
+4. O gabarito local NÃO é alterado automaticamente.
+5. Se o Google sugerir gabarito diferente, o QuestFlow apresenta um alerta.
+6. Fontes, provedor, avaliação e interação ficam registrados na auditoria de IA.
+
+SEGURANÇA / PRIVACIDADE
+-----------------------
+- O modo Privado do Centro de Privacidade bloqueia a pesquisa externa.
+- Não existe fallback silencioso para outro provedor nessa ação específica.
+- Se o Google não retornar explicação verificável, o campo não é preenchido.
+- Uma explicação existente só é substituída após confirmação do usuário.
+- Alterações ainda não salvas do editor podem ser usadas como contexto de pesquisa sem serem gravadas previamente.
+
+BANCO E COMPATIBILIDADE
+-----------------------
+Não há nova migração de dados.
+question_bank: v8
+study: v11
+ai_governance: v4
+
+Os seis motores continuam preservados.

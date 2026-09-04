@@ -1,0 +1,27 @@
+QUESTFLOW STUDIO 6.8.4 — RETRIEVAL QUALITY GATES
+
+NOVIDADE PRINCIPAL
+------------------
+Na tela Revisar Banco existe agora o botão "Quality Gates".
+
+A release atual é comparada com a baseline aprovada usando:
+- score do retrieval híbrido;
+- recall das fontes Ouro;
+- grounding;
+- cobertura do índice.
+
+ESTADOS
+-------
+APTO: gates aprovados; a promoção humana fica disponível.
+QUARENTENA: uma ou mais regressões ultrapassaram os thresholds.
+PROMOVIDO: a release foi aprovada explicitamente e tornou-se baseline.
+OVERRIDE: uma release em quarentena foi liberada excepcionalmente com justificativa humana registrada.
+
+SEGURANÇA
+---------
+- nenhuma release é promovida automaticamente;
+- override exige justificativa humana auditável;
+- rollback restaura a baseline e o perfil de retrieval aprovados anteriormente;
+- rollback do executável continua sob o atualizador seguro;
+- nenhuma nova migração SQLite;
+- FSRS, KT e IRT não são modificados pelos Quality Gates.

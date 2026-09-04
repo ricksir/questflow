@@ -1,0 +1,37 @@
+QUESTFLOW STUDIO 5.6.0 — FSRS 6 + OTIMIZADOR + REVISÃO ADAPTATIVA
+
+Esta versão substitui a lógica de prioridade única por uma arquitetura de revisão em camadas:
+1. correções marcadas;
+2. relearning pós-erro vencido;
+3. revisões FSRS vencidas;
+4. questões novas de matéria/aula já estudada;
+5. revisão antecipada somente quando habilitada.
+
+PRINCIPAIS MUDANÇAS
+- Py-FSRS 6.3.2 e Optimizer passam a ser dependências obrigatórias.
+- O instalador valida Scheduler, Card, Rating, ReviewLog e Optimizer.
+- 21 parâmetros FSRS podem ser aprendidos do histórico real.
+- Retenção ótima pode ser aprendida automaticamente.
+- Históricos anteriores são convertidos para ReviewLog e os cartões são reagendados após a otimização.
+- Conteúdos fora do que foi efetivamente estudado na planilha ficam fora do universo normal de revisão.
+- Relearning automático após erro, com intervalo configurável.
+- Interleaving ponderado por necessidade, sem igualdade artificial entre matérias.
+- Estado de aprendizagem em Matéria > Aula > Assunto.
+- Botões no Telegram: Sabia / Dúvida / Chutei e, nos erros, Não sabia / Confundi / Desatenção.
+- A confiança altera o rating FSRS da resposta e o cartão é reconstruído sem duplicar a revisão.
+- Data da prova limita o horizonte de agendamento.
+- Tempo diário disponível gera capacidade e carga recomendada de questões.
+- Cada questão enviada pode informar o motivo da seleção.
+- Comparação de calibração entre previsão adaptativa e retrievability FSRS (Brier/Log Loss/ECE).
+- Painel web com estado do FSRS, retenção efetiva, histórico para treino, carga diária e botão Otimizar agora.
+- Interface clássica recebeu as mesmas preferências essenciais.
+
+ATUALIZAÇÃO SEGURA
+1. Faça backup da pasta data da instalação em uso, principalmente data/questflow_questions.sqlite.
+2. Extraia a 5.6.0 em pasta nova.
+3. Copie sua pasta data para a nova instalação.
+4. Execute INICIAR_QUESTFLOW_STUDIO.bat. Como requirements.txt mudou, o instalador instalará fsrs[optimizer]==6.3.2.
+5. Se a rede corporativa exigir proxy, configure-o antes pelo utilitário do QuestFlow.
+6. Em Fluxo Telegram, confira FSRS 6 · Memória personalizada.
+
+O QuestFlow mantém fallback DSR apenas para continuidade em instalação danificada. O instalador e o diagnóstico consideram Py-FSRS + Optimizer obrigatórios nesta versão.

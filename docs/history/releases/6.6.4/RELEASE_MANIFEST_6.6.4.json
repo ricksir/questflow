@@ -1,0 +1,56 @@
+{
+  "product": "QuestFlow Studio",
+  "version": "6.6.4",
+  "release_name": "Curadoria Humana Soberana",
+  "database_schema": {
+    "question_bank": 8,
+    "study": 10,
+    "ai_governance": 4
+  },
+  "engines": 6,
+  "fixes": [
+    "human approval is authoritative for grade-B curation when critical fields are intact",
+    "curation status is separated from A-D editorial quality",
+    "curation queue distinguishes awaiting human completion from critical data gaps",
+    "curation queue offers explicit complete-review action when eligible",
+    "opening from curation highlights save-and-complete-review workflow",
+    "semantic/materialized derived columns do not create Cloud Sync noise"
+  ],
+  "critical_curation_checks": [
+    "statement",
+    "answer",
+    "alternatives",
+    "subject",
+    "topic"
+  ],
+  "validation": {
+    "tests_total": 351,
+    "tests_passed": 351,
+    "partitions": [
+      117,
+      117,
+      117
+    ],
+    "javascript_syntax": "ok",
+    "python_changed_modules_compile": "ok",
+    "eighteen_question_regression": "18 pending -> 0 pending, while 18 remain quality B"
+  },
+  "file_sha256": {
+    "VERSION.txt": "7d4f563fc9aa3ef2baac3a3f66beef80de1bb5294e00e8681327569bad7c1a83",
+    "pyproject.toml": "630be8b0eb61267a926825c988b989b3983d8593a3512d2997643c23dad7bde4",
+    "core/bank_intelligence.py": "5c077882e26c5341370675a9362533ba132ca78c2d80c9b19dd20ba60d684f6b",
+    "core/storage.py": "06de63ff739ad4a3fa53bb2d1dbf6567ba18e0b93d6293015af81a15562d0aea",
+    "core/cloud_sync.py": "1c1a83f46eac2814b6a073e38dd2c10c01a1c0470ef63fde3c875557464a08ce",
+    "core/question_services.py": "5b45061c24adba0a65bdd3a0921b5390f15b93dc6bbd48c00ba3b0563c50150e",
+    "core/engines/editorial_bank.py": "489847cad6778808112db2ff9c32f73e8f08563bc07832666d9397a36bcd3f75",
+    "web_api.py": "9189fd47b9e614914e475d4bf270dd5293b6ceb2c3b32a92568a271680855262",
+    "web_server.py": "bdd2fd5c44afa83d55c742267c1ccb66804b6e19848e613010cb0e76d6d0da7e",
+    "web/app.js": "c6edc819495b43c6bfce04f5497d2f6f7ec7f636bc73dcd43805b4fada03bb6f",
+    "web/styles.css": "e5c99242103b757ca6452e5382f2c52cc03b80fc3de7861fba1ec4f0742634c1",
+    "tests/test_curation_human_review_664.py": "0ad43689ff385530d72343ab53754ea5001148609910f2b885fb58d4b90acc39",
+    "tests/test_curation_reactive_663.py": "1062177285c06fd90a98f884e5cd55726104fb97420f91cbd0f7701d612b6bd2",
+    "VALIDACAO_6.6.4.md": "e61ac92e784ef17cdd44cae833021055bed52bce7e0dec83ae2985c084ef945b",
+    "LEIA-ME_ATUALIZACAO_6.6.4.txt": "2012c5bca42e44f71791659cbdbc5a37066a724a60fc4e7dd44b2ddfc9624236",
+    "ARQUITETURA_SEIS_MOTORES_6.6.4.md": "5a976c6b220582876bd504f94a7860df82b9d7192e3d1ee96e8ae06dc5dad625"
+  }
+}

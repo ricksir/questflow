@@ -1,0 +1,48 @@
+QUESTFLOW STUDIO 5.8.0 — CURADORIA INTELIGENTE
+===================================================
+
+Objetivo
+--------
+Esta versão consolida técnicas publicamente observáveis em plataformas brasileiras de preparação para concursos: uso de provas oficiais + conteúdo próprio, curadoria humana, taxonomia detalhada, deduplicação, comentários assistidos por IA, estatística de dificuldade e aprendizagem adaptativa. Não incorpora nem copia comentários, taxonomias ou bancos proprietários de terceiros.
+
+O que foi implementado
+-----------------------
+1. Origem e proveniência
+   - oficial; inédita própria; adaptada; literal de norma; manual; não informada.
+   - fonte primária e rastreabilidade editorial.
+   - separação entre origem da questão e origem do comentário.
+
+2. Saúde editorial
+   - pontuação de qualidade 0–100.
+   - faixas A, B, C e D.
+   - status pronta/revisar/incompleta/bloqueada calculado a partir do conteúdo atual.
+   - checklist mostra exatamente quais metadados ou elementos ainda faltam.
+
+3. Dificuldade baseada em uso real
+   - combina taxa de acerto das tentativas com percepção Fácil/Média/Difícil.
+   - mostra confiança da amostra; não inventa dificuldade quando não há tentativas.
+
+4. Deduplicação segura
+   - similaridade textual gera apenas candidatos.
+   - fluxo: comparar → marcar duplicata ou descartar.
+   - nenhuma exclusão automática; histórico e decisão permanecem auditáveis.
+
+5. IA com human-in-the-loop
+   - botão para inspecionar o contexto/RAG antes da geração.
+   - geração de rascunho assistido usando o mecanismo de enriquecimento existente.
+   - fontes, alertas e confiança permanecem visíveis.
+   - o texto só entra no editor por escolha do usuário e ainda precisa ser salvo/aprovado.
+
+6. Nova tela Curadoria inteligente
+   - indicadores de total, qualidade média, prontas, em revisão, comentários, origem oficial e duplicidades.
+   - distribuições por origem, estado editorial, dificuldade, fonte do comentário e qualidade.
+   - pipeline visual Captar → Normalizar → Deduplicar → Classificar → Comentar → Aprovar → Aprender.
+
+7. Banco e compatibilidade
+   - migration question_bank v5, idempotente.
+   - preserva o JSON original e adiciona colunas de índice para leitura rápida.
+   - preserva FSRS, Learning Analytics, Telegram, Turso, importadores e histórico.
+
+Governança de conteúdo
+----------------------
+Questões de prova oficial e comentários/explicações próprios são tratados como camadas distintas. A versão não fornece autorização jurídica para reutilizar bases ou comentários de terceiros. Proveniência e origem do comentário existem justamente para reduzir mistura de conteúdo oficial com material editorial proprietário.

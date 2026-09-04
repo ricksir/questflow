@@ -1,0 +1,30 @@
+QUESTFLOW STUDIO 6.5.1 — AI GATEWAY, PRIVACIDADE E OBSERVABILIDADE
+
+Esta versão é uma atualização incremental da 6.5.0. Ela não altera o modelo de seis motores nem substitui o banco de questões.
+
+PRINCIPAIS ALTERAÇÕES
+1. AI Gateway interno ao AI Engine, com Structured Outputs para OpenAI, Gemini e Claude.
+2. Centro de Privacidade da IA: Privado, Equilibrado e Personalizado.
+3. Prévia no Tutor dos campos que serão enviados à IA externa.
+4. Defesa contra prompt injection em evidências RAG/documentos; trechos suspeitos são tratados como dados não confiáveis e sanitizados.
+5. Evaluation & Governance Engine v3 com telemetria de chamadas, tokens, latência, cache, Structured Outputs e alertas de injeção.
+6. Custos estimados somente quando o usuário informa preços de entrada/saída por 1 milhão de tokens.
+7. O modo Privado impede também Curadoria online e Google Modo IA de receberem a questão.
+8. Fallback local/RAG preservado quando o provedor externo estiver indisponível ou não aceitar o schema configurado.
+
+MIGRAÇÃO
+- question_bank permanece v8.
+- study permanece v9.
+- ai_governance avança de v2 para v3.
+- Migração incremental/idempotente; dados antigos de Tutor/IA são preservados.
+
+VALIDAÇÃO
+- 319/319 testes automatizados aprovados.
+- Migração real 6.5.0 → 6.5.1 validada.
+- PRAGMA quick_check = ok.
+- 0 violações de foreign key.
+- JavaScript validado com node --check.
+- Compilação em memória dos módulos Python validada.
+
+OBSERVAÇÃO DE PRIVACIDADE
+O QuestFlow não considera um documento recuperado como instrução. Conteúdo RAG é sempre classificado como dado não confiável. O modo Privado mantém toda a tutoria no motor local.

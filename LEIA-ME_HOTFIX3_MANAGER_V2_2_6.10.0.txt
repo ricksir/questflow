@@ -1,0 +1,9 @@
+QuestFlow 6.10.0 HOTFIX3 - Manager V2.2
+
+Correção principal:
+- remove completamente o Expand-Archive do fluxo de atualização do Manager;
+- lê VERSION.txt diretamente dentro do ZIP sem extração PowerShell;
+- usa o release_tools.py já instalado no QuestFlow para aplicar a atualização;
+- preserva temporariamente mobile/node_modules e caches Expo fora da pasta da instalação;
+- mantém a pasta data intacta e o Cloud Sync/Turso no estado atual;
+- mantém log visível em %LOCALAPPDATA%\QFS\logs.

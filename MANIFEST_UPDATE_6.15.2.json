@@ -1,0 +1,35 @@
+{
+  "schema": "questflow.update-manifest.v1",
+  "release": "6.15.2",
+  "from_version": "6.15.1",
+  "generated_at": "2026-08-20T16:40:00Z",
+  "package_root": "QuestFlow",
+  "preserves": [
+    "data",
+    ".venv",
+    "venv",
+    "runtime",
+    "backups"
+  ],
+  "excludes": [
+    "data",
+    "mobile",
+    "node_modules",
+    ".expo",
+    "__pycache__",
+    ".pytest_cache",
+    "*.pyc"
+  ],
+  "changed_focus": [
+    "VERSION.txt",
+    "pyproject.toml",
+    "app.py",
+    "desktop_runtime.py",
+    "questflow_manager.ps1",
+    "tests/test_post_update_startup_6152.py"
+  ],
+  "database_migration": "none",
+  "mobile_version": "0.10.1",
+  "mobile_changed": false,
+  "feature": "Correção da primeira abertura após UPDATE: limpeza segura de Chrome órfão, preflight do servidor local e retry automático"
+}

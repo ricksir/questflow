@@ -1,0 +1,12 @@
+{
+  "release": "QuestFlow Studio 6.18.2",
+  "studio_version": "6.18.2",
+  "mobile_version": "0.13.1",
+  "package_type": "safe-update-hotfix",
+  "from_versions_targeted": ["6.18.1"],
+  "purpose": "Restore Web UI startup functions removed accidentally in 6.18.1",
+  "database_migration": "none",
+  "learning_engine_changed": false,
+  "mobile_changed": false,
+  "cloud_sync_changed": false
+}

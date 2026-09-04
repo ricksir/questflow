@@ -1,0 +1,82 @@
+{
+  "product": "QuestFlow Studio",
+  "version": "6.5.1",
+  "release_name": "AI Gateway, Privacidade e Observabilidade",
+  "release_date": "2026-08-13",
+  "architecture": {
+    "type": "monolito_modular_seis_motores",
+    "engine_count": 6,
+    "engines": {
+      "editorial_bank": "qf-editorial-engine-3",
+      "learner_model": "qf-learner-engine-1",
+      "learning_engine": "qf-learning-engine-3",
+      "knowledge_engine": "qf-knowledge-engine-2",
+      "ai_engine": "qf-ai-engine-3",
+      "evaluation_governance": "qf-ai-governance-3"
+    }
+  },
+  "schemas": {
+    "question_bank": 8,
+    "study": 9,
+    "ai_governance": 3
+  },
+  "features": [
+    "AI Gateway multiprovedor no AI Engine",
+    "Structured Outputs com JSON Schema para OpenAI, Gemini e Claude",
+    "Defesa contra prompt injection em fontes RAG não confiáveis",
+    "Centro de Privacidade com modos Privado, Equilibrado e Personalizado",
+    "Minimização de dados antes de chamadas externas",
+    "Telemetria de latência, tokens, cache, sucesso, segurança e custo estimado",
+    "Custos somente a partir de preços configurados pelo usuário",
+    "Fallback local/RAG preservado",
+    "Seis motores preservados"
+  ],
+  "validation": {
+    "unit_tests": {
+      "passed": 319,
+      "failed": 0
+    },
+    "python_modules_compiled": 138,
+    "javascript_node_check": "ok",
+    "migration_6_5_0_to_6_5_1": {
+      "questions_preserved": "1/1",
+      "ai_interactions_preserved": "1/1",
+      "ai_governance_before": [
+        1,
+        2
+      ],
+      "ai_governance_after": [
+        1,
+        2,
+        3
+      ],
+      "quick_check": "ok",
+      "foreign_key_violations": 0,
+      "engine_count": 6
+    }
+  },
+  "critical_file_sha256": {
+    "VERSION.txt": "cd25bc61a72f650255e4c2eec7fac325befdb35236229d9f4d3d3c7edab101ea",
+    "pyproject.toml": "dee464a0e906fadc337ebf338c4bcde1e72653b1e39e0702cfbbdb16e623c3aa",
+    "app_shared.py": "215ef30d20411e0afddfa58ff3b9d726d2b14abf2222290b0afc6b56b8082dd9",
+    "web_api.py": "c52655cc9e88e7364551276b9f2cdab4e1aa8f2d7ce85c10dc47cad5400c2664",
+    "web_server.py": "efd7d8d943b410c8113eda067c5d332ca102d5895f74170d4ef18b329f71d52a",
+    "core/ai_safety.py": "10e9ad81c9a31fdb1679e66dcb7506c683a6bec0183616782ea3808b9fb1bce4",
+    "core/ai_providers.py": "168699e3d58705f3c0b198ffd3bd5cb0a48b42bfed3ee75006843c93a2f59d86",
+    "core/engines/ai_engine.py": "adeae0487c91d09307098d80c62753a194d7c4c8c301fcd601e9f9558cdfbaf8",
+    "core/engines/evaluation_governance.py": "5cd42dfb603fc4e4f45999f253fd4e1bd23b1fbe49af12530bc14485dd9e4e15",
+    "core/engines/registry.py": "6bd925c84bd2d3103fe94472b66dbc3ca7459abc815e89a0f4cb74aac82730ab",
+    "web/index.html": "719b0c1d5fd55048dd8aaa850dba777b30bb41c028f170d81dffcd0c78d18289",
+    "web/app.js": "1c0a6df01ba338240305742e3db1a7aaef780354b8d941e9a1c0ac6d4bb8fc05",
+    "web/styles.css": "16f092aa3b0b15ce0937678e7f1b5caeae5b8bbe339eb24a17706b71e8e9f341",
+    "requirements.txt": "9e169f8464ec98dff7609f7429d884fe6fec2130a92576e0f3c3a2c7308d142e"
+  },
+  "tree": {
+    "file_count": 416
+  },
+  "notes": [
+    "Credenciais não são incluídas no manifesto.",
+    "Valores comerciais de APIs não são congelados no código; o usuário configura preços para estimativa de custo.",
+    "Conteúdo RAG externo é tratado como dado não confiável e não como instrução."
+  ]
+}

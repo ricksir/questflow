@@ -1,0 +1,24 @@
+QuestFlow 6.10.0 HOTFIX1 - Manager V2
+
+Problema corrigido
+------------------
+No Manager anterior, depois da confirmacao da atualizacao a tela podia ser limpa e a etapa de staging/backup ficar silenciosa. Em Windows isso parecia que o processo havia encerrado. Alem disso, o atualizador rodava a partir da propria arvore que estava sendo substituida.
+
+Manager V2
+----------
+- usa um atualizador externo copiado para %LOCALAPPDATA%\QFS\manager;
+- abre uma janela separada e visivel durante toda a atualizacao;
+- mostra tempo decorrido a cada poucos segundos;
+- grava logs em %LOCALAPPDATA%\QFS\logs;
+- preserva integralmente /data;
+- mantem o estado atual do Recovery Guard e do Cloud Sync/Turso;
+- o QUESTFLOW.bat nao fecha silenciosamente se o Manager retornar erro.
+
+Reparo de uma instalacao que ainda usa Manager antigo
+-----------------------------------------------------
+1. Feche Studio, Mobile/Expo e o QuestFlow Manager.
+2. Extraia este pacote.
+3. Execute REPARAR_QUESTFLOW_MANAGER.bat.
+4. O reparo copia somente QUESTFLOW.bat, questflow_manager.ps1 e questflow_external_updater.ps1 para %USERPROFILE%\QuestFlow.
+5. Abra %USERPROFILE%\QuestFlow\QUESTFLOW.bat.
+6. Escolha a atualizacao desejada. O novo atualizador abrira em uma segunda janela e mostrara progresso.

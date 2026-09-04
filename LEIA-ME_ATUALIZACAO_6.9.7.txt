@@ -1,0 +1,22 @@
+QUESTFLOW STUDIO 6.9.7 + MOBILE 0.4 — STUDY TRIAGE
+
+PRINCIPAL NOVIDADE
+- Antes de responder uma questão no Mobile existem duas novas ações:
+  1) Corrigir questão
+  2) Assunto ainda não estudado
+
+CORRIGIR QUESTÃO
+- Envia a questão à fila Correções solicitadas do Studio.
+- A questão fica suspensa até revisão.
+- Não registra acerto, erro, tentativa ou tempo de resposta.
+
+ASSUNTO AINDA NÃO ESTUDADO
+- Separa matéria/assunto/aula em uma lista pedagógica própria.
+- O conteúdo fica fora das próximas sessões enquanto estiver pendente.
+- Não é considerado erro de desempenho.
+- Em Progresso > Ainda não estudados, use “Já estudei — liberar para questões”.
+
+ATUALIZAÇÃO NO WINDOWS
+- A correção HOTFIX1 da 6.9.6 foi preservada.
+- Para migração segura a partir de uma pasta anterior, prefira MIGRAR_DADOS_DA_VERSAO_ANTERIOR.bat.
+- Não copie manualmente as pastas core, web, mobile, ui ou tests da versão antiga sobre a 6.9.7.

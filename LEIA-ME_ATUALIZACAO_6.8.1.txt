@@ -1,0 +1,16 @@
+QUESTFLOW STUDIO 6.8.1 — BENCHMARK MULTIMODAL & GROUNDING QUALITY
+
+A versão 6.8.1 mede objetivamente a qualidade do Multimodal RAG 3.0 usando as Questões Ouro locais.
+
+NOVO
+- botão “Benchmark RAG 3.0” em Inteligência e curadoria;
+- comparação Textual x Visual x Híbrido;
+- precisão/recall de fontes ouro quando a referência existe;
+- cobertura de grounding;
+- suporte lexical ao comentário oficial;
+- cobertura visual em questões com imagem/PDF;
+- verificação de que caminhos locais não vazam no payload auditável;
+- ganho híbrido contra o melhor backend isolado;
+- rótulo de amostra insuficiente/limitada/suficiente.
+
+O benchmark é local, determinístico, não chama LLM externa e não altera FSRS, KT ou IRT.

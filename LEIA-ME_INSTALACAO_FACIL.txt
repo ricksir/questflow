@@ -1,0 +1,38 @@
+QUESTFLOW - INSTALACAO E ATUALIZACAO FACIL
+==========================================
+
+A partir desta versão, o arquivo recomendado para uso diário é:
+
+    QUESTFLOW.bat
+
+PRIMEIRA VEZ COM ESTE NOVO MODELO
+---------------------------------
+1. Extraia o ZIP da nova versão.
+2. Dê dois cliques em INSTALAR_QUESTFLOW_FACIL.bat.
+3. O instalador cria uma pasta estável em:
+
+       C:\Users\SEU_USUARIO\QuestFlow
+
+4. Ele tenta localizar sua versão anterior automaticamente.
+5. Confirme a pasta antiga ou selecione-a na janela, se necessário.
+6. O banco é validado e é criado um backup antes da migração.
+7. O atalho "QuestFlow" será criado na Área de Trabalho.
+8. Você pode iniciar Studio + Mobile imediatamente.
+
+A PARTIR DA PRÓXIMA VERSÃO
+--------------------------
+1. Baixe o novo ZIP normalmente para Downloads.
+2. NÃO precisa extrair o ZIP.
+3. Abra o atalho QuestFlow da Área de Trabalho.
+4. O Manager detecta automaticamente uma versão mais nova em Downloads.
+5. Responda "S" para atualizar.
+6. Ele fecha os processos desta instalação, cria backup, valida o ZIP,
+   atualiza Studio + Mobile e preserva a pasta data.
+7. Dependências Python e npm são preparadas automaticamente no primeiro
+   início após a atualização, somente quando necessário.
+
+Você não precisa mais executar manualmente os vários scripts de instalação,
+migração, atualização e Mobile em uma atualização normal.
+
+Os scripts antigos continuam no pacote apenas para diagnóstico, manutenção
+avançada e recuperação.

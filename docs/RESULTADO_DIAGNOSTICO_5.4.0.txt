@@ -1,0 +1,40 @@
+Python: 3.13.5
+[OK] fitz
+[OK] PIL
+[OK] pytesseract
+[OK] cv2
+[OK] tkinter
+[AVISO] pymupdf4llm: indisponível neste ambiente; o QuestFlow usará o modo alternativo (No module named 'pymupdf4llm')
+[AVISO] selenium: indisponível neste ambiente; o QuestFlow usará o modo alternativo (No module named 'selenium')
+[OK] Tesseract: /usr/bin/tesseract
+[OK] Pasta de dados: /mnt/data/qf540/QuestFlow_Studio_5.4.0/data
+[OK] Motor local HTTP/JSON: interface e núcleo comunicando sem ponte injetada
+[AVISO] Google Chrome não localizado; instale o Chrome para abrir a interface responsiva
+[OK] Rede corporativa: conexão direta/bypass (Nenhum proxy necessário/detectado.)
+[OK] Bypass local obrigatório: localhost, 127.0.0.1 e ::1
+[OK] Cloud Sync local-first: outbox durável, gatilhos e integridade SQLite
+[INFO] Turso Cloud real: ainda não configurado; use CONFIGURAR_TURSO_CLOUD.bat ou Configurações → Cloud Sync
+[OK] Taxonomia AFRFB: 25 matérias e 473 tarefas de referência
+[OK] Pipeline Markdown: estrutura, cache e preparação para imagens/OCR
+[OK] PDFs textuais: lista, metadados, alternativas e gabarito
+[OK] Análise apurada: Certo/Errado, alternativas embutidas e aprovação segura
+[OK] Banco, ciclo diário de 20 questões, rotação por matéria e estatísticas
+[OK] Telegram resiliente: classificação de erro e retentativa com backoff
+[OK] Quiz, botão de correção, mais questões, novo ciclo e desempenho no Telegram
+[OK] Correções Telegram: fila persistente, abertura posterior e resolução
+[OK] Continuidade offline: correções persistentes, reenvio sem resposta e mapa de aulas
+[OK] Agendamento diário por horário e dias da semana
+[OK] Google Modo IA: resposta renderizada, Mostrar mais, banca/ano, alternativas, gabarito e justificativa
+[OK] Interface: progresso, prévia Telegram e confirmação antes de atualizar a base
+[OK] Questões anuladas: retirada da base ativa e bloqueio de reimportação
+[OK] Motor adaptativo: curva de esquecimento, memória e modelo online
+[OK] Engenharia 4.2: runtime estruturado, bandit de assuntos, gamificação educativa e FSRS=fallback local
+[OK] Dívida técnica 4.2: composition root, views modulares, CQRS leve e migrações versionadas
+[OK] Interface Web Enterprise: Grid/Flexbox, container queries, tokens, acessibilidade e virtualização
+[OK] Renderizador: Google Chrome exclusivo, perfil isolado e API local HTTP/JSON
+[OK] Interface: Mission Control, revisão ajustável, temas, zoom, saúde e reenvio de falhas
+[OK] Módulo principal QuestFlow Studio 5.4.0
+
+Diagnóstico concluído sem falhas locais.
+A conexão real com o Telegram deve ser testada no botão 'Testar bot'.
+Observação: com o computador totalmente desligado, o envio só pode ocorrer após ele ser ligado novamente.

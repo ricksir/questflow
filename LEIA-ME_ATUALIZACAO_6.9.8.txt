@@ -1,0 +1,13 @@
+QuestFlow Studio 6.9.8 / Mobile 0.5.0
+
+Novidades desta atualização:
+- Cronômetro ativo do aplicativo passa a contar apenas enquanto o usuário permanece na aba Questões.
+- Tempo exibido em formato amigável: segundos, minutos e horas, em vez de valores crus.
+- Reorganização visual da aba Perfil, separando rota ativa, endpoint local e fallback cloud.
+- Refinamento do visual do aplicativo com cards mais modernos, hierarquia visual mais clara e navegação inferior aprimorada.
+- Melhorias na leitura de resultado e feedback da questão.
+
+Como atualizar:
+1. Extraia esta versão em uma nova pasta.
+2. Se quiser manter seus dados locais, copie apenas a pasta /data da versão anterior para esta nova pasta (com o app fechado).
+3. No mobile, reinstale/atualize o projeto Expo e abra novamente o aplicativo.

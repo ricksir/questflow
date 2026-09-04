@@ -1,0 +1,12 @@
+{
+  "release": "QuestFlow Studio 6.22.1 + Mobile 0.15.1",
+  "studio_version": "6.22.1",
+  "mobile_version": "0.15.1",
+  "package_type": "safe-analytics-hotfix-with-mobile-source-and-apk",
+  "from_versions_targeted": ["6.21.0", "6.21.1", "6.22.0"],
+  "purpose": "Show every confirmed answer from the start and prevent the generation evidence panel from overlapping later content",
+  "database_migration": "none",
+  "learning_engine_changed": false,
+  "mobile_changed": true,
+  "cloud_sync_changed": false
+}

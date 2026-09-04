@@ -1,0 +1,14 @@
+QUESTFLOW STUDIO 6.8.3 — RETRIEVAL OBSERVABILITY
+
+NOVO
+- Botão “Observabilidade retrieval” na Inteligência e curadoria.
+- Histórico temporal por release/perfil de score, recall, grounding e cobertura do índice.
+- Detecção de drift de chunks e fontes por fingerprints SHA-256 locais.
+- Sugestões de expansão das Questões Ouro sem autoaprovação.
+- Exportação de relatório JSON ou CSV.
+
+SEGURANÇA
+- Nenhum conteúdo bruto ou caminho local é gravado nos fingerprints de observabilidade.
+- Nenhuma Questão Ouro é adicionada automaticamente.
+- Nenhum perfil de reranking é alterado pela observabilidade.
+- Sem nova migração SQLite.

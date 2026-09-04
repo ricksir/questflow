@@ -1,0 +1,45 @@
+{
+  "product": "QuestFlow Studio",
+  "version": "6.6.3",
+  "release_name": "Curadoria Reativa",
+  "database_schema": {
+    "question_bank": 8,
+    "study": 10,
+    "ai_governance": 4
+  },
+  "engines": 6,
+  "fixes": [
+    "curation refresh recalculates derived editorial indicators for the whole bank",
+    "primary source edited by the user counts as traceable provenance",
+    "saved explanations cannot remain classified as sem_comentario",
+    "empirical difficulty is rebuilt from real attempts",
+    "attention cards expose the exact question queue and missing checklist items",
+    "saving/approving a question refreshes curation counters immediately",
+    "derived curation/intelligence reads do not create Cloud Sync noise"
+  ],
+  "validation": {
+    "tests_total": 345,
+    "tests_passed": 345,
+    "python_files_compiled": 143,
+    "javascript_syntax": "ok",
+    "targeted_post_cleanup_tests": "10/10"
+  },
+  "file_sha256": {
+    "VERSION.txt": "a2d69360e401db060a30ae54a177ec78a1d8430998dda8f81602597fef7d5cee",
+    "pyproject.toml": "4d7a042822025efc23d989949e0cac46271feeac5158d31a7ac8b8d15dc3a7d7",
+    "core/bank_intelligence.py": "c2c8cbb4b785d09c86356413b5d4f225eee823e7ba24d46c335ab1a4975bcfef",
+    "core/storage.py": "4727e7a8f9aa79317e80e7445ee7b27a44e51853913ac7a3f884b77389d52c83",
+    "core/cloud_sync.py": "53398141531a1c6d93abd75486328092626e54b1c33900af78b990bfa58e4e57",
+    "core/question_services.py": "b3f2caa55f0e1527672d0b546e27ce00177116ffad695dec2f80e27a45bae59b",
+    "core/engines/editorial_bank.py": "9614ffae84fa937bd93f4fa4d072336f3353a23caa312516cfd94896ec6718e8",
+    "web_api.py": "4ae0bec69fa1ad3a1cca74404f5588ada2f8b43da9fe270d8be1c069d3b4f89d",
+    "web_server.py": "3407ab328829a76d8e1a604d12b426a21d39a0b391e4046db7ac6849b0bd8491",
+    "web/app.js": "b2b9ae698902a35c61026726571762330dd005e3907c95cbf946b05d5e83c0be",
+    "web/index.html": "3e57f55f56d3990e1f153c255c70215f114583a9f0c515d2d0171ec24f450d44",
+    "web/styles.css": "729df421c48a26083df990a538f2b138326aee7e97917f6a37f7ded93a8cc1b0",
+    "tests/test_curation_reactive_663.py": "1062177285c06fd90a98f884e5cd55726104fb97420f91cbd0f7701d612b6bd2",
+    "VALIDACAO_6.6.3.md": "d094b30fdf52eeedb91cd643ca4d7a0c30037866e28eb06df3188cb447b5742a",
+    "LEIA-ME_ATUALIZACAO_6.6.3.txt": "c50670a915f55f91bba139e4613344ca0c4dc6b2fb7f1fd876c754be379be58f",
+    "ARQUITETURA_SEIS_MOTORES_6.6.3.md": "c9d61945f3b04538d6ce068ce78912053a2690a4d7f02f75d95f65ab617e95e0"
+  }
+}

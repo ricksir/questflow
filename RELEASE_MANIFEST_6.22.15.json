@@ -1,0 +1,13 @@
+{
+  "release": "QuestFlow Studio 6.22.15 + Mobile 0.15.4",
+  "studio_version": "6.22.15",
+  "mobile_version": "0.15.4",
+  "mobile_version_code": 19,
+  "package_type": "safe-studio-update",
+  "from_versions_targeted": ["6.22.14", "6.22.13"],
+  "purpose": "Count every focused subject while keeping a compact top-four summary and searchable full list",
+  "database_migration": "none",
+  "learning_engine_changed": false,
+  "mobile_changed": false,
+  "cloud_sync_changed": false
+}

@@ -1,0 +1,65 @@
+QUESTFLOW STUDIO 6.5.0 — PROJETO DE CONCURSO E EDITAL
+
+OBJETIVO DA RELEASE
+Transformar o edital em contexto central do planejamento sem substituir o FSRS, o Learner Model ou os seis motores já existentes.
+
+1. PROJETO DE CONCURSO
+- Cadastre nome do projeto, órgão, cargo, banca, data da prova, status e observações.
+- Um projeto pode ser marcado como ativo.
+- A data da prova ativa alimenta o planejamento do Learning Engine.
+
+2. EDITAL E RETIFICAÇÕES
+- Registre o edital inicial e novas versões/retificações.
+- O conteúdo programático é normalizado em itens.
+- O sistema informa itens adicionados, removidos e alterados entre versões.
+- A versão mais recente é usada para cobertura e mapeamento.
+
+3. COBERTURA DO EDITAL
+- Questões existentes são relacionadas aos itens do edital por matéria/tópico com confiança de correspondência.
+- O painel mostra quantidade de questões, tentativas, desempenho, domínio KT e prioridade por item.
+- O remapeamento pode ser executado novamente quando o banco ou o edital mudar.
+
+4. O QUE FAZER HOJE?
+- Nova central na Visão geral.
+- Prioriza revisões vencidas, lacunas críticas, questões de alto valor, cobertura e simulado recomendado.
+- A precedência FSRS continua rígida: o edital não ultrapassa uma revisão vencida de classe superior.
+
+5. ATUALIDADE DAS QUESTÕES
+Estados disponíveis:
+- Vigente
+- Potencialmente desatualizada
+- Desatualizada
+- Anulada
+- Controversa
+- Histórica
+
+Questões desatualizadas, anuladas ou controversas não entram na seleção normal futura até revisão, mas não são apagadas e permanecem no histórico/editorial.
+
+6. LEGISLAÇÃO TEMPORAL
+- A varredura usa referências legais e versões de legislação já cadastradas.
+- Alterações posteriores à questão podem gerar alerta “Potencialmente desatualizada”.
+- O humano continua responsável pela decisão editorial final.
+
+7. TURSO E OFFLINE
+- Projeto, versões, itens, vínculos e atualidade foram incluídos no Cloud Sync.
+- O reset do ciclo de estudos não apaga esses dados editoriais.
+- O funcionamento local/offline é preservado.
+
+8. ARQUITETURA
+Exatamente seis motores:
+1) Banco Editorial — qf-editorial-engine-3
+2) Learner Model — qf-learner-engine-1
+3) Learning Engine — qf-learning-engine-3
+4) Knowledge Engine — qf-knowledge-engine-2
+5) AI Engine — qf-ai-engine-2
+6) Evaluation & Governance — qf-ai-governance-2
+
+9. BANCO
+- Nova migração question_bank v8.
+- Migrações são incrementais e idempotentes.
+
+10. VALIDAÇÃO
+- 314/314 testes automatizados aprovados.
+- Migração real 6.4.1→6.5.0 validada.
+- quick_check=ok e zero violações de foreign key no smoke test de migração.
+- API HTTP real de projeto, edital e Central Hoje validada.

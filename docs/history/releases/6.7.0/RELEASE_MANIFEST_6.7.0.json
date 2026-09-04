@@ -1,0 +1,127 @@
+{
+  "product": "QuestFlow Studio",
+  "version": "6.7.0",
+  "release_date": "2026-08-16",
+  "release_name": "Tutor com Scaffolding Progressivo e Revisão Multimodal",
+  "architecture": {
+    "type": "six_independent_engines",
+    "engine_count": 6,
+    "engines": {
+      "editorial_bank": "qf-editorial-engine-3",
+      "learner_model": "qf-learner-engine-3",
+      "learning_engine": "qf-learning-engine-5",
+      "knowledge_engine": "qf-knowledge-engine-2",
+      "ai_engine": "qf-ai-engine-4",
+      "evaluation_governance": "qf-ai-governance-4"
+    }
+  },
+  "schemas": {
+    "question_bank": 8,
+    "study": 11,
+    "ai_governance": 4
+  },
+  "features": [
+    "scaffolding progressivo em seis níveis",
+    "sinal de independência/suporte no Learner Model",
+    "representações texto/flashcard/passo a passo/visual",
+    "imagem binária permanece local",
+    "transcrição/descrição visual opcional sob política de privacidade",
+    "auditoria de pistas",
+    "sincronização de sessões/eventos de scaffolding",
+    "Watchdog e Cloud Sync preservados"
+  ],
+  "validation": {
+    "automated_tests": 379,
+    "automated_tests_passed": 379,
+    "test_partitions": [
+      113,
+      131,
+      63,
+      72
+    ],
+    "python_files_compiled": 152,
+    "javascript_node_check": true,
+    "real_http_scaffolding_methods": 3,
+    "migration_from": "6.6.8",
+    "quick_check": "ok",
+    "foreign_key_violations": 0
+  },
+  "files": [
+    {
+      "path": "VERSION.txt",
+      "sha256": "82396552835868194c4604eaeb8b3e33be7e243b62a6973d5d8d767568231b10"
+    },
+    {
+      "path": "pyproject.toml",
+      "sha256": "56972df1075f7ec1645eeadbea4329f40c404dc2fa0f0704ff6a7f31cfe3f50a"
+    },
+    {
+      "path": "core/study.py",
+      "sha256": "9c0df4d5124cb32c36397a01056ea86d59d618221364ce7c43d1ce913e08bb59"
+    },
+    {
+      "path": "core/engines/ai_engine.py",
+      "sha256": "da14a7b3786bb7cf34e33275290f3ce742f028356100dccdda4e84fd3d12bb97"
+    },
+    {
+      "path": "core/engines/learner_model_engine.py",
+      "sha256": "69319e0bb9da37401ace1022c1c6169b1a0ab806afb685defdf3902fe523f367"
+    },
+    {
+      "path": "core/engines/learning_engine.py",
+      "sha256": "1c0f625a802579ff825afa319a515f8424013bd0d46d7cb66be0371b0558ac89"
+    },
+    {
+      "path": "core/engines/registry.py",
+      "sha256": "b8632abf2757da0c1e9c163ac4b7ee91b80ada5c66c8e969f8b2284f9113e446"
+    },
+    {
+      "path": "core/ai_safety.py",
+      "sha256": "abe41bb0c27a46ea048372c8cab4ba12c9488623d0df6d2a9aed607dfe77a5d0"
+    },
+    {
+      "path": "core/cloud_sync.py",
+      "sha256": "1636bd734b6c3766d08b5dbecf7370532a580957e55432576ae23676bb58f323"
+    },
+    {
+      "path": "web_api.py",
+      "sha256": "874b003401e13b78e1300f9ecf3bd61206c8f6a8d0ebba530cad54eca31a70de"
+    },
+    {
+      "path": "web_server.py",
+      "sha256": "881df1332a6ae00dd82a41fe4f431a48af8b3debadd7203710fee92c1d28afdb"
+    },
+    {
+      "path": "web/index.html",
+      "sha256": "526c868a169b712e1cc223ed859b8707a54e96027b370aed8de5937b677b5c9c"
+    },
+    {
+      "path": "web/app.js",
+      "sha256": "df0c8fd18c52f8fd750049de9b39de9b3b3a688710e79f916ef5afb056c8e01b"
+    },
+    {
+      "path": "web/styles.css",
+      "sha256": "fc5f1f12b2d70b3054b111c4eda3d0931b01c8b18a3dc7c17dd353c84e38f6bc"
+    },
+    {
+      "path": "tests/test_tutor_scaffolding_670.py",
+      "sha256": "9bf56952c04aa69266467cad6451e3ae09d48ae6410b4e2d15e69604c90ec50c"
+    },
+    {
+      "path": "VALIDACAO_6.7.0.md",
+      "sha256": "26d5b87e67e036e1f82c920358cc8bba365d12716afaef55ae7f174759dcfd37"
+    },
+    {
+      "path": "LEIA-ME_ATUALIZACAO_6.7.0.txt",
+      "sha256": "d8b6cd28d33dd1c8cffbf5bebe154f13f90df3e7606e445bb6ee52961860acfd"
+    },
+    {
+      "path": "ARQUITETURA_SEIS_MOTORES_6.7.0.md",
+      "sha256": "af66e3b299d021f398604d83a16fd03efed2b20efd475cfc1be66149818695f3"
+    },
+    {
+      "path": "ROADMAP_EVOLUCAO_TECNICA.md",
+      "sha256": "2fb5224a178d8bc39caf2d6509e3fa859ba64768d349f9bc4b2585311451408f"
+    }
+  ]
+}

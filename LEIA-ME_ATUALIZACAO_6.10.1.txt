@@ -1,0 +1,16 @@
+QUESTFLOW STUDIO 6.10.1 + MOBILE 0.7.3
+
+ALTERACOES PRINCIPAIS
+- Corrige a apresentacao do tempo no resumo da sessao Mobile.
+- O tempo passa a usar formato compacto e ajuste automatico para telas estreitas.
+- A aba Progresso tambem evita textos longos no indicador de tempo medio.
+- Todos os paineis principais do Studio passam a ter identidade visual por bloco.
+- Configuracoes diferencia Rede, Cloud Sync, IA, Monitor, Watchdog e Zona de risco por cor.
+- O editor de questoes tambem separa visualmente suas secoes internas.
+
+ATUALIZACAO
+Use o QUESTFLOW.bat / QuestFlow Manager da mesma forma das versoes anteriores.
+O Manager preserva a pasta data, configuracoes, banco e dados pedagogicos durante a atualizacao.
+
+VALIDACAO
+Execute VALIDAR_RELEASE_6.10.1.bat para os testes criticos locais.

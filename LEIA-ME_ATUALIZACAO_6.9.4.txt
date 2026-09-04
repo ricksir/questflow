@@ -1,0 +1,49 @@
+QUESTFLOW STUDIO 6.9.4 + QUESTFLOW MOBILE 0.2 — STUDY COACH
+============================================================
+
+Esta evolução leva para o aplicativo a interpretação pedagógica orientada à ação que começou no Studio 6.9.3.
+
+PRINCIPAIS ENTREGAS
+-------------------
+1. Tela HOJE reorganizada como plano de estudo:
+   - O que está acontecendo;
+   - Por que isso importa;
+   - O que fazer agora.
+2. Tela PROGRESSO com leitura rápida e explicação dos indicadores.
+3. Tendência recente por matéria, amostra recente e assuntos fracos.
+4. Histórico recente unificado, identificando respostas vindas de:
+   - Aplicativo;
+   - Telegram;
+   - Studio.
+5. Contagem separada por canal no Progresso.
+6. Controle remoto do canal Telegram pelo próprio Mobile:
+   - Pausar novas questões;
+   - Retomar novas questões;
+   - O listener continua ativo para respostas e comandos.
+7. Quality Gate de tempo preservado:
+   - apenas tempo ativo confiável entra nas métricas de velocidade;
+   - amostras excluídas continuam registradas para auditoria.
+8. Contrato `questflow.mobile.v1` preservado. As mudanças são aditivas.
+
+QUESTFLOW MOBILE 0.2
+--------------------
+- versão do app atualizada para 0.2.0;
+- mantém pareamento por QR, SecureStore, cache SQLite, outbox e sync idempotente;
+- mantém redescoberta automática do Studio quando a rede local muda;
+- não recebe gabarito antecipadamente;
+- continua funcionando offline para respostas já baixadas.
+
+CONTROLE DO TELEGRAM
+--------------------
+O novo botão no Mobile altera apenas `telegram_questions_paused`.
+
+Ao pausar:
+- não são enviados novos ciclos;
+- não são reenviadas questões sem resposta;
+- não são disparados retries/relearning de questões;
+- o listener permanece conectado;
+- respostas antigas e comandos continuam sendo processados.
+
+LIMITAÇÃO DA FASE
+-----------------
+A comunicação ainda é direta com o QuestFlow Studio na mesma LAN. O computador precisa estar acessível para sincronização e para alterar o estado do Telegram. O futuro Gateway Cloud/OAuth continua sendo a próxima grande etapa de arquitetura.

@@ -1,0 +1,30 @@
+QUESTFLOW STUDIO 6.10.0 + MOBILE 0.7.0 — STUDY SESSION
+
+Esta versão transforma a aba Questões em sessões de estudo configuráveis.
+
+Mobile 0.7:
+- Sessão Recomendada: usa prioridade, memória e desempenho do QuestFlow.
+- Sessão Revisões: seleciona questões que chegaram ao momento de revisão.
+- Sessão Meus erros: prioriza questões com histórico de erro.
+- Sessão Por matéria: permite concentrar o lote em uma matéria escolhida.
+- Tamanho da sessão: 5, 10, 15 ou 20 questões.
+- Sessões interrompidas ficam salvas no aparelho e podem ser retomadas.
+- Estado da alternativa/confiança/etapa da questão é preservado na retomada.
+- Resumo final mostra respondidas, acertos, erros, puladas, acurácia e tempo ativo.
+- O cronômetro continua contando somente na aba Questões.
+- Corrigir questão e Assunto ainda não estudado permanecem integrados.
+
+Studio 6.10.0:
+- API Mobile aceita os modos recommended/review/errors/subject sem expor gabarito.
+- Cada questão pública recebe apenas indicadores seguros de agenda/erro para suportar o pacote offline.
+- A infraestrutura Cloud Bridge continua opcional/experimental e permanece compatível com os filtros quando o pacote publicado contém os indicadores.
+- Recovery Guard e QuestFlow Manager continuam preservados.
+
+ATUALIZAÇÃO
+1. Deixe este ZIP em Downloads, sem extrair.
+2. Abra C:\Users\user\QuestFlow\QUESTFLOW.bat.
+3. Escolha Procurar atualização em Downloads.
+4. Confirme a atualização 6.10.0.
+5. Inicie Studio + Mobile pelo Manager.
+
+O diretório data da instalação atual deve ser preservado pelo Manager. Não recupere novamente data(1).zip para instalar esta release.

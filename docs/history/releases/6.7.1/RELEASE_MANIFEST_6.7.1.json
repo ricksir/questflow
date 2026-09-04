@@ -1,0 +1,117 @@
+{
+  "product": "QuestFlow Studio",
+  "version": "6.7.1",
+  "release_date": "2026-08-16",
+  "release_name": "Benchmark Pedagógico e Coleta de Evidências",
+  "architecture": {
+    "type": "six_independent_engines",
+    "engine_count": 6,
+    "engines": {
+      "editorial_bank": "qf-editorial-engine-3",
+      "learner_model": "qf-learner-engine-4",
+      "learning_engine": "qf-learning-engine-6",
+      "knowledge_engine": "qf-knowledge-engine-2",
+      "ai_engine": "qf-ai-engine-4",
+      "evaluation_governance": "qf-ai-governance-4"
+    }
+  },
+  "schemas": {
+    "question_bank": 8,
+    "study": 11,
+    "ai_governance": 4
+  },
+  "features": [
+    "coleta de evidência acionável para conceitos em abstenção",
+    "explicação de abstenção como evidência insuficiente, não erro",
+    "prática diagnóstica restrita ao conceito-alvo",
+    "seleção diagnóstica por informação IRT, prioridade e novidade",
+    "encerramento antecipado quando a evidência se torna suficiente",
+    "benchmark pedagógico do scaffolding com retenção posterior",
+    "comparação observacional por nível de apoio e representação",
+    "Watchdog, Cloud Sync, Curadoria e seis motores preservados"
+  ],
+  "validation": {
+    "automated_tests": 385,
+    "automated_tests_passed": 385,
+    "test_partitions": [
+      128,
+      128,
+      129
+    ],
+    "python_files_compiled": 153,
+    "javascript_node_check": true,
+    "real_http_methods": 3,
+    "database_migration_required": false,
+    "quick_check": "schemas unchanged from 6.7.0"
+  },
+  "files": [
+    {
+      "path": "VERSION.txt",
+      "sha256": "d3877d7768919a0cbcde1b4b8410379eaa932d98ba89998215d761fa378092ba"
+    },
+    {
+      "path": "pyproject.toml",
+      "sha256": "23e974de28d2ac5578372c65cbe5937ef585c74b1178eebf1c7ca76046fe173e"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "sha256": "1400189be01d59f40d78b97a7a9bc07471b2c2af8ae58254393d80d18fc05527"
+    },
+    {
+      "path": "README.md",
+      "sha256": "a63f68451f7925347acbb144e787e49490af0fa40152a70f7489429fa7e735c3"
+    },
+    {
+      "path": "core/study.py",
+      "sha256": "69cf7b5c9c2a7fa79368388b41a1134bdcf64e24783619e5e7e6a3b20dd5b8dd"
+    },
+    {
+      "path": "core/engines/learner_model_engine.py",
+      "sha256": "0e5c36308136a46860cde4703c36b8b047cee19f0bdb7a6b36d443eccaceea63"
+    },
+    {
+      "path": "core/engines/learning_engine.py",
+      "sha256": "5d834af4fd5d73fc1b7bb7a888b3dac4f19df303bfa86c800ee9e434784bbbea"
+    },
+    {
+      "path": "core/engines/registry.py",
+      "sha256": "91e03621592a2aefa91fa4fe8395cbbd83c6d6223f4f35a2bdf80990e893437d"
+    },
+    {
+      "path": "web_api.py",
+      "sha256": "1935ec703ed94960c8d5b68baeef8825ca97a6651f91a6b99885e9f93a68c6e4"
+    },
+    {
+      "path": "web_server.py",
+      "sha256": "89e93265b2cb3217fb43f2038280c6b1ad7c15df63e396a57ed039e2d79869b9"
+    },
+    {
+      "path": "web/app.js",
+      "sha256": "ecca1497c626031ef7d4873a9f26718792b233c29df898b7decffe4da2708f10"
+    },
+    {
+      "path": "web/styles.css",
+      "sha256": "c6b93cc48af45c4f4500648475a33c4e67940b7a5e603dfc70b78b985938925c"
+    },
+    {
+      "path": "tests/test_evidence_benchmark_671.py",
+      "sha256": "04dc0d9fc75bd5b94d99d18a725a71f89dfa1b70e15d008c6bb4fdb3286180d0"
+    },
+    {
+      "path": "VALIDACAO_6.7.1.md",
+      "sha256": "8e20b008b1f06dd8cd6bb55298b9bdb2ca3ac05d659e9a34fe312b9f31e13c08"
+    },
+    {
+      "path": "LEIA-ME_ATUALIZACAO_6.7.1.txt",
+      "sha256": "83d0c7e1a7946d559f6c08a2d9cc4358963658b5cc081ecca957c6e62effb239"
+    },
+    {
+      "path": "ARQUITETURA_SEIS_MOTORES_6.7.1.md",
+      "sha256": "6c82b42de706018928e6ede8215882a461f868a86541154defd4e3b8ba517ad2"
+    },
+    {
+      "path": "ROADMAP_EVOLUCAO_TECNICA.md",
+      "sha256": "b8b06796d74e5208e39901685c4c32620b06f7f2bbfeb0e64305a9208ca0f6ae"
+    }
+  ]
+}

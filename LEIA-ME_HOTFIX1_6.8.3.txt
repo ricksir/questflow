@@ -1,0 +1,8 @@
+QUESTFLOW STUDIO 6.8.3 — HOTFIX 1 — AUDITORIA DOS CONTROLES DO ROADMAP
+
+Correções:
+- Benchmark RAG, Calibrar retrieval e Observabilidade foram movidos para uma barra sempre visível no topo de Revisar Banco.
+- Contexto/RAG, Grafo e Evidências híbridas também ganharam atalhos visíveis; ficam desabilitados até uma questão ser selecionada.
+- Aplicar perfil recomendado deixa de desaparecer: fica desabilitado com explicação quando não há mudança recomendada.
+- Iniciar prática diagnóstica deixa de desaparecer quando indisponível: fica desabilitado com motivo no tooltip.
+- Auditoria estática confirma ligação dos controles principais a handlers JS e métodos HTTP permitidos.

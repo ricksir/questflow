@@ -1,0 +1,22 @@
+test_query_contains_code_and_statement (test_enrichment.EnrichmentTests.test_query_contains_code_and_statement) ... ok
+test_safe_suggestions_only_fill_empty_fields (test_enrichment.EnrichmentTests.test_safe_suggestions_only_fill_empty_fields) ... ok
+test_scoring_exact_code (test_enrichment.EnrichmentTests.test_scoring_exact_code) ... ok
+test_native_bank_validation (test_extractor_exporter.ExtractorExporterTests.test_native_bank_validation) ... ok
+test_textual_list_and_true_false (test_extractor_exporter.ExtractorExporterTests.test_textual_list_and_true_false) ... ok
+test_retry_resolves_failed_delivery (test_flow_retry.FlowRetryTests.test_retry_resolves_failed_delivery) ... ok
+test_pdf_to_markdown_and_cache (test_markdown_pipeline.MarkdownPipelineTests.test_pdf_to_markdown_and_cache) ... ok
+test_source_pdf_is_released_after_conversion (test_markdown_pipeline.MarkdownPipelineTests.test_source_pdf_is_released_after_conversion) ... ok
+test_adaptive_interval (test_study_retry_math.StudyRetryMathTests.test_adaptive_interval) ... ok
+test_bayesian_error_probability (test_study_retry_math.StudyRetryMathTests.test_bayesian_error_probability) ... ok
+test_failed_delivery_lifecycle (test_study_retry_math.StudyRetryMathTests.test_failed_delivery_lifecycle) ... ok
+test_recency_priority (test_study_retry_math.StudyRetryMathTests.test_recency_priority) ... ok
+test_local_validation_classification (test_telegram.TelegramTests.test_local_validation_classification) ... ok
+test_long_question_uses_context (test_telegram.TelegramTests.test_long_question_uses_context) ... ok
+test_non_retryable_error_stops (test_telegram.TelegramTests.test_non_retryable_error_stops) ... ok
+test_quiz_payload (test_telegram.TelegramTests.test_quiz_payload) ... ok
+test_retry_transient_error (test_telegram.TelegramTests.test_retry_transient_error) ... ok
+
+----------------------------------------------------------------------
+Ran 17 tests in 4.471s
+
+OK

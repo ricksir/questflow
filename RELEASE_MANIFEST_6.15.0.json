@@ -1,0 +1,30 @@
+{
+  "release": "QuestFlow Studio 6.15.0",
+  "mobile_version": "0.10.1",
+  "package_type": "safe-update",
+  "from_version_validated": "6.14.4",
+  "merge_strategy": "incremental-preserve-progress-v1",
+  "database_migration": "additive-nondestructive",
+  "mobile_changed": false,
+  "cloud_sync_catalog_namespace": "content.*",
+  "tests": {
+    "pytest_passed": 573,
+    "subtests_passed": 10,
+    "failures": 0
+  },
+  "database_validation": {
+    "questions_preserved": 1292,
+    "quick_check": "ok",
+    "foreign_key_violations": 0,
+    "studied_scope_before": 39,
+    "studied_scope_after": 39
+  },
+  "artifacts": [
+    "ARQUITETURA_COURSE_CATALOG_SAFE_MERGE_6.15.0.md",
+    "RELATORIO_VALIDACAO_6.15.0.md",
+    "INSTRUCOES_ATUALIZACAO_6.15.0.md",
+    "MATRIZ_COMPATIBILIDADE_6.15.0.json",
+    "SBOM_6.15.0.cdx.json",
+    "AUDITORIA_VULNERABILIDADES_6.15.0.json"
+  ]
+}

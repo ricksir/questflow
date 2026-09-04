@@ -1,0 +1,15 @@
+{
+  "schema": "questflow.update-manifest.v1",
+  "release": "6.22.3",
+  "from_version": "6.22.2",
+  "package_root": "QuestFlow",
+  "preserves": ["data", ".venv", "venv", "runtime", "backups", "mobile"],
+  "excludes": ["data", "mobile", "node_modules", ".expo", ".git", "__pycache__", ".pytest_cache", "*.pyc"],
+  "changed_focus": ["core/extractor.py", "web_api.py", "web/app.js"],
+  "database_migration": "none",
+  "mobile_version": "0.15.1",
+  "mobile_changed": false,
+  "learning_engine_changed": false,
+  "cloud_sync_changed": false,
+  "feature": "Import resolved-and-commented question PDFs with inline answer keys"
+}

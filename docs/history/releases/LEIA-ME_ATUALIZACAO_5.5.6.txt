@@ -1,0 +1,20 @@
+QUESTFLOW STUDIO 5.5.6 — AGRUPAMENTO POR AULA + CERTO/ERRADO
+
+1. ESTUDOS E QUESTÕES
+- Linhas com a mesma TRILHA + MATÉRIA + AULA são agrupadas automaticamente.
+- O grupo soma CH efetiva, questões feitas e acertos registrados nessas tarefas.
+- O banco é contado sem duplicar a mesma questão.
+- Ao clicar no grupo pendente, o PDF é importado para a AULA inteira.
+- O extrator continua identificando o assunto específico de cada questão.
+- O contexto da importação grava um identificador de grupo, evitando prender um PDF inteiro a apenas uma parte da aula.
+
+2. CERTO / ERRADO
+- Trocar o campo Tipo para Certo / Errado muda imediatamente o editor.
+- As únicas opções passam a ser C — Certo e E — Errado.
+- O botão Adicionar alternativa é ocultado nesse formato.
+- Registros antigos inconsistentes (tipo Certo/Errado com A-E) são normalizados ao abrir.
+- O banco persiste somente o formato canônico e registra conversões no histórico.
+- O Telegram também normaliza o formato antes do envio.
+
+3. ATUALIZAÇÃO
+Preserve a pasta data e principalmente data/questflow_questions.sqlite ao substituir uma instalação em uso.

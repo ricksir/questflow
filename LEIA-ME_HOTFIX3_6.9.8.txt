@@ -1,0 +1,20 @@
+QuestFlow Studio 6.9.8 HOTFIX3 — Recuperação de dados e Manager
+
+Correções:
+- evita selecionar como origem uma pasta mais recente porém com banco vazio/intermediário;
+- prioriza a instalação anterior com banco de dados mais completo;
+- adiciona recuperação segura a partir de ZIP da pasta data;
+- valida SQLite antes e depois da recuperação;
+- cria backup completo do estado atual antes de substituir dados;
+- restaura config.json, banco principal, Mobile, question_images, markdown_cache,
+  tenants e credenciais protegidas Turso/Telegram quando presentes;
+- não restaura caches/locks/runtime temporários do navegador;
+- adiciona opção [7] no QuestFlow Manager para recuperação de dados.
+
+Para o caso atual:
+1. Feche QuestFlow Studio e Expo/Mobile.
+2. Extraia este HOTFIX3.
+3. Execute RECUPERAR_DADOS_COMPLETOS.bat.
+4. Selecione o ZIP da pasta data antiga (ex.: data(1).zip).
+5. Aguarde a mensagem Banco final íntegro.
+6. Abra o QuestFlow pelo atalho da Área de Trabalho.

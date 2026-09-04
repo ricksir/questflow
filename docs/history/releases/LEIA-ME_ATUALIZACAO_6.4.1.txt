@@ -1,0 +1,44 @@
+QUESTFLOW STUDIO 6.4.1 — HARDENING + MONITOR QUINZENAL
+
+Esta atualização consolida a 6.4.0 antes das próximas evoluções de produto.
+
+PRINCIPAIS ALTERAÇÕES
+
+1. Monitor quinzenal integrado ao QuestFlow
+- Agenda local padrão nos dias 1 e 15 de cada mês, configurável entre 1 e 28.
+- O agendador não acessa a internet sozinho. Quando a janela chega, o QuestFlow pergunta se você deseja verificar naquele momento.
+- Opções: Verificar agora, Adiar 24h ou Pular esta quinzena.
+- A verificação usa tarefa em segundo plano e consulta em paralelo fontes oficiais das APIs OpenAI, Gemini, Claude, Turso e das plataformas Gran Questões, Estratégia, QConcursos e TEC.
+- O monitor mantém estado em arquivo JSON próprio. Ele não abre, consulta nem grava o SQLite durante a verificação.
+- Se não houver internet ou a rede/proxy bloquear todas as fontes, a sessão de monitoramento termina sem tocar no banco e permanece pendente para nova tentativa.
+- O primeiro ciclo cria a linha de base; nos seguintes, o QuestFlow sinaliza páginas que mudaram desde a última verificação.
+
+2. Hardening de IA
+- Provedor padrão passa a ser QuestFlow local/RAG (privacy-first).
+- OpenAI Responses é chamada com store=false.
+- Gemini Interactions é chamada com store=false.
+- Modelos Claude 4.7+ / 5+ deixam de receber parâmetros de sampling não suportados.
+- Erros transitórios de rede, 429 e 5xx recebem retry exponencial limitado com jitter e respeito ao Retry-After.
+
+3. Segurança de credenciais
+- Token do Telegram deixa de ser persistido no config.json.
+- No Windows, o token é protegido com DPAPI no arquivo telegram_credentials.dat.
+- Token legado em texto claro é migrado na inicialização e removido do JSON persistido.
+- Chaves OpenAI/Gemini/Claude, Turso e proxy continuam fora do config.json conforme seus cofres existentes.
+
+4. Versionamento e release
+- VERSION.txt passa a ser a fonte de versão do runtime.
+- pyproject.toml e diagnóstico de release foram alinhados para 6.4.1.
+- O launcher usa VERSION.txt para seu marcador de runtime.
+- Artefatos de bytecode/cache e diretórios temporários de desenvolvimento são removidos do pacote final.
+- Documentação histórica é organizada em docs/history/releases.
+
+MONITORAMENTO
+
+Abra Configurações > Monitor quinzenal de atualizações para:
+- ativar/desativar o lembrete;
+- escolher os dois dias do mês;
+- executar uma verificação manual;
+- consultar o histórico local.
+
+O monitor é deliberadamente consent-first: chegar à data gera um aviso, não uma conexão automática.

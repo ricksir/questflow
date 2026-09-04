@@ -1,0 +1,14 @@
+{
+  "id": "aac64890-6083-4d30-85d0-b3c183461507",
+  "status": "FINISHED",
+  "platform": "ANDROID",
+  "distribution": "INTERNAL",
+  "buildProfile": "preview",
+  "appIdentifier": "br.questflow.mobile",
+  "sdkVersion": "57.0.0",
+  "appVersion": "0.14.0",
+  "appBuildVersion": "14",
+  "fingerprint": "9a45ce1e4d347479ea453a4eb4975420565ad6e1",
+  "buildPage": "https://expo.dev/accounts/rick_sir/projects/questflow-mobile/builds/aac64890-6083-4d30-85d0-b3c183461507",
+  "artifact": "QuestFlow_Mobile_0.14.0.apk"
+}

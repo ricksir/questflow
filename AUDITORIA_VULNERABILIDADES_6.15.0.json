@@ -1,0 +1,16 @@
+{
+  "ok": true,
+  "status": "unavailable",
+  "strict": false,
+  "detail": "pip-audit não instalado",
+  "command": [
+    "/opt/pyvenv/bin/python",
+    "-m",
+    "pip_audit",
+    "-r",
+    "/mnt/data/qfwork/QuestFlow/requirements.lock",
+    "-f",
+    "json"
+  ],
+  "generated_at": "2026-08-20T15:22:34Z"
+}

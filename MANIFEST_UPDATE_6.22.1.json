@@ -1,0 +1,23 @@
+{
+  "schema": "questflow.update-manifest.v1",
+  "release": "6.22.1",
+  "from_version": "6.21.0",
+  "package_root": "QuestFlow",
+  "preserves": ["data", ".venv", "venv", "runtime", "backups"],
+  "excludes": ["data", "node_modules", ".expo", ".git", "mobile/.git", "mobile/node_modules", "mobile/.expo", "__pycache__", ".pytest_cache", "*.pyc"],
+  "changed_focus": [
+    "core/mobile_foundation.py",
+    "web/questflow621.js",
+    "web/questflow621.css",
+    "web/questflow622.css",
+    "mobile/src/components/analytics.tsx",
+    "mobile/app/(tabs)/today.tsx",
+    "mobile/app/(tabs)/progress.tsx"
+  ],
+  "database_migration": "none",
+  "mobile_version": "0.15.1",
+  "mobile_changed": true,
+  "learning_engine_changed": false,
+  "cloud_sync_changed": false,
+  "feature": "Raw answer history from the first attempt and non-overlapping generation evidence rail"
+}

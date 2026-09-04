@@ -1,0 +1,13 @@
+{
+  "release": "QuestFlow Studio 6.22.16 + Mobile 0.15.5",
+  "studio_version": "6.22.16",
+  "mobile_version": "0.15.5",
+  "mobile_version_code": 20,
+  "package_type": "safe-studio-and-mobile-update",
+  "from_versions_targeted": ["6.22.15", "6.22.14", "6.22.13"],
+  "purpose": "Remove stale 0.14 labels, fix analytics clipping, order question actions and shorten feedback latency",
+  "database_migration": "none",
+  "learning_engine_changed": false,
+  "mobile_changed": true,
+  "cloud_sync_changed": false
+}

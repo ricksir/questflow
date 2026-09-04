@@ -1,0 +1,51 @@
+QUESTFLOW STUDIO 6.2.0 — RECOMENDADOR MULTIOBJETIVO + SIMULADOS ADAPTATIVOS
+
+ETAPA 4 CONCLUÍDA
+
+1. NOVA ABA: RECOMENDADOR E SIMULADOS ADAPTATIVOS
+- Mostra as próximas melhores ações com score 0–100 e explicação dos componentes.
+- Perfis: Equilibrado, Diagnóstico, Revisão e Cobertura do edital.
+- Mostra projeções de acerto por matéria com intervalo de confiança.
+- Mostra incidência observada das bancas nas questões aprovadas do banco local.
+
+2. RECOMENDADOR MULTIOBJETIVO
+O score combina:
+- lacuna de domínio do Knowledge Tracing;
+- risco de esquecimento do FSRS;
+- lacuna de cobertura;
+- incidência observada da banca;
+- informação IRT;
+- urgência da prova;
+- incerteza da estimativa;
+- recência.
+
+IMPORTANTE: o FSRS continua definindo a classe de precedência. O score não coloca uma revisão antecipada na frente de uma revisão vencida pertencente a uma classe superior.
+
+3. SIMULADO ADAPTATIVO REAL
+A lista inteira não é sorteada no começo. Após cada resposta:
+Resposta → grava tentativa → atualiza FSRS → atualiza KT → atualiza IRT → recalcula candidatos → aplica diversidade → escolhe a próxima questão.
+
+O simulado evita repetir a mesma questão e penaliza repetição excessiva de matéria, aula, assunto e banca.
+
+4. HISTÓRICO UNIFICADO, OPERAÇÃO SEPARADA
+Tentativas do simulado alimentam o Learner Model usando source=simulado_adaptativo. Elas não aparecem no histórico operacional de envios do Telegram.
+
+5. ARQUITETURA
+Permanecem exatamente seis motores:
+- Banco Editorial
+- Learner Model
+- Learning Engine
+- Knowledge Engine
+- AI Engine
+- Evaluation & Governance Engine
+
+A Etapa 4 pertence ao Learning Engine. Não foi criado um sétimo motor.
+
+6. BANCO E MIGRAÇÃO
+Nova migração study v9, incremental e idempotente.
+A migração 6.1.0 → 6.2.0 foi testada com questões e tentativas reais de teste preservadas.
+
+7. CUIDADOS METODOLÓGICOS
+- Incidência de banca = distribuição observada no seu banco local, não estatística oficial de todas as provas.
+- IRT continua pessoal/regularizada, não calibração populacional.
+- Projeção de acerto não é probabilidade de aprovação.

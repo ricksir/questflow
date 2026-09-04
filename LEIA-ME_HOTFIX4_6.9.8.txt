@@ -1,0 +1,19 @@
+QuestFlow 6.9.8 HOTFIX4 - DATA GUARD
+
+Motivo:
+Após restaurar a base completa, a configuração antiga também reativava Cloud Sync/Turso no início.
+Se o remoto estivesse mais antigo/incompleto, a reconciliação automática podia reaplicar o estado remoto.
+
+Correção:
+- recuperação cria RECOVERY_GUARD.json;
+- Cloud Sync/Turso fica temporariamente pausado após restauração;
+- o motor Cloud Sync respeita o guard mesmo que uma configuração antiga tente ligá-lo;
+- dados locais recuperados passam a ser a fonte protegida até reconciliação explícita;
+- nenhum dado de questões/estudo é apagado para criar a proteção.
+
+Procedimento:
+1. Feche Studio e Mobile/Expo.
+2. Rode RECUPERAR_DADOS_COMPLETOS.bat e selecione o data(1).zip íntegro.
+3. Abra QuestFlow normalmente pelo QUESTFLOW.bat.
+4. Confira questões/configurações.
+5. Não reative Turso ainda. Primeiro valide o banco remoto em uma etapa separada.

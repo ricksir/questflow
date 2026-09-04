@@ -1,0 +1,22 @@
+QUESTFLOW STUDIO 5.5.5 — CORREÇÃO ASSISTIDA DO BANCO
+
+NOVIDADE PRINCIPAL
+Foi adicionada a aba "Corrigir banco" para localizar e consertar questões que foram importadas com matéria, aula ou vínculo de conteúdo incorretos.
+
+RECURSOS
+- filtro por matéria realmente presente no banco;
+- filtro por aula;
+- filtro por status;
+- busca por código, enunciado, assunto, banca etc.;
+- prévia da questão ao clicar na linha;
+- alteração rápida de matéria e aula;
+- seleção opcional da tarefa/conteúdo exato da planilha;
+- abertura do editor completo para alterar todos os demais campos;
+- exclusão definitiva da questão;
+- atualização da Cobertura dos estudos após correção ou exclusão.
+
+SEGURANÇA DA CORREÇÃO
+A questão mantém o mesmo UID e o histórico de estudo. Ao mover matéria/aula, o QuestFlow remove referências exatas antigas que poderiam fazê-la continuar sendo contabilizada no conteúdo incorreto. Se você escolher o conteúdo/tarefa correta da planilha, o novo vínculo passa a ser exato.
+
+ATUALIZAÇÃO
+Antes de substituir uma instalação em uso, faça backup/preserve a pasta data e principalmente questflow_questions.sqlite.

@@ -1,0 +1,21 @@
+{
+  "release": "QuestFlow Studio 6.15.2",
+  "mobile_version": "0.10.1",
+  "package_type": "safe-update-hotfix",
+  "from_version_validated": "6.15.1",
+  "purpose": "Prevent post-update first-launch Chrome/local-engine race",
+  "database_migration": "none",
+  "mobile_changed": false,
+  "tests": {
+    "focused_passed": 77,
+    "functional_failures": 0,
+    "full_suite": "partial_timeout_at_about_24_percent"
+  },
+  "artifacts": [
+    "INSTRUCOES_ATUALIZACAO_6.15.2.md",
+    "RELATORIO_VALIDACAO_6.15.2.md",
+    "MATRIZ_COMPATIBILIDADE_6.15.2.json",
+    "SBOM_6.15.2.cdx.json",
+    "AUDITORIA_VULNERABILIDADES_6.15.2.json"
+  ]
+}

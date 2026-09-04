@@ -1,0 +1,26 @@
+[
+  {
+    "file": "tecinformacao1.pdf",
+    "questions": 24,
+    "answers": 24,
+    "true_false": 9,
+    "multiple_choice": 15,
+    "with_images": 2,
+    "pending": 0,
+    "extractor_mode": "texto_nativo_lista_gabarito",
+    "markdown_engine": "pymupdf-fast-probe-image-heavy-pdf",
+    "elapsed_s": 0.24
+  },
+  {
+    "file": "auditoria8.pdf",
+    "questions": 5,
+    "answers": 5,
+    "true_false": 2,
+    "multiple_choice": 3,
+    "with_images": 0,
+    "pending": 0,
+    "extractor_mode": "OCR",
+    "markdown_engine": "pymupdf-fast-probe-image-heavy-pdf",
+    "elapsed_s": 11.21
+  }
+]

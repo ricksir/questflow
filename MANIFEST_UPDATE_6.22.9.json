@@ -1,0 +1,15 @@
+{
+  "schema": "questflow.update-manifest.v1",
+  "release": "6.22.9",
+  "from_version": "6.22.8",
+  "package_root": "QuestFlow",
+  "preserves": ["data", ".venv", "venv", "runtime", "backups", "mobile"],
+  "excludes": ["data", "mobile", "node_modules", ".expo", ".git", "__pycache__", ".pytest_cache", "*.pyc"],
+  "changed_focus": ["core/storage.py", "core/question_services.py", "web_api.py", "web_server.py", "web/app.js", "web/styles.css", "web/index.html"],
+  "database_migration": "additive question_bank/9: lesson_title and qf_bank_lesson_aliases",
+  "mobile_version": "0.15.1",
+  "mobile_changed": false,
+  "learning_engine_changed": false,
+  "cloud_sync_changed": false,
+  "feature": "Canonical subject and lesson grouping in Corrigir banco"
+}

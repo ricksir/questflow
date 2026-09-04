@@ -1,0 +1,37 @@
+QUESTFLOW STUDIO 5.7.0 — LEARNING ANALYTICS POR MATÉRIA
+=======================================================
+
+Esta versão evolui a tela "Desempenho e prioridades por matéria" para um painel de Learning Analytics preditivo e prescritivo.
+
+PRINCIPAIS NOVIDADES
+- Retenção FSRS estimada hoje por matéria.
+- Desempenho recente x histórico e tendência temporal.
+- Última revisão e recência.
+- Revisões vencidas, próximos 7 dias e próximos 30 dias.
+- Cobertura do banco e cobertura dos conteúdos estudados.
+- Prioridade inteligente e explicável por matéria.
+- Metas e projeção até a prova quando a data estiver configurada.
+- Drill-down resumido dos pontos fracos por aula e assunto.
+- Estado vazio útil e seguro para matérias ainda sem respostas.
+
+TELEGRAM
+Após responder, você pode informar opcionalmente:
+- Sabia / Dúvida / Chutei;
+- Fácil / Média / Difícil;
+- em erros: Não sabia / Confundi / Desatenção;
+- Preciso estudar este conteúdo.
+
+Esses sinais enriquecem o diagnóstico. Fácil/Média/Difícil e "Preciso estudar" NÃO criam revisões FSRS falsas.
+
+MIGRAÇÃO DO BANCO
+A migração v7 é automática e preserva o histórico existente. Ela adiciona campos aos registros de tentativa e uma tabela derivada de agregação diária por matéria. Não é necessário zerar o banco.
+
+ATUALIZAÇÃO
+1. Feche o QuestFlow.
+2. Faça backup da pasta data, especialmente data/questflow_questions.sqlite.
+3. Extraia a 5.7.0 em uma pasta nova.
+4. Leve seu banco/configurações necessários para a nova instalação.
+5. Execute INICIAR_QUESTFLOW_STUDIO.bat.
+
+FSRS
+A 5.7.0 mantém Py-FSRS 6.3.2 + Optimizer da linha 5.6.x. Em uma instalação nova, deixe o instalador concluir as dependências.

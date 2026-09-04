@@ -1,0 +1,15 @@
+{
+  "schema": "questflow.update-manifest.v1",
+  "release": "6.22.5",
+  "from_version": "6.22.4",
+  "package_root": "QuestFlow",
+  "preserves": ["data", ".venv", "venv", "runtime", "backups", "mobile"],
+  "excludes": ["data", "mobile", "node_modules", ".expo", ".git", "__pycache__", ".pytest_cache", "*.pyc"],
+  "changed_focus": ["core/extractor.py", "tests/test_extractor_exporter.py"],
+  "database_migration": "none",
+  "mobile_version": "0.15.1",
+  "mobile_changed": false,
+  "learning_engine_changed": false,
+  "cloud_sync_changed": false,
+  "feature": "Map complete PDF commentary to question explanation after Markdown normalization"
+}

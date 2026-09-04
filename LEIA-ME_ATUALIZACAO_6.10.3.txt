@@ -1,0 +1,37 @@
+QUESTFLOW STUDIO 6.10.3 + MOBILE 0.7.3
+ATUALIZACAO INCREMENTAL — RETRIEVAL / UI COMPOSITOR
+
+Objetivo
+- Corrigir de forma incremental o provável artefato visual/barra azul piscando associado à composição gráfica de modais.
+- Tornar Observabilidade e Quality Gates operações de leitura rápida ao abrir a tela.
+- Evitar representar ausência de amostra como qualidade 0,0.
+- Eliminar versões antigas hardcoded na interface de Retrieval.
+- Preservar Mobile 0.7.3, banco de dados e arquitetura geral do QuestFlow.
+
+Principais mudanças
+1. O backdrop dos modais não usa mais backdrop-filter/blur de tela inteira.
+2. A animação dos modais usa opacity + translateY, sem scale.
+3. Enquanto um modal está aberto, o blur da topbar é desativado.
+4. Foram adicionados logs de pageshow, visibilitychange, long tasks e abertura/fechamento de modal para diagnóstico caso o flicker persista no hardware do usuário.
+5. Abrir Observabilidade não executa benchmark: mostra o último snapshot imediatamente.
+6. Abrir Quality Gates não executa avaliação: mostra o último estado em cache.
+7. 'Reavaliar e registrar' / 'Reavaliar gates' são agora ações explícitas.
+8. Sem Questões Ouro/amostra, Score/Recall/Grounding passam a ser null / 'Não avaliado', nunca 0,0.
+9. Versões exibidas vêm do release/engine atual, removendo referências antigas como 6.8.3 no cabeçalho.
+10. Histórico, métricas técnicas e ações administrativas ficam em divulgação progressiva / Modo avançado.
+
+Compatibilidade e dados
+- Studio: 6.10.3
+- Mobile: 0.7.3 (sem alteração de contrato incompatível)
+- O pacote UPDATE não contém mobile/node_modules, .expo, builds transitórios nem data.
+- O atualizador seguro preserva a instalação e o banco de dados existente.
+
+Instalação
+1. Não extraia este ZIP manualmente.
+2. Abra C:\Users\user\QuestFlow\QUESTFLOW.bat.
+3. Use a opção de atualização do QuestFlow e selecione este pacote.
+4. Aguarde a conclusão e confirme a versão 6.10.3 no Studio.
+5. Abra Observabilidade/Quality Gates e verifique se a barra azul deixou de piscar.
+
+Observação
+A correção elimina as causas de composição encontradas no código. Como o efeito também pode depender do Chrome/driver/GPU específicos do computador, a 6.10.3 inclui instrumentação para isolar a origem caso o artefato ainda apareça.

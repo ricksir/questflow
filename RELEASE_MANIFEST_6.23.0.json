@@ -1,0 +1,13 @@
+{
+  "release": "QuestFlow Studio 6.23.0 + Mobile 0.15.5",
+  "studio_version": "6.23.0",
+  "mobile_version": "0.15.5",
+  "mobile_version_code": 20,
+  "package_type": "safe-studio-only-update",
+  "from_versions_targeted": ["6.22.16"],
+  "purpose": "Adopt modular hexagonal boundaries, version the Studio API and add a secure APIdasQuestoes question source",
+  "database_migration": "additive-only",
+  "learning_engine_changed": true,
+  "mobile_changed": false,
+  "cloud_sync_changed": true
+}

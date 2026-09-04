@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "product": "QuestFlow Studio",
+  "version": "6.4.1",
+  "release": "Hardening + Monitor Quinzenal",
+  "generated_at_utc": "2026-08-13T17:27:47+00:00",
+  "python": ">=3.11",
+  "tests": {
+    "automated": 308,
+    "status": "passed"
+  },
+  "sqlite_schema_change": false,
+  "monitor": {
+    "default_days": [
+      1,
+      15
+    ],
+    "consent_first": true,
+    "sqlite_access": false,
+    "official_sources": 9
+  },
+  "critical_file_sha256": {
+    "VERSION.txt": "54b11ccf3cb1e7809aff739924b32e15d39cc236fcbb79bd596ec817269f3ba9",
+    "pyproject.toml": "c992b0e6b1df4f13500b1d9e5eb8d3f211c21ee25888f36ff626e876eb5e43e3",
+    "app_shared.py": "74e33ac8c2eb952807ef2be1e8c9ab46e8395eeea397634dc3804a27e8d9842d",
+    "web_api.py": "84663f1610f81b701da972e923faf07894c255baa63bba4ccc3dd1e6ab1133b2",
+    "web_server.py": "c5e157df4dc0ac766458a96d4f6dffcc2b2d16bef7c2feefea714f0b8cb9ba19",
+    "core/ai_providers.py": "461e5a5049614df94aeb980674672f042b805bd5e3fc2d98cbe7cbab47d8c0ef",
+    "core/update_monitor.py": "eaac6ffe35b45f9ffa5baeb132570ea38aa6fd02bbaee650be1751d8ba1a6eaf",
+    "core/telegram_secrets.py": "ef62f503d6e5a981e4b905891e80aec90a6d7e1acfaa48dc949615379805e0e7",
+    "web/index.html": "369f409b53ab9be2defb07b12549e6fa91e9ad48eed23eed94aa07df8138598d",
+    "web/app.js": "0ad59347a3141136b81e7a6be885ec1cef0d0d8119c6d12edd609464b128799e",
+    "web/styles.css": "072961e47924e99378996882c004180d48deae5e320003bd106398ccd17fee5a",
+    "requirements.txt": "b57deb8ca724015291b85457ba5b1bd8bf1c916977cb6d16c98608ff85295001"
+  }
+}

@@ -1,0 +1,44 @@
+QUESTFLOW STUDIO 5.2.0 — MOTOR DE EXECUÇÃO ISOLADO
+==================================================
+
+Esta versão substitui a antiga ponte JavaScript injetada pelo pywebview por um
+servidor HTTP/JSON local, acessível somente em 127.0.0.1 e protegido por token
+aleatório criado a cada abertura.
+
+MOTOR VISUAL
+- No Windows, o programa usa primeiro o Microsoft Edge ou Google Chrome em modo
+  aplicativo, com processo e memória próprios e aceleração gráfica.
+- O núcleo Python, o banco SQLite, o OCR e o Telegram ficam separados do motor
+  visual; trabalhos pesados não bloqueiam mais a janela.
+- Se Edge/Chrome não estiver disponível, o programa tenta pywebview. A interface
+  clássica continua como último modo alternativo.
+
+DESEMPENHO
+- Quantidade de trabalhadores ajustada ao número de processadores do computador.
+- Cache e mapeamento de memória do SQLite ajustados à RAM disponível.
+- Painel inicial salvo em cache local para aparecer imediatamente na próxima
+  abertura, enquanto os valores atuais são recalculados em segundo plano.
+- Arquivos Python compilados na primeira preparação de cada versão.
+
+COMO ATUALIZAR
+1. Feche o QuestFlow anterior.
+2. Extraia todo o ZIP em uma pasta nova.
+3. Execute INSTALAR_E_DIAGNOSTICAR.bat uma vez.
+4. Depois use INICIAR_QUESTFLOW_STUDIO.bat.
+
+A pasta data contém o banco recebido e deve ser preservada ao migrar dados.
+
+LAYOUT E FORMATAÇÃO
+- Textos de matéria, aula, assunto, situação e cabeçalhos agora quebram linha de
+  forma controlada, sem invadir outras colunas.
+- A tela Revisar banco usa lista e editor independentes, com rolagem interna e
+  ações sempre acessíveis.
+- Os controles do Fluxo Telegram usam switches compactos e alinhados.
+- O Mapa de aulas elimina linhas artificiais vazias e adapta a tabela para
+  cartões rotulados em janelas estreitas.
+- Menu, barra superior, filtros, botões e painéis se reorganizam por largura e
+  altura disponível, sem rolagem horizontal global.
+
+RECARREGAMENTO
+- O token da API local é preservado na sessão do navegador. Assim, atualizar a
+  interface com F5 não quebra a comunicação com o núcleo do programa.

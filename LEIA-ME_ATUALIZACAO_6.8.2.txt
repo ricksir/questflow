@@ -1,0 +1,17 @@
+QUESTFLOW STUDIO 6.8.2 — RERANKING CALIBRADO + REGRESSÃO CONTÍNUA
+
+NOVIDADES
+- botão “Calibrar retrieval” na Inteligência e curadoria;
+- comparação explícita de perfis de reranking;
+- recomendação sem aplicação automática;
+- confirmação humana para promover pesos;
+- rollback do perfil anterior;
+- baseline por release/matéria;
+- alertas de queda de score, recall e grounding;
+- Knowledge Engine 3.2.
+
+BANCO
+Sem nova migração SQLite.
+
+PEDAGOGIA
+FSRS, KT e IRT permanecem soberanos em seus papéis.

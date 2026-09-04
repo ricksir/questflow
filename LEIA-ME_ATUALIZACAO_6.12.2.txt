@@ -1,0 +1,23 @@
+QUESTFLOW STUDIO 6.12.2 + MOBILE 0.8.2
+
+OBJETIVO
+- Remover Telegram completamente da superfície do aplicativo.
+- Manter configuração, pausa/retomada e diagnóstico do Telegram exclusivamente no Studio.
+
+ATUALIZACAO
+1. Não extraia o ZIP de atualização.
+2. Execute C:\Users\user\QuestFlow\QUESTFLOW.bat.
+3. Escolha Atualizar QuestFlow.
+4. Selecione QuestFlow_Studio_6.12.2_Mobile_0.8.2_UPDATE.zip.
+5. Confirme a atualização 6.12.1 -> 6.12.2.
+
+MOBILE
+- Recarregue/reinicie o app após a atualização.
+- Não há dependência nativa nova; não é necessário novo Dev Client apenas por esta release.
+- Telegram não aparece no Perfil, Hoje, Progresso ou em qualquer outra tela.
+- O aplicativo não possui endpoint, tipo ou comando para pausar/retomar Telegram.
+- Respostas históricas continuam compondo métricas pedagógicas sem expor o canal de origem.
+
+STUDIO
+- O gerenciamento do Telegram continua no programa, incluindo pausar/retomar novas questões e diagnósticos.
+- Retrieval Health, Observabilidade, Quality Gates, Watchdog e demais ferramentas técnicas permanecem no Studio.

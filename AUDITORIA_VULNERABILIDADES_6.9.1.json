@@ -1,0 +1,23 @@
+{
+  "ok": true,
+  "status": "unavailable",
+  "strict": false,
+  "detail": "pip-audit não instalado",
+  "command": [
+    "/opt/pyvenv/bin/python",
+    "-m",
+    "pip_audit",
+    "-r",
+    "/mnt/data/qf691/requirements.lock",
+    "-f",
+    "json"
+  ],
+  "generated_at": "2026-08-17T16:16:46Z",
+  "mobile": {
+    "status": "not_executed",
+    "reason": "node_modules/package-lock.json não são empacotados no código-fonte Alpha; executar npm audit após npm install no ambiente de build.",
+    "manifest": "mobile/package.json",
+    "declared_dependencies": 14,
+    "declared_dev_dependencies": 2
+  }
+}

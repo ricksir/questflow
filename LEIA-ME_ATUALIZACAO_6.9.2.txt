@@ -1,0 +1,52 @@
+QUESTFLOW STUDIO 6.9.2 + QUESTFLOW MOBILE 0.1.1
+REDE LOCAL DINÂMICA / AUTO-REDESCOBERTA
+
+Esta revisão corrige o caso em que o computador troca de Wi-Fi/LAN e o QR do
+QuestFlow continuava usando um IPv4 de uma rede anterior ou de um adaptador
+virtual.
+
+O que mudou no Studio:
+- o endereço móvel não é mais tratado como fotografia fixa da inicialização;
+- a cada consulta/pareamento o Studio consulta novamente a rede atual;
+- o IPv4 escolhido pela rota padrão do Windows recebe prioridade;
+- IPv4s privados secundários ficam como alternativas de fallback;
+- loopback e endereços link-local não entram no QR;
+- o QR pode carregar mais de um endereço local, em ordem de preferência;
+- a tela de Configurações passa a informar a rede ativa detectada.
+
+O que mudou no Mobile 0.1.1:
+- o QR aceita uma lista de endereços candidatos do mesmo Studio;
+- no pareamento, o app tenta automaticamente os endereços válidos;
+- se o usuário mudar de Wi-Fi/LAN depois de já estar pareado, o app testa o
+  endereço anterior e, se ele não responder, procura o Studio na sub-rede IPv4
+  atual do celular;
+- ao encontrar o mesmo Studio, o novo endereço é salvo no SecureStore e a
+  outbox offline continua preservada;
+- a descoberta autenticada impede que outro QuestFlow na mesma rede seja
+  confundido com o Studio já pareado;
+- não é necessário editar o IP manualmente para redes /24 usuais.
+
+Exemplo do problema corrigido:
+  rede antiga: 192.168.128.84
+  rede nova:   192.168.15.131
+
+O Studio 6.9.2 deve oferecer 192.168.15.131 primeiro, e o Mobile 0.1.1 consegue
+redescobrir esse endereço se ainda estiver guardando 192.168.128.84.
+
+Limite desta fase Alpha:
+- a descoberta automática é local e pressupõe computador e celular na mesma
+  rede IPv4;
+- a varredura automática usa a sub-rede /24 do celular, adequada à maioria das
+  redes domésticas e pequenos escritórios;
+- redes com isolamento de clientes, firewall bloqueando TCP/53155, VLANs sem
+  roteamento entre clientes ou redes maiores que /24 podem exigir ajuste de
+  rede ou o futuro Cloud Gateway.
+
+Correções de empacotamento incorporadas nesta revisão:
+- React 19.2.3 alinhado ao Expo SDK 57;
+- react-dom 19.2.3 e react-native-web 0.21;
+- dependências peer do Expo Router incluídas;
+- expo-dev-client incluído no package.json;
+- campo obsoleto newArchEnabled removido do app.json;
+- projeto EAS já vinculado ao Project ID utilizado neste QuestFlow;
+- cli.appVersionSource definido como local para remover o aviso do EAS.

@@ -1,0 +1,27 @@
+{
+  "schema": "questflow.update-manifest.v1",
+  "release": "6.23.0",
+  "from_version": "6.22.16",
+  "package_root": "QuestFlow",
+  "preserves": ["data", ".venv", "venv", "runtime", "backups"],
+  "excludes": ["data", "node_modules", ".expo", ".git", "dist", "work", "__pycache__", ".pytest_cache", "*.pyc"],
+  "changed_focus": [
+    "core/architecture",
+    "core/application",
+    "core/modules/question_catalog",
+    "core/engines/registry.py",
+    "core/cloud_sync.py",
+    "web_api.py",
+    "web_server.py",
+    "web-src",
+    "web/modules",
+    "web/app.js",
+    "web/index.html"
+  ],
+  "database_migration": "additive-only",
+  "mobile_version": "0.15.5",
+  "mobile_changed": false,
+  "learning_engine_changed": true,
+  "cloud_sync_changed": true,
+  "feature": "Extensible modular monolith, Studio v1 contracts, selective event sourcing, rebuildable projections and APIdasQuestoes catalog"
+}

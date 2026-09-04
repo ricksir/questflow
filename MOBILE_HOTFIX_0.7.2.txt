@@ -1,0 +1,5 @@
+﻿QuestFlow Mobile 0.7.2 - Pairing + Safe Area Fix
+Aplicado em: 2026-08-19 09:39:06
+Studio base: 6.10.0
+Backup de codigo: C:\Users\user\QuestFlow_Patches\mobile-0.7.2-20260819-093904
+Pasta data: NAO ALTERADA

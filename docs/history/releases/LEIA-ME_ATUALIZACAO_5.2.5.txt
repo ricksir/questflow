@@ -1,0 +1,41 @@
+QUESTFLOW STUDIO 5.2.5 — INDICADORES EXPLICÁVEIS E TELEGRAM MODERNIZADO
+
+VISÃO GERAL
+
+- Cada matéria apresenta percentual de acertos, classificação, quantidade de
+  questões, envios, respostas certas e erradas.
+- A legenda explica as cores e o comprimento das barras.
+- Sem respostas não é tratado como 0% de aproveitamento: aparece explicitamente
+  como "Sem respostas".
+- Matérias sem nome aparecem como "Matéria não informada".
+- Etiquetas vazias e círculos sem texto foram removidos.
+
+TELEGRAM
+
+- Cartão de contexto com matéria, aula, assunto, banca, ano, órgão e código.
+- Enquete nativa em formato quiz, mantendo a marcação de certo/errado do Telegram.
+- Após a resposta, o QuestFlow mostra separadamente:
+  1. a alternativa marcada pelo usuário;
+  2. o gabarito correto;
+  3. XP, sequência, tempo e retenção prevista, quando disponíveis;
+  4. a explicação completa cadastrada.
+- Questões sem explicação mostram aviso claro para correção.
+- A aba Fluxo Telegram permite escolher entre explicação completa automática,
+  resultado curto com botão ou explicação somente quando solicitada.
+- A prévia da aba Revisar banco foi atualizada para representar esse formato.
+
+INSTALAÇÃO
+
+1. Feche a versão anterior.
+2. Extraia o ZIP em uma pasta nova.
+3. Execute INSTALAR_E_DIAGNOSTICAR.bat.
+4. Execute INICIAR_QUESTFLOW_STUDIO.bat.
+
+Para preservar uma base mais recente, copie com o programa fechado:
+- data\questflow_questions.sqlite
+- data\config.json
+- data\question_images
+- data\markdown_cache
+
+Não copie o perfil antigo do Chrome. A versão 5.2.5 utiliza
+ data\chrome_runtime_5_2_5.

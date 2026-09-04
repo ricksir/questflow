@@ -1,0 +1,15 @@
+{
+  "schema": "questflow.update-manifest.v1",
+  "release": "6.18.2",
+  "from_version": "6.18.1",
+  "package_root": "QuestFlow",
+  "preserves": ["data", ".venv", "venv", "runtime", "backups", "mobile"],
+  "excludes": ["data", "mobile", "node_modules", ".expo", "__pycache__", ".pytest_cache", "*.pyc"],
+  "changed_focus": ["VERSION.txt", "pyproject.toml", "web/app.js", "tests/test_web_startup_symbols_6182.py"],
+  "database_migration": "none",
+  "mobile_version": "0.13.1",
+  "mobile_changed": false,
+  "learning_engine_changed": false,
+  "cloud_sync_changed": false,
+  "feature": "Web UI startup heartbeat hotfix"
+}

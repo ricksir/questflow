@@ -1,0 +1,37 @@
+QUESTFLOW STUDIO 6.14.1 + MOBILE 0.10.0
+ATUALIZACAO INCREMENTAL A PARTIR DA 6.14.0
+
+PRINCIPAL NOVIDADE
+- Cloud Sync Safe Activation.
+- A primeira escrita no Turso exige preflight somente-leitura, comparacao por IDs/hashes, dry-run da fila, verificacao de conflitos e backup SQLite validado.
+- O Cloud Sync automatico somente e liberado depois de a primeira sincronizacao protegida terminar sem fila pendente e sem conflitos.
+- Eventos continuam idempotentes por event_id; falhas transitorias usam retry exponencial e podem ser retomadas sem duplicar operacoes.
+- O Mobile permanece 0.10.0 e Study Only. Cloud Sync, Turso e diagnosticos continuam somente no Studio.
+
+COMO ATUALIZAR
+1. NAO extraia este ZIP manualmente.
+2. Execute C:\Users\user\QuestFlow\QUESTFLOW.bat.
+3. Escolha Atualizar QuestFlow.
+4. Selecione QuestFlow_Studio_6.14.1_Mobile_0.10.0_UPDATE.zip.
+5. Confirme a transicao 6.14.0 -> 6.14.1.
+6. Aguarde o Manager concluir backup, staging, smoke e verificacao do banco.
+7. Abra Configuracoes > Cloud Sync no Studio.
+
+PRIMEIRA ATIVACAO DO CLOUD SYNC
+1. Informe/confirme URL e token do Turso.
+2. Clique em Ativacao segura.
+3. Aguarde o preflight verificar SQLite, credenciais, Turso, IDs/hashes, fila e conflitos.
+4. Revise o resumo antes de confirmar.
+5. O QuestFlow criara e validara um backup local antes da primeira escrita remota.
+6. A sincronizacao automatica so sera habilitada se a primeira sincronizacao protegida concluir sem pendencias e sem conflitos.
+
+PRESERVACAO
+- O pacote UPDATE nao contem data, node_modules, .expo ou .core-test-build.
+- O atualizador preserva banco e caches/dependencias existentes.
+- O Mobile continua 0.10.0 e nao exige novo Dev Client por esta release.
+
+SE A ATIVACAO FALHAR
+- O sincronismo automatico permanece desligado.
+- O checkpoint e o ultimo erro ficam registrados no Studio.
+- Operacoes ja confirmadas no Turso podem ser reenviadas com seguranca por event_id idempotente.
+- Nao apague manualmente a fila local ou o backup de ativacao.

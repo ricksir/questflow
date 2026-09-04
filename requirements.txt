@@ -1,0 +1,12 @@
+# QuestFlow Studio core requirements — release 6.9.0
+# As versões são exatas para reduzir deriva entre instalações.
+PyMuPDF==1.28.2
+Pillow==12.3.0
+pytesseract==0.3.13
+opencv-python-headless==4.13.0.92
+pymupdf4llm==1.28.2
+selenium==4.47.0
+fsrs[optimizer]==6.3.2
+
+# QR de pareamento do futuro QuestFlow Mobile (gerado localmente, sem serviço externo).
+qrcode==8.2

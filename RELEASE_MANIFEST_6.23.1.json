@@ -1,0 +1,13 @@
+{
+  "release": "QuestFlow Studio 6.23.1 + Mobile 0.15.6",
+  "studio_version": "6.23.1",
+  "mobile_version": "0.15.6",
+  "mobile_version_code": 21,
+  "package_type": "safe-studio-and-mobile-update",
+  "from_versions_targeted": ["6.23.0", "6.22.16"],
+  "purpose": "Return answer feedback before rebuildable projections, remove blocking sync from navigation and prevent previous-block repetition",
+  "database_migration": "none",
+  "learning_engine_changed": true,
+  "mobile_changed": true,
+  "cloud_sync_changed": false
+}

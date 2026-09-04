@@ -1,0 +1,25 @@
+QUESTFLOW STUDIO 6.9.5 + QUESTFLOW MOBILE 0.2.1
+CICLO DE APARELHOS
+============================================================
+
+O QUE MUDOU
+-----------
+1. “Revogar” e “Revogado” foram removidos da interface Mobile.
+2. A única ação de encerramento agora é “Desconectar”.
+3. Desconectar encerra a sessão/autorização, mas preserva histórico e métricas.
+4. O celular mantém um identificador de instalação permanente, separado da sessão.
+5. Para voltar a um aparelho desconectado:
+   - clique em “Conectar novo aparelho” no Studio;
+   - gere um novo QR;
+   - leia o QR no mesmo celular;
+   - o registro anterior volta a “Conectado”, sem duplicar o aparelho.
+6. Aparelhos desconectados podem ser “Removidos da lista”. Essa ação apenas oculta o registro e NÃO apaga dados de estudo.
+7. O painel diferencia “Aparelhos conectados” e “Desconectados”.
+
+IMPORTANTE
+----------
+A linha antiga “Revogado” que já existia pode ser removida da lista após atualizar para 6.9.5. Ela é um registro legado da versão anterior. O histórico de estudo permanece preservado.
+
+CONTRATO
+--------
+O contrato continua questflow.mobile.v1. Não há quebra de compatibilidade da API.

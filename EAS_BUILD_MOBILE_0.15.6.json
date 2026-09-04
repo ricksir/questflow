@@ -1,0 +1,18 @@
+{
+  "schema": "questflow.eas-build-evidence.v1",
+  "build_id": "9c74c945-7763-4254-9071-88a86e710982",
+  "status": "FINISHED",
+  "platform": "ANDROID",
+  "distribution": "INTERNAL",
+  "build_profile": "preview",
+  "application_id": "br.questflow.mobile",
+  "sdk_version": "57.0.0",
+  "app_version": "0.15.6",
+  "app_build_version": "21",
+  "fingerprint": "49c135720402a24e45b80f4ff7883f226b9b151b",
+  "created_at": "2026-08-25T21:10:01.438Z",
+  "completed_at": "2026-08-25T21:32:46.359Z",
+  "artifact": "QuestFlow_Mobile_0.15.6.apk",
+  "artifact_size_bytes": 136791801,
+  "artifact_sha256": "892D5F5D86CA2E5F7EC2BB72B21DDB76A940435C2EF50AA17DFB1AAE387C3779"
+}

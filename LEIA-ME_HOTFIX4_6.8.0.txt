@@ -1,0 +1,35 @@
+QUESTFLOW STUDIO 6.8.0 — HOTFIX 4
+RETORNO DO GOOGLE MODO IA PARA O EDITOR
+
+PROBLEMA CORRIGIDO
+------------------
+O Google podia exibir claramente um bloco como:
+
+    Gabarito: CERTO
+    Explicação: ...
+
+mas o QuestFlow ainda recusava a resposta quando ela aparecia durante a consulta
+pelo enunciado e não repetia código, banca e ano dentro do texto retornado.
+
+CORREÇÃO
+--------
+1. O contexto da consulta passa a fazer parte da verificação de correspondência.
+2. Consulta pelo código exato continua ancorando a resposta.
+3. Consulta pelo próprio enunciado também pode ancorar a resposta quando a
+   similaridade entre consulta e enunciado é suficiente.
+4. O coletor do Chrome prioriza blocos compactos que contenham simultaneamente
+   "Gabarito" e "Explicação/Justificativa/Resolução".
+5. A confiança de extração deixa de ser filtro eliminatório após a resposta estar
+   vinculada à questão e o comentário ser substantivo; passa a ser alerta para
+   revisão humana.
+6. O texto geral da página, menus, metadados e navegação continuam proibidos como
+   explicação automática.
+7. O gabarito local não é sobrescrito automaticamente.
+8. Origem do comentário permanece "IA assistida + revisão humana".
+
+VALIDAÇÃO
+---------
+- 423 / 423 testes automatizados aprovados em quatro partições: 111 + 97 + 110 + 105.
+- 24 / 24 testes focados do fluxo Google aprovados.
+- 4 / 4 novos testes do Hotfix 4 aprovados.
+- Cenário Q105746 reproduzido: consulta por enunciado + bloco "Gabarito: CERTO / Explicação" sem eco de metadados.

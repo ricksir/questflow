@@ -1,0 +1,35 @@
+QUESTFLOW STUDIO 6.7.1 — BENCHMARK PEDAGÓGICO E COLETA DE EVIDÊNCIAS
+
+O QUE SIGNIFICA “O MODELO SE ABSTÉM”?
+Não é um erro e não significa necessariamente que você esteja mal na matéria. Significa que o Learner Model ainda não possui evidências suficientes para afirmar seu nível de domínio com confiança.
+
+COLETAR EVIDÊNCIA AGORA É UMA FUNÇÃO REAL
+Ao clicar em “Entender e coletar evidência”, o QuestFlow mostra:
+- quantas evidências existem;
+- por que a estimativa foi considerada insuficiente;
+- a confiança atual;
+- quantas questões diagnósticas são recomendadas;
+- quais questões do mesmo conceito têm maior valor diagnóstico.
+
+O botão “Iniciar prática diagnóstica” abre um mini-simulado focado naquele conceito. Cada resposta alimenta FSRS, Knowledge Tracing e IRT. Se o modelo atingir evidência suficiente antes da quantidade prevista, a prática pode terminar antecipadamente.
+
+BENCHMARK PEDAGÓGICO DO TUTOR
+A 6.7.1 passa a observar se o nível de ajuda usado no scaffolding está associado a retenção posterior. O sistema cruza sessões do Tutor com respostas posteriores e compara:
+- tentativa independente/pouco apoio;
+- apoio moderado;
+- apoio alto;
+- representações de revisão utilizadas.
+
+As janelas observadas incluem imediato, 1 dia, 3 dias, 7 dias e 30 dias. O QuestFlow só sugere tendências quando existe amostra mínima e sempre informa que o resultado é observacional, não uma garantia causal.
+
+BANCO E COMPATIBILIDADE
+Não há nova migração nesta versão.
+question_bank = v8
+study = v11
+ai_governance = v4
+
+SEIS MOTORES
+Os seis motores permanecem. A coleta de evidência pertence ao Learner Model/Learning Engine e o benchmark é calculado a partir do histórico existente.
+
+RECURSOS PRESERVADOS
+Watchdog, Self-Healing, Cloud Sync idempotente, Curadoria guiada, Projeto/Edital, RAG, Tutor multiprovedor, FSRS/KT/IRT, calibração, simulados adaptativos, legislação temporal, AI Gateway e governança continuam disponíveis.

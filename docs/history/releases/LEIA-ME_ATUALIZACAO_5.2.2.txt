@@ -1,0 +1,36 @@
+QUESTFLOW STUDIO 5.2.2 — TABELAS INTELIGENTES E DADOS COMPLETOS
+
+Esta atualização corrige os campos sem preenchimento e amplia a operação das
+tabelas sem remover recursos das versões anteriores.
+
+REVISAR BANCO
+
+- Matéria da planilha passa a combinar a taxonomia com as matérias do banco.
+- O seletor é carregado sob demanda quando a questão é aberta.
+- A lista de questões permite ordenar, mover e redimensionar colunas.
+
+VISÃO GERAL E FLUXO TELEGRAM
+
+- Os históricos buscam a questão vinculada ao envio para preencher código,
+  matéria, assunto, tentativas, respostas e acertos.
+- Número sem informação aparece como 0.
+- Texto sem informação aparece como Não encontrado ou equivalente.
+- Ao clicar em uma linha vinculada, o programa abre a questão em Revisar banco.
+
+TELEGRAM
+
+- Nova área para token do bot e Chat ID.
+- O token salvo não é devolvido integralmente para a interface.
+- É possível salvar e testar a conexão antes de iniciar o fluxo.
+
+INTERFACE
+
+- Botão de tela cheia adicionado à barra superior.
+- Tabelas de atividade, histórico, correções e cobertura permitem ordenar,
+  deslocar e redimensionar colunas.
+- Ordem, largura e ordenação ficam salvas no perfil local do aplicativo.
+
+INSTALAÇÃO
+
+Extraia o pacote em pasta nova, execute INSTALAR_E_DIAGNOSTICAR.bat e depois
+INICIAR_QUESTFLOW_STUDIO.bat. O modo responsivo usa somente Google Chrome.

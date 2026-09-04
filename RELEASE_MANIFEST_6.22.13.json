@@ -1,0 +1,13 @@
+{
+  "release": "QuestFlow Studio 6.22.13 + Mobile 0.15.4",
+  "studio_version": "6.22.13",
+  "mobile_version": "0.15.4",
+  "mobile_version_code": 19,
+  "package_type": "safe-studio-and-mobile-source-update",
+  "from_versions_targeted": ["6.22.12"],
+  "purpose": "Open a real reminder time selector and always show scheduling feedback",
+  "database_migration": "none",
+  "learning_engine_changed": false,
+  "mobile_changed": true,
+  "cloud_sync_changed": false
+}

@@ -1,0 +1,28 @@
+QUESTFLOW STUDIO 5.4.0 — TURSO CLOUD SYNC
+
+NOVIDADES PRINCIPAIS
+- Sincronização local-first entre dois ou mais computadores via Turso Cloud.
+- Os computadores não precisam estar ligados ao mesmo tempo.
+- Fila local durável: sem Internet, o QuestFlow continua funcionando e envia depois.
+- Sincronização automática ao abrir, periodicamente e tentativa final ao fechar.
+- Proteção contra desligamento abrupto e reenvio idempotente.
+- Registro de conflitos entre edições offline.
+- Reset global por geração, evitando que progresso antigo volte de um PC que ficou desligado.
+- Integração com o Gerenciador de Rede/Proxy da versão 5.3.x.
+- Token Turso protegido pelo Windows DPAPI.
+- Acesso opcional pelo celular na mesma LAN enquanto uma instância estiver aberta.
+
+PRIMEIRO USO
+1. Execute INSTALAR_E_DIAGNOSTICAR.bat.
+2. Crie um banco Turso (veja docs/CLOUD_SYNC_TURSO_5.4.0.md).
+3. Execute CONFIGURAR_TURSO_CLOUD.bat e informe URL + token.
+4. Abra o QuestFlow → Configurações → Cloud Sync.
+5. No PC que contém a base principal, use "Usar este computador como origem".
+6. Nos demais PCs, use "Mesclar com a nuvem".
+7. Aguarde Pendentes = 0 antes de desligar, quando houver rede disponível.
+
+TESTE
+Execute VALIDAR_CLOUD_SYNC.bat para os testes de dois dispositivos, offline, crash,
+idempotência, conflito, reset global, protocolo Turso HTTP e acesso móvel.
+
+O QuestFlow continua abrindo exclusivamente no Google Chrome.

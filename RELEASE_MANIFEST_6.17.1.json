@@ -1,0 +1,29 @@
+{
+  "release": "QuestFlow Studio 6.17.1",
+  "studio_version": "6.17.1",
+  "mobile_version": "0.12.0",
+  "package_type": "safe-update-hotfix-feature",
+  "from_versions_targeted": ["6.16.1", "6.17.0"],
+  "purpose": "Tutor IA editable human revisions and safe refresh after question edits",
+  "database_migration": "additive ai_governance v5+v6",
+  "learning_engine_changed": false,
+  "mobile_changed": false,
+  "cloud_sync_changed": false,
+  "tests": {
+    "focused_and_related_pytest_passed": 124,
+    "functional_failures": 0,
+    "legacy_real_database_migration": "passed on 1292-question database with 7 legacy AI interactions",
+    "legacy_false_stale_after_migration": 0,
+    "javascript_syntax": "passed",
+    "python_smoke": "passed"
+  },
+  "artifacts": [
+    "ARQUITETURA_TUTOR_EDITABLE_SYNC_6.17.1.md",
+    "INSTRUCOES_ATUALIZACAO_6.17.1.md",
+    "RELATORIO_VALIDACAO_6.17.1.md",
+    "MATRIZ_COMPATIBILIDADE_6.17.1.json",
+    "SBOM_6.17.1.cdx.json",
+    "AUDITORIA_VULNERABILIDADES_6.17.1.json",
+    "VALIDACAO_FINAL_6.17.1.json"
+  ]
+}

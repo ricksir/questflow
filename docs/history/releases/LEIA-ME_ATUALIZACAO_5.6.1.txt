@@ -1,0 +1,12 @@
+QUESTFLOW STUDIO 5.6.1 — MIGRAÇÃO PYMUPDF
+
+Esta atualização substitui internamente a API legada `fitz` pela API oficial `pymupdf`.
+
+ALTERAÇÕES
+- `import fitz` -> `import pymupdf` em todas as rotinas ativas de PDF.
+- Diagnóstico verifica `pymupdf` diretamente.
+- Instalador verifica `pymupdf` diretamente.
+- Extrator, QConcursos, Markdown, PDFs de trilhas e testes atualizados.
+- Elimina o aviso: "The 'fitz' API is deprecated ... Use 'import pymupdf' instead."
+
+Não há migração de banco nesta versão. Preserve normalmente a pasta data ao atualizar.

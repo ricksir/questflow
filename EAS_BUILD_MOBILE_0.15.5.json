@@ -1,0 +1,14 @@
+{
+  "id": "a1f56f1a-5166-4c86-b6e9-014fe08cbd3a",
+  "status": "FINISHED",
+  "platform": "ANDROID",
+  "distribution": "INTERNAL",
+  "build_profile": "preview",
+  "application_id": "br.questflow.mobile",
+  "sdk_version": "57.0.0",
+  "app_version": "0.15.5",
+  "app_build_version": "20",
+  "fingerprint": "b786babf48bd1d117a878610e6a7f1e38c153cb1",
+  "completed_at": "2026-08-24T22:28:55.082Z",
+  "artifact": "QuestFlow_Mobile_0.15.5.apk"
+}

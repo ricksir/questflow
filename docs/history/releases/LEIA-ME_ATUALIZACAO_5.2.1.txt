@@ -1,0 +1,28 @@
+QUESTFLOW STUDIO 5.2.1 — CORREÇÃO DO ERRO 501 E CHROME EXCLUSIVO
+
+Esta versão corrige o erro exibido como:
+
+  Error code: 501
+  Unsupported method ('{{GET')
+
+O erro principal ocorria porque o servidor respondia ao heartbeat sem consumir
+o corpo JSON da requisição. Em uma conexão HTTP/1.1 reutilizada, os caracteres
+{} ficavam pendentes e eram anexados ao próximo GET, formando {{GET e causando
+o erro 501. A versão 5.2.1 corrige a leitura do corpo e acrescenta três camadas
+de proteção:
+
+1. abre exclusivamente no Google Chrome;
+2. utiliza um perfil próprio do Chrome, sem extensões e sem proxy;
+3. normaliza, no servidor local, prefixos indevidos inseridos em GET/POST.
+
+A versão não abre no Microsoft Edge e não usa WebView2 como alternativa.
+
+INSTALAÇÃO
+
+1. Feche todas as janelas do QuestFlow.
+2. Extraia o ZIP completo para uma pasta nova.
+3. Execute INSTALAR_E_DIAGNOSTICAR.bat.
+4. Execute INICIAR_QUESTFLOW_STUDIO.bat.
+
+O perfil antigo compartilhado entre Edge e Chrome não é reutilizado. O novo
+perfil fica em data\chrome_runtime_5_2_1.

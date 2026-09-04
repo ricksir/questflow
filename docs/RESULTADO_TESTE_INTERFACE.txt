@@ -1,0 +1,7 @@
+geometry= 1360x850+0+0
+pages= ['export', 'flow', 'import', 'review', 'settings']
+flow_columns= ('data', 'codigo', 'materia', 'status', 'tentativas', 'motivo', 'respostas', 'acertos')
+review_panes= 2
+flow_panes= 2
+theme= claro
+density= confortavel

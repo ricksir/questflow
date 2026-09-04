@@ -1,0 +1,28 @@
+QUESTFLOW STUDIO 6.14.3 + MOBILE 0.10.1
+Correção: primeira ativação do Cloud Sync com filas grandes
+
+CENÁRIO CORRIGIDO
+- Na 6.14.2, a ativação protegida executava no máximo 10 rodadas.
+- Cada rodada envia no máximo 250 eventos.
+- Uma fila com 4.164 alterações, como a observada no ambiente real, não podia atingir zero em uma única ativação.
+- O Studio exibia "A primeira sincronização não foi concluída" mesmo sem erro no Turso.
+
+NOVO COMPORTAMENTO
+- A primeira sincronização avança em blocos retomáveis.
+- Enquanto houver fila, o Cloud Sync automático continua desligado.
+- O Studio mostra quantas alterações ainda restam e continua automaticamente em novos blocos.
+- Se o Studio for fechado/interrompido, a tela oferece "Retomar primeira sincronização".
+- Uma tentativa parcial da 6.14.2 é reconhecida e retomada sem nova semeadura completa.
+- Escritas remotas já confirmadas permanecem válidas e não precisam ser apagadas.
+
+INSTALAÇÃO
+1. Não extraia este ZIP.
+2. Abra C:\Users\user\QuestFlow\QUESTFLOW.bat.
+3. Escolha Atualizar QuestFlow.
+4. Selecione QuestFlow_Studio_6.14.3_Mobile_0.10.1_UPDATE.zip.
+5. Confirme 6.14.2 -> 6.14.3.
+6. Abra Configurações > Cloud Sync > Ativação segura.
+7. Use Retomar primeira sincronização / Mesclar com a nuvem conforme mostrado.
+8. Não feche o Studio enquanto a primeira sincronização estiver avançando.
+
+O Mobile permanece 0.10.1. Não há nova dependência nativa.

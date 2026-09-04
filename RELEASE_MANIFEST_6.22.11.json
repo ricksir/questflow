@@ -1,0 +1,13 @@
+{
+  "release": "QuestFlow Studio 6.22.11 + Mobile 0.15.2",
+  "studio_version": "6.22.11",
+  "mobile_version": "0.15.2",
+  "mobile_version_code": 17,
+  "package_type": "safe-studio-and-mobile-source-update",
+  "from_versions_targeted": ["6.22.10"],
+  "purpose": "Replace raw Firebase failures with local reminders and make pairing QR-first",
+  "database_migration": "none",
+  "learning_engine_changed": false,
+  "mobile_changed": true,
+  "cloud_sync_changed": false
+}

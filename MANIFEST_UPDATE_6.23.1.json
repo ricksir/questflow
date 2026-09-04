@@ -1,0 +1,21 @@
+{
+  "schema": "questflow.update-manifest.v1",
+  "release": "6.23.1",
+  "from_version": "6.23.0",
+  "package_root": "QuestFlow",
+  "preserves": ["data", ".venv", "venv", "runtime", "backups"],
+  "excludes": ["data", "node_modules", ".expo", ".git", "dist", "work", "__pycache__", ".pytest_cache", "*.pyc"],
+  "changed_focus": [
+    "core/mobile_foundation.py",
+    "core/study.py",
+    "web_api.py",
+    "mobile/app/(tabs)/questions.tsx",
+    "mobile/src/lib/sync.ts"
+  ],
+  "database_migration": "none; durable projection state reuses qf_learning_events",
+  "mobile_version": "0.15.6",
+  "mobile_changed": true,
+  "learning_engine_changed": true,
+  "cloud_sync_changed": false,
+  "feature": "Durable fast feedback, non-blocking micro-batch navigation and previous-block rotation"
+}

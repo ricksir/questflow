@@ -1,0 +1,9 @@
+QuestFlow Studio 6.4.0 — Curadoria acionável + Provedores de IA
+
+- Remove a Esteira recomendada puramente descritiva e substitui por prioridades reais da curadoria.
+- Curadoria mostra percentual pronto e ações priorizadas por volume.
+- Menu lateral compactado para caber sem rolagem nas resoluções usuais e reduzir altura automaticamente.
+- Tutor IA exibe provedor ativo e atalho para configuração.
+- Integração configurável com QuestFlow local, Google Modo IA, OpenAI API, Google Gemini API e Anthropic Claude API.
+- Chaves protegidas por DPAPI no Windows.
+- Botões do Tutor continuam dependentes de uma questão selecionada; a interface agora explica o contexto e o provedor.

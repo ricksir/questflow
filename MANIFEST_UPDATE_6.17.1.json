@@ -1,0 +1,41 @@
+{
+  "schema": "questflow.update-manifest.v1",
+  "release": "6.17.1",
+  "from_version": "6.16.1+",
+  "generated_at": "2026-08-21T14:24:30Z",
+  "package_root": "QuestFlow",
+  "preserves": [
+    "data",
+    ".venv",
+    "venv",
+    "runtime",
+    "backups",
+    "mobile"
+  ],
+  "excludes": [
+    "data",
+    "mobile",
+    "node_modules",
+    ".expo",
+    "__pycache__",
+    ".pytest_cache",
+    "*.pyc"
+  ],
+  "changed_focus": [
+    "VERSION.txt",
+    "pyproject.toml",
+    "core/engines/evaluation_governance.py",
+    "core/engines/ai_engine.py",
+    "web_api.py",
+    "web_server.py",
+    "web/app.js",
+    "web/styles.css",
+    "tests/test_tutor_editable_drafts_6171.py"
+  ],
+  "database_migration": "additive ai_governance v5+v6; legacy snapshot hash baseline; no destructive changes",
+  "mobile_version": "0.12.0",
+  "mobile_changed": false,
+  "learning_engine_changed": false,
+  "cloud_sync_changed": false,
+  "feature": "Editable Tutor IA drafts, immutable AI original, question-content staleness detection, and false-positive-safe legacy migration"
+}

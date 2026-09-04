@@ -1,0 +1,14 @@
+QuestFlow Studio 6.10.0 HOTFIX2 — Manager V2.1
+
+Correção específica para Windows PowerShell/Expand-Archive:
+- staging movido para %LOCALAPPDATA%\QFS\tmp\uXXXXXXXX;
+- pasta interna do pacote encurtada para QFS_6.10.0_HF2;
+- caches Python (__pycache__/*.pyc) removidos do pacote de distribuição;
+- Manager e atualizador externo identificados como V2.1;
+- nenhuma alteração automática na pasta data ao reparar o Manager.
+
+Procedimento:
+1. Extraia este ZIP.
+2. Execute REPARAR_QUESTFLOW_MANAGER.bat.
+3. Mantenha este mesmo ZIP em Downloads.
+4. Abra C:\Users\SEU_USUARIO\QuestFlow\QUESTFLOW.bat e procure a atualização.

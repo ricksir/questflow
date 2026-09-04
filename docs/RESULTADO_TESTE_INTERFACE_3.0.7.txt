@@ -1,0 +1,3 @@
+[OK] Escala ao vivo: 10 -> 12
+[OK] Seleção múltipla, análise selecionada e pesquisa web em lote
+[OK] Interface principal criada sem erro

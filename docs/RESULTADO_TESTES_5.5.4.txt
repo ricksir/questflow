@@ -1,0 +1,3 @@
+QuestFlow Studio 5.5.4
+Suíte regressiva completa: 216 testes executados, 216 aprovados.
+Inclui 2 testes novos para clique em toda a linha da Cobertura dos estudos.

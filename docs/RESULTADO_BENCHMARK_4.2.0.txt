@@ -1,0 +1,6 @@
+Questões importadas: 5000
+Importação: 0.347s
+Seleção adaptativa de 20/5000: 0.096s
+Painel agregado: 0.011s
+Matérias no painel: 8
+Questões selecionadas: 20

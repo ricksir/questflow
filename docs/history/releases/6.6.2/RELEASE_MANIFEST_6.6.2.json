@@ -1,0 +1,36 @@
+{
+  "product": "QuestFlow Studio",
+  "version": "6.6.2",
+  "release_name": "Cloud Sync Idempotente",
+  "database_schema": {
+    "question_bank": 8,
+    "study": 10,
+    "ai_governance": 4
+  },
+  "engines": 6,
+  "fixes": [
+    "dashboard/recommendation preview is read-only",
+    "transient study_state fields do not create Cloud Sync outbox events",
+    "no-op UPDATEs do not create sync events",
+    "durable FSRS/progress changes remain synchronized",
+    "exact 213-event refresh regression covered by automated test"
+  ],
+  "validation": {
+    "tests_total": 341,
+    "tests_passed": 341,
+    "python_files_compiled": 142,
+    "javascript_syntax": "ok"
+  },
+  "file_sha256": {
+    "VERSION.txt": "8ed5bf0c52d1de4d5a9ec57ccbda83e2cc927c0c1e0034182689834bdfdaf215",
+    "pyproject.toml": "65efd462deae4ba2cd958bc9383c2b6f57b178f7e0e06d9cb2f6353af95818ee",
+    "core/cloud_sync.py": "8cafb2fc1518bfa581f46b7df4496a894c9ed50404611543a7d8cb4ce6624021",
+    "core/study.py": "1cd4bd44abcf3b1a44bd17fc9e9c20115b3ca688b9d1f1b349a2c8bea444e6a5",
+    "core/engines/learning_engine.py": "11e6645410c1229fa5fc1a4b05d212f1c3531d9fecba384feb0dc1f50447f547",
+    "web/app.js": "394d3c8c2566957473d57aef2f76f8ac3fe596eb3be1ce93549083ac82c2688c",
+    "tests/test_cloud_sync_refresh_662.py": "0e02caa873fc91f4ba8fdb9a129a9b08e4dfda4db654cc23a39ed5f4bcd780fb",
+    "VALIDACAO_6.6.2.md": "dff7a1fe6f573e9cf2e5c4225bff6b0113ff6d7cccc535b1915f7d0f67fa129f",
+    "LEIA-ME_ATUALIZACAO_6.6.2.txt": "1b43ecdd8fed44ad1340211549abc6fd74dd94d915c048bb8f557b3aad5cd16f",
+    "ARQUITETURA_SEIS_MOTORES_6.6.2.md": "56f8bb101fc5b3cf3683a7e8169ced110a27ec0bc0a249e1a126f7c68a4fb5d0"
+  }
+}

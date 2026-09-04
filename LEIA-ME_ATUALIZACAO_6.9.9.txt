@@ -1,0 +1,28 @@
+QUESTFLOW STUDIO 6.9.9 + MOBILE 0.6.0 — PROFESSIONAL UX
+
+Esta release reorganiza o Mobile como uma área própria do produto e melhora a experiência no Android.
+
+MOBILE
+- Safe area Android e barra inferior responsiva: os botões Hoje, Questões, Progresso e Perfil deixam de ficar atrás da navegação do sistema.
+- Nova suíte visual: cards, hierarquia, estados, navegação e telas de estudo redesenhados.
+- Hoje: painel visual de desempenho com acertos x erros e barras de acerto recente por matéria.
+- O controle Retomar/Pausar Telegram foi removido da tela Hoje.
+- Questões: sessão com progresso visual, cronômetro ativo amigável e preservação de Corrigir questão / Assunto ainda não estudado.
+- O tempo ativo continua contando somente enquanto a aba Questões está em foco e o app está ativo.
+- Perfil: informações técnicas recolhidas em Diagnóstico técnico.
+
+STUDIO
+- Nova aba lateral QUESTFLOW MOBILE.
+- Pareamento, aparelhos, acesso local e sincronização do aplicativo ficam concentrados nessa aba.
+- Cloud Bridge permanece integrado, experimental, opcional e recolhido na área avançada.
+- A opção de acesso local do Mobile saiu de Configurações gerais e foi para a nova aba.
+
+ATUALIZAÇÃO NA INSTALAÇÃO ESTÁVEL
+1. Não apague C:\Users\<usuario>\QuestFlow\data.
+2. Coloque este ZIP em Downloads.
+3. Abra C:\Users\<usuario>\QuestFlow\QUESTFLOW.bat.
+4. Use a opção Procurar atualização em Downloads e selecione/aceite a versão 6.9.9.
+5. O Manager atualiza Studio + Mobile e preserva a pasta data.
+6. Como o seu Recovery Guard está ativo, mantenha Cloud Sync/Turso pausado após a atualização até a conferência do remoto.
+
+Após atualizar, inicie Studio + Mobile pelo QuestFlow Manager. No celular, Perfil > Diagnóstico técnico deve mostrar v0.6.0 Alpha.

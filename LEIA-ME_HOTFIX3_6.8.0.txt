@@ -1,0 +1,39 @@
+QUESTFLOW STUDIO 6.8.0 — HOTFIX 3 — EXTRAÇÃO TOLERANTE + UI ORGANIZADA
+
+PROBLEMA CORRIGIDO
+------------------
+O Google podia encontrar a justificativa correta, mas o QuestFlow a descartava por dois motivos:
+1. a resposta não repetia código/banca/ano, apesar de a consulta ter sido feita pelo código exato;
+2. a confiança automática ficava abaixo do corte rígido, mesmo com justificativa substantiva.
+
+NOVO COMPORTAMENTO
+------------------
+- A consulta pelo código exato passa a ancorar a correspondência da resposta do Modo IA.
+- O Google não precisa repetir Qxxxx, banca ou ano dentro da explicação.
+- "Gabarito: C. Isso porque..." na mesma linha é corretamente separado e aproveitado.
+- A confiança virou indicador para revisão humana, não motivo automático para apagar a resposta.
+- Metadados, enunciado repetido, alternativas, menus, Fontes e Pesquisas relacionadas continuam removidos.
+- O bloco integral da página continua proibido como explicação.
+- Se restar apenas ruído/metadados, o campo permanece intacto.
+
+INTERFACE
+---------
+- Pesquisa assistida ganhou um bloco próprio, separado do contador de caracteres.
+- Rodapé separa "Status da revisão" de "Ações".
+- Na Curadoria os botões usam rótulos curtos: "Salvar rascunho" e "Concluir revisão".
+- Em telas menores, os botões reorganizam-se automaticamente sem sobreposição.
+
+VALIDAÇÃO
+---------
+- 419/419 testes automatizados aprovados em quatro partições: 97 + 106 + 117 + 99.
+- 20/20 testes específicos da cadeia Google 6.7.2–6.8.0 aprovados.
+- 4/4 testes novos do Hotfix 3 aprovados.
+- 162 arquivos Python compilados.
+- web/app.js aprovado por node --check.
+- SQLite quick_check = ok; foreign_key_check = 0.
+- Diagnóstico Google: OK.
+- O ambiente de validação não possui Py-FSRS Optimizer instalado; por isso o diagnóstico geral registra apenas essa dependência do ambiente como falha, sem relação com o Hotfix 3.
+
+VERSÃO
+------
+A versão funcional continua 6.8.0. A numeração 6.8.1 permanece reservada para o próximo item do Roadmap.

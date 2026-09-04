@@ -1,0 +1,76 @@
+QUESTFLOW STUDIO 6.8.0 — MULTIMODAL RAG 3.0 + PESQUISA GOOGLE PRECISA
+=====================================================================
+
+NOVIDADE 1 — PESQUISA DE RESPOSTA/EXPLICAÇÃO MAIS CONFIÁVEL
+------------------------------------------------------------
+A ação “Pesquisar resposta no Google com IA” foi endurecida para impedir que
+blocos gerais da página, metadados ou menus sejam copiados para “Explicação
+após a resposta”.
+
+O novo fluxo:
+1. pesquisa primeiro pelo código da questão;
+2. valida se a página realmente corresponde à questão;
+3. tenta extrair somente Justificativa/Explicação/Resolução/Fundamentação;
+4. se houver correspondência mas não houver explicação útil, continua pelo
+   enunciado exato e depois por consulta textual ampliada;
+5. se a resposta do Google ainda estiver instável, faz uma recaptura controlada;
+6. calcula confiança da extração;
+7. descarta menus, banca, ano, órgão, prova, alternativas, fontes, pesquisas
+   relacionadas e outros blocos não pertencentes à resposta;
+8. se a confiança for insuficiente, NÃO preenche o editor.
+
+O gabarito local não é alterado. Se o Google sugerir resposta diferente, o
+QuestFlow apresenta um alerta para revisão humana.
+
+NOVIDADE 2 — MULTIMODAL RAG 3.0
+-------------------------------
+O Knowledge Engine possui agora recuperação intercambiável:
+- text: evidência textual/RAG já existente;
+- visual: evidência multimodal local com grounding;
+- hybrid: fusão auditável dos dois backends.
+
+Imagem/PDF permanecem locais por padrão. Para permitir envio binário a um
+provedor externo é necessário usar o modo Personalizado do Centro de
+Privacidade e marcar explicitamente o novo opt-in de imagem/PDF.
+
+PRIVACIDADE E AUDITORIA
+-----------------------
+- caminhos absolutos locais não são expostos nos descritores multimodais;
+- grounding usa hashes e identificação de fonte/página;
+- origem editorial continua “IA assistida + revisão humana”;
+- toda pesquisa permanece como rascunho até revisão/salvamento humano;
+- não há fallback silencioso para outro provedor externo.
+
+BANCO E COMPATIBILIDADE
+-----------------------
+Sem nova migração:
+- question_bank v8
+- study v11
+- ai_governance v4
+
+O hardening 6.7.3 permanece: lock/hash, SBOM, auditoria, backup/restauração,
+compatibilidade, atualizador seguro e rollback.
+
+HOTFIX 1 — DIAGNÓSTICO DE INSTALAÇÃO
+-------------------------------------
+- Corrigido falso negativo "Pesquisa Google visível: pergunta orientadora do Google não aplicada".
+- O diagnóstico agora valida a diretiva atual usada pela própria pesquisa, em vez de procurar uma frase legada fixa.
+- Mantida a orientação mais precisa da 6.8.0: gabarito + justificativa, sem repetir enunciado, metadados ou menus.
+- Adicionado teste de regressão para impedir que o instalador e a pesquisa voltem a ficar fora de sincronia.
+
+
+HOTFIX 2 — PESQUISA IA NÃO FICA MAIS PRESA EM “PESQUISANDO...”
+----------------------------------------------------------------
+Problema corrigido:
+- a diretiva 6.8.0 pede gabarito + justificativa sem repetir o código/enunciado;
+- o detector antigo ainda exigia que o código Qxxxx aparecesse na resposta;
+- respostas corretas e concisas podiam ser tratadas como ainda carregando.
+
+Correções:
+1. resposta curta pode estabilizar sem repetir Qxxxx;
+2. blocos de resposta menores passam a ser capturados quando contêm sinais de gabarito/justificativa;
+3. uma resposta já útil não é pesquisada novamente só por causa da flag “instável”;
+4. a interface mostra progresso real por etapa;
+5. se o Modo IA falhar, a Pesquisa Google procura uma fonte pública correspondente e extrai somente uma justificativa verificada;
+6. CAPTCHA/esperas possuem limites menores e deixam de manter a Curadoria indefinidamente ocupada;
+7. nenhuma fonte não verificada é aplicada e o gabarito local nunca é sobrescrito.

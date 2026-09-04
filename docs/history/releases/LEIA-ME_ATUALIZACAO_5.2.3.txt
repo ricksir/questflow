@@ -1,0 +1,43 @@
+QUESTFLOW STUDIO 5.2.3 — LISTAS MAIS DENSAS E DIVISORES VISUAIS
+
+Esta versão é cumulativa: inclui as correções de dados, Telegram, tela cheia,
+tabelas ajustáveis e Chrome exclusivo da versão 5.2.2.
+
+DENSIDADE DAS LISTAS
+
+- o espaço externo entre linhas e cartões foi reduzido em mais de 50%;
+- o padding interno dos itens foi preservado, mantendo a área ao redor dos textos;
+- a separação visual agora usa border-bottom de 1 px, em cor discreta do tema;
+- a lista virtual de questões ficou mais compacta sem remover conteúdo;
+- tabelas convertidas em cartões no modo responsivo usam o mesmo padrão;
+- fila de importação, alternativas e blocos repetidos da visão geral também
+  passaram a usar espaçamento compacto e divisores consistentes;
+- o comportamento foi aplicado aos temas claro e escuro e às densidades
+  compacta, padrão e espaçosa.
+
+RECURSOS CUMULATIVOS
+
+- Matéria da planilha carregada pela taxonomia e pelo banco;
+- históricos com código, matéria, assunto e valores numéricos preenchidos;
+- clique em histórico para abrir a questão em Revisar banco;
+- botão de tela cheia na barra superior;
+- configuração e teste do bot Telegram;
+- ordenação, movimentação e redimensionamento de colunas;
+- execução exclusiva no Google Chrome, sem Edge/WebView2.
+
+INSTALAÇÃO
+
+1. Feche qualquer versão anterior.
+2. Extraia todo o ZIP para uma pasta nova.
+3. Execute INSTALAR_E_DIAGNOSTICAR.bat.
+4. Execute INICIAR_QUESTFLOW_STUDIO.bat.
+
+Para migrar dados mais recentes, com o programa fechado, copie para data:
+questflow_questions.sqlite, config.json, question_images e markdown_cache.
+Não copie a pasta chrome_runtime de versões anteriores.
+
+VALIDAÇÃO
+
+- 134 testes automatizados aprovados;
+- JavaScript e CSS validados;
+- banco principal preservado sem alteração de hash.

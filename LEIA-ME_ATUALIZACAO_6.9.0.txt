@@ -1,0 +1,41 @@
+QUESTFLOW STUDIO 6.9.0 — MOBILE INTEGRATION FOUNDATION
+
+Esta versão implementa a fundação necessária para o futuro aplicativo iPhone/Android sem transformar o Mobile em uma cópia do Studio.
+
+PRINCIPAIS IMPLEMENTAÇÕES
+- API versionada /api/v1/mobile e contrato questflow.mobile.v1.
+- Identidade account / tenant / learner.
+- Control plane para bancos fisicamente separados por tenant.
+- exam_project_id para separar concursos/provas do mesmo usuário.
+- learning_events imutáveis com event_id idempotente.
+- device_id, session_id, attempt_id e origem do canal.
+- question_revision e snapshot para preservar exatamente a revisão vista pelo usuário.
+- Mobile Projections: bootstrap, hoje, prioridades e progresso.
+- Sync push/pull por cursor para suportar outbox offline do futuro app.
+- Pareamento temporário de uso único, QR gerado localmente e revogação de aparelhos.
+- Registro de push token preparado para o futuro gateway.
+- Painel “QuestFlow Mobile — Fundação 6.9.0” dentro de Configurações.
+
+TEMPO DE RESPOSTA — CORREÇÃO IMPORTANTE
+A versão não considera mais que “questão aberta por muito tempo = usuário lento”.
+
+São separados:
+- tempo ativo estimado;
+- tempo total de relógio;
+- tempo ocioso;
+- qualidade da medição.
+
+Somente timing_quality = valid ou active_filtered entra em médias/modelos de velocidade.
+Tela deixada aberta, background, abandono, wall-clock antigo, outlier ou medição inconsistente são preservados para auditoria, porém excluídos do sinal de velocidade. A resposta continua valendo para acerto/erro e demais estados pedagógicos.
+
+DADOS LEGADOS
+Tempos antigos que não distinguiam atividade de relógio são rotulados legacy_unverified. Eles não são apagados.
+
+IMPORTANTE SOBRE CLOUD E O APLICATIVO
+A 6.9.0 entrega a fundação e o contrato. O aplicativo React Native/Expo e a implantação de um Gateway Cloud/OAuth-PKCE permanente são a próxima fase. Não foram simuladas credenciais ou infraestrutura externa inexistente.
+
+ARQUIVOS DE REFERÊNCIA
+- MOBILE_API_V1_6.9.0.md
+- MOBILE_API_V1_6.9.0.openapi.json
+- MOBILE_DATA_CATALOG.md
+- VALIDACAO_6.9.0.md

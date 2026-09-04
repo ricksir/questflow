@@ -1,0 +1,28 @@
+QUESTFLOW STUDIO 6.13.0 + MOBILE 0.9.0
+ATUALIZAÇÃO INCREMENTAL A PARTIR DA 6.12.2
+
+OBJETIVO
+Fazer o Mobile consumir a inteligência adaptativa do QuestFlow Core/Studio em vez de manter um seletor simplificado próprio.
+
+PRINCIPAIS ALTERAÇÕES
+- Novo StudyBatchService sobre StudyRepository.select_questions.
+- Modo Recomendado combina correções/relearning, revisões FSRS, lacunas adaptativas e questões novas.
+- Proteção contra repetir a mesma questão no início de sessões consecutivas, exceto urgência pedagógica real.
+- Interleaving por matéria, assunto e aula.
+- Baixa/média confiança prioriza transferência para outra questão do mesmo conceito antes de repetir o mesmo item.
+- Questão pulada conta como exposição recente, mas não vira tentativa FSRS.
+- Correção do viés FSRS: ausência de histórico não é tratada como histórico ruim.
+- Cache offline passa a usar pool rotativo e evita o mesmo lote quando houver alternativas.
+- Metadados de seleção auditáveis em cada questão, sem virar métrica visível do aluno.
+- Mobile continua Study Only; Telegram, saúde técnica, serviços, arquitetura e observabilidade permanecem no Studio.
+
+INSTALAÇÃO
+1. Não extraia este ZIP manualmente.
+2. Execute C:\Users\user\QuestFlow\QUESTFLOW.bat.
+3. Escolha Atualizar QuestFlow.
+4. Selecione o ZIP desta versão.
+5. Confirme a atualização 6.12.2 -> 6.13.0.
+6. Ao final, recarregue/reinicie o Mobile.
+
+DADOS E DEPENDÊNCIAS
+O pacote UPDATE não inclui a pasta data, node_modules nem .expo. O atualizador preserva banco, dados locais e dependências Mobile já instaladas. Não foram adicionadas dependências nativas do Expo nesta release.

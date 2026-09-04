@@ -1,0 +1,34 @@
+QUESTFLOW STUDIO 6.6.6 — CURADORIA COM NAVEGAÇÃO GUIADA
+
+OBJETIVO
+Resolver o caso em que a Curadoria informava uma pendência crítica (ex.: "Enunciado íntegro"), mas o usuário precisava procurar manualmente o campo correspondente dentro do editor.
+
+O QUE MUDOU
+- Pendências críticas viraram ações clicáveis "Ir ao campo →".
+- Ao clicar, o QuestFlow rola até o campo exato, destaca a seção e posiciona o foco no controle.
+- O rodapé do editor mostra a orientação específica do requisito selecionado.
+- O painel "Inteligência e curadoria" mostra atalhos tanto para bloqueios críticos quanto para oportunidades de qualidade editorial.
+- A fila da Curadoria também permite abrir uma questão diretamente no campo que precisa ser corrigido.
+- Quando "Concluir revisão" falha, o rodapé passa a exibir botões clicáveis para todas as pendências críticas.
+
+MAPEAMENTOS INCLUÍDOS
+Enunciado íntegro -> Enunciado
+Gabarito consistente -> Gabarito
+Alternativas estruturadas -> Alternativas
+Matéria informada -> Matéria da planilha
+Assunto informado -> Assunto principal
+Banca identificada -> Banca
+Ano identificado -> Ano
+Prova/órgão identificados -> Prova/Órgão
+Proveniência classificada -> Origem editorial
+Fonte rastreável -> Fonte primária / referência
+Comentário disponível -> Explicação após a resposta
+Curadoria aprovada -> ação de conclusão humana
+
+COMPATIBILIDADE
+Não há nova migração de banco. Permanecem question_bank v8, study v10 e ai_governance v4. A correção 6.6.2 de Cloud Sync idempotente permanece preservada.
+
+VALIDAÇÃO
+357/357 testes aprovados em execução particionada.
+JavaScript validado com node --check.
+Módulos Python compilados sem erro.

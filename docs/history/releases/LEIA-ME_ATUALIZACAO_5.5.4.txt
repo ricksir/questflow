@@ -1,0 +1,12 @@
+QUESTFLOW STUDIO 5.5.4 — CLIQUE EM TODA A LINHA DA PENDÊNCIA
+
+ALTERAÇÃO PRINCIPAL
+- Em Estudos e questões > Cobertura dos estudos, qualquer ponto de uma linha pendente pode ser clicado para iniciar a importação contextual.
+- Não é mais necessário ir até o botão no extremo direito.
+- A coluna Importar foi removida para diminuir a largura horizontal da tabela.
+- O indicador Faltam adicionar continua visível.
+- Linhas pendentes ganham realce ao passar o mouse.
+- Enter/Espaço funcionam pelo teclado.
+- Selecionar texto para copiar não abre o seletor de arquivo.
+
+A lógica de classificação automática por matéria, aula, trilha e conteúdo da versão 5.5.3 foi preservada.

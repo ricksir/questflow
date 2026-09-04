@@ -1,0 +1,187 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "QuestFlow Mobile API",
+    "version": "1.0.3",
+    "description": "Contrato questflow.mobile.v1 usado pelo QuestFlow Studio 6.9.5 e QuestFlow Mobile 0.2.1, com Study Coach e ciclo de aparelhos Conectar/Desconectar."
+  },
+  "paths": {
+    "/api/v1/mobile/health": {
+      "get": {
+        "summary": "Saúde e descoberta mínima da API; público para pareamento",
+        "security": []
+      }
+    },
+    "/api/v1/mobile/pairing/exchange": {
+      "post": {
+        "summary": "Trocar token de pareamento por sessão mobile",
+        "security": []
+      }
+    },
+    "/api/v1/mobile/bootstrap": {
+      "get": {
+        "summary": "Bootstrap mobile"
+      }
+    },
+    "/api/v1/mobile/today": {
+      "get": {
+        "summary": "Prioridade do dia"
+      }
+    },
+    "/api/v1/mobile/priorities": {
+      "get": {
+        "summary": "Prioridades por matéria"
+      }
+    },
+    "/api/v1/mobile/progress": {
+      "get": {
+        "summary": "Progresso mobile"
+      }
+    },
+    "/api/v1/mobile/question-batches": {
+      "post": {
+        "summary": "Criar lote de questões"
+      }
+    },
+    "/api/v1/mobile/questions/{question_id}": {
+      "get": {
+        "summary": "Obter revisão da questão",
+        "parameters": [
+          {
+            "name": "question_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v1/mobile/events:batch": {
+      "post": {
+        "summary": "Enviar eventos idempotentes"
+      }
+    },
+    "/api/v1/mobile/attempts/{attempt_id}/feedback": {
+      "get": {
+        "summary": "Feedback após resposta",
+        "parameters": [
+          {
+            "name": "attempt_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v1/mobile/sync": {
+      "get": {
+        "summary": "Pull por cursor"
+      },
+      "post": {
+        "summary": "Push + pull offline-first"
+      }
+    },
+    "/api/v1/mobile/devices/push-token": {
+      "post": {
+        "summary": "Registrar push token"
+      }
+    },
+    "/api/v1/mobile/devices/{device_id}": {
+      "delete": {
+        "summary": "Revogar o próprio dispositivo",
+        "parameters": [
+          {
+            "name": "device_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v1/mobile/channels/telegram": {
+      "get": {
+        "summary": "Consultar estado do canal Telegram"
+      },
+      "put": {
+        "summary": "Pausar ou retomar novas questões do Telegram"
+      },
+      "post": {
+        "summary": "Pausar ou retomar novas questões do Telegram (compatibilidade)"
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {
+      "LearningEvent": {
+        "type": "object",
+        "required": [
+          "event_id",
+          "event_type"
+        ],
+        "properties": {
+          "event_id": {
+            "type": "string"
+          },
+          "schema_version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "event_type": {
+            "type": "string"
+          },
+          "device_id": {
+            "type": "string"
+          },
+          "session_id": {
+            "type": "string"
+          },
+          "attempt_id": {
+            "type": "string"
+          },
+          "exam_project_id": {
+            "type": "string"
+          },
+          "question_id": {
+            "type": "string"
+          },
+          "question_revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "occurred_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "sequence_no": {
+            "type": "integer"
+          },
+          "client": {
+            "type": "object"
+          },
+          "payload": {
+            "type": "object"
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ]
+}

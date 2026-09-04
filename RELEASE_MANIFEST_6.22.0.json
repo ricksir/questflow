@@ -1,0 +1,12 @@
+{
+  "release": "QuestFlow Studio 6.22.0 + Mobile 0.15.0",
+  "studio_version": "6.22.0",
+  "mobile_version": "0.15.0",
+  "package_type": "safe-ui-redesign-with-mobile-source-and-apk",
+  "from_versions_targeted": ["6.21.0", "6.21.1"],
+  "purpose": "Replace the inherited card-heavy layout with an editorial bento system and progressive learning analytics",
+  "database_migration": "none",
+  "learning_engine_changed": false,
+  "mobile_changed": true,
+  "cloud_sync_changed": false
+}

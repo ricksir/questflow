@@ -1,0 +1,13 @@
+{
+  "studio": "6.21.0",
+  "mobile": "0.14.0",
+  "upgrade_from": ["6.18.2"],
+  "api_contract": "questflow.analytics.v2",
+  "database_migration": "additive-only",
+  "notes": [
+    "Mantém /api/v1/mobile/progress compatível.",
+    "Analytics V2 usa somente tentativas e questões persistidas.",
+    "Séries curtas exibem KPI e aviso de amostra insuficiente.",
+    "Banco, respostas, runtime e backups são preservados pela atualização."
+  ]
+}

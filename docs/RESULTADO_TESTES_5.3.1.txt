@@ -1,0 +1,10 @@
+.............................................................................................Método HTTP normalizado no loopback: '{{GET' -> GET
+................./usr/lib/python3.13/json/decoder.py:361: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7f65a1ba7f10>
+  obj, end = self.scan_once(s, idx)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+...............................................
+----------------------------------------------------------------------
+Ran 157 tests in 7.760s
+
+OK
+[OK] Dependências já instaladas e válidas. Nenhum download necessário.

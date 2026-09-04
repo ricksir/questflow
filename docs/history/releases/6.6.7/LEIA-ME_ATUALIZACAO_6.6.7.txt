@@ -1,0 +1,18 @@
+QUESTFLOW STUDIO 6.6.7 — ENUNCIADO CONTEXTUAL
+
+CORREÇÃO PRINCIPAL
+A Curadoria não usa mais um mínimo fixo de 40 caracteres para decidir se o enunciado é íntegro.
+
+O caso "A imunidade tributária:" agora é aceito corretamente quando a questão possui estrutura coerente. Enunciado, alternativas e gabarito são avaliados de forma separada e contextual.
+
+COMO FICA A REGRA
+- Enunciado vazio ou marcador explícito de texto ausente: bloqueia.
+- Enunciado curto, mas válido: não bloqueia.
+- Possível sinal de corte/truncamento: alerta para conferência, mas não impede a decisão humana por si só.
+- Alternativas e gabarito continuam tendo seus próprios requisitos críticos.
+
+COMPATIBILIDADE
+Não há migração nova de banco. A versão preserva as correções de Curadoria, navegação guiada e Cloud Sync idempotente das versões anteriores.
+
+AÇÃO APÓS ATUALIZAR
+Abra Curadoria inteligente e clique em Recalcular curadoria. Questões que estavam presas somente pelo antigo limite de tamanho deixam de apresentar "Enunciado íntegro" como pendência crítica.

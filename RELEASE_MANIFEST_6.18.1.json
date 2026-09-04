@@ -1,0 +1,30 @@
+{
+  "release": "QuestFlow Studio 6.18.1",
+  "studio_version": "6.18.1",
+  "mobile_version": "0.13.1",
+  "package_type": "safe-update-hotfix",
+  "from_versions_targeted": [
+    "6.18.0"
+  ],
+  "purpose": "Separate Corrections from Not Studied subjects and make offline session summaries explicit",
+  "database_migration": "none",
+  "learning_engine_changed": false,
+  "mobile_changed": true,
+  "cloud_sync_changed": false,
+  "tests": {
+    "focused_pytest_passed": 83,
+    "functional_failures": 0,
+    "mobile_typecheck": "passed",
+    "mobile_core_tests": "passed",
+    "javascript_syntax": "passed"
+  },
+  "artifacts": [
+    "ARQUITETURA_CORRECTIONS_OFFLINE_SUMMARY_6.18.1.md",
+    "INSTRUCOES_ATUALIZACAO_6.18.1.md",
+    "RELATORIO_VALIDACAO_6.18.1.md",
+    "MATRIZ_COMPATIBILIDADE_6.18.1.json",
+    "SBOM_6.18.1.cdx.json",
+    "AUDITORIA_VULNERABILIDADES_6.18.1.json",
+    "VALIDACAO_FINAL_6.18.1.json"
+  ]
+}

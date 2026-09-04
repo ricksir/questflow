@@ -1,0 +1,40 @@
+QuestFlow Studio 6.6.2 — Cloud Sync Idempotente
+
+CORREÇÃO PRINCIPAL
+A versão 6.6.1 podia recriar eventos de Cloud Sync apenas ao atualizar o painel.
+A causa era o Recomendador: a pré-visualização recalculava métricas derivadas de
+study_state e persistia esses valores. O trigger do Cloud Sync tratava qualquer
+UPDATE como alteração de domínio e recolocava todos os candidatos na outbox.
+
+O caso foi reproduzido com 213 candidatos:
+- 6.6.1: fila 0 -> atualizar recomendador/painel -> 213 eventos study_state.
+- 6.6.2: fila 0 -> atualizar recomendador/painel -> 0 eventos.
+
+O QUE MUDOU
+1. Pré-visualizações do Recomendador e da Central “O que fazer hoje?” são read-only.
+2. Os campos transitórios abaixo não geram mais eventos Cloud Sync:
+   - memory_retrievability
+   - adaptive_prediction
+   - adaptive_priority
+   - last_selection_reason
+   - last_selection_bucket
+3. Mudanças reais continuam sincronizadas: respostas, acertos/erros, FSRS, due_at,
+   suspensão, correções, KT/IRT persistente e demais estado durável.
+4. UPDATE sem mudança efetiva de valor também deixa de gerar ruído na outbox.
+5. A seleção operacional do Telegram/simulado ainda pode persistir métricas locais,
+   mas essas métricas recalculáveis não são enviadas ao Turso.
+
+COMO PROCEDER AO ATUALIZAR
+Se a sua instalação ainda mostrar as 213 pendências criadas pela versão anterior,
+clique uma vez em “Sincronizar agora”. Elas podem ser enviadas normalmente.
+Depois disso, atualizar o painel não deve recriar a fila.
+
+BANCO
+Nenhuma nova migração é necessária:
+- question_bank: v8
+- study: v10
+- ai_governance: v4
+
+VALIDAÇÃO
+341/341 testes automatizados aprovados, incluindo reprodução explícita dos 213
+eventos e regressões de Cloud Sync, FSRS, simulados, Tutor IA e Projeto/Edital.

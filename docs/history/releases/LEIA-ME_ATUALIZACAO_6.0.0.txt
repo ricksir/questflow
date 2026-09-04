@@ -1,0 +1,59 @@
+QUESTFLOW STUDIO 6.0.0 — MODELO DO ALUNO
+FSRS + KNOWLEDGE TRACING + IRT
+
+1. CORREÇÃO CRÍTICA DA CURADORIA
+
+A tela “Curadoria inteligente” da 5.9 podia exibir “Método não permitido” porque a interface chamava recursos já implementados no núcleo, mas ausentes da lista de métodos autorizados pelo servidor HTTP local.
+
+Na 6.0 todos os métodos usados pela Curadoria, RAG, grafo, duplicidade e assistência de IA foram autorizados e há teste automático para impedir que esse problema volte.
+
+O nome “Curadoria inteligente” também passa a aparecer completo no menu, com sidebar responsivo e sem truncamento por reticências.
+
+2. NOVA ETAPA — MODELO DO ALUNO
+
+O QuestFlow passa a combinar três motores complementares:
+
+- FSRS: estima retenção e decide quando revisar.
+- Knowledge Tracing (BKT): estima quanto você provavelmente domina cada conceito.
+- IRT pessoal regularizada: estima habilidade por matéria e dificuldade/discriminação/informação das questões.
+
+O FSRS continua com precedência rígida. O novo modelo não força revisão antecipada nem tira prioridade de revisões vencidas; ele melhora a ordenação e o diagnóstico dentro de cada classe de revisão.
+
+3. HISTÓRICO JÁ EXISTENTE
+
+Ao atualizar uma base 5.9, o histórico de respostas existente é reaproveitado automaticamente para construir o KT/IRT. Não é necessário começar do zero.
+
+O botão “Reconstruir modelo do aluno”, no Painel visual, permite forçar um replay completo do histórico. Essa rotina não altera os cartões FSRS.
+
+4. NOVAS INFORMAÇÕES VISUAIS
+
+No Painel visual:
+- domínio médio;
+- confiança do modelo;
+- conceitos fortes;
+- lacunas prováveis;
+- habilidade pessoal por matéria;
+- número de questões modeladas.
+
+Na inteligência de cada questão:
+- domínio KT;
+- confiança;
+- dificuldade IRT pessoal;
+- habilidade da matéria;
+- informação da questão.
+
+5. IMPORTANTE SOBRE IRT
+
+O QuestFlow é, por padrão, um banco pessoal. Portanto a IRT 6.0 é propositalmente regularizada e apresentada como calibração pessoal, não como parâmetro psicométrico populacional. Para uma IRT populacional seriam necessários dados de uma coorte ampla de candidatos.
+
+6. COMPATIBILIDADE
+
+- Migração de estudo v8 automática e idempotente.
+- Banco de questões 5.9/Curadoria 2.0/RAG preservados.
+- FSRS preservado.
+- Telegram preservado.
+- Learning Analytics preservado.
+- Turso/offline preservados.
+- Importadores e correção do banco preservados.
+
+VALIDAÇÃO FINAL: 266/266 TESTES APROVADOS.

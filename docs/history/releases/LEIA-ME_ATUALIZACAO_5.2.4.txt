@@ -1,0 +1,35 @@
+QUESTFLOW STUDIO 5.2.4 — CÓDIGO EDITÁVEL, AUDITORIA E ROLAGEM HORIZONTAL
+
+ALTERAÇÃO DO CÓDIGO DA QUESTÃO
+
+- O campo Código da questão agora é editável em Revisar banco.
+- Ao salvar uma troca, o QuestFlow pede confirmação.
+- O UID técnico da questão é preservado, mantendo ciclos, respostas, envios,
+  estatísticas e solicitações de correção ligados ao mesmo registro.
+- O código visível, source_code, source_key, id, fonte.codigo e referências de
+  código existentes no JSON são atualizados na mesma transação SQLite.
+- A troca é registrada na tabela question_code_history e no histórico interno
+  da questão, com código anterior, novo código, data e origem da alteração.
+- O programa bloqueia código vazio, inválido ou já usado por outra questão.
+
+LAYOUT E TABELAS
+
+- O espaço externo entre painéis, formulários, cartões e blocos foi reduzido.
+- O padding interno dos campos e registros foi preservado.
+- Divisores finos substituem faixas escuras entre itens repetidos.
+- A lista Questões possui uma barra horizontal própria, visível logo abaixo do
+  cabeçalho, para acessar Aula, Assunto, Ano e Status sem depender da barra no
+  final da lista.
+- Também é possível usar Shift + roda do mouse para rolagem horizontal.
+- Todas as tabelas gerenciadas mantêm rolagem horizontal, ordenação,
+  movimentação e redimensionamento de colunas.
+
+INSTALAÇÃO
+
+1. Feche a versão anterior.
+2. Extraia o ZIP completo em uma pasta nova.
+3. Execute INSTALAR_E_DIAGNOSTICAR.bat.
+4. Execute INICIAR_QUESTFLOW_STUDIO.bat.
+
+A interface responsiva abre somente no Google Chrome e usa o perfil isolado
+ data\chrome_runtime_5_2_4.

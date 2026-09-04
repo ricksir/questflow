@@ -1,0 +1,41 @@
+QUESTFLOW STUDIO 6.9.6 + QUESTFLOW MOBILE 0.3
+CLOUD BRIDGE
+============================================================
+
+OBJETIVO
+--------
+Permitir que o Mobile continue estudando fora da mesma LAN do Studio, usando
+um Gateway Cloud seguro, sem dar ao aplicativo acesso direto ao banco interno.
+
+O QUE JÁ ESTÁ IMPLEMENTADO
+---------------------------
+1. Transporte híbrido: Studio local quando disponível e Cloud Bridge como fallback.
+2. Outbox offline e sincronização idempotente preservadas.
+3. Gateway independente em mobile_cloud_gateway.py.
+4. Projeções de Hoje/Progresso/Bootstrap e pacote limitado de questões na nuvem.
+5. Tokens brutos não são publicados pelo Studio: o Gateway recebe hashes de sessão.
+6. Feedback Cloud provisório, com métricas definitivas após retorno do Studio.
+7. Isolamento por tenant em todas as tabelas do Gateway.
+8. Desconexão remota é entregue ao Studio sem perder respostas já enfileiradas.
+9. Sessões Mobile 0.2.x podem aprender a URL Cloud ao abrir a 0.3 junto ao Studio.
+
+IMPORTANTE: HOSPEDAGEM
+----------------------
+O ZIP inclui o software do Gateway, mas não inclui uma hospedagem pública.
+Para estudar por 4G/5G ou outra rede com o Studio desligado, hospede o Gateway
+em um servidor/VPS com HTTPS e configure no Studio:
+
+Configurações -> Mobile Cloud Bridge
+
+Informe a URL HTTPS pública e a mesma chave administrativa usada no Gateway,
+teste a conexão e use "Publicar e receber agora".
+
+PRIMEIRO PAREAMENTO
+-------------------
+O primeiro QR ainda é emitido pelo Studio. Depois que o aparelho conhece a URL
+Cloud, o pareamento Bearer existente pode ser usado pelo Gateway enquanto válido.
+
+SEGURANÇA
+---------
+O Gateway NÃO recebe TURSO_AUTH_TOKEN, arquivo SQLite do QuestFlow nem acesso
+às tabelas internas. O Learning Engine/FSRS/KT/IRT continua autoritativo no Studio.

@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800" role="img" aria-label="QuestFlow Studio — banco inteligente de questões">
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#071525"/><stop offset="1" stop-color="#0a2340"/></linearGradient>
+  <linearGradient id="card" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0f2742"/><stop offset="1" stop-color="#153451"/></linearGradient>
+  <linearGradient id="blue" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#7cc5ff"/><stop offset="1" stop-color="#4ca3ff"/></linearGradient>
+  <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffd28b"/><stop offset="1" stop-color="#ffb547"/></linearGradient>
+  <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="16" stdDeviation="20" flood-color="#000000" flood-opacity="0.35"/></filter>
+  <filter id="soft" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="14"/></filter>
+</defs>
+<rect x="18" y="18" width="764" height="764" rx="72" fill="url(#bg)"/>
+<!-- quiet prestige rings -->
+<circle cx="400" cy="400" r="312" fill="none" stroke="#2d4b67" stroke-width="1.5" opacity=".55"/>
+<circle cx="400" cy="400" r="270" fill="none" stroke="#4ca3ff" stroke-width="1.2" opacity=".22" stroke-dasharray="4 10"/>
+<path d="M120 518 C205 620 310 675 421 670 C553 665 657 583 696 470" fill="none" stroke="#ffb547" stroke-width="3" opacity=".38" stroke-linecap="round"/>
+<path d="M115 286 C220 144 394 103 552 153 C625 176 674 224 704 281" fill="none" stroke="#7cc5ff" stroke-width="3" opacity=".28" stroke-linecap="round"/>
+
+<!-- central question-bank stack -->
+<g filter="url(#shadow)">
+  <rect x="236" y="236" width="324" height="380" rx="28" fill="#153451" stroke="#2d4b67" stroke-width="2" transform="rotate(-5 398 426)"/>
+  <rect x="252" y="222" width="324" height="380" rx="28" fill="#153451" stroke="#2d4b67" stroke-width="2" transform="rotate(4 414 412)"/>
+  <rect x="224" y="214" width="352" height="406" rx="30" fill="url(#card)" stroke="#2d4b67" stroke-width="2.5"/>
+  <rect x="248" y="238" width="304" height="48" rx="14" fill="#4ca3ff" opacity=".11"/>
+  <circle cx="278" cy="262" r="8" fill="#ffb547"/>
+  <text x="304" y="270" fill="#eef6ff" font-family="Segoe UI,Arial,sans-serif" font-size="22" font-weight="700" letter-spacing="1">BANCO DE QUESTÕES</text>
+  <line x1="248" y1="309" x2="552" y2="309" stroke="#2d4b67" stroke-width="2"/>
+  <text x="248" y="356" fill="#eef6ff" font-family="Segoe UI,Arial,sans-serif" font-size="27" font-weight="750">Questão de alto nível</text>
+  <rect x="248" y="376" width="260" height="10" rx="5" fill="#9fb5c8" opacity=".32"/>
+  <rect x="248" y="396" width="224" height="10" rx="5" fill="#9fb5c8" opacity=".23"/>
+  <rect x="248" y="416" width="282" height="10" rx="5" fill="#9fb5c8" opacity=".23"/>
+  <!-- alternatives -->
+  <g font-family="Segoe UI,Arial,sans-serif" font-size="17" font-weight="700">
+    <circle cx="266" cy="468" r="14" fill="none" stroke="#4ca3ff" stroke-width="2"/><text x="260" y="474" fill="#4ca3ff">A</text>
+    <rect x="290" y="461" width="202" height="12" rx="6" fill="#9fb5c8" opacity=".28"/>
+    <circle cx="266" cy="512" r="14" fill="url(#blue)"/><text x="260" y="518" fill="#fff">B</text>
+    <rect x="290" y="505" width="232" height="12" rx="6" fill="#4ca3ff" opacity=".58"/>
+    <circle cx="266" cy="556" r="14" fill="none" stroke="#2d4b67" stroke-width="2"/><text x="260" y="562" fill="#9fb5c8">C</text>
+    <rect x="290" y="549" width="184" height="12" rx="6" fill="#9fb5c8" opacity=".24"/>
+  </g>
+  <!-- Q seal -->
+  <circle cx="518" cy="562" r="37" fill="url(#gold)"/>
+  <text x="494" y="576" fill="#fff" font-family="Segoe UI,Arial,sans-serif" font-size="42" font-weight="800">Q</text>
+</g>
+
+<!-- performance card -->
+<g filter="url(#shadow)">
+  <rect x="92" y="176" width="170" height="130" rx="24" fill="#0f2742" stroke="#2d4b67" stroke-width="2"/>
+  <text x="116" y="206" fill="#9fb5c8" font-family="Segoe UI,Arial,sans-serif" font-size="14" font-weight="650">DESEMPENHO</text>
+  <path d="M118 267 L150 248 L180 255 L211 220 L238 232" fill="none" stroke="#7cc5ff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="211" cy="220" r="6" fill="#ffb547"/>
+  <rect x="116" y="277" width="94" height="7" rx="4" fill="#36c98b" opacity=".72"/>
+</g>
+
+<!-- review/ranking card -->
+<g filter="url(#shadow)">
+  <rect x="548" y="164" width="156" height="142" rx="24" fill="#0f2742" stroke="#2d4b67" stroke-width="2"/>
+  <circle cx="626" cy="225" r="37" fill="none" stroke="#2d4b67" stroke-width="10"/>
+  <path d="M626 188 A37 37 0 1 1 596 247" fill="none" stroke="#ffb547" stroke-width="10" stroke-linecap="round"/>
+  <path d="M620 221 L630 232 L650 208" fill="none" stroke="#36c98b" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="584" y="279" width="84" height="7" rx="4" fill="#9fb5c8" opacity=".25"/>
+</g>
+
+<!-- syllabus/map card -->
+<g filter="url(#shadow)">
+  <rect x="80" y="514" width="170" height="134" rx="24" fill="#0f2742" stroke="#2d4b67" stroke-width="2"/>
+  <text x="104" y="544" fill="#9fb5c8" font-family="Segoe UI,Arial,sans-serif" font-size="14" font-weight="650">MAPA DE AULAS</text>
+  <rect x="106" y="570" width="118" height="12" rx="6" fill="#4ca3ff" opacity=".24"/>
+  <rect x="106" y="596" width="88" height="12" rx="6" fill="#ffb547" opacity=".82"/>
+  <rect x="106" y="622" width="106" height="12" rx="6" fill="#36c98b" opacity=".68"/>
+</g>
+
+<!-- mastery target -->
+<g filter="url(#shadow)">
+  <rect x="566" y="516" width="154" height="136" rx="24" fill="#0f2742" stroke="#2d4b67" stroke-width="2"/>
+  <circle cx="643" cy="578" r="38" fill="none" stroke="#2d4b67" stroke-width="8"/>
+  <circle cx="643" cy="578" r="24" fill="none" stroke="#7cc5ff" stroke-width="7"/>
+  <circle cx="643" cy="578" r="9" fill="#ffb547"/>
+  <path d="M646 575 L683 538" stroke="#ffb547" stroke-width="6" stroke-linecap="round"/>
+  <path d="M675 537 L688 533 L684 546" fill="#ffb547"/>
+  <rect x="606" y="629" width="74" height="7" rx="4" fill="#9fb5c8" opacity=".25"/>
+</g>
+
+<!-- small mastery badge -->
+<g transform="translate(343 112)" filter="url(#shadow)">
+  <path d="M57 0 L74 35 L112 40 L84 66 L92 104 L57 85 L22 104 L30 66 L2 40 L40 35 Z" fill="url(#gold)"/>
+  <circle cx="57" cy="53" r="24" fill="#0f2742" opacity=".92"/>
+  <path d="M45 54 L54 63 L70 44" fill="none" stroke="#36c98b" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+
+<!-- subtle synchronization line, secondary not dominant -->
+<g opacity=".78">
+  <circle cx="400" cy="686" r="24" fill="#0f2742" stroke="#2d4b67" stroke-width="2"/>
+  <path d="M386 687 a16 16 0 0 1 27-10" fill="none" stroke="#7cc5ff" stroke-width="4" stroke-linecap="round"/>
+  <path d="M411 672 l4 9 l-10-1" fill="#7cc5ff"/>
+  <path d="M414 688 a16 16 0 0 1-27 10" fill="none" stroke="#ffb547" stroke-width="4" stroke-linecap="round"/>
+  <path d="M389 703 l-4-9 l10 1" fill="#ffb547"/>
+</g>
+</svg>

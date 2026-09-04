@@ -1,0 +1,15 @@
+{
+  "schema": "questflow.update-manifest.v1",
+  "release": "6.22.6",
+  "from_version": "6.22.5",
+  "package_root": "QuestFlow",
+  "preserves": ["data", ".venv", "venv", "runtime", "backups", "mobile"],
+  "excludes": ["data", "mobile", "node_modules", ".expo", ".git", "__pycache__", ".pytest_cache", "*.pyc"],
+  "changed_focus": ["core/course_catalog.py", "tests/test_course_catalog_merge_6150.py"],
+  "database_migration": "none",
+  "mobile_version": "0.15.1",
+  "mobile_changed": false,
+  "learning_engine_changed": false,
+  "cloud_sync_changed": true,
+  "feature": "Idempotent catalog refresh without recreating the Cloud Sync outbox"
+}

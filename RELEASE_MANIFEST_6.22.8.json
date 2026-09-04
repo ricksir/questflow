@@ -1,0 +1,12 @@
+{
+  "release": "QuestFlow Studio 6.22.8 + Mobile 0.15.1",
+  "studio_version": "6.22.8",
+  "mobile_version": "0.15.1",
+  "package_type": "safe-studio-only-hotfix",
+  "from_versions_targeted": ["6.22.7"],
+  "purpose": "Recognize editorial Markdown question headers, comments and bare-letter alternatives",
+  "database_migration": "none",
+  "learning_engine_changed": false,
+  "mobile_changed": false,
+  "cloud_sync_changed": false
+}

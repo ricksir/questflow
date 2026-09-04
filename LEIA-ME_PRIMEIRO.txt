@@ -1,0 +1,19 @@
+QUESTFLOW STUDIO 6.7.0 — COMO INSTALAR
+
+1. Extraia todo o conteúdo do ZIP para uma pasta local.
+2. Execute INICIAR_QUESTFLOW_STUDIO.bat.
+3. Mantenha sua pasta de dados/banco conforme o procedimento de atualização já utilizado.
+
+NOVIDADE CENTRAL DA 6.7.0
+O Tutor IA passa a trabalhar com scaffolding progressivo em seis níveis de ajuda. No modo “Socrático progressivo”, use “Próxima pista” apenas quando precisar; quando conseguir resolver, clique “Consegui resolver”. O nível necessário é registrado no Learner Model como sinal de independência/suporte.
+
+REPRESENTAÇÕES DISPONÍVEIS
+- Texto guiado
+- Flashcard de recuperação
+- Passo a passo
+- Visual / imagem da questão
+
+PRIVACIDADE MULTIMODAL
+A imagem binária vinculada à questão permanece local nesta versão. Uma transcrição ou descrição visual opcional pode ser usada pelo Tutor; se houver IA externa ativa, esse texto respeita as mesmas configurações do Centro de Privacidade.
+
+O Watchdog central, Cloud Sync idempotente, Curadoria guiada e os seis motores permanecem preservados.

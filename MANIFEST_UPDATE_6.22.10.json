@@ -1,0 +1,15 @@
+{
+  "schema": "questflow.update-manifest.v1",
+  "release": "6.22.10",
+  "from_version": "6.22.9",
+  "package_root": "QuestFlow",
+  "preserves": ["data", ".venv", "venv", "runtime", "backups", "mobile"],
+  "excludes": ["data", "mobile", "node_modules", ".expo", ".git", "__pycache__", ".pytest_cache", "*.pyc"],
+  "changed_focus": ["web/styles.css", "tests/test_bank_correction_5_5_5.py"],
+  "database_migration": "none; keeps additive question_bank/9 from 6.22.9",
+  "mobile_version": "0.15.1",
+  "mobile_changed": false,
+  "learning_engine_changed": false,
+  "cloud_sync_changed": false,
+  "feature": "Responsive containment for grouped bank lessons and actions"
+}

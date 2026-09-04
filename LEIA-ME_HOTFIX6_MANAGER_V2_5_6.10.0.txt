@@ -1,0 +1,18 @@
+QuestFlow Studio 6.10.0 - HOTFIX6 / Manager V2.5
+
+Correção principal
+- Backups de atualização não incluem mais perfis/runtimes transitórios do Chrome
+  (data/chrome_runtime_* e data/google_browser_profile).
+- Esses diretórios são cache de execução e podem conter arquivos .db bloqueados
+  pelo Chrome no Windows, causando WinError 32 durante o teste de restauração.
+- Banco QuestFlow, configurações, credenciais protegidas, dados pedagógicos,
+  imagens e demais dados persistentes continuam no backup.
+
+Manager V2.5
+- Usa um runner Python externo em %LOCALAPPDATA%\QFS\updater, independente da
+  versão antiga do release_tools.py instalada.
+- O runner aplica a exclusão de cache em memória mesmo quando a instalação atual
+  é 6.9.8, permitindo atualizar com segurança para 6.10.0.
+- A correção permanente também é instalada em core/production_hardening.py.
+
+A pasta data não é alterada pelo REPARAR_QUESTFLOW_MANAGER.bat.

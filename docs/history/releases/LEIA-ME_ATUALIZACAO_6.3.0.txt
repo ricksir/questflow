@@ -1,0 +1,52 @@
+QUESTFLOW STUDIO 6.3.0
+ETAPA 5 — GERAÇÃO CONTROLADA + LEGISLAÇÃO TEMPORAL + QUESTÕES OURO
+
+1. GERAÇÃO CONTROLADA
+- Uma questão inédita só pode ser criada depois que o usuário selecionar explicitamente uma ou mais evidências do Knowledge Engine.
+- O gerador não faz busca externa silenciosa e não recebe o banco inteiro como contexto.
+- O snapshot das fontes selecionadas, seus identificadores e o contexto temporal ficam ligados ao rascunho.
+- A questão nasce como `inedita_propria` e nunca é publicada automaticamente.
+
+2. SEGUNDO AVALIADOR INDEPENDENTE
+- O AI Engine gera o rascunho.
+- O Evaluation & Governance Engine executa um crítico separado (`qf-generation-critic-1`).
+- O crítico verifica suporte do gabarito nas fontes, alternativas duplicadas, referências legais não sustentadas, cobertura das evidências, qualidade de formulação e coerência temporal.
+- Aprovação humana continua obrigatória.
+
+3. DISTRATORES DERIVADOS DOS ERROS
+- Quando existe histórico suficiente, o motor consulta o perfil de erros do aluno.
+- Padrões como confusão conceitual, regra/exceção, interpretação e esquecimento podem orientar a construção dos distratores.
+- O objetivo é tornar a questão diagnóstica, não apenas criar alternativas aleatórias.
+
+4. LEGISLAÇÃO TEMPORAL
+- Cada norma/versionamento recebe chave canônica, início de vigência, fim de vigência opcional, fonte e texto.
+- O QuestFlow resolve qual versão estava vigente em uma data informada.
+- As versões entram no índice RAG e podem ser escolhidas como evidência da geração.
+- Ao informar a data da prova, o crítico bloqueia rascunhos que utilizem versão legislativa incompatível com aquela data.
+
+5. QUESTÕES OURO
+- Questões selecionadas podem ser registradas em um conjunto permanente de avaliação.
+- Cada execução de regressão é persistida, permitindo comparar estabilidade do motor ao longo das versões.
+- O baseline atual é local e fundamentado nas fontes, deliberadamente reproduzível.
+
+6. ARQUITETURA
+A versão continua com exatamente seis motores:
+1) Banco Editorial
+2) Learner Model
+3) Learning Engine
+4) Knowledge Engine
+5) AI Engine
+6) Evaluation & Governance Engine
+
+A Etapa 5 não criou um sétimo motor. Seus recursos foram distribuídos entre as fronteiras já existentes.
+
+7. MIGRAÇÕES
+- question_bank v7: legislação temporal.
+- ai_governance v2: geração controlada, questões ouro e regressões.
+- Migrações anteriores permanecem intactas e idempotentes.
+
+8. VALIDAÇÃO
+- 296 testes automatizados aprovados em execução integral particionada.
+- 129 arquivos Python compilados com sucesso.
+- JavaScript validado com `node --check`.
+- Migração real de uma base criada pela 6.2.0 para a 6.3.0: questão e tentativa preservadas, seis motores ativos, `PRAGMA quick_check = ok` e zero violações de foreign key.

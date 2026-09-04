@@ -1,0 +1,609 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "QuestFlow Mobile API",
+    "version": "1.2.0",
+    "description": "Contrato questflow.mobile.v1 usado pelo QuestFlow Studio 6.14.0 e QuestFlow Mobile 0.10.0. A experiência principal usa questflow.mobile.adaptive_session.v1 com micro-lotes, prefetch e replanejamento no QuestFlow Core. O Mobile permanece Study Only e não recalcula FSRS, KT, IRT, mastery ou prioridade."
+  },
+  "paths": {
+    "/api/v1/mobile/health": {
+      "get": {
+        "summary": "Saúde e descoberta mínima da API; público para pareamento",
+        "security": []
+      }
+    },
+    "/api/v1/mobile/pairing/exchange": {
+      "post": {
+        "summary": "Trocar token de pareamento por sessão mobile",
+        "security": []
+      }
+    },
+    "/api/v1/mobile/bootstrap": {
+      "get": {
+        "summary": "Bootstrap mobile"
+      }
+    },
+    "/api/v1/mobile/today": {
+      "get": {
+        "summary": "Prioridade do dia"
+      }
+    },
+    "/api/v1/mobile/priorities": {
+      "get": {
+        "summary": "Prioridades por matéria"
+      }
+    },
+    "/api/v1/mobile/progress": {
+      "get": {
+        "summary": "Progresso mobile"
+      }
+    },
+    "/api/v1/mobile/question-batches": {
+      "post": {
+        "summary": "Criar lote com seleção adaptativa central",
+        "description": "Retorna questões escolhidas pelo StudyBatchService sobre StudyRepository.select_questions. O Mobile não executa algoritmo adaptativo próprio. recommended mistura correções/relearning, revisões FSRS, lacunas e questões novas com interleaving e proteção contra repetição recente.",
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "count": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 50,
+                    "default": 10
+                  },
+                  "exam_project_id": {
+                    "type": "string"
+                  },
+                  "mode": {
+                    "type": "string",
+                    "enum": [
+                      "recommended",
+                      "review",
+                      "errors",
+                      "subject"
+                    ],
+                    "default": "recommended"
+                  },
+                  "subject": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/mobile/questions/{question_id}": {
+      "get": {
+        "summary": "Obter revisão da questão",
+        "parameters": [
+          {
+            "name": "question_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v1/mobile/events:batch": {
+      "post": {
+        "summary": "Enviar eventos idempotentes"
+      }
+    },
+    "/api/v1/mobile/attempts/{attempt_id}/feedback": {
+      "get": {
+        "summary": "Feedback após resposta",
+        "parameters": [
+          {
+            "name": "attempt_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v1/mobile/sync": {
+      "get": {
+        "summary": "Pull por cursor"
+      },
+      "post": {
+        "summary": "Push + pull offline-first"
+      }
+    },
+    "/api/v1/mobile/devices/push-token": {
+      "post": {
+        "summary": "Registrar push token"
+      }
+    },
+    "/api/v1/mobile/devices/{device_id}": {
+      "delete": {
+        "summary": "Desconectar o próprio aparelho",
+        "parameters": [
+          {
+            "name": "device_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v1/mobile/study-sessions": {
+      "post": {
+        "summary": "Inicia sessão adaptativa e retorna o primeiro micro-lote",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "session_id",
+                  "count"
+                ],
+                "properties": {
+                  "session_id": {
+                    "type": "string"
+                  },
+                  "count": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 50
+                  },
+                  "exam_project_id": {
+                    "type": "string"
+                  },
+                  "mode": {
+                    "type": "string",
+                    "enum": [
+                      "recommended",
+                      "review",
+                      "errors",
+                      "subject"
+                    ]
+                  },
+                  "subject": {
+                    "type": "string"
+                  },
+                  "micro_batch_size": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 6,
+                    "default": 3
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/AdaptiveSessionProjection"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/mobile/study-sessions/{session_id}/micro-batches": {
+      "post": {
+        "summary": "Prefetch ou ativa o próximo micro-lote adaptativo",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "purpose": {
+                    "type": "string",
+                    "enum": [
+                      "active",
+                      "prefetch"
+                    ],
+                    "default": "active"
+                  },
+                  "prefetched_batch_id": {
+                    "type": "string"
+                  },
+                  "force_replan": {
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "excluded_question_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/AdaptiveSessionProjection"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/mobile/study-sessions/{session_id}": {
+      "get": {
+        "summary": "Consulta o estado persistido de uma sessão adaptativa",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {
+      "LearningEvent": {
+        "type": "object",
+        "required": [
+          "event_id",
+          "event_type"
+        ],
+        "properties": {
+          "event_id": {
+            "type": "string"
+          },
+          "schema_version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "event_type": {
+            "type": "string",
+            "enum": [
+              "session_started",
+              "session_ended",
+              "question_presented",
+              "question_opened",
+              "answer_selected",
+              "answer_changed",
+              "answer_submitted",
+              "confidence_reported",
+              "difficulty_reported",
+              "result_seen",
+              "explanation_opened",
+              "explanation_finished",
+              "learning_gap_reported",
+              "question_skipped",
+              "question_correction_requested",
+              "topic_not_studied_reported",
+              "topic_study_completed",
+              "hint_requested",
+              "scaffold_used"
+            ]
+          },
+          "device_id": {
+            "type": "string"
+          },
+          "session_id": {
+            "type": "string"
+          },
+          "attempt_id": {
+            "type": "string"
+          },
+          "exam_project_id": {
+            "type": "string"
+          },
+          "question_id": {
+            "type": "string"
+          },
+          "question_revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "occurred_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "sequence_no": {
+            "type": "integer"
+          },
+          "client": {
+            "type": "object"
+          },
+          "payload": {
+            "type": "object"
+          }
+        }
+      },
+      "AdaptiveSelectionMetadata": {
+        "type": "object",
+        "description": "Metadados auditáveis da decisão do QuestFlow Core; não são métricas de desempenho do aluno.",
+        "properties": {
+          "policy": {
+            "type": "string",
+            "const": "recommended-adaptive-v2"
+          },
+          "source": {
+            "type": "string",
+            "const": "StudyRepository.select_questions"
+          },
+          "core_policy": {
+            "type": "string",
+            "const": "auditor_inteligente"
+          },
+          "bucket": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "reason": {
+            "type": "string"
+          },
+          "recent_exposure_penalty": {
+            "type": "number"
+          },
+          "topic_transfer": {
+            "type": "boolean"
+          },
+          "core_rank": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "review_eligible": {
+            "type": "boolean"
+          }
+        }
+      },
+      "AdaptiveSessionGoal": {
+        "type": "object",
+        "required": [
+          "type",
+          "headline",
+          "questions_target",
+          "estimated_minutes",
+          "focus"
+        ],
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "headline": {
+            "type": "string"
+          },
+          "questions_target": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50
+          },
+          "estimated_minutes": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "focus": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "strategy_profile": {
+            "type": "string",
+            "enum": [
+              "balanced",
+              "consolidate",
+              "transfer",
+              "expand"
+            ]
+          }
+        }
+      },
+      "AdaptiveMicroBatch": {
+        "type": "object",
+        "required": [
+          "batch_id",
+          "questions"
+        ],
+        "properties": {
+          "batch_id": {
+            "type": "string"
+          },
+          "ordinal": {
+            "type": "integer"
+          },
+          "plan_revision": {
+            "type": "integer"
+          },
+          "purpose": {
+            "type": "string",
+            "enum": [
+              "active",
+              "prefetch"
+            ]
+          },
+          "strategy_profile": {
+            "type": "string"
+          },
+          "state_signature": {
+            "type": "string"
+          },
+          "questions": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "completed": {
+            "type": "boolean"
+          },
+          "prefetch_promoted": {
+            "type": "boolean"
+          },
+          "prefetch_reused": {
+            "type": "boolean"
+          },
+          "prefetch_invalidated": {
+            "type": "boolean"
+          },
+          "prefetch_invalidation_reason": {
+            "type": "string"
+          }
+        }
+      },
+      "AdaptiveSessionProjection": {
+        "type": "object",
+        "required": [
+          "contract",
+          "session_id",
+          "goal",
+          "micro_batch"
+        ],
+        "properties": {
+          "contract": {
+            "type": "string",
+            "const": "questflow.mobile.adaptive_session.v1"
+          },
+          "orchestrator": {
+            "type": "string",
+            "const": "adaptive-session-orchestrator-v1"
+          },
+          "session_id": {
+            "type": "string"
+          },
+          "target_questions": {
+            "type": "integer"
+          },
+          "micro_batch_size": {
+            "type": "integer"
+          },
+          "goal": {
+            "$ref": "#/components/schemas/AdaptiveSessionGoal"
+          },
+          "micro_batch": {
+            "$ref": "#/components/schemas/AdaptiveMicroBatch"
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "x-questflow-transports": {
+    "studio_lan": {
+      "protocol": "questflow.mobile.v1",
+      "pairing": true,
+      "authoritative_learning_engine": true
+    },
+    "cloud_bridge": {
+      "protocol": "questflow.mobile.cloud.v1",
+      "pairing": false,
+      "authoritative_learning_engine": false,
+      "feedback_may_be_provisional": true
+    }
+  },
+  "x-questflow-study-selection": {
+    "authoritative_service": "StudyBatchService",
+    "authoritative_core_selector": "StudyRepository.select_questions",
+    "policy": "recommended-adaptive-v2",
+    "mobile_recalculates_adaptive_ranking": false,
+    "recent_session_guard": true,
+    "interleaving": [
+      "subject",
+      "topic",
+      "lesson"
+    ],
+    "concept_transfer_after_low_or_medium_confidence": true,
+    "offline_cache_rotation": true
+  }
+}

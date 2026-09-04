@@ -1,0 +1,8 @@
+interface:
+  display_name: "QuestFlow Release"
+  short_description: "Valida e empacota releases do QuestFlow"
+  brand_color: "#FF7A00"
+  default_prompt: "Use $questflow-release para preparar e validar uma atualização instalável do QuestFlow."
+
+policy:
+  allow_implicit_invocation: true

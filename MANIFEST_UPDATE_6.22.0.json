@@ -1,0 +1,21 @@
+{
+  "schema": "questflow.update-manifest.v1",
+  "release": "6.22.0",
+  "from_version": "6.21.0",
+  "package_root": "QuestFlow",
+  "preserves": ["data", ".venv", "venv", "runtime", "backups"],
+  "excludes": ["data", "node_modules", ".expo", ".git", "mobile/.git", "mobile/node_modules", "mobile/.expo", "__pycache__", ".pytest_cache", "*.pyc"],
+  "changed_focus": [
+    "web/questflow622.css",
+    "web/questflow622.js",
+    "mobile/src/components/ui.tsx",
+    "mobile/src/components/analytics.tsx",
+    "mobile/app/(tabs)/_layout.tsx"
+  ],
+  "database_migration": "none",
+  "mobile_version": "0.15.0",
+  "mobile_changed": true,
+  "learning_engine_changed": false,
+  "cloud_sync_changed": false,
+  "feature": "Editorial bento redesign across Studio and Mobile with progressive evidence charts"
+}

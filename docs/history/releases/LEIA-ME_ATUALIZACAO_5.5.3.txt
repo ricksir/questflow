@@ -1,0 +1,15 @@
+QUESTFLOW STUDIO 5.5.3 — IMPORTAÇÃO CONTEXTUAL DOS ESTUDOS
+
+Na tela "Estudos e questões > Cobertura dos estudos", conteúdos pendentes agora possuem o botão "Adicionar PDF".
+
+Ao usar o botão:
+1. O QuestFlow abre a tela Importar.
+2. A matéria, a aula, a trilha, a tarefa e o conteúdo estudado ficam vinculados ao lote.
+3. Você seleciona o PDF com as questões daquela aula/conteúdo.
+4. O mesmo extrator da aba Importar processa código, enunciado, alternativas, gabarito, banca e demais dados.
+5. O núcleo vincula as questões extraídas ao conteúdo estudado selecionado, evitando depender de uma nova inferência de matéria/aula.
+6. Ao final, a cobertura é recalculada e informa a quantidade ainda faltante.
+
+Também é possível clicar diretamente no número em "Faltam adicionar". O contexto é limpo após a conclusão da importação para evitar classificações acidentais em lotes posteriores.
+
+Antes de atualizar uma instalação em uso, preserve a pasta data e faça backup de questflow_questions.sqlite.

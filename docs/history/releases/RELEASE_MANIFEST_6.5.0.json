@@ -1,0 +1,65 @@
+{
+  "schema": 1,
+  "product": "QuestFlow Studio",
+  "version": "6.5.0",
+  "release": "Projeto de Concurso e Edital",
+  "generated_at_utc": "2026-08-13T17:53:11+00:00",
+  "python": ">=3.11",
+  "tests": {
+    "automated": 314,
+    "status": "passed"
+  },
+  "sqlite_schema_change": true,
+  "schemas": {
+    "question_bank": 8,
+    "study": 9,
+    "ai_governance": 2
+  },
+  "architecture": {
+    "engine_count": 6,
+    "engines": {
+      "editorial": "qf-editorial-engine-3",
+      "learner": "qf-learner-engine-1",
+      "learning": "qf-learning-engine-3",
+      "knowledge": "qf-knowledge-engine-2",
+      "ai": "qf-ai-engine-2",
+      "governance": "qf-ai-governance-2"
+    }
+  },
+  "stage_6": {
+    "exam_project_centric": true,
+    "edital_versioning": true,
+    "retification_diff": true,
+    "today_dashboard": true,
+    "temporal_question_status": true,
+    "turso_sync": true,
+    "fsrs_precedence_preserved": true
+  },
+  "migration_validation": {
+    "from": "6.4.1",
+    "questions_preserved": true,
+    "attempts_preserved": true,
+    "quick_check": "ok",
+    "foreign_key_violations": 0
+  },
+  "critical_file_sha256": {
+    "VERSION.txt": "3eb8e06ca1e02f0a30b0e3eebd289494b35d4fd1466ed907b9148e03b2459b00",
+    "pyproject.toml": "ab4acfc777bb1274e26d0a8c2387ce639dcca713294c9dfc20a725973c5fe24d",
+    "app_shared.py": "74e33ac8c2eb952807ef2be1e8c9ab46e8395eeea397634dc3804a27e8d9842d",
+    "web_api.py": "74a27e6a7fa749001aac2cabc13b46ac393c8d1e754bf3ad5ea23c7d010dea9f",
+    "web_server.py": "49fee59694867307591413f56847335ec95eeb8f6e61e37d80489fe14ea2129b",
+    "core/exam_projects.py": "25d0083511832fd10f7d27d24cfbc74e79961090321ea1565b431f792571d0ef",
+    "core/study.py": "e93c78da014a6917086e37223a8abd008e2413133b85f165e1efd1dd17d76abf",
+    "core/cloud_sync.py": "c922c2ba325c3521d9629be9d783bb0657182aba42717c37e2503e871aaf1b7d",
+    "core/update_monitor.py": "77286efd496327a939b9c9bc096c42cf38a7d8643b058c7c6df3f047b8fbc00e",
+    "core/network.py": "2df7198f5ca06258daf82514c1e95d177d820cd69949a2277c6578dca171c8a5",
+    "core/engines/editorial_bank.py": "3bfb57dcf9e57f544ff21f7660f58a2e0f637cb69f0820ea49fe635267f6e826",
+    "core/engines/learning_engine.py": "f22542a9c971936b8a281f7791ab50064f160cb4a9710190f1cbb8c93ff1723d",
+    "core/engines/registry.py": "fa0781bcdd5f7c6bea365119b066489e6a8802d0e04597accfceb6e2323c80e3",
+    "web/index.html": "f4662037147ded118ed531975c7d08a885973f0530b808aa3a1ea5407738ac62",
+    "web/app.js": "6839ce0a9ceffdc89c2d7a69eaa678426c9bf9d97d0c883f1ec8f67f8b73ef0f",
+    "web/styles.css": "207e02831d36d2a8bd0053ae4048008dd827d057f66a515367aeea6d5ea3f3eb",
+    "requirements.txt": "ee9f6b1eca63963f0b6ace3c85ad46beb67585bca84a2d1b8fe7998ebcb51401"
+  },
+  "tree_file_count": 418
+}

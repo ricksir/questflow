@@ -1,0 +1,33 @@
+QUESTFLOW STUDIO 6.7.0 — TUTOR COM SCAFFOLDING PROGRESSIVO E REVISÃO MULTIMODAL
+
+PRINCIPAL MUDANÇA
+O modo Socrático passa a ser progressivo. O Tutor não entrega a explicação completa imediatamente: ele oferece níveis crescentes de suporte e registra até onde foi necessário chegar.
+
+NÍVEIS
+0. Tentativa independente
+1. Pista metacognitiva
+2. Pista conceitual
+3. Pista de contraste
+4. Pista quase completa
+5. Explicação completa
+
+SINAL PARA O LEARNER MODEL
+- resolver com pouca ajuda aumenta o sinal de independência;
+- precisar de níveis altos registra maior dependência de suporte;
+- esse sinal reduz cautelosamente a confiança ajustada e aumenta moderadamente a prioridade de prática independente futura;
+- FSRS continua soberano no agendamento; KT e IRT continuam sendo modelos distintos.
+
+REVISÃO MULTIMODAL
+O Tutor pode orientar por texto, flashcard, passo a passo ou contexto visual. Imagens que já pertencem à questão são exibidas localmente e não são enviadas automaticamente a provedores externos. Uma transcrição/descrição visual fornecida pelo usuário pode participar do prompt e segue o Centro de Privacidade.
+
+GOVERNANÇA
+Cada pista pode ser auditada. O nível final reutiliza o Tutor completo já governado por afirmação/evidência. A IA não aprova a própria saída.
+
+CLOUD SYNC
+As sessões e eventos de scaffolding foram incluídos no contrato de sincronização e continuam offline-first.
+
+MIGRAÇÃO
+A 6.7.0 adiciona `study v11`. `question_bank v8` e `ai_governance v4` permanecem.
+
+COMPATIBILIDADE
+A atualização preserva Watchdog central, autorrecuperação, rate limiting, Curadoria reativa/guiada, Projeto/Edital, RAG, Tutor multiprovedor, FSRS/KT/IRT, recomendações, simulados e legislação temporal.

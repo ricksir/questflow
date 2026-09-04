@@ -1,0 +1,89 @@
+{
+  "release": "QuestFlow Studio 6.10.0 + Mobile 0.7.0",
+  "codename": "Study Session",
+  "contract": "questflow.mobile.v1",
+  "generated_at": "2026-08-19T09:17:28.871453+00:00",
+  "quality": {
+    "python_tests": 495,
+    "mobile_core": "pass",
+    "typescript_syntax": "pass",
+    "smoke": "pass",
+    "sqlite": "ok",
+    "lock": "ok"
+  },
+  "features": [
+    "recommended_session",
+    "review_session",
+    "error_session",
+    "subject_session",
+    "session_resume",
+    "session_summary"
+  ],
+  "files": [
+    {
+      "path": "VERSION.txt",
+      "sha256": "81254ec8251acd235eecc3375f5dc6931a9fd2c4405b0c2e2760aaa7b960307b",
+      "bytes": 7
+    },
+    {
+      "path": "pyproject.toml",
+      "sha256": "5d531a0224223e7309c3e58a1f5db788a6e74b3d1340b7d64fdf3d76af47bf2e",
+      "bytes": 597
+    },
+    {
+      "path": "core/mobile_foundation.py",
+      "sha256": "4924ff1d3287116fd7e14bf9632abf639fd5527a8de3f255c94207b29691c5d1",
+      "bytes": 104073
+    },
+    {
+      "path": "mobile_cloud_gateway.py",
+      "sha256": "502b103bfee360523803e3155ab9b665f3952dc2ff1982120be8813581432733",
+      "bytes": 36570
+    },
+    {
+      "path": "mobile/app/(tabs)/questions.tsx",
+      "sha256": "df98310cb30d922087b95cd405542a6587401ec622e90bae2e947d1dc2ff122c",
+      "bytes": 43849
+    },
+    {
+      "path": "mobile/src/lib/studySession.ts",
+      "sha256": "735ca9bd63f69852b30ae785a34b9dcf077fa7a22eaee8f5aad42f72c250add9",
+      "bytes": 2869
+    },
+    {
+      "path": "mobile/src/lib/api.ts",
+      "sha256": "0d21cc68dd98cd3f87a99247c131ee72ee9da8c969f1beaf110509f8e8a04489",
+      "bytes": 5249
+    },
+    {
+      "path": "mobile/src/lib/db.ts",
+      "sha256": "b332785a2eb335950ad7483f812180670183551fb046e097bb80b3ebca655a1a",
+      "bytes": 6686
+    },
+    {
+      "path": "mobile/package.json",
+      "sha256": "7b8ec0de9e32ab68c601b20a1d7201d32f6c9fbdcbb61213e05efa8f5c46caab",
+      "bytes": 1384
+    },
+    {
+      "path": "mobile/app.json",
+      "sha256": "a788a53c2a32a4be2e34dcce7566832b9d6bae258fd6c71c30bf5df56611487f",
+      "bytes": 1568
+    },
+    {
+      "path": "questflow_manager.ps1",
+      "sha256": "186a22a13989077ecf9c5f13c53c6412f5a40ff6b011d9366f0e02fbab621970",
+      "bytes": 23721
+    },
+    {
+      "path": "QUESTFLOW.bat",
+      "sha256": "79b3407ca72243d9f0617db506fafe2266626d9989f97ca9fdc1d0bac844da27",
+      "bytes": 188
+    },
+    {
+      "path": "CHANGELOG.md",
+      "sha256": "2bb975ddb2c12da0df96ea536feace0dd3998a26ae27013cb2795bb981e87bc4",
+      "bytes": 16944
+    }
+  ]
+}

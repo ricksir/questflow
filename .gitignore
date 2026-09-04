@@ -1,0 +1,65 @@
+# Sistema e editores
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.swp
+*.tmp
+*.bak
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyd
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.pyright/
+.coverage
+htmlcov/
+.venv/
+venv/
+
+# JavaScript, Expo e builds locais
+node_modules/
+.expo/
+.core-test-build/
+dist/
+build/
+coverage/
+*.tsbuildinfo
+
+# Dados locais, runtime, logs e segredos
+data/
+backups/
+runtime/
+logs/
+*.log
+*.sqlite
+*.sqlite3
+*.sqlite-*
+*.db
+.env
+.env.*
+!.env.example
+google-services.json
+GoogleService-Info.plist
+*.jks
+*.keystore
+*.pem
+*.p12
+*.pfx
+
+# Artefatos e áreas temporárias de release
+work/
+outputs/
+mobile_update_payload_*/
+QuestFlow_Studio_*_UPDATE.zip
+QuestFlow_Mobile_*.apk
+*.apk
+*.aab
+*.zip
+
+# Ferramentas locais
+.idea/
+.vscode/
+

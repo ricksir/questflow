@@ -1,0 +1,28 @@
+{
+  "release": "QuestFlow Studio 6.16.1",
+  "studio_version": "6.16.1",
+  "mobile_version": "0.11.0",
+  "package_type": "safe-update-hotfix",
+  "from_version_validated": "6.16.0",
+  "purpose": "Replace internal UUIDs in Tutor question picker with pedagogically meaningful question identity and content search",
+  "database_migration": "none",
+  "mobile_changed": false,
+  "tests": {
+    "focused_passed": 65,
+    "functional_failures": 0,
+    "javascript_syntax": "passed",
+    "database_sample_questions": 1292,
+    "quick_check": "ok",
+    "foreign_key_violations": 0
+  },
+  "known_limitations": [
+    "UI interaction was validated structurally and through JavaScript syntax/unit tests; no Windows browser automation was available in this environment."
+  ],
+  "artifacts": [
+    "INSTRUCOES_ATUALIZACAO_6.16.1.md",
+    "RELATORIO_VALIDACAO_6.16.1.md",
+    "MATRIZ_COMPATIBILIDADE_6.16.1.json",
+    "SBOM_6.16.1.cdx.json",
+    "AUDITORIA_VULNERABILIDADES_6.16.1.json"
+  ]
+}

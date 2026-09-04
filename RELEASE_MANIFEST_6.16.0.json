@@ -1,0 +1,49 @@
+{
+  "release": "QuestFlow Studio 6.16.0 + Mobile 0.11.0",
+  "studio_version": "6.16.0",
+  "mobile_version": "0.11.0",
+  "generated_at": "2026-08-20T19:06:07Z",
+  "upgrade_from": [
+    "6.15.2"
+  ],
+  "mobile_upgrade_from": [
+    "0.10.1"
+  ],
+  "features": [
+    "mobile_swipe_strike_alternatives",
+    "studio_learning_engine_authority_confirmed",
+    "studio_planned_offline_reserve",
+    "offline_attempt_outbox"
+  ],
+  "offline_pack": {
+    "contract": "questflow.mobile.offline_study_pack.v1",
+    "source": "studio_learning_engine",
+    "adaptive_while_offline": false,
+    "default_size": 30,
+    "contains_answer_key": false
+  },
+  "database": {
+    "studio_schema_destructive_change": false,
+    "validated_questions": 1292,
+    "quick_check": "ok",
+    "foreign_key_violations": 0
+  },
+  "mobile_database": {
+    "new_table": "qf_offline_study_pack",
+    "new_index": "idx_qf_offline_pack_question"
+  },
+  "tests": {
+    "targeted_passed": 31,
+    "targeted_failed": 0,
+    "release_regression_passed": 104,
+    "mobile_typecheck": "passed",
+    "mobile_core": "passed",
+    "expo_android_bundle": "passed",
+    "full_monolithic_suite": "not_completed_timeout"
+  },
+  "known_limitations": [
+    "Cold-start offline is guaranteed only with an embedded Preview/Production Mobile build, not Expo Dev Client.",
+    "Physical swipe gesture was not tested on a real device in this environment.",
+    "pip-audit unavailable in environment."
+  ]
+}

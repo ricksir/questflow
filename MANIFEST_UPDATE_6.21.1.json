@@ -1,0 +1,20 @@
+{
+  "schema": "questflow.update-manifest.v1",
+  "release": "6.21.1",
+  "from_version": "6.21.0",
+  "package_root": "QuestFlow",
+  "preserves": ["data", ".venv", "venv", "runtime", "backups", "mobile"],
+  "excludes": ["data", "node_modules", ".expo", "__pycache__", ".pytest_cache", "*.pyc"],
+  "changed_focus": [
+    "web/app.js",
+    "web/questflow621.css",
+    "web/questflow621.js",
+    "tests/test_questflow_621.py"
+  ],
+  "database_migration": "none",
+  "mobile_version": "0.14.0",
+  "mobile_changed": false,
+  "learning_engine_changed": false,
+  "cloud_sync_changed": false,
+  "feature": "Progressive sample visualizations and route-specific companion rails"
+}

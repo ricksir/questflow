@@ -1,0 +1,5 @@
+﻿QuestFlow Mobile 0.7.1 - Network Recovery Fix
+Aplicado em: 2026-08-19 09:19:31
+Studio base: 6.10.0
+Backup de codigo: C:\Users\user\QuestFlow_Patches\mobile-0.7.1-20260819-091928
+Pasta data: NAO ALTERADA

@@ -1,0 +1,16 @@
+QUESTFLOW STUDIO 6.8.0 — HOTFIX 6
+
+GOOGLE / TEMPORIZAÇÃO
+- espera principal adaptativa ampliada de 36s para 75s;
+- segunda espera pós-expansão com no mínimo 30s;
+- captura só encerra após janela real de estabilidade do texto;
+- recaptura final 1,8s depois da estabilização;
+- varredura sempre inclui o menor bloco visual com Gabarito + Explicação/Justificativa/Resolução.
+
+EDITOR
+- topo ainda menor por padrão;
+- botão para recolher/expandir os detalhes da questão;
+- preferência persistida no navegador;
+- barra de pesquisa assistida menor;
+- ações de revisão em linha compacta;
+- área de explicação ampliada.

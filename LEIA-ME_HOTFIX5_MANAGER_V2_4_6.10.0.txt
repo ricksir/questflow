@@ -1,0 +1,10 @@
+QuestFlow Studio 6.10.0 - HOTFIX5 / Manager V2.4
+
+Correcoes:
+- remove entradas de cache com caminhos absolutos Windows que vazaram para o ZIP HOTFIX4;
+- valida nomes de todos os membros do ZIP antes da atualizacao;
+- endurece extract_update_zip contra caminhos C:\\, UNC, absolutos e ../;
+- preserva data, Recovery Guard e estado atual do Cloud Sync/Turso;
+- mantem o Manager externo e o log permanente.
+
+A falha do HOTFIX4 ocorria antes da aplicacao definitiva e executava rollback automatico.

@@ -1,0 +1,30 @@
+QUESTFLOW STUDIO 6.6.0 — LEARNER MODEL CALIBRADO
+
+PRINCIPAL EVOLUÇÃO
+O QuestFlow agora reconhece quando não possui evidência suficiente para afirmar seu nível de domínio. Em vez de sempre exibir uma porcentagem, o Learner Model pode assumir três estados:
+
+- Estimativa confiável
+- Estimativa cautelosa
+- Evidência insuficiente
+
+Quando houver evidência insuficiente, o sistema prioriza questões diagnósticas e evita conclusões fortes.
+
+CALIBRAÇÃO
+Cada nova tentativa pode registrar a probabilidade prevista antes da resposta, a confiança, o intervalo e a decisão de abstenção. O Painel Visual acompanha:
+
+- Brier Score;
+- ECE (erro esperado de calibração);
+- cobertura das previsões aceitas;
+- taxa de abstenção.
+
+PLANO CONTRAFACTUAL
+O QuestFlow calcula, sob o modelo BKT atual, quais evidências adicionais seriam úteis para aproximar um conceito de um alvo de domínio (80% por padrão). Se a evidência ainda for pequena, primeiro recomenda diagnóstico. Essa projeção é uma ferramenta de planejamento e não garante causalmente o domínio real.
+
+MIGRAÇÃO
+A versão aplica `study v10`. Na primeira abertura de uma base 6.5.x com histórico, o Learner Model reprocessa cronologicamente as tentativas para criar previsões históricas coerentes. O histórico bruto e o FSRS são preservados.
+
+MOTORES
+A arquitetura continua com exatamente seis motores. O Learner Model passa para `qf-learner-engine-2` e o Learning Engine para `qf-learning-engine-4`.
+
+VALIDAÇÃO
+330/330 testes aprovados em três partições. Upgrade real 6.5.2 → 6.6.0: 8/8 tentativas preservadas, 8/8 previsões históricas criadas, quick_check=ok e zero violações de foreign key.

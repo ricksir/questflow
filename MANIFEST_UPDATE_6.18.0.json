@@ -1,0 +1,26 @@
+{
+  "schema": "questflow.update-manifest.v1",
+  "release": "6.18.0",
+  "from_version": "6.17.0+",
+  "generated_at": "2026-08-21T17:32:00Z",
+  "package_root": "QuestFlow",
+  "preserves": ["data", ".venv", "venv", "runtime", "backups", "mobile"],
+  "excludes": ["data", "mobile", "node_modules", ".expo", "__pycache__", ".pytest_cache", "*.pyc"],
+  "changed_focus": [
+    "VERSION.txt",
+    "pyproject.toml",
+    "core/engines/ai_engine.py",
+    "core/mobile_foundation.py",
+    "web/index.html",
+    "web/app.js",
+    "web/styles.css",
+    "aplicar_mobile_update_0_13_0.py",
+    "mobile_update_payload_0.13.0/mobile/app/(tabs)/questions.tsx"
+  ],
+  "database_migration": "none required; no destructive changes",
+  "mobile_version": "0.13.0",
+  "mobile_changed": true,
+  "learning_engine_changed": false,
+  "cloud_sync_changed": false,
+  "feature": "Tutor review queue and treated errors; strict offline eligibility; offline no-spinner UX; stronger alternative elimination"
+}

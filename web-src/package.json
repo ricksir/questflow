@@ -1,0 +1,9 @@
+{
+  "name": "questflow-studio-web-modules",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node ../mobile/node_modules/typescript/bin/tsc -p tsconfig.json",
+    "typecheck": "node ../mobile/node_modules/typescript/bin/tsc -p tsconfig.json --noEmit"
+  }
+}

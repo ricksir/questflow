@@ -1,0 +1,78 @@
+{
+  "expo": {
+    "name": "QuestFlow Mobile",
+    "slug": "questflow-mobile",
+    "version": "0.15.6",
+    "scheme": "questflow",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "br.questflow.mobile",
+      "infoPlist": {
+        "NSLocalNetworkUsageDescription": "O QuestFlow usa a rede local no primeiro pareamento e quando o Studio está disponível; depois pode usar o Cloud Bridge configurado.",
+        "NSAppTransportSecurity": {
+          "NSAllowsLocalNetworking": true
+        }
+      },
+      "config": {
+        "usesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "package": "br.questflow.mobile",
+      "versionCode": 21
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Permita que o QuestFlow use a câmera somente para ler o QR de pareamento com o seu Studio.",
+          "recordAudioAndroid": false,
+          "barcodeScannerEnabled": true
+        }
+      ],
+      [
+        "expo-secure-store",
+        {
+          "configureAndroidBackup": true
+        }
+      ],
+      "expo-notifications",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "usesCleartextTraffic": true
+          }
+        }
+      ],
+      [
+        "expo-dev-client",
+        {
+          "launchMode": "most-recent",
+          "toolsButton": false,
+          "skipOnboarding": true,
+          "showMenuAtLaunch": false
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "owner": "rick_sir",
+    "extra": {
+      "eas": {
+        "projectId": "f6973b2c-c748-424a-a074-56cff9511951"
+      }
+    },
+    "backgroundColor": "#080D16",
+    "primaryColor": "#FF7A18",
+    "androidStatusBar": {
+      "backgroundColor": "#080D16",
+      "barStyle": "light-content",
+      "translucent": false
+    }
+  }
+}

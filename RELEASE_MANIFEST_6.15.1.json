@@ -1,0 +1,22 @@
+{
+  "release": "QuestFlow Studio 6.15.1",
+  "mobile_version": "0.10.1",
+  "package_type": "safe-update-hotfix",
+  "from_version_validated": "6.15.0",
+  "purpose": "Expose Course Catalog Safe Merge in primary Web Settings UI",
+  "merge_strategy": "incremental-preserve-progress-v1",
+  "database_migration": "none",
+  "mobile_changed": false,
+  "tests": {
+    "focused_passed": 26,
+    "catalog_specific_passed": 13,
+    "failures": 0
+  },
+  "artifacts": [
+    "INSTRUCOES_ATUALIZACAO_6.15.1.md",
+    "RELATORIO_VALIDACAO_6.15.1.md",
+    "MATRIZ_COMPATIBILIDADE_6.15.1.json",
+    "SBOM_6.15.1.cdx.json",
+    "AUDITORIA_VULNERABILIDADES_6.15.1.json"
+  ]
+}

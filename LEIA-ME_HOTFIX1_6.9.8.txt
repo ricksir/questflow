@@ -1,0 +1,15 @@
+QuestFlow 6.9.8 HOTFIX1 - Easy Update Manager
+
+Este pacote substitui o ZIP 6.9.8 anterior para quem ainda não o instalou.
+
+Mudanças do HOTFIX1:
+- adiciona QUESTFLOW.bat como ponto único de entrada;
+- adiciona INSTALAR_QUESTFLOW_FACIL.bat para a migração inicial;
+- cria instalação estável em %USERPROFILE%\QuestFlow, evitando caminhos longos em Downloads;
+- cria atalho QuestFlow na Área de Trabalho;
+- detecta automaticamente ZIPs mais novos em Downloads;
+- atualização segura passa a usar o updater contido no NOVO pacote, não o código da versão antiga;
+- Studio + Mobile são atualizados juntos preservando /data;
+- dependências Python são verificadas automaticamente por versão;
+- dependências npm do Mobile são reinstaladas automaticamente quando package.json muda;
+- os scripts antigos continuam disponíveis somente como ferramentas avançadas/diagnóstico.

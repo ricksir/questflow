@@ -1,0 +1,15 @@
+{
+  "schema": "questflow.update-manifest.v1",
+  "release": "6.22.13",
+  "from_version": "6.22.12",
+  "package_root": "QuestFlow",
+  "preserves": ["data", ".venv", "venv", "runtime", "backups"],
+  "excludes": ["data", "node_modules", ".expo", ".git", "dist", "__pycache__", ".pytest_cache", "*.pyc"],
+  "changed_focus": ["mobile/app/(tabs)/profile.tsx", "mobile/src/lib/push.ts", "mobile/app/pair.tsx", "web/app.js", "web/questflow622.js", "web/index.html"],
+  "database_migration": "none",
+  "mobile_version": "0.15.4",
+  "mobile_changed": true,
+  "learning_engine_changed": false,
+  "cloud_sync_changed": false,
+  "feature": "Interactive local reminder rescheduling with visible confirmation"
+}

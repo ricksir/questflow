@@ -1,0 +1,9 @@
+QuestFlow Studio 6.10.0 - HOTFIX7 / Manager V2.6
+
+Correção específica para Windows:
+- fecha explicitamente conexões SQLite usadas no quick_check e no backup;
+- evita WinError 32 no teste temporário de restauração de mobile_control_plane.sqlite;
+- o teste de restauração agora faz limpeza temporária com tentativas limitadas;
+- o motor externo aplica a correção em memória mesmo quando a instalação atual ainda é 6.9.8;
+- mantém filtros de caches/runtimes transitórios do HOTFIX6;
+- não altera /data durante o reparo do Manager.

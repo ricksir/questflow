@@ -1,0 +1,37 @@
+QUESTFLOW STUDIO 6.8.0 — HOTFIX 2 DA PESQUISA IA
+===================================================
+
+Este hotfix corrige o caso em que “Pesquisar resposta no Google com IA” permanecia
+em carregamento e não preenchia “Explicação após a resposta”.
+
+CAUSA
+-----
+A consulta nova pede ao Google uma saída curta e ordena que não repita código,
+enunciado e metadados. O detector de estabilidade ainda exigia o código Qxxxx
+dentro da própria resposta. Quando o Google obedecia a orientação, o QuestFlow
+não reconhecia a resposta como concluída.
+
+NOVO FLUXO
+----------
+1. pesquisa pelo código;
+2. aceita resposta curta quando gabarito + justificativa estabilizam;
+3. se necessário, tenta o enunciado;
+4. se o Modo IA não devolver justificativa verificável, pesquisa uma fonte pública
+   correspondente no Google;
+5. valida código/enunciado/banca/ano antes de usar a fonte;
+6. extrai somente a justificativa e remove ruído;
+7. preenche o editor e marca origem como “IA assistida + revisão humana”;
+8. exige salvamento/conclusão manual.
+
+SEGURANÇA
+---------
+- gabarito local nunca é sobrescrito automaticamente;
+- snippets isolados não confirmam resposta;
+- texto geral da página continua proibido como explicação;
+- sem correspondência verificável, o editor permanece intacto.
+
+VALIDAÇÃO
+---------
+- 415/415 testes de regressão aprovados;
+- 23/23 testes focados do fluxo Google aprovados;
+- 4 testes novos do Hotfix 2 aprovados.

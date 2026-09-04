@@ -1,0 +1,30 @@
+{
+  "release": "QuestFlow Studio 6.18.0",
+  "studio_version": "6.18.0",
+  "mobile_version": "0.13.0",
+  "package_type": "safe-update-feature",
+  "from_versions_targeted": ["6.17.0", "6.17.1"],
+  "purpose": "Tutor error-review workflow, strict Studio-controlled offline reserve eligibility, and Mobile offline UX improvements",
+  "database_migration": "none required by 6.18.0 feature",
+  "learning_engine_changed": false,
+  "mobile_changed": true,
+  "cloud_sync_changed": false,
+  "tests": {
+    "focused_and_related_pytest_passed": 102,
+    "functional_failures": 0,
+    "mobile_typecheck": "passed",
+    "mobile_core_tests": "passed",
+    "javascript_syntax": "passed",
+    "python_smoke": "passed",
+    "mobile_updater_0.12.0_to_0.13.0": "passed"
+  },
+  "artifacts": [
+    "ARQUITETURA_TUTOR_ERROR_OFFLINE_6.18.0.md",
+    "INSTRUCOES_ATUALIZACAO_6.18.0.md",
+    "RELATORIO_VALIDACAO_6.18.0.md",
+    "MATRIZ_COMPATIBILIDADE_6.18.0.json",
+    "SBOM_6.18.0.cdx.json",
+    "AUDITORIA_VULNERABILIDADES_6.18.0.json",
+    "VALIDACAO_FINAL_6.18.0.json"
+  ]
+}

@@ -1,0 +1,5 @@
+[OK] Janela criada: 1360x850
+[OK] Versão: 3.0.11
+[OK] Páginas: 5
+[OK] Botão de pesquisa web: True
+[OK] Interface encerrada corretamente

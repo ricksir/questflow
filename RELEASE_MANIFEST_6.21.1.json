@@ -1,0 +1,12 @@
+{
+  "release": "QuestFlow Studio 6.21.1",
+  "studio_version": "6.21.1",
+  "mobile_version": "0.14.0",
+  "package_type": "safe-ui-hotfix-mobile-preserved",
+  "from_versions_targeted": ["6.21.0"],
+  "purpose": "Render evidence progressively and remove remaining dead desktop columns",
+  "database_migration": "none",
+  "learning_engine_changed": false,
+  "mobile_changed": false,
+  "cloud_sync_changed": false
+}

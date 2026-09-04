@@ -1,0 +1,25 @@
+{
+  "schema": "questflow.update-manifest.v1",
+  "release": "6.17.0",
+  "from_version": "6.16.1",
+  "generated_at": "2026-08-21T12:55:00Z",
+  "package_root": "QuestFlow",
+  "preserves": ["data", ".venv", "venv", "runtime", "backups", "mobile"],
+  "excludes": ["data", "mobile", "node_modules", ".expo", "__pycache__", ".pytest_cache", "*.pyc"],
+  "changed_focus": [
+    "VERSION.txt",
+    "pyproject.toml",
+    "web/index.html",
+    "web/app.js",
+    "ATUALIZAR_QUESTFLOW_MOBILE_0.12.0.bat",
+    "aplicar_mobile_update_0_12_0.py",
+    "mobile_update_payload_0.12.0",
+    "GERAR_APK_MOBILE_0.12.0_LIMPO_EAS.bat",
+    "GERAR_DEV_CLIENT_MOBILE_0.12.0_SEM_BOTAO_EAS.bat",
+    "tests/test_mobile_offline_results_6170.py"
+  ],
+  "database_migration": "none destructive",
+  "mobile_version": "0.12.0",
+  "mobile_changed": true,
+  "feature": "Offline response result history + Dev UI cleanup while keeping Studio as the only pedagogical decision engine"
+}

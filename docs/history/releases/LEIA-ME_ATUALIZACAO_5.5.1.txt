@@ -1,0 +1,16 @@
+QUESTFLOW STUDIO 5.5.1 — COBERTURA DOS ESTUDOS
+
+A aba "Mapa de aulas" foi substituída pela lógica "Estudos e questões / Cobertura dos estudos".
+
+O programa agora:
+- sincroniza a aba CICLO_REG da planilha Google;
+- considera somente conteúdos realmente estudados;
+- lê DATA, CH, CH EFETIVA, TOT QUEST FEITAS, TOT ACERTOS e DESEMPENHO;
+- compara matéria, aula e conteúdo com o banco QuestFlow;
+- informa quantas questões ainda faltam adicionar quando há quantidade conhecida;
+- sinaliza conteúdo estudado sem cobertura quando a planilha não informa quantidade;
+- evita contar a mesma questão em várias partes da mesma aula.
+
+Na tela, o filtro padrão é "Somente pendências".
+
+Para atualizar os dados da planilha, use "Sincronizar planilha".

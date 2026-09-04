@@ -1,0 +1,165 @@
+{
+  "release": "QuestFlow Studio 6.10.1 + Mobile 0.7.3",
+  "codename": "Visual Sections & Time Summary",
+  "contract": "questflow.mobile.v1",
+  "generated_at": "2026-08-19T13:18:54.516677+00:00",
+  "quality": {
+    "focused_python_tests": "48 passed",
+    "release_hardening_tests": "10 passed",
+    "mobile_typecheck": "pass",
+    "mobile_core": "pass",
+    "node_syntax": "pass",
+    "smoke": "pass",
+    "sqlite": "ok",
+    "full_suite": "not completed in sandbox: 120s execution limit"
+  },
+  "features": [
+    "responsive_mobile_time_summary",
+    "compact_progress_time",
+    "persistent_panel_color_identity",
+    "semantic_settings_sections",
+    "question_editor_section_identity"
+  ],
+  "files": [
+    {
+      "path": "VERSION.txt",
+      "sha256": "9c62e7974d9910d8a9def0dba4bc1a1a667f4c0aedc0ca689d2320acdaa06c04",
+      "bytes": 7
+    },
+    {
+      "path": "pyproject.toml",
+      "sha256": "14419105aff40328bcf2e0299ad4b73897a8ad662736b771e2b48a7ae76ca140",
+      "bytes": 597
+    },
+    {
+      "path": "CHANGELOG.md",
+      "sha256": "54016619c65af338e06636767d52410dcbbe0de26d7a2c1ad232db6a3a77c46f",
+      "bytes": 19257
+    },
+    {
+      "path": "release_tools.py",
+      "sha256": "1f2c0cfd25362c25b37168258ded2b9ed01c5a394f5aa07abda151fc70be01d4",
+      "bytes": 11303
+    },
+    {
+      "path": "web/styles.css",
+      "sha256": "9624b6697c0de04a241107313ca46a59fc6e311dfa561c876b87655aeb6799ac",
+      "bytes": 218230
+    },
+    {
+      "path": "web/index.html",
+      "sha256": "b3070191fde37a37c1f5ee5ed0edc958bd7042ce7eab0dedc936bc4d88c51fec",
+      "bytes": 99693
+    },
+    {
+      "path": "web/app.js",
+      "sha256": "d773f19f2f404fcb023437b0505ab16b993383790d6f0b98b97d9548d94c0ea6",
+      "bytes": 482900
+    },
+    {
+      "path": "mobile/package.json",
+      "sha256": "745c3d6b6bc25adb9fc55e9756b8498e97f19ce2643a7a16adeef8efed9b1f7d",
+      "bytes": 1384
+    },
+    {
+      "path": "mobile/package-lock.json",
+      "sha256": "eff68c3e7a724a3a6207ed0ae6a8822af9eb037e4a13a408de3cfea86b921f59",
+      "bytes": 304592
+    },
+    {
+      "path": "mobile/app.json",
+      "sha256": "c9f84544887e36553fc0766e6bff999ce1f326eda176aa04229bc78b6fe7e4fd",
+      "bytes": 1667
+    },
+    {
+      "path": "mobile/README.md",
+      "sha256": "356948f1d76c526042209d7158b500890907ed0fe1dd7a8eb5515a95f59cca0a",
+      "bytes": 312
+    },
+    {
+      "path": "mobile/src/lib/config.ts",
+      "sha256": "f20313afc5c71b0634aae7db808f4e9dc5104b6c6da29226ef51adad79f0ed87",
+      "bytes": 514
+    },
+    {
+      "path": "mobile/src/lib/networkDiscovery.ts",
+      "sha256": "7fae81cf8900e4902b52dad6da189937ac5e12399311efd88aac0825f3232402",
+      "bytes": 2081
+    },
+    {
+      "path": "mobile/src/components/ui.tsx",
+      "sha256": "af17bf9869a9f40cad214ad87d2751df45e6fc5a143e2b76d11748c236de42cf",
+      "bytes": 8563
+    },
+    {
+      "path": "mobile/app/_layout.tsx",
+      "sha256": "ddf3d992bf0f4165c7ae331c89103aa542580baac146ce125e9e4b2e00b9ec7a",
+      "bytes": 895
+    },
+    {
+      "path": "mobile/app/(tabs)/_layout.tsx",
+      "sha256": "7be31fbc3053355306b4ab0e6af38e0ea7b623720704c423cc8aaaf4dbd5c946",
+      "bytes": 2337
+    },
+    {
+      "path": "mobile/app/(tabs)/questions.tsx",
+      "sha256": "f0235b1ddbfeb33b0ec68cb03fadefa3f2062e20412ab4b6475be51b438d8545",
+      "bytes": 45157
+    },
+    {
+      "path": "mobile/app/(tabs)/progress.tsx",
+      "sha256": "326d538b58405664e9ac4c3842ae8d31ab281cfb0b488f8a34da35064fa1cbcf",
+      "bytes": 15318
+    },
+    {
+      "path": "tests/test_visual_sections_6101.py",
+      "sha256": "a3dd638b1c149fc4d01c70a9bb6a47466461dcad1ea62819036c84abfc7a4396",
+      "bytes": 1968
+    },
+    {
+      "path": "tests/test_mobile_professional_ux_699.py",
+      "sha256": "ac31fa824f0ae852cc147e3b3ad131f8f99bda73b47a21f90c5850c18513e5c5",
+      "bytes": 2624
+    },
+    {
+      "path": "tests/test_mobile_integration_foundation_690.py",
+      "sha256": "44b538a0f28695b10eef3f7b0011d35fb4ccd551ee1fe3a6fe9d6908d63c560f",
+      "bytes": 13669
+    },
+    {
+      "path": "SBOM_6.10.1.cdx.json",
+      "sha256": "065eeeb30d4fbf675113f1ad1b60e1e74e0e69b1cb36b35c6d9c0f4446b69c0c",
+      "bytes": 3990
+    },
+    {
+      "path": "AUDITORIA_VULNERABILIDADES_6.10.1.json",
+      "sha256": "5edea957ea4863fbc0f02320fccaba3fcbc751b751b56150e43f9952f53c66b8",
+      "bytes": 313
+    },
+    {
+      "path": "MATRIZ_COMPATIBILIDADE_6.10.1.json",
+      "sha256": "2ffc482c0abe4ab44c61c8902db5bf4da6d3b300005f13997fda67b50420b7c0",
+      "bytes": 1796
+    },
+    {
+      "path": "VALIDAR_RELEASE_6.10.1.bat",
+      "sha256": "dadb718e9327699aa169a592bbe1377aff52e080c33218e6ad6cb44da37818a9",
+      "bytes": 885
+    },
+    {
+      "path": "GERAR_SBOM_6.10.1.bat",
+      "sha256": "49d6d549b361d2b532e8376e5da45a4c1317e6c49b8fda04ce46433b969c5fe0",
+      "bytes": 186
+    },
+    {
+      "path": "LEIA-ME_ATUALIZACAO_6.10.1.txt",
+      "sha256": "e4c54a50b4d0b457c33eff420b4e8f12ef981dd5e8ae32d6794e0d36696afa98",
+      "bytes": 792
+    },
+    {
+      "path": "VALIDACAO_6.10.1.md",
+      "sha256": "2869ddd3a36d9d6ea7bfdba86de8c35b2004fda81592e225ae6e354ff6f90bbf",
+      "bytes": 1171
+    }
+  ]
+}

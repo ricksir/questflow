@@ -1,0 +1,14 @@
+QuestFlow 6.10.0 HOTFIX4 - Manager V2.3
+
+Correcao:
+- Corrige falha imediata no passo [3/5] com a mensagem "O sistema nao pode encontrar o arquivo especificado".
+- A causa era um detalhe do PowerShell: quando Find-Python retornava apenas um caminho, o resultado de um unico item era convertido em string; ao acessar [0], o atualizador usava apenas a primeira letra do caminho (por exemplo, C) como executavel.
+- O Manager agora materializa explicitamente o retorno como array e valida o executavel Python antes de iniciar o processo.
+- Exibe no passo [2/5] qual Python foi selecionado, facilitando diagnostico futuro.
+- Nao altera a pasta data.
+
+Procedimento:
+1. Feche QuestFlow/Expo.
+2. Execute REPARAR_QUESTFLOW_MANAGER.bat desta versao.
+3. Abra C:\Users\SEU_USUARIO\QuestFlow\QUESTFLOW.bat.
+4. Procure a atualizacao em Downloads e confirme.

@@ -1,0 +1,28 @@
+Python: 3.13.5
+[OK] fitz
+[OK] PIL
+[OK] pytesseract
+[OK] cv2
+[OK] tkinter
+Consider using the pymupdf_layout package for a greatly improved page layout analysis.
+[OK] pymupdf4llm
+[OK] selenium
+[OK] Tesseract: /usr/bin/tesseract
+[OK] Pasta de dados: /mnt/data/QuestFlow_Studio_3.0.10/data
+[OK] Taxonomia AFRFB: 25 matérias e 473 tarefas de referência
+[OK] Pipeline Markdown: estrutura, cache e preparação para imagens/OCR
+[OK] PDFs textuais: lista, metadados, alternativas e gabarito
+[OK] Análise apurada: Certo/Errado, alternativas embutidas e aprovação segura
+[OK] Banco, ciclo diário de 20 questões, rotação por matéria e estatísticas
+[OK] Telegram resiliente: classificação de erro e retentativa com backoff
+[OK] Quiz, botões de mais questões, novo ciclo e desempenho no Telegram
+[OK] Agendamento diário por horário e dias da semana
+[OK] Google Modo IA: resposta renderizada, Mostrar mais, banca/ano, alternativas, gabarito e justificativa
+[OK] Interface: progresso, prévia Telegram e confirmação antes de atualizar a base
+[OK] Questões anuladas: retirada da base ativa e bloqueio de reimportação
+[OK] Interface: revisão ajustável, temas, zoom, pesquisa assistida e reenvio de falhas
+[OK] Módulo principal QuestFlow Studio 3.0.10
+
+Diagnóstico concluído sem falhas locais.
+A conexão real com o Telegram deve ser testada no botão 'Testar bot'.
+Observação: com o computador totalmente desligado, o envio só pode ocorrer após ele ser ligado novamente.

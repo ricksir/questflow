@@ -1,0 +1,13 @@
+{
+  "studio": "6.22.0",
+  "mobile": "0.15.0",
+  "upgrade_from": ["6.21.0", "6.21.1"],
+  "api_contract": "questflow.analytics.v2",
+  "database_migration": "none",
+  "notes": [
+    "Mantém /api/v1/mobile/progress e /api/v1/mobile/analytics compatíveis.",
+    "Uma janela real gera linha de base; 2-3 geram direção inicial; 4-7 tendência emergente; 8 ou mais tendência consolidada.",
+    "O pacote inclui o Mobile 0.15.0, mas exclui .git, node_modules e caches para evitar bloqueios do atualizador no Windows.",
+    "Banco, respostas, FSRS, runtime e backups são preservados sem migração."
+  ]
+}

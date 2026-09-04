@@ -1,0 +1,12 @@
+QUESTFLOW STUDIO 6.8.0 — HOTFIX 5
+
+Foco: compactar o editor da questão para aumentar a área útil de visualização.
+
+Ajustes principais:
+- cabeçalho da questão mais compacto;
+- badge de status menor;
+- barra “Pesquisa assistida” reduzida;
+- botão “Pesquisar resposta no Google com IA” com menor altura;
+- barra “Copiar / Expandir / Normalizar” mais enxuta;
+- rodapé de ações mais compacto;
+- área de “Explicação após a resposta” ampliada.

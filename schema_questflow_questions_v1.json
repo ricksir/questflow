@@ -1,0 +1,191 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "questflow.questions.v1",
+  "title": "QuestFlow Question Bank",
+  "type": "object",
+  "required": [
+    "schema",
+    "schema_version",
+    "questions"
+  ],
+  "properties": {
+    "schema": {
+      "const": "questflow.questions.v1"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "generated_at": {
+      "type": "string"
+    },
+    "question_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "questions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "codigo_origem",
+          "materia",
+          "banca",
+          "ano",
+          "orgao",
+          "tipo",
+          "enunciado",
+          "alternativas",
+          "gabarito",
+          "fingerprint"
+        ],
+        "properties": {
+          "codigo_origem": {
+            "type": "string"
+          },
+          "materia": {
+            "type": "string"
+          },
+          "assuntos": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "banca": {
+            "type": "string"
+          },
+          "ano": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "orgao": {
+            "type": "string"
+          },
+          "prova": {
+            "type": "string"
+          },
+          "cargo": {
+            "type": "string"
+          },
+          "area": {
+            "type": "string"
+          },
+          "especialidade": {
+            "type": "string"
+          },
+          "tipo": {
+            "enum": [
+              "certo_errado",
+              "multipla_escolha"
+            ]
+          },
+          "enunciado": {
+            "type": "string"
+          },
+          "alternativas": {
+            "type": "array",
+            "minItems": 2,
+            "items": {
+              "type": "object",
+              "required": [
+                "chave",
+                "texto"
+              ],
+              "properties": {
+                "chave": {
+                  "type": "string"
+                },
+                "texto": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "gabarito": {
+            "type": "string"
+          },
+          "explicacao": {
+            "type": "string"
+          },
+          "fingerprint": {
+            "type": "string"
+          },
+          "telegram": {
+            "type": "object",
+            "required": [
+              "modo",
+              "pergunta",
+              "opcoes",
+              "indice_correto"
+            ]
+          },
+          "revisao": {
+            "type": "object",
+            "required": [
+              "status",
+              "confianca",
+              "alertas"
+            ]
+          },
+          "aula_planilha": {
+            "type": "string"
+          },
+          "assunto": {
+            "type": "string"
+          },
+          "trilha_assuntos": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "materia_origem": {
+            "type": "string"
+          },
+          "assuntos_origem": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "classificacao_planilha": {
+            "type": "object",
+            "properties": {
+              "status": {
+                "enum": [
+                  "classificado",
+                  "revisar"
+                ]
+              },
+              "confianca": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "metodo": {
+                "type": "string"
+              },
+              "referencia": {
+                "type": "string"
+              },
+              "fonte": {
+                "type": "string"
+              },
+              "categoria_origem": {
+                "type": "string"
+              },
+              "assuntos_origem": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

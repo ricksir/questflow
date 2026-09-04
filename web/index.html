@@ -1,0 +1,1331 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="system" data-density="comfortable">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <meta id="themeColorMeta" name="theme-color" content="#f3f7fb">
+  <meta name="application-name" content="QuestFlow Studio">
+  <link id="appFavicon" rel="icon" type="image/png" sizes="32x32" href="assets/questflow_logo_light_32.png">
+  <link id="appTouchIcon" rel="apple-touch-icon" href="assets/questflow_logo_light_256.png">
+  <title>QuestFlow Studio</title>
+  <link rel="preload" as="image" href="assets/questflow_logo_light_128.png">
+  <link rel="preload" as="image" href="assets/questflow_logo_dark_128.png">
+  <link rel="stylesheet" href="styles.css?v=6.23.2">
+  <link rel="stylesheet" href="questflow621.css">
+  <link rel="stylesheet" href="questflow622.css">
+</head>
+<body>
+  <a class="skip-link" href="#workspace">Pular para o conteúdo principal</a>
+  <div class="app-shell" id="appShell">
+    <aside class="sidebar" id="sidebar" aria-label="Navegação principal">
+      <div class="brand">
+        <span class="brand-image theme-picture" aria-hidden="true">
+          <img class="theme-art theme-art--light" src="assets/questflow_logo_light_128.png" alt="" width="48" height="48" decoding="async">
+          <img class="theme-art theme-art--dark" src="assets/questflow_logo_dark_128.png" alt="" width="48" height="48" decoding="async">
+        </span>
+        <span class="brand-copy">
+          <strong>QuestFlow Studio</strong>
+          <small id="appVersion">Carregando…</small>
+        </span>
+      </div>
+
+      <nav class="nav-list" id="mainNav">
+        <p class="nav-section-label">Planejamento</p>
+        <button class="nav-item is-active" data-route="dashboard" aria-current="page">
+          <span class="nav-icon" aria-hidden="true">◫</span><span>Visão geral</span>
+        </button>
+        <button class="nav-item" data-route="visualanalytics">
+          <span class="nav-icon" aria-hidden="true">◔</span><span>Painel visual</span>
+        </button>
+        <button class="nav-item" data-route="examproject">
+          <span class="nav-icon" aria-hidden="true">⌑</span><span class="nav-label">Projeto e edital</span>
+          <span class="nav-badge" id="examProjectBadge" hidden>!</span>
+        </button>
+        <p class="nav-section-label">Banco de questões</p>
+        <button class="nav-item" data-route="import">
+          <span class="nav-icon" aria-hidden="true">⇧</span><span>Importar</span>
+        </button>
+        <button class="nav-item" data-route="curation">
+          <span class="nav-icon" aria-hidden="true">◎</span><span class="nav-label">Curadoria inteligente</span>
+          <span class="nav-badge" id="curationBadge" hidden>0</span>
+        </button>
+        <button class="nav-item" data-route="review">
+          <span class="nav-icon" aria-hidden="true">✎</span><span>Revisar banco</span>
+          <span class="nav-badge" id="pendingBadge" hidden>0</span>
+        </button>
+        <button class="nav-item" data-route="bankfix">
+          <span class="nav-icon" aria-hidden="true">⌁</span><span>Corrigir banco</span>
+        </button>
+        <p class="nav-section-label">Aprendizagem e IA</p>
+        <button class="nav-item" data-route="tutor">
+          <span class="nav-icon" aria-hidden="true">✦</span><span class="nav-label">Tutor IA</span>
+          <span class="nav-badge" id="tutorDraftBadge" hidden>0</span>
+        </button>
+        <button class="nav-item" data-route="recommend">
+          <span class="nav-icon" aria-hidden="true">⌁</span><span class="nav-label">Recomendador e simulados</span>
+        </button>
+        <button class="nav-item" data-route="stage5">
+          <span class="nav-icon" aria-hidden="true">⚗</span><span class="nav-label">Geração e legislação</span>
+        </button>
+        <p class="nav-section-label">Rotina e sincronização</p>
+        <button class="nav-item" data-route="corrections">
+          <span class="nav-icon" aria-hidden="true">⚠</span><span>Correções e Matérias não Estudadas</span>
+          <span class="nav-badge" id="correctionsBadge" hidden>0</span>
+        </button>
+        <button class="nav-item" data-route="coverage">
+          <span class="nav-icon" aria-hidden="true">▦</span><span>Estudos e questões</span>
+          <span class="nav-badge" id="coverageGuideBadge" hidden>0</span>
+        </button>
+        <button class="nav-item" data-route="flow">
+          <span class="nav-icon" aria-hidden="true">➤</span><span>Fluxo Telegram</span>
+        </button>
+        <button class="nav-item nav-item--mobile" data-route="mobile">
+          <span class="nav-icon" aria-hidden="true">▯</span><span>QuestFlow Mobile</span>
+        </button>
+        <p class="nav-section-label">Sistema</p>
+        <button class="nav-item" data-route="settings">
+          <span class="nav-icon" aria-hidden="true">⚙</span><span>Configurações</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="nav-item nav-item--subtle" id="classicUiButton" type="button">
+          <span class="nav-icon" aria-hidden="true">↗</span><span>Interface clássica</span>
+        </button>
+        <div class="system-chip" id="systemChip" aria-live="polite">
+          <span class="status-dot status-dot--loading"></span>
+          <span>Inicializando</span>
+        </div>
+      </div>
+    </aside>
+
+    <div class="app-stage">
+      <header class="topbar">
+        <button class="icon-button" id="sidebarToggle" type="button" aria-label="Recolher ou expandir menu" aria-expanded="true">
+          <span aria-hidden="true">☰</span>
+        </button>
+        <div class="breadcrumbs" id="breadcrumbs" aria-live="polite">Visão geral</div>
+        <div class="topbar-actions">
+          <label class="global-search" for="globalSearch">
+            <span aria-hidden="true">⌕</span>
+            <input id="globalSearch" type="search" placeholder="Buscar questão…" autocomplete="off" aria-label="Buscar questão em todo o banco">
+            <kbd>Ctrl K</kbd>
+          </label>
+          <button class="icon-button fullscreen-button" id="fullscreenToggle" type="button" aria-label="Ativar tela cheia" title="Tela cheia (F11)">
+            <span aria-hidden="true">⛶</span>
+          </button>
+          <div class="segmented-control" role="group" aria-label="Escala da interface">
+            <button id="zoomOut" type="button" aria-label="Diminuir interface">A−</button>
+            <span id="zoomValue" aria-live="polite">100%</span>
+            <button id="zoomIn" type="button" aria-label="Aumentar interface">A+</button>
+          </div>
+          <button class="icon-button" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">
+            <span aria-hidden="true">◐</span>
+          </button>
+          <button class="icon-button close-app-button" id="closeQuestFlow" type="button" aria-label="Fechar QuestFlow com segurança" title="Fechar QuestFlow com segurança">
+            <span aria-hidden="true">⏻</span>
+          </button>
+        </div>
+      </header>
+
+      <main class="workspace" id="workspace" tabindex="-1">
+        <div class="route-progress" id="routeProgress" aria-hidden="true"><span></span></div>
+        <div class="visually-hidden" id="pageStateAnnouncer" role="status" aria-live="polite" aria-atomic="true"></div>
+        <section class="page is-active" data-page="dashboard" aria-labelledby="dashboardTitle">
+          <div class="page-header">
+            <div>
+              <p class="eyebrow">Banco inteligente de questões</p>
+              <h1 id="dashboardTitle">Visão geral</h1>
+              <p>Questões de alto nível, desempenho, revisão adaptativa e sincronização em um único painel.</p>
+            </div>
+            <div class="page-actions">
+              <button class="button button--secondary" id="refreshDashboard">Atualizar painel</button>
+            </div>
+          </div>
+          <div class="metric-grid" id="metricGrid" aria-live="polite"></div>
+          <article class="panel learning-pulse-panel" aria-labelledby="learningPulseTitle">
+            <div class="panel-header learning-pulse-header">
+              <div>
+                <p class="eyebrow">Cockpit adaptativo</p>
+                <h2 id="learningPulseTitle">Pulso de aprendizagem</h2>
+                <p>Retenção, ritmo e prioridade reunidos para transformar diagnóstico em uma próxima ação clara.</p>
+              </div>
+              <span class="learning-pulse-live"><i aria-hidden="true"></i> Modelo atualizado</span>
+            </div>
+            <div id="learningPulsePanel" class="panel-body" aria-live="polite"><div class="skeleton" style="height:15rem"></div></div>
+          </article>
+          <article class="panel study-command-panel" aria-labelledby="studyCommandTitle">
+            <div class="panel-header"><div><p class="eyebrow">Leitura rápida do seu estudo</p><h2 id="studyCommandTitle">Entenda em 30 segundos</h2><p>O painel resume o que aconteceu, por que isso importa e qual é a próxima ação recomendada.</p></div></div>
+            <div id="studyCommandPanel" class="panel-body" aria-live="polite"><div class="skeleton" style="height:10rem"></div></div>
+          </article>
+          <article class="panel adaptive-decision-panel" aria-labelledby="adaptiveDecisionTitle">
+            <div class="panel-header"><div><p class="eyebrow">Learning Engine · explicabilidade</p><h2 id="adaptiveDecisionTitle">Por que esta questão?</h2><p>Audite as decisões recentes das sessões adaptativas. Esta informação fica no Studio e não é exibida no aplicativo.</p></div></div>
+            <div id="adaptiveDecisionPanel" class="panel-body" aria-live="polite"><div class="skeleton" style="height:6rem"></div></div>
+          </article>
+          <article class="panel today-panel" aria-labelledby="todayTitle">
+            <div class="panel-header today-panel__header">
+              <div><p class="eyebrow">Plano diário orientado pelo edital</p><h2 id="todayTitle">O que fazer hoje?</h2><p>FSRS mantém a agenda; edital, KT, IRT, cobertura e banca explicam onde concentrar esforço.</p></div>
+              <button class="button button--secondary button--compact" id="refreshToday" type="button">Recalcular plano</button>
+            </div>
+            <div id="todayPanel" class="panel-body" aria-live="polite"><div class="skeleton" style="height:8rem"></div></div>
+          </article>
+          <article class="panel database-health-panel" aria-labelledby="databaseHealthTitle">
+            <div class="panel-header database-health-header">
+              <div><h2 id="databaseHealthTitle">Saúde e sincronização do banco</h2><p>Validação do SQLite local e comparação com a cópia sincronizada no Turso.</p></div>
+              <button class="button button--secondary button--compact" id="refreshDatabaseHealth" type="button">Verificar agora</button>
+            </div>
+            <div id="databaseHealthPanel" class="panel-body database-health-body" aria-live="polite">
+              <div class="skeleton" style="height:4.5rem"></div>
+            </div>
+          </article>
+          <article class="panel trail-guide-dashboard" aria-labelledby="trailGuideDashboardTitle">
+            <div class="panel-header"><div><h2 id="trailGuideDashboardTitle">Documentação das trilhas</h2><p>O QuestFlow acompanha quais PDFs explicativos já foram incorporados e avisa quando você estudar uma trilha ainda sem explicação.</p></div></div>
+            <div id="trailGuideDashboardPanel" class="panel-body" aria-live="polite"><div class="skeleton" style="height:3.8rem"></div></div>
+          </article>
+          <div class="dashboard-grid">
+            <article class="panel panel--wide" aria-labelledby="adaptiveTitle">
+              <div class="panel-header"><div><h2 id="adaptiveTitle">Desempenho e prioridades por matéria</h2><p>Learning analytics com retenção FSRS, desempenho recente, tendência, cobertura, recência e prioridade explicável.</p></div></div>
+              <div id="adaptivePanel" class="panel-body"></div>
+            </article>
+            <article class="panel" aria-labelledby="flowHealthTitle">
+              <div class="panel-header"><div><h2 id="flowHealthTitle">Saúde do fluxo</h2><p>Status do agendador e do listener.</p></div></div>
+              <div id="flowHealthPanel" class="panel-body"></div>
+            </article>
+            <article class="panel panel--wide" aria-labelledby="recentTitle">
+              <div class="panel-header"><div><h2 id="recentTitle">Atividade recente</h2><p>Últimos envios, respostas e falhas.</p></div></div>
+              <div id="recentActivity" class="panel-body"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="page" data-page="visualanalytics" aria-labelledby="visualAnalyticsTitle">
+          <div class="page-header">
+            <div>
+              <p class="eyebrow">Learning analytics avançado</p>
+              <h1 id="visualAnalyticsTitle">Painel visual</h1>
+              <p>Dashboard visual com comparativos, evolução temporal, proporções, insights rápidos e detalhamento das matérias e aulas.</p>
+            </div>
+            <div class="page-actions">
+              <button class="button button--secondary" id="rebuildLearnerModel" type="button">Reconstruir modelo do aluno</button>
+              <button class="button button--secondary" id="refreshVisualAnalytics">Atualizar painel visual</button>
+            </div>
+          </div>
+          <article class="panel" aria-labelledby="visualAnalyticsPanelTitle">
+            <div class="panel-header"><div><h2 id="visualAnalyticsPanelTitle">Painel de desempenho visual</h2><p>Clique nos cards, gráficos, tabelas e linhas para ver explicações e mais detalhes por matéria/aula.</p></div></div>
+            <div id="visualAnalyticsPanel" class="panel-body"></div>
+          </article>
+        </section>
+
+        <section class="page page--exam-project" data-page="examproject" aria-labelledby="examProjectTitle">
+          <div class="page-header">
+            <div>
+              <p class="eyebrow">QuestFlow 6.5 · centro do planejamento</p>
+              <h1 id="examProjectTitle">Projeto de concurso e edital</h1>
+              <p>Organize concurso, banca, data da prova, edital e retificações. O QuestFlow cruza esses dados com o Banco Editorial e o Modelo do Aluno.</p>
+            </div>
+            <div class="page-actions">
+              <button class="button button--secondary" id="scanProjectCurrency" type="button">Verificar atualidade das questões</button>
+              <button class="button button--secondary" id="relinkExamProject" type="button">Remapear banco ao edital</button>
+            </div>
+          </div>
+          <div id="examProjectMetrics" class="metric-grid"></div>
+          <div class="exam-project-layout">
+            <article class="panel">
+              <div class="panel-header"><div><h2>Projeto ativo</h2><p>O projeto ativo fornece banca e data da prova ao Learning Engine.</p></div></div>
+              <div class="panel-body form-stack">
+                <label>Projeto<select id="examProjectSelect"><option value="">Novo projeto</option></select></label>
+                <div class="form-grid form-grid--2">
+                  <label>Nome<input id="examProjectName" type="text" placeholder="Ex.: RFB · Auditor-Fiscal"></label>
+                  <label>Órgão<input id="examProjectAgency" type="text" placeholder="Receita Federal"></label>
+                  <label>Cargo<input id="examProjectRole" type="text" placeholder="Auditor-Fiscal"></label>
+                  <label>Banca<input id="examProjectBoard" type="text" placeholder="CEBRASPE / FGV / FCC..."></label>
+                  <label>Data da prova<input id="examProjectDate" type="date"></label>
+                  <label>Status<select id="examProjectStatus"><option value="planejamento">Planejamento</option><option value="edital_publicado">Edital publicado</option><option value="pos_edital">Pós-edital</option><option value="concluido">Concluído</option></select></label>
+                </div>
+                <label>Observações<textarea id="examProjectNotes" rows="3" placeholder="Regras, metas e observações do concurso."></textarea></label>
+                <div class="button-row"><button class="button button--primary" id="saveExamProject" type="button">Salvar projeto</button><button class="button button--secondary" id="activateExamProject" type="button">Tornar ativo</button></div>
+              </div>
+            </article>
+            <article class="panel">
+              <div class="panel-header"><div><h2>Edital e retificações</h2><p>Cada nova versão produz um diff e recalcula a cobertura do conteúdo programático.</p></div></div>
+              <div class="panel-body form-stack">
+                <div class="form-grid form-grid--2"><label>Rótulo<input id="editalVersionLabel" type="text" placeholder="Edital inicial / Retificação 1"></label><label>Publicação<input id="editalPublishedAt" type="date"></label></div>
+                <label>Fonte/URL<input id="editalSourceUrl" type="url" placeholder="Link oficial (opcional)"></label>
+                <label>Conteúdo programático<textarea id="editalText" rows="10" placeholder="Cole o conteúdo do edital. Também aceita: Matéria | Assunto | Peso | Questões"></textarea></label>
+                <div class="button-row"><button class="button button--secondary" id="previewEditalParsing" type="button">Pré-visualizar itens</button><button class="button button--primary" id="saveEditalVersion" type="button">Registrar nova versão</button></div>
+                <div id="editalParsePreview" class="edital-preview"></div>
+              </div>
+            </article>
+          </div>
+          <article class="panel">
+            <div class="panel-header"><div><h2>Cobertura do edital</h2><p>Questões vinculadas, estudo realizado, domínio estimado e prioridade por item.</p></div></div>
+            <div id="examCoveragePanel" class="panel-body"></div>
+          </article>
+          <div class="exam-project-layout">
+            <article class="panel"><div class="panel-header"><div><h2>Histórico de versões</h2><p>Inclusões, remoções e alterações de peso entre edital e retificações.</p></div></div><div id="editalVersionsPanel" class="panel-body"></div></article>
+            <article class="panel"><div class="panel-header"><div><h2>Atualidade das questões</h2><p>Questões desatualizadas, anuladas ou controversas ficam fora da seleção normal, mas permanecem no histórico editorial.</p></div></div><div id="questionCurrencyPanel" class="panel-body"></div></article>
+          </div>
+        </section>
+
+        <section class="page" data-page="import" aria-labelledby="importTitle">
+          <div class="page-header">
+            <div>
+              <p class="eyebrow">Ingestão do banco</p>
+              <h1 id="importTitle">Importar arquivos</h1>
+              <p>PDFs e imagens são convertidos para Markdown, OCR e estrutura de questões.</p>
+            </div>
+          </div>
+          <div id="importContextPanel" class="context-import panel panel--flat" hidden aria-live="polite"></div>
+          <div class="import-layout">
+            <article class="drop-zone panel" id="dropZone" tabindex="0" role="button" aria-label="Selecionar PDFs ou imagens para importar">
+              <span class="drop-zone-art theme-picture" aria-hidden="true"><img class="theme-art theme-art--light" src="assets/questflow_exam_light.svg" alt="" width="160" height="160" loading="lazy" decoding="async"><img class="theme-art theme-art--dark" src="assets/questflow_exam_dark.svg" alt="" width="160" height="160" loading="lazy" decoding="async"></span>
+              <h2>Selecione PDFs ou imagens</h2>
+              <p>Use o seletor do sistema. O processamento ocorre em segundo plano e não trava a interface.</p>
+              <button class="button button--primary" id="chooseImportFiles">Escolher arquivos</button>
+            </article>
+            <article class="panel">
+              <div class="panel-header"><div><h2>Fila de importação</h2><p id="importSummary">Nenhum arquivo selecionado.</p></div></div>
+              <div class="panel-body">
+                <div id="importFileList" class="file-list empty-state">A fila está vazia.</div>
+                <button class="button button--primary button--full" id="startImport" disabled>Processar arquivos</button>
+                <div class="progress-block" id="importProgress" hidden>
+                  <div class="progress-label"><span id="importProgressText">Preparando…</span><span id="importProgressValue">0%</span></div>
+                  <div class="progress-track" aria-label="Progresso da importação"><span></span></div>
+                </div>
+              </div>
+            </article>
+          </div>
+          <article class="panel">
+            <div class="panel-header"><div><h2>Importações recentes</h2><p>Resumo dos últimos arquivos processados.</p></div></div>
+            <div id="recentImports" class="panel-body"></div>
+          </article>
+        </section>
+
+        <section class="page" data-page="curation" aria-labelledby="curationTitle">
+          <div class="page-header">
+            <div>
+              <p class="eyebrow">Banco editorial de alto nível</p>
+              <h1 id="curationTitle">Curadoria inteligente</h1>
+              <p>Proveniência, qualidade, dificuldade empírica, comentários assistidos por IA e controle de duplicidade em uma única esteira.</p>
+            </div>
+            <div class="page-actions">
+              <button class="button button--secondary" id="refreshCuration" type="button" title="Recalcula qualidade, status, comentários e dificuldade a partir dos dados atuais">Recalcular curadoria</button>
+            </div>
+          </div>
+          <div class="metric-grid" id="curationMetrics" aria-live="polite"></div>
+          <div class="curation-layout">
+            <article class="panel panel--wide">
+              <div class="panel-header"><div><h2>Saúde editorial do banco</h2><p>Distribuição de origem, qualidade, comentários e dificuldade com sinais separados do desempenho do aluno.</p></div></div>
+              <div id="curationOverview" class="panel-body"></div>
+            </article>
+            <article class="panel curation-action-panel">
+              <div class="panel-header"><div><h2>O que merece sua atenção agora</h2><p>Leitura prática dos dados da curadoria, sem ocupar espaço com etapas apenas descritivas.</p></div></div>
+              <div class="panel-body" id="curationInsights"></div>
+            </article>
+          </div>
+          <article class="panel curation-queue-panel" id="curationQueuePanel" hidden>
+            <div class="panel-header">
+              <div><h2 id="curationQueueTitle">Fila de atenção</h2><p id="curationQueueSubtitle">Veja exatamente quais questões sustentam este indicador e o que ainda falta.</p></div>
+              <button class="button button--secondary button--small" id="closeCurationQueue" type="button">Fechar fila</button>
+            </div>
+            <div class="panel-body" id="curationQueueBody"></div>
+          </article>
+          <article class="panel semantic-index-panel">
+            <div class="panel-header">
+              <div><h2>Índice híbrido e grafo de conhecimento</h2><p>Busca lexical + assinatura semântica local + reranking por metadados, com funcionamento offline e arquitetura preparada para embeddings externos.</p></div>
+              <button class="button button--secondary button--small" id="rebuildSemanticIndex" type="button">Reindexar conhecimento</button>
+            </div>
+            <div class="panel-body" id="semanticIndexOverview">
+              <div class="skeleton" style="height:8rem"></div>
+            </div>
+          </article>
+          <article class="panel">
+            <div class="panel-header"><div><h2>Regras de governança</h2><p>O QuestFlow separa questão de prova, conteúdo autoral e comentário para manter rastreabilidade.</p></div></div>
+            <div class="panel-body governance-grid">
+              <div><strong>Questão oficial</strong><span>Registre banca, ano, órgão/prova e fonte primária sempre que possível.</span></div>
+              <div><strong>Questão própria</strong><span>Marque como inédita, adaptada ou literal de norma; não misture com prova oficial.</span></div>
+              <div><strong>IA</strong><span>Resultados entram como rascunho e exigem aprovação humana antes de serem tratados como comentário final.</span></div>
+              <div><strong>Direitos</strong><span>Não copie comentários, taxonomias ou materiais proprietários de outras plataformas.</span></div>
+            </div>
+          </article>
+        </section>
+
+        <section class="page page--tutor" data-page="tutor" aria-labelledby="tutorTitle">
+          <div class="page-header">
+            <div>
+              <p class="eyebrow">Etapa 3 · aprendizagem assistida e auditável</p>
+              <h1 id="tutorTitle">Tutor IA adaptativo</h1>
+              <p>Explicações personalizadas por FSRS + Knowledge Tracing + IRT, com escada progressiva de pistas, revisão multimodal local, RAG e avaliação independente.</p>
+            </div>
+            <div class="page-actions">
+              <button class="button button--secondary" id="refreshTutor" type="button">Atualizar Tutor</button>
+            </div>
+          </div>
+
+          <article class="panel architecture-panel" aria-labelledby="architectureTitle">
+            <div class="panel-header"><div><h2 id="architectureTitle">Arquitetura QuestFlow · monólito modular</h2><p>Módulos verticais têm limites e propriedade de dados explícitos; novos módulos e serviços podem ser adicionados sem uma contagem fixa.</p></div></div>
+            <div class="panel-body" id="engineArchitecture"><div class="skeleton" style="height:8rem"></div></div>
+          </article>
+
+          <div class="metric-grid" id="tutorGovernanceMetrics" aria-live="polite"></div>
+
+          <div class="tutor-layout">
+            <div class="tutor-queue-column">
+              <article class="panel tutor-recent-panel">
+                <div class="panel-header"><div><h2>Revisão de Erros com o Tutor IA</h2><p>Erros que ainda precisam ser tratados. Ao aprovar a orientação, a questão sai desta fila; se você errá-la novamente no futuro, ela volta automaticamente.</p></div></div>
+                <div class="panel-body tutor-error-list" id="tutorRecentErrors"></div>
+              </article>
+
+              <article class="panel tutor-treated-panel">
+                <div class="panel-header"><div><h2>Erros Tratados</h2><p>Questões cujo erro mais recente já possui uma orientação do Tutor IA aprovada.</p></div></div>
+                <div class="panel-body tutor-error-list tutor-treated-list" id="tutorTreatedErrors"></div>
+              </article>
+            </div>
+
+            <article class="panel panel--wide tutor-workspace-panel">
+              <div class="panel-header"><div><h2>Workspace do Tutor</h2><p id="tutorSelectedMeta">Selecione uma questão com histórico de resposta.</p></div></div>
+              <div class="panel-body">
+                <div class="tutor-question-selector">
+                  <div class="tutor-question-selector__intro">
+                    <label for="tutorQuestionSelect">Qual questão você quer entender?</label>
+                    <small>Escolha pelo conteúdo da questão. O Tutor usa seu histórico para explicar a provável causa do erro e orientar a revisão; o identificador técnico fica oculto.</small>
+                  </div>
+                  <label class="tutor-question-search" for="tutorQuestionSearch"><span>Localizar questão</span><input id="tutorQuestionSearch" type="search" autocomplete="off" placeholder="Busque por código, matéria, assunto, aula ou trecho do enunciado"></label>
+                  <label class="tutor-question-choice" for="tutorQuestionSelect"><span>Questão para analisar</span><select id="tutorQuestionSelect"><option value="">Selecione uma questão…</option></select></label>
+                  <small id="tutorQuestionChoiceHelp" class="tutor-question-choice-help">As opções mostram código, matéria, assunto/aula e o começo do enunciado.</small>
+                </div>
+                <div id="tutorSelectedQuestion" class="tutor-selected-question"></div>
+                <div id="tutorDiagnosis" class="tutor-diagnosis"></div>
+
+                <div class="tutor-controls">
+                  <fieldset class="tutor-mode-picker">
+                    <legend>Modo pedagógico</legend>
+                    <label><input type="radio" name="tutorMode" value="rapido"> <span><strong>Rápido</strong><small>Resposta curta e ponto-chave.</small></span></label>
+                    <label><input type="radio" name="tutorMode" value="professor" checked> <span><strong>Professor</strong><small>Fundamentação + causa provável do erro.</small></span></label>
+                    <label><input type="radio" name="tutorMode" value="socratico"> <span><strong>Socrático progressivo</strong><small>Escada de 6 níveis; registra quanto apoio foi necessário.</small></span></label>
+                    <label><input type="radio" name="tutorMode" value="banca"> <span><strong>Banca</strong><small>Leitura estratégica do estilo do item.</small></span></label>
+                  </fieldset>
+                  <div class="tutor-scaffold-options" id="tutorScaffoldOptions" hidden>
+                    <label><span>Representação de revisão</span>
+                      <select id="tutorRepresentation">
+                        <option value="texto">Texto guiado</option>
+                        <option value="flashcard">Flashcard de recuperação</option>
+                        <option value="passo_a_passo">Passo a passo</option>
+                        <option value="visual">Visual / imagem da questão</option>
+                      </select>
+                    </label>
+                    <label class="tutor-media-notes" for="tutorMediaNotes"><span>Transcrição/descrição visual opcional</span><textarea id="tutorMediaNotes" rows="2" placeholder="Cole aqui uma transcrição, legenda, descrição de gráfico ou detalhe visual relevante."></textarea></label>
+                    <small>As imagens permanecem locais nesta versão. Uma transcrição digitada por você segue a mesma regra de privacidade da pergunta do Tutor.</small>
+                    <div id="tutorScaffoldStatus" class="tutor-scaffold-status"></div>
+                  </div>
+                  <label class="tutor-question-field">
+                    <span>Sua dúvida ou pedido específico</span>
+                    <textarea id="tutorUserPrompt" rows="3" placeholder="Ex.: por que minha alternativa está errada? Qual regra e qual exceção devo memorizar?"></textarea>
+                  </label>
+                  <div class="tutor-provider-box">
+                    <label class="tutor-online-toggle"><input id="tutorOnlineAi" type="checkbox"> <span><strong>Complementar com IA externa</strong><small id="tutorProviderHint">Usa o provedor escolhido em Configurações. Se falhar, mantém o RAG local.</small></span></label>
+                    <div class="tutor-provider-status"><span>Provedor ativo</span><strong id="tutorActiveProvider">QuestFlow local</strong><button class="button button--ghost button--small" id="openAiSettings" type="button">Configurar IAs</button></div>
+                    <div class="ai-privacy-preview" id="tutorPrivacyPreview"><small>Modo local: nenhum conteúdo é enviado a terceiros.</small></div>
+                  </div>
+                  <div class="tutor-actions">
+                    <button class="button button--primary" id="generateTutorAnswer" type="button" disabled>Gerar orientação</button>
+                    <button class="button button--secondary" id="refreshTutorDiagnosis" type="button" disabled>Recalcular diagnóstico</button>
+                  </div>
+                </div>
+
+                <div id="tutorAnswer" class="tutor-answer-area" aria-live="polite"></div>
+              </div>
+            </article>
+          </div>
+
+          <article class="panel ai-audit-panel">
+            <div class="panel-header"><div><h2>Auditoria de IA</h2><p>Prompt, provedor/modelo, avaliação independente, fontes e decisão humana permanecem rastreáveis.</p></div></div>
+            <div class="panel-body" id="aiAuditTable"></div>
+          </article>
+        </section>
+
+        <section class="page page--recommend" data-page="recommend" aria-labelledby="recommendTitle">
+          <div class="page-header">
+            <div>
+              <p class="eyebrow">Etapa 4 · decisão pedagógica multiobjetivo</p>
+              <h1 id="recommendTitle">Recomendador e simulados adaptativos</h1>
+              <p>Prioriza o próximo melhor esforço combinando FSRS, domínio KT, informação IRT, cobertura, incidência observada da banca, prova-alvo e diversidade.</p>
+            </div>
+            <div class="page-actions">
+              <button class="button button--secondary" id="refreshRecommendations" type="button">Atualizar recomendações</button>
+            </div>
+          </div>
+
+          <div class="metric-grid" id="recommendationMetrics" aria-live="polite"></div>
+
+          <div class="stage4-grid">
+            <article class="panel stage4-recommendations-panel">
+              <div class="panel-header"><div><h2>Próximas melhores ações</h2><p>O FSRS define a classe de urgência; o score multiobjetivo ordena e explica o que fazer dentro dela.</p></div>
+                <label class="select-field stage4-mode-filter"><span class="visually-hidden">Perfil do recomendador</span><select id="recommendationMode"><option value="equilibrado">Equilibrado</option><option value="diagnostico">Diagnóstico</option><option value="revisao">Revisão</option><option value="edital">Cobertura do edital</option></select></label>
+              </div>
+              <div class="panel-body" id="recommendationList"><div class="skeleton" style="height:12rem"></div></div>
+            </article>
+
+            <article class="panel stage4-simulation-setup">
+              <div class="panel-header"><div><h2>Novo simulado adaptativo</h2><p>A próxima questão é escolhida somente depois da resposta anterior atualizar FSRS + KT + IRT.</p></div></div>
+              <div class="panel-body stage4-setup-form">
+                <label><span>Objetivo</span><select id="simulationMode"><option value="equilibrado">Equilibrado</option><option value="diagnostico">Diagnóstico do nível</option><option value="revisao">Revisão e retenção</option><option value="edital">Cobertura do edital</option></select></label>
+                <label><span>Quantidade</span><input id="simulationCount" type="number" min="5" max="100" value="10"></label>
+                <label><span>Matéria</span><select id="simulationSubject"><option value="">Todas as matérias estudadas</option></select></label>
+                <label><span>Banca</span><select id="simulationBoard"><option value="">Todas as bancas</option></select></label>
+                <button class="button button--primary" id="startAdaptiveSimulation" type="button">Iniciar simulado</button>
+                <button class="button button--secondary" id="resumeAdaptiveSimulation" type="button" hidden>Retomar simulado em andamento</button>
+                <p class="field-help">A incidência de banca usa a distribuição observada no seu banco local; não é uma estatística oficial de todas as provas.</p>
+              </div>
+            </article>
+
+            <article class="panel panel--wide stage4-simulation-workspace">
+              <div class="panel-header"><div><h2>Simulado em execução</h2><p id="simulationStatusText">Nenhuma sessão ativa.</p></div><button class="button button--danger-ghost button--compact" id="abandonAdaptiveSimulation" type="button" hidden>Encerrar</button></div>
+              <div class="panel-body" id="simulationWorkspace">
+                <div class="empty-state"><h3>Pronto para começar</h3><p>Configure o objetivo do simulado. O motor preservará a precedência FSRS e diversificará matéria, aula, assunto e banca.</p></div>
+              </div>
+            </article>
+
+            <article class="panel stage4-projection-panel">
+              <div class="panel-header"><div><h2>Projeção com intervalo</h2><p>Estimativa conservadora de acerto por matéria. Não representa probabilidade de aprovação.</p></div></div>
+              <div class="panel-body" id="projectionTable"></div>
+            </article>
+
+            <article class="panel stage4-board-panel">
+              <div class="panel-header"><div><h2>Incidência observada por banca</h2><p>Distribuição das questões aprovadas existentes no banco local.</p></div></div>
+              <div class="panel-body" id="boardIncidence"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="page page--stage5" data-page="stage5" aria-labelledby="stage5Title">
+          <div class="page-header">
+            <div>
+              <p class="eyebrow">Etapa 5 · geração controlada e atualização temporal</p>
+              <h1 id="stage5Title">Geração de questões, legislação temporal e questões ouro</h1>
+              <p>Gera inéditas somente com fontes marcadas por você, valida por um segundo modelo, controla a vigência legislativa e mantém um conjunto permanente para regressão da IA.</p>
+            </div>
+            <div class="page-actions"><button class="button button--secondary" id="refreshStage5" type="button">Atualizar Etapa 5</button></div>
+          </div>
+
+          <div class="metric-grid" id="stage5Metrics" aria-live="polite"></div>
+
+          <div class="stage5-grid">
+            <article class="panel stage5-generator-panel">
+              <div class="panel-header"><div><h2>Gerador controlado</h2><p>O AI Engine não pode usar texto fora das evidências que você selecionar abaixo.</p></div></div>
+              <div class="panel-body stage5-form">
+                <label><span>Questão-base / contexto</span><select id="stage5SeedQuestion"><option value="">Selecione uma questão</option></select></label>
+                <div class="stage5-inline-fields">
+                  <label><span>Tipo</span><select id="stage5QuestionType"><option value="multipla_escolha">Múltipla escolha</option><option value="certo_errado">Certo/Errado</option></select></label>
+                  <label><span>Banca-alvo</span><input id="stage5BoardStyle" type="text" placeholder="Ex.: CEBRASPE, FGV"></label>
+                  <label><span>Data da prova</span><input id="stage5ExamDate" type="date"></label>
+                </div>
+                <label><span>Matéria</span><input id="stage5Subject" type="text" placeholder="Usa a questão-base se ficar vazio"></label>
+                <label><span>Assunto</span><input id="stage5Topic" type="text" placeholder="Usa a questão-base se ficar vazio"></label>
+                <div>
+                  <div class="stage5-section-label"><strong>Fontes selecionadas</strong><span>Marque explicitamente os chunks que podem alimentar a geração.</span></div>
+                  <div id="stage5SourcePool" class="stage5-source-pool"><div class="skeleton" style="height:8rem"></div></div>
+                </div>
+                <button class="button button--primary" id="generateControlledQuestion" type="button">Gerar rascunho controlado</button>
+                <p class="field-help">O rascunho não entra no banco. Primeiro passa pelo <strong>qf-generation-critic</strong>; depois exige sua aprovação explícita.</p>
+              </div>
+            </article>
+
+            <article class="panel stage5-draft-panel">
+              <div class="panel-header"><div><h2>Rascunho + segunda validação</h2><p>Fundamentação, gabarito, distratores, fontes e compatibilidade temporal permanecem auditáveis.</p></div></div>
+              <div class="panel-body" id="stage5DraftWorkspace"><div class="empty-state"><h3>Nenhum rascunho nesta sessão</h3><p>Selecione fontes e gere uma questão para iniciar a validação independente.</p></div></div>
+            </article>
+
+            <article class="panel stage5-legislation-panel">
+              <div class="panel-header"><div><h2>Legislação com vigência temporal</h2><p>Cadastre versões da mesma norma e resolva qual texto valia na data de uma prova.</p></div></div>
+              <div class="panel-body stage5-form">
+                <div class="stage5-inline-fields">
+                  <label><span>Chave canônica</span><input id="legCanonicalKey" type="text" placeholder="CTN_ART_151"></label>
+                  <label><span>Início da vigência</span><input id="legEffectiveFrom" type="date"></label>
+                  <label><span>Fim da vigência</span><input id="legEffectiveTo" type="date"></label>
+                </div>
+                <label><span>Título</span><input id="legTitle" type="text" placeholder="CTN · art. 151"></label>
+                <label><span>Matéria</span><input id="legSubject" type="text" placeholder="Direito Tributário"></label>
+                <div class="stage5-inline-fields"><label><span>Fonte</span><input id="legSourceLabel" type="text" placeholder="Planalto / norma oficial"></label><label><span>URL de referência</span><input id="legSourceUrl" type="url" placeholder="Opcional"></label></div>
+                <label><span>Texto vigente nessa versão</span><textarea id="legText" rows="6" placeholder="Cole o texto oficial da versão correspondente à vigência informada."></textarea></label>
+                <button class="button button--secondary" id="saveLegislationVersion" type="button">Salvar versão e indexar no RAG</button>
+                <div class="stage5-resolver">
+                  <div class="stage5-section-label"><strong>Qual versão valia na data?</strong><span>Consulta temporal sem sobrescrever o histórico.</span></div>
+                  <div class="stage5-inline-fields"><label><span>Chave canônica</span><input id="legResolveKey" type="text" placeholder="CTN_ART_151"></label><label><span>Data de referência/prova</span><input id="legResolveDate" type="date"></label><button class="button button--secondary" id="resolveLegislationVersion" type="button">Resolver vigência</button></div>
+                  <div id="legResolveResult"></div>
+                </div>
+                <div id="legislationTimeline" class="stage5-timeline"></div>
+              </div>
+            </article>
+
+            <article class="panel stage5-gold-panel">
+              <div class="panel-header"><div><h2>Questões ouro · regressão permanente da IA</h2><p>Conjunto fixo para detectar regressões quando prompts, modelos ou mecanismos de recuperação forem alterados.</p></div><button class="button button--secondary button--compact" id="runGoldRegression" type="button">Executar regressão</button></div>
+              <div class="panel-body" id="goldRegressionPanel"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="page page--review" data-page="review" aria-labelledby="reviewTitle">
+          <div class="page-header page-header--compact">
+            <div>
+              <p class="eyebrow">Curadoria de questões</p>
+              <h1 id="reviewTitle">Revisar e organizar</h1>
+              <p>Editor responsivo com autosave visual, validação e prévia do Telegram.</p>
+            </div>
+            <div class="page-actions">
+              <button class="button button--secondary" id="createQuestion">Nova questão</button>
+              <button class="button button--danger-ghost" id="annulQuestion" disabled>Anular</button>
+              <button class="button button--danger-ghost" id="deleteQuestion" disabled>Excluir</button>
+            </div>
+          </div>
+
+          <div class="roadmap-tools-strip panel panel--flat" aria-label="Ferramentas das evoluções do Roadmap">
+            <div class="roadmap-tools-strip__group roadmap-tools-strip__group--global">
+              <span class="roadmap-tools-strip__label">Qualidade RAG</span>
+              <button class="button button--secondary button--small" type="button" id="openGroundingBenchmark" title="6.8.1 · Comparar RAG textual, visual e híbrido nas Questões Ouro">Benchmark RAG 3.0</button>
+              <button class="button button--secondary button--small" type="button" id="openRetrievalCalibration" title="6.8.2 · Calibrar reranking, baseline e rollback">Calibrar retrieval</button>
+              <button class="button button--primary button--small" type="button" id="openRetrievalObservability" title="6.8.3 · Histórico, drift, qualidade por matéria e expansão do dataset Ouro">Observabilidade retrieval</button>
+              <button class="button button--success button--small" type="button" id="openRetrievalQualityGate" title="6.8.4 · Quality gates, quarentena, promoção segura, override auditado e rollback">Quality Gates</button>
+            </div>
+            <div class="roadmap-tools-strip__divider" aria-hidden="true"></div>
+            <div class="roadmap-tools-strip__group roadmap-tools-strip__group--question">
+              <span class="roadmap-tools-strip__label">Questão selecionada</span>
+              <button class="button button--tertiary button--small" type="button" id="showAiBrief" disabled title="Selecione uma questão para visualizar o contexto/RAG">Contexto/RAG</button>
+              <button class="button button--tertiary button--small" type="button" id="showKnowledgeGraph" disabled title="Selecione uma questão para abrir o mapa de conceitos">Grafo</button>
+              <button class="button button--tertiary button--small" type="button" id="showHybridEvidence" disabled title="6.8.0 · Selecione uma questão para visualizar evidências híbridas">Evidências híbridas</button>
+            </div>
+          </div>
+
+          <div class="review-toolbar panel panel--flat">
+            <label class="search-field">
+              <span aria-hidden="true">⌕</span>
+              <input type="search" id="questionSearch" placeholder="Código, enunciado, matéria ou assunto" aria-label="Pesquisar no banco">
+            </label>
+            <label class="select-field">
+              <span class="visually-hidden">Filtrar por status</span>
+              <select id="questionStatus" aria-label="Filtrar questões por status">
+                <option value="todos">Todos os status</option>
+                <option value="pendente">Pendentes</option>
+                <option value="aprovado">Aprovadas</option>
+                <option value="aprovado_automaticamente">Aprovadas automaticamente</option>
+              </select>
+            </label>
+            <button class="button button--secondary" id="rereadQuestion" disabled>Reler PDF</button>
+            <button class="button button--secondary" id="reviewPreview" disabled>Prévia Telegram</button>
+            <span class="toolbar-status" id="reviewToolbarStatus" aria-live="polite"></span>
+          </div>
+
+          <div class="review-shell" id="reviewShell">
+            <article class="question-list-panel panel" aria-labelledby="questionListTitle">
+              <div class="panel-header panel-header--dense">
+                <div><h2 id="questionListTitle">Questões</h2><p id="questionCount">Carregando…</p></div>
+                <button class="icon-button" id="collapseQuestionList" type="button" aria-label="Recolher lista de questões">⇤</button>
+              </div>
+              <div class="virtual-table" id="questionTable" role="table" aria-label="Lista de questões">
+                <div class="virtual-table-head-clip">
+                  <div class="virtual-table-head" id="questionTableHead" role="row" aria-label="Cabeçalho ajustável da lista de questões"></div>
+                </div>
+                <div class="question-horizontal-scroll" id="questionHorizontalScroll" aria-label="Rolagem horizontal das colunas" title="Arraste para visualizar todas as colunas">
+                  <div class="question-horizontal-scroll-track" id="questionHorizontalScrollTrack"></div>
+                </div>
+                <div class="virtual-table-viewport" id="questionViewport" tabindex="0" aria-describedby="questionScrollHint">
+                  <div class="virtual-table-spacer" id="questionSpacer"></div>
+                  <div class="virtual-table-rows" id="questionRows"></div>
+                </div>
+                <p class="question-scroll-hint" id="questionScrollHint">Arraste a barra horizontal acima ou use Shift + roda do mouse para ver todas as colunas.</p>
+              </div>
+            </article>
+
+            <article class="question-editor panel" id="questionEditor" aria-labelledby="editorTitle">
+              <div class="panel-header panel-header--sticky question-editor-header">
+                <div class="question-editor-header__identity"><h2 id="editorTitle">Selecione uma questão</h2><p id="editorSubtitle">Os campos aparecerão aqui.</p></div>
+                <div class="question-editor-header__actions">
+                  <span class="status-pill" id="editorStatus" hidden></span>
+                  <button class="icon-button question-header-toggle" id="toggleQuestionHeader" type="button" aria-expanded="true" title="Recolher detalhes da questão" aria-label="Recolher detalhes da questão">⌃</button>
+                </div>
+              </div>
+              <div class="editor-empty empty-state" id="editorEmpty">
+                <span class="empty-state-art theme-picture" aria-hidden="true"><img class="theme-art theme-art--light" src="assets/questflow_exam_light.svg" alt="" width="144" height="144" loading="lazy" decoding="async"><img class="theme-art theme-art--dark" src="assets/questflow_exam_dark.svg" alt="" width="144" height="144" loading="lazy" decoding="async"></span>
+                <h3>Nenhuma questão selecionada</h3>
+                <p>Escolha uma questão na lista ou crie uma nova.</p>
+              </div>
+              <form id="questionForm" hidden novalidate>
+                <div class="editor-content">
+                  <section class="editor-section metadata-section" aria-labelledby="metadataTitle">
+                    <div class="section-heading"><div><h3 id="metadataTitle">Identificação e classificação</h3><p>Metadados usados no banco, nos filtros e no ciclo.</p></div></div>
+                    <div class="form-grid" id="metadataGrid"></div>
+                  </section>
+
+                  <section class="editor-section" aria-labelledby="statementTitle">
+                    <div class="section-heading">
+                      <div><h3 id="statementTitle">Enunciado</h3><p>Texto completo da questão, preservando parágrafos.</p></div>
+                      <span class="character-count" id="statementCount">0 caracteres</span>
+                    </div>
+                    <div class="rich-text-field" data-field="enunciado">
+                      <div class="text-toolbar" role="toolbar" aria-label="Ferramentas do enunciado">
+                        <button type="button" data-action="copy" aria-label="Copiar enunciado">Copiar</button>
+                        <button type="button" data-action="expand" aria-label="Expandir editor do enunciado">Expandir</button>
+                        <button type="button" data-action="format" aria-label="Normalizar espaçamento do enunciado">Normalizar</button>
+                      </div>
+                      <textarea id="statementInput" name="enunciado" rows="8" spellcheck="true" aria-describedby="statementHelp"></textarea>
+                      <p class="field-help" id="statementHelp">Use quebras de linha para separar contexto e comando.</p>
+                    </div>
+                  </section>
+
+                  <section class="editor-section" id="alternativesSection" aria-labelledby="alternativesTitle">
+                    <div class="section-heading">
+                      <div><h3 id="alternativesTitle">Alternativas</h3><p id="alternativesSubtitle">Edite cada opção separadamente. A ordem é preservada no Telegram.</p></div>
+                      <button class="button button--tertiary button--small" type="button" id="addAlternative">Adicionar alternativa</button>
+                    </div>
+                    <div class="alternatives-list" id="alternativesList"></div>
+                  </section>
+
+                  <section class="editor-section" aria-labelledby="explanationTitle">
+                    <div class="section-heading">
+                      <div><h3 id="explanationTitle">Explicação após a resposta</h3><p>Enviada em mensagem separada para evitar o limite da explicação nativa do quiz.</p></div>
+                      <span class="character-count" id="explanationCount">0 caracteres</span>
+                    </div>
+                    <div class="explanation-ai-bar" aria-label="Pesquisa assistida da explicação">
+                      <div class="explanation-ai-bar__text">
+                        <strong>Pesquisa assistida</strong>
+                        <span>Localiza a justificativa, remove metadados/enunciado repetido e prepara o texto para sua revisão.</span>
+                      </div>
+                      <button class="button button--secondary" type="button" id="researchGoogleCommentary" title="Pesquisa a questão no Google, isola a justificativa e marca a origem como IA assistida + revisão humana.">Pesquisar resposta no Google com IA</button>
+                    </div>
+                    <div class="rich-text-field" data-field="explicacao">
+                      <div class="text-toolbar" role="toolbar" aria-label="Ferramentas da explicação">
+                        <button type="button" data-action="copy" aria-label="Copiar explicação">Copiar</button>
+                        <button type="button" data-action="expand" aria-label="Expandir editor da explicação">Expandir</button>
+                        <button type="button" data-action="format" aria-label="Normalizar espaçamento da explicação">Normalizar</button>
+                      </div>
+                      <textarea id="explanationInput" name="explicacao" rows="7" spellcheck="true"></textarea>
+                    </div>
+                  </section>
+
+                  <section class="editor-section question-intelligence-section" aria-labelledby="questionIntelligenceTitle">
+                    <div class="section-heading">
+                      <div><h3 id="questionIntelligenceTitle">Inteligência e curadoria</h3><p>Qualidade editorial, dificuldade real, duplicidade e assistência por IA. Nada é publicado automaticamente.</p></div>
+                      <button class="button button--secondary button--small" type="button" id="refreshQuestionIntelligence">Recalcular</button>
+                    </div>
+                    <div id="questionIntelligencePanel" class="question-intelligence-panel" aria-live="polite">
+                      <div class="skeleton" style="height:5rem"></div>
+                    </div>
+                    <div class="ai-curation-actions">
+                      <button class="button button--secondary" type="button" id="openTutorForQuestion">Abrir no Tutor IA</button>
+                      <button class="button button--primary" type="button" id="assistCommentaryAi">Gerar rascunho assistido por IA/RAG</button>
+                      <small>O índice local funciona offline. O rascunho só entra na explicação se você aceitar explicitamente.</small>
+                    </div>
+                  </section>
+
+                  <section class="editor-section" aria-labelledby="imageTitle">
+                    <div class="section-heading"><div><h3 id="imageTitle">Imagem da questão</h3><p>Recorte automático ou anexo manual.</p></div></div>
+                    <div class="image-card" id="imageCard">
+                      <div class="image-empty" id="imageEmpty">Nenhuma imagem associada.</div>
+                      <img id="questionImage" alt="Imagem associada à questão" loading="lazy" hidden>
+                      <div class="image-actions">
+                        <button class="button button--secondary button--small" type="button" id="attachImage">Escolher ou trocar</button>
+                        <button class="button button--tertiary button--small" type="button" id="removeImage" disabled>Remover</button>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+                <div class="editor-actions">
+                  <div class="editor-actions__status">
+                    <span class="editor-actions__label">Status da revisão</span>
+                    <div class="validation-message" id="editorValidation" aria-live="polite"></div>
+                  </div>
+                  <div class="editor-actions__controls">
+                    <span class="editor-actions__label">Ações</span>
+                    <div class="editor-action-buttons" role="group" aria-label="Ações da revisão da questão">
+                      <button class="button button--secondary" type="button" id="discardChanges">Descartar</button>
+                      <button class="button button--primary" type="submit" id="saveQuestion">Salvar alterações</button>
+                      <button class="button button--success" type="button" id="approveQuestion">Salvar e aprovar</button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </article>
+          </div>
+        </section>
+
+        <section class="page page--bankfix" data-page="bankfix" aria-labelledby="bankFixTitle">
+          <div class="page-header">
+            <div>
+              <p class="eyebrow">Manutenção e classificação</p>
+              <h1 id="bankFixTitle">Corrigir banco de questões</h1>
+              <p>Localize questões importadas com matéria, aula ou conteúdo incorretos e corrija sem perder histórico, respostas ou vínculo interno.</p>
+            </div>
+            <div class="page-actions">
+              <button class="button button--secondary" id="refreshBankFix" type="button">Atualizar lista</button>
+            </div>
+          </div>
+
+          <div class="metric-grid bank-fix-summary" id="bankFixSummary" aria-live="polite"></div>
+
+          <div class="bank-fix-toolbar panel panel--flat">
+            <label class="search-field">
+              <span aria-hidden="true">⌕</span>
+              <input type="search" id="bankFixSearch" placeholder="Código, enunciado, assunto, banca…" aria-label="Pesquisar questões para correção">
+            </label>
+            <label class="select-field">
+              <span class="visually-hidden">Filtrar por matéria</span>
+              <select id="bankFixMatter" aria-label="Filtrar por matéria"><option value="">Todas as matérias</option></select>
+            </label>
+            <label class="select-field">
+              <span class="visually-hidden">Filtrar por aula</span>
+              <select id="bankFixLesson" aria-label="Filtrar por aula"><option value="">Todas as aulas</option></select>
+            </label>
+            <label class="select-field">
+              <span class="visually-hidden">Filtrar por status</span>
+              <select id="bankFixStatus" aria-label="Filtrar por status">
+                <option value="todos">Todos os status</option>
+                <option value="pendente">Pendentes</option>
+                <option value="aprovado">Aprovadas</option>
+                <option value="aprovado_automaticamente">Aprovadas automaticamente</option>
+              </select>
+            </label>
+            <button class="button button--tertiary" id="clearBankFixFilters" type="button">Limpar filtros</button>
+          </div>
+
+          <article class="panel bank-fix-panel">
+            <div class="panel-header">
+              <div><h2>Banco organizado por matéria e aula</h2><p id="bankFixCount">Carregando…</p></div>
+              <span class="toolbar-status">Expanda uma matéria, organize o título da aula ou corrija uma questão individual.</span>
+            </div>
+            <div class="panel-body" id="bankFixTable"></div>
+          </article>
+        </section>
+
+        <section class="page" data-page="flow" aria-labelledby="flowTitle">
+          <div class="page-header">
+            <div><p class="eyebrow">Revisão adaptativa</p><h1 id="flowTitle">Fluxo de estudos</h1><p>Questões, marcações, explicações, reenvios e retenção em um ciclo contínuo.</p></div>
+            <div class="page-actions">
+              <button class="button button--secondary" id="refreshFlow">Atualizar</button>
+              <button class="button button--primary" id="sendCycleNow">Enviar ciclo agora</button>
+            </div>
+          </div>
+          <div class="flow-layout">
+            <article class="panel">
+              <div class="panel-header"><div><h2>Estado do serviço</h2><p>Listener, agendamento e próxima execução.</p></div></div>
+              <div class="panel-body" id="flowStatusPanel"></div>
+              <div class="panel-actions">
+                <button class="button button--success" id="flowStart">Iniciar</button>
+                <button class="button button--secondary" id="flowPause">Pausar</button>
+                <button class="button button--secondary" id="flowResume">Retomar</button>
+                <button class="button button--danger-ghost" id="flowStop">Parar</button>
+              </div>
+              <div class="panel-actions telegram-question-controls">
+                <button class="button button--warning" id="telegramQuestionsPause" type="button">Pausar envio de questões</button>
+                <button class="button button--success" id="telegramQuestionsResume" type="button">Retomar envio de questões</button>
+                <small>O listener continua conectado para registrar respostas e comandos. A pausa bloqueia novos ciclos, reenvios e questões de relearning.</small>
+              </div>
+            </article>
+            <article class="panel">
+              <div class="panel-header"><div><h2>Configuração do ciclo</h2><p>Preferências de envio e retenção.</p></div></div>
+              <form class="panel-body form-grid" id="flowSettingsForm"></form>
+              <div class="panel-actions"><button class="button button--primary" id="saveFlowSettings" type="button">Salvar configuração</button></div>
+            </article>
+            <article class="panel panel--wide">
+              <div class="panel-header"><div><h2>FSRS 6 · Memória personalizada</h2><p>Scheduler oficial, otimizador, carga diária e horizonte até a prova.</p></div><button class="button button--secondary button--small" id="optimizeFsrs" type="button">Otimizar agora</button></div>
+              <div class="panel-body" id="fsrsStatusPanel"><div class="skeleton" style="height:5rem"></div></div>
+            </article>
+            <article class="panel panel--wide telegram-config-panel">
+              <div class="panel-header"><div><h2>Bot do Telegram</h2><p>Configure o token fornecido pelo BotFather e o Chat ID que receberá as questões.</p></div><span class="status-pill" id="telegramConfigStatus">Não verificado</span></div>
+              <form class="panel-body telegram-config-grid" id="telegramBotForm" autocomplete="off">
+                <div class="form-field">
+                  <label for="telegramBotToken">Token do bot</label>
+                  <input id="telegramBotToken" name="telegram_bot_token" type="password" autocomplete="new-password" placeholder="Cole um novo token para substituir o atual">
+                  <small id="telegramTokenHint" class="field-help">Nenhum token configurado.</small>
+                </div>
+                <div class="form-field">
+                  <label for="telegramChatId">Chat ID</label>
+                  <input id="telegramChatId" name="telegram_chat_id" type="text" inputmode="numeric" placeholder="Ex.: 123456789 ou -100…">
+                  <small class="field-help">Pode ser o ID de um usuário, grupo ou canal autorizado.</small>
+                </div>
+              </form>
+              <div class="panel-actions">
+                <button class="button button--secondary" id="testTelegramConnection" type="button">Testar conexão</button>
+                <button class="button button--primary" id="saveTelegramSettings" type="button">Salvar bot</button>
+              </div>
+            </article>
+            <article class="panel panel--wide">
+              <div class="panel-header"><div><h2>Histórico recente</h2><p>Envios, respostas, tentativas e erros.</p></div><button class="button button--secondary button--small" id="retryFailures">Reenviar falhas</button></div>
+              <div class="panel-body" id="flowHistory"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="page" data-page="corrections" aria-labelledby="correctionsTitle">
+          <div class="page-header">
+            <div><p class="eyebrow">Triagem de estudo e qualidade</p><h1 id="correctionsTitle">Correções e Matérias não Estudadas</h1><p>Separe claramente o que precisa de <strong>correção no banco</strong> do que ainda precisa ser <strong>estudado</strong>. Marcar uma matéria como não estudada continua sem contar como erro de desempenho.</p></div>
+            <div class="page-actions"><button class="button button--secondary" id="refreshCorrections">Atualizar</button></div>
+          </div>
+          <div class="corrections-overview" id="correctionsOverview"></div>
+          <article class="panel corrections-section corrections-section--editorial">
+            <div class="panel-header"><div><p class="eyebrow">Qualidade do banco</p><h2>Correções</h2><p>Somente questões marcadas para correção editorial, revisão de conteúdo, gabarito, enunciado ou cadastro.</p></div><span class="status-pill" id="editorialCorrectionsCount">0 pendências</span></div>
+            <div class="panel-body" id="editorialCorrectionsTable"></div>
+          </article>
+          <article class="panel corrections-section corrections-section--study">
+            <div class="panel-header"><div><p class="eyebrow">Planejamento do estudo</p><h2>Matérias ainda não estudadas</h2><p>Questões que você sinalizou no Mobile porque o conteúdo ainda não foi estudado. Elas ficam separadas das correções e não contam como erro.</p></div><span class="status-pill" id="notStudiedCorrectionsCount">0 pendências</span></div>
+            <div class="panel-body" id="notStudiedCorrectionsTable"></div>
+          </article>
+        </section>
+
+        <section class="page" data-page="coverage" aria-labelledby="coverageTitle">
+          <div class="page-header">
+            <div><p class="eyebrow">CICLO_REG • conteúdos concluídos</p><h1 id="coverageTitle">Cobertura dos estudos</h1><p>Mostra somente o que você já marcou como estudado e compara as questões realizadas na planilha com as questões já cadastradas no QuestFlow.</p></div>
+            <div class="page-actions"><button class="button button--secondary" id="addTrailGuide">Adicionar PDF da trilha</button><button class="button button--secondary" id="refreshCoverage">Recalcular</button><button class="button button--primary" id="syncCoverage">Sincronizar planilha</button></div>
+          </div>
+          <div class="metric-grid coverage-summary" id="coverageSummary"></div>
+          <div class="coverage-sync-note panel panel--flat" id="coverageSyncNote">Aguardando leitura da planilha.</div>
+          <div class="trail-guide-status panel panel--flat" id="trailGuideStatus" aria-live="polite">Carregando documentação das trilhas…</div>
+          <details class="panel panel--flat trail-guide-knowledge" id="trailGuideKnowledge">
+            <summary>Como o QuestFlow interpreta o preenchimento da planilha</summary>
+            <div id="trailGuideKnowledgeBody" class="trail-guide-knowledge-body"></div>
+          </details>
+          <div class="coverage-toolbar panel panel--flat">
+            <label class="search-field"><span aria-hidden="true">⌕</span><input id="coverageSearch" type="search" placeholder="Buscar matéria, aula ou conteúdo estudado" aria-label="Buscar nos conteúdos estudados"></label>
+            <label class="select-field"><span class="visually-hidden">Filtrar cobertura</span><select id="coverageStatus"><option value="pendentes" selected>Somente pendências</option><option value="faltam_questoes">Sem cobertura</option><option value="cobertura_parcial">Cobertura parcial</option><option value="sem_questoes">Sem questão e sem meta</option><option value="cobertos">Cobertos</option><option value="todos">Todos os estudados</option></select></label>
+          </div>
+          <article class="panel">
+            <div class="panel-header coverage-explainer"><div><h2>O que ainda precisa ser importado</h2><p><strong>Faltam adicionar</strong> = questões que você registrou como feitas na planilha − questões do mesmo conteúdo encontradas no banco. <strong>Clique em qualquer ponto de uma linha pendente</strong> para escolher o PDF e abrir a importação já vinculada à matéria, aula e conteúdo selecionados. Quando a planilha não informa quantidade, o QuestFlow sinaliza o conteúdo estudado sem cobertura, mas não inventa uma meta.</p></div></div>
+            <div class="panel-body" id="coverageTable"></div>
+          </article>
+        </section>
+
+        <section class="page mobile-studio-page" data-page="mobile" aria-labelledby="mobileStudioTitle">
+          <div class="page-header mobile-studio-header">
+            <div>
+              <p class="eyebrow">Aplicativo e dispositivos</p>
+              <h1 id="mobileStudioTitle">QuestFlow Mobile</h1>
+              <p>Conecte o celular, acompanhe a sincronização e gerencie aparelhos em uma área própria, sem misturar configurações técnicas do Studio.</p>
+            </div>
+            <div class="page-actions">
+              <button class="button button--primary" type="button" id="createMobilePairingTop">Conectar novo aparelho</button>
+              <button class="button button--secondary" type="button" id="refreshMobilePage">Atualizar status</button>
+            </div>
+          </div>
+
+          <section class="mobile-studio-hero" aria-label="Resumo do QuestFlow Mobile">
+            <div class="mobile-studio-hero__copy">
+              <span class="mobile-studio-kicker">MOBILE 0.15.6</span>
+              <h2>Seu QuestFlow no celular</h2>
+              <p>O Studio continua sendo o cérebro do estudo; o aplicativo fica focado em responder, revisar e acompanhar desempenho.</p>
+              <div class="mobile-studio-hero__badges">
+                <span class="status-pill" data-tone="success">Fila offline protegida</span>
+                <span class="status-pill" data-tone="success">Tempo ativo com Quality Gate</span>
+                <span class="status-pill" data-tone="neutral">Cloud Bridge opcional</span>
+              </div>
+            </div>
+            <div class="mobile-studio-hero__art" aria-hidden="true">
+              <span class="mobile-phone-shape"><span></span><span></span><span></span></span>
+            </div>
+          </section>
+
+          <div class="mobile-studio-grid">
+            <article class="panel mobile-local-panel">
+              <div class="panel-header">
+                <div><p class="eyebrow">Conexão principal</p><h2>Celular na mesma rede</h2><p>Este é o modo recomendado durante o desenvolvimento. O aplicativo encontra o Studio enquanto ambos estão na mesma rede.</p></div>
+                <span class="status-pill" id="mobileLocalStatusPill">Verificando</span>
+              </div>
+              <div class="panel-body">
+                <label class="mobile-toggle-card switch-line" for="mobileLanEnabled">
+                  <input id="mobileLanEnabled" type="checkbox">
+                  <span><strong>Permitir acesso do QuestFlow Mobile nesta rede</strong><small>Após mudar esta opção, reinicie o Studio para publicar a API local com segurança.</small></span>
+                </label>
+                <div class="network-detected" id="mobileAccessText">Acesso por celular: verificando.</div>
+                <div class="network-actions">
+                  <button class="button button--primary" type="button" id="saveMobileLanSettings">Salvar acesso do Mobile</button>
+                </div>
+              </div>
+            </article>
+
+            <article class="panel mobile-help-panel">
+              <div class="panel-header"><div><p class="eyebrow">Como conectar</p><h2>Primeiro pareamento</h2><p>O fluxo fica concentrado aqui para você não precisar procurar em Configurações.</p></div></div>
+              <div class="panel-body mobile-steps">
+                <div><span>1</span><p>Deixe computador e celular na mesma Wi‑Fi.</p></div>
+                <div><span>2</span><p>Ative o acesso local ao lado e reinicie o Studio se solicitado.</p></div>
+                <div><span>3</span><p>Clique em <strong>Conectar novo aparelho</strong> e leia o QR pelo aplicativo.</p></div>
+              </div>
+            </article>
+          </div>
+
+            
+
+            
+
+        
+          <div class="mobile-section-stack">
+<article class="panel panel--wide mobile-foundation-panel" aria-labelledby="mobileFoundationTitle">
+              <div class="panel-header">
+                <div><p class="eyebrow">Aparelhos</p><h2 id="mobileFoundationTitle">QuestFlow Mobile 0.15.6 — Study Session</h2><p>Pareamento, aparelhos, fila offline, tempo ativo e sincronização local em uma única área.</p></div>
+                <span class="status-pill" id="mobileFoundationStatusPill">Verificando</span>
+              </div>
+              <div class="panel-body">
+                <div class="network-note"><strong>Separação de responsabilidades:</strong> o Studio continua sendo o centro de inteligência e curadoria. O Mobile recebe projeções próprias e nunca acessa diretamente as tabelas internas do QuestFlow.</div>
+                <div id="mobileFoundationMetrics" class="mobile-foundation-metrics" aria-live="polite"></div>
+                <div class="network-actions">
+                  <button class="button button--primary" type="button" id="createMobilePairing">Conectar novo aparelho</button>
+                  <button class="button" type="button" id="refreshMobileFoundation">Atualizar status</button>
+                </div>
+                <section class="mobile-pairing-card" id="mobilePairingCard" hidden aria-live="polite">
+                  <div class="mobile-pairing-qr"><img id="mobilePairingQr" alt="QR Code temporário para parear o QuestFlow Mobile" hidden></div>
+                  <div class="mobile-pairing-copy">
+                    <h3>Pareamento temporário</h3>
+                    <p>Escaneie o QR no <strong>QuestFlow Mobile 0.15.6</strong>. O código é de <strong>uso único</strong> e expira automaticamente.</p>
+                    <code id="mobilePairingToken"></code>
+                    <small id="mobilePairingServer" class="field-help"></small>
+                    <small id="mobilePairingExpiry" class="field-help"></small>
+                    <div class="button-row"><button class="button button--secondary button--compact" id="copyMobilePairing" type="button">Copiar código</button></div>
+                  </div>
+                </section>
+                <div class="mobile-device-section">
+                  <h3>Aparelhos do Mobile</h3>
+                  <p class="field-help">Conectado = pode sincronizar agora. Desconectar encerra a sessão. Um aparelho desconectado pode voltar pelo mesmo fluxo de QR e será reconhecido sem criar um novo registro.</p>
+                  <div id="mobileDeviceList" class="mobile-device-list"><p class="muted">Nenhum aparelho conectado.</p></div>
+                </div>
+                <div class="network-note mobile-timing-note"><strong>Tempo de resposta protegido contra falsa lentidão:</strong> métricas de velocidade usam somente tempo ativo aprovado pelo Quality Gate. Deixar a questão aberta, colocar o app em segundo plano ou ficar inativo não transforma esse período em “tempo de resposta”.</div>
+              </div>
+            </article>
+
+            <details class="mobile-cloud-advanced panel panel--flat">
+              <summary><span><strong>Cloud Bridge</strong><small>Experimental e opcional — deixe para uma fase futura se quiser.</small></span><span aria-hidden="true">⌄</span></summary>
+              <div class="mobile-cloud-advanced__body">
+<article class="panel panel--wide cloud-sync-panel" aria-labelledby="mobileCloudBridgeTitle">
+              <div class="panel-header">
+                <div><p class="eyebrow">Experimental</p><h2 id="mobileCloudBridgeTitle">Cloud Bridge</h2><p>Cloud Bridge integrado ao produto, mas experimental e opcional para uma fase futura. O desenvolvimento normal do Mobile não depende dele.</p></div>
+                <span class="status-pill" id="mobileCloudBridgeStatusPill">Desativado</span>
+              </div>
+              <div class="panel-body">
+                <div class="network-note"><strong>Não é obrigatório agora:</strong> deixe desativado enquanto o Studio e o Mobile ainda estão evoluindo. Quando quiser acesso fora da rede local, esta área continua disponível.</div>
+                <form class="network-settings-grid" id="mobileCloudBridgeSettings" autocomplete="off">
+                  <div class="form-field form-field--wide">
+                    <label class="switch-line" for="mobileCloudBridgeEnabled"><input id="mobileCloudBridgeEnabled" type="checkbox"><span>Ativar Mobile Cloud Bridge</span></label>
+                  </div>
+                  <div class="form-field form-field--wide">
+                    <label for="mobileCloudBridgeUrl">URL pública do Gateway</label>
+                    <input id="mobileCloudBridgeUrl" type="url" placeholder="https://mobile.seudominio.com">
+                    <small class="field-help">Em produção use HTTPS. O Gateway incluído nesta versão pode ser hospedado em um servidor/VPS sempre ligado.</small>
+                  </div>
+                  <div class="form-field form-field--wide">
+                    <label for="mobileCloudBridgeKey">Chave administrativa do Gateway</label>
+                    <input id="mobileCloudBridgeKey" type="password" autocomplete="new-password" placeholder="Deixe vazio para manter a chave protegida">
+                    <small id="mobileCloudBridgeKeyHint" class="field-help">A chave não é enviada ao aplicativo e fica protegida pelo Windows (DPAPI).</small>
+                  </div>
+                  <div class="form-field">
+                    <label for="mobileCloudBridgeInterval">Atualizar Gateway a cada (s)</label>
+                    <input id="mobileCloudBridgeInterval" type="number" min="15" max="900" value="30">
+                  </div>
+                  <div class="form-field">
+                    <label for="mobileCloudBridgePackSize">Questões disponíveis quando Studio estiver offline</label>
+                    <input id="mobileCloudBridgePackSize" type="number" min="8" max="100" value="40">
+                  </div>
+                </form>
+                <div class="network-detected" id="mobileCloudBridgeStatusText">Cloud Bridge ainda não configurado.</div>
+                <div class="network-actions">
+                  <button class="button" type="button" id="testMobileCloudBridge">Testar Gateway</button>
+                  <button class="button" type="button" id="syncMobileCloudBridgeNow">Publicar e receber agora</button>
+                  <button class="button button--primary" type="button" id="saveMobileCloudBridgeSettings">Salvar Mobile Cloud Bridge</button>
+                </div>
+              </div>
+            </article>
+              </div>
+            </details>
+          </div>
+</section>
+
+        <section class="page" data-page="settings" aria-labelledby="settingsTitle">
+          <div class="page-header">
+            <div><p class="eyebrow">Preferências</p><h1 id="settingsTitle">Configurações e dados</h1><p>Interface, OCR, Telegram, backup e interoperabilidade.</p></div>
+          </div>
+          <div class="settings-grid">
+            <article class="panel">
+              <div class="panel-header"><div><h2>Aparência</h2><p>Tema, densidade e escala fluidos.</p></div></div>
+              <form class="panel-body form-grid" id="appearanceSettings"></form>
+            </article>
+            <article class="panel">
+              <div class="panel-header"><div><h2>OCR e processamento</h2><p>Qualidade e idiomas da extração.</p></div></div>
+              <form class="panel-body form-grid" id="processingSettings"></form>
+            </article>
+            <article class="panel panel--wide catalog-settings-panel" id="courseCatalogSettingsPanel">
+              <div class="panel-header">
+                <div><h2>Estudos e Trilhas</h2><p>Planilha de estudos e trilhas — atualize a estrutura do curso sem perder o que você já estudou.</p></div>
+                <span class="status-pill" id="courseCatalogStatusPill">Carregando…</span>
+              </div>
+              <div class="panel-body">
+                <div class="network-note catalog-safety-note"><strong>Mesclagem segura:</strong> a nova planilha atualiza trilhas, aulas e matérias, mas campos vazios não apagam seu progresso, respostas, FSRS, Knowledge Tracing ou histórico do Mobile.</div>
+                <div class="catalog-current-grid">
+                  <div><span>Planilha atual</span><strong id="courseCatalogSourceTitle">Carregando…</strong><small id="courseCatalogTrailRange">—</small></div>
+                  <div><span>Última sincronização</span><strong id="courseCatalogLastSync">—</strong><small id="courseCatalogVersion">—</small></div>
+                  <div><span>Abas detectadas</span><strong id="courseCatalogSheets">—</strong><small id="courseCatalogLessonCount">—</small></div>
+                </div>
+                <div class="form-field form-field--wide catalog-url-field">
+                  <label for="courseCatalogUrl">Link da planilha de controle</label>
+                  <input id="courseCatalogUrl" type="url" spellcheck="false" placeholder="https://docs.google.com/spreadsheets/d/…">
+                  <small class="field-help">Cole aqui o link da planilha mais atual. A URL só se torna ativa depois do dry-run e da confirmação da mesclagem.</small>
+                </div>
+                <div class="network-actions">
+                  <button class="button" type="button" id="testCourseCatalog">Testar planilha</button>
+                  <button class="button button--primary" type="button" id="updateCourseCatalog">Trocar/Atualizar planilha</button>
+                </div>
+                <div class="network-detected" id="courseCatalogStatusText">Carregando a fonte atual…</div>
+              </div>
+            </article>
+
+            <article class="panel panel--wide network-panel">
+              <div class="panel-header">
+                <div><h2>Rede e Proxy</h2><p>Use a rede corporativa sem colocar o proxy entre a interface do QuestFlow e o motor local.</p></div>
+                <span class="status-pill" id="networkStatusPill">Não verificado</span>
+              </div>
+              <div class="panel-body">
+                <div class="network-note"><strong>Canal local protegido:</strong> localhost, 127.0.0.1 e ::1 permanecem sempre fora do proxy. O proxy é aplicado apenas a Telegram, Google, Google Sheets, Selenium e instalação de dependências.</div>
+                <form class="network-settings-grid" id="networkSettings" autocomplete="off">
+                  <div class="form-field">
+                    <label for="networkMode">Modo de conexão</label>
+                    <select id="networkMode" name="network_mode">
+                      <option value="auto">Automático — recomendado</option>
+                      <option value="system">Proxy do Windows</option>
+                      <option value="manual">Proxy manual</option>
+                      <option value="pac">Arquivo PAC / WPAD</option>
+                      <option value="direct">Sem proxy</option>
+                    </select>
+                  </div>
+                  <div class="form-field network-manual-field">
+                    <label for="networkProxyHost">Servidor do proxy</label>
+                    <input id="networkProxyHost" name="network_proxy_host" type="text" placeholder="Ex.: proxy.instituicao.local">
+                  </div>
+                  <div class="form-field network-manual-field">
+                    <label for="networkProxyPort">Porta</label>
+                    <input id="networkProxyPort" name="network_proxy_port" type="number" min="1" max="65535" placeholder="8080">
+                  </div>
+                  <div class="form-field network-pac-field">
+                    <label for="networkPacUrl">URL do PAC</label>
+                    <input id="networkPacUrl" name="network_pac_url" type="url" placeholder="http://servidor/proxy.pac">
+                  </div>
+                  <div class="form-field">
+                    <label for="networkProxyAuth">Autenticação</label>
+                    <select id="networkProxyAuth" name="network_proxy_auth">
+                      <option value="none">Sem autenticação</option>
+                      <option value="windows">Credenciais do Windows / SSO</option>
+                      <option value="basic">Usuário e senha</option>
+                    </select>
+                  </div>
+                  <div class="form-field network-auth-field">
+                    <label for="networkProxyUsername">Usuário</label>
+                    <input id="networkProxyUsername" name="network_proxy_username" type="text" autocomplete="username" placeholder="DOMINIO\usuario ou usuario">
+                  </div>
+                  <div class="form-field network-auth-field">
+                    <label for="networkProxyPassword">Senha do proxy</label>
+                    <input id="networkProxyPassword" name="network_proxy_password" type="password" autocomplete="new-password" placeholder="Deixe vazio para manter a senha atual">
+                    <small id="networkPasswordHint" class="field-help">Nenhuma senha armazenada.</small>
+                  </div>
+                  <div class="form-field form-field--wide">
+                    <label for="networkProxyBypass">Ignorar proxy para</label>
+                    <input id="networkProxyBypass" name="network_proxy_bypass" type="text" placeholder="localhost;127.0.0.1;::1;<local>">
+                    <small class="field-help">Os endereços locais obrigatórios são preservados automaticamente.</small>
+                  </div>
+                </form>
+                <div class="network-detected" id="networkDetected">A detecção de proxy ainda não foi executada.</div>
+                <div class="network-test-results" id="networkTestResults"></div>
+                <div class="network-actions">
+                  <button class="button" type="button" id="detectNetworkProxy">Detectar proxy</button>
+                  <button class="button" type="button" id="testNetworkConnection">Testar conexão</button>
+                  <button class="button button--primary" type="button" id="saveNetworkSettings">Salvar Rede e Proxy</button>
+                </div>
+              </div>
+            </article>
+
+            <article class="panel panel--wide cloud-sync-panel">
+              <div class="panel-header">
+                <div><h2>Cloud Sync — Turso</h2><p>Mantenha o mesmo banco de estudos atualizado entre os computadores, mesmo quando um deles estiver desligado.</p></div>
+                <span class="status-pill" id="cloudSyncStatusPill">Desativado</span>
+              </div>
+              <div class="panel-body">
+                <div class="network-note"><strong>Local-first:</strong> o QuestFlow continua lendo e gravando no SQLite local. Alterações confirmadas entram em uma fila durável e são sincronizadas com o Turso em segundo plano quando houver rede.</div>
+                <form class="network-settings-grid" id="cloudSyncSettings" autocomplete="off">
+                  <div class="form-field">
+                    <label class="switch-line" for="cloudSyncEnabled"><input id="cloudSyncEnabled" type="checkbox"><span>Cloud Sync automático</span></label><small class="field-help">Na primeira vez, o automático só é liberado após a Ativação segura.</small>
+                  </div>
+                  <div class="form-field form-field--wide">
+                    <label for="cloudTursoUrl">URL do banco Turso</label>
+                    <input id="cloudTursoUrl" type="text" placeholder="turso://questflow-sua-conta.turso.io">
+                  </div>
+                  <div class="form-field form-field--wide">
+                    <label for="cloudTursoToken">Token do banco</label>
+                    <input id="cloudTursoToken" type="password" autocomplete="new-password" placeholder="Deixe vazio para manter o token salvo">
+                    <small id="cloudTokenHint" class="field-help">O token é protegido pelo Windows (DPAPI) e não fica no config.json.</small>
+                  </div>
+                  <div class="form-field">
+                    <label for="cloudDeviceName">Nome deste computador</label>
+                    <input id="cloudDeviceName" type="text" placeholder="Ex.: Casa ou Trabalho">
+                  </div>
+                  <div class="form-field">
+                    <label for="cloudSyncInterval">Intervalo de sincronização (s)</label>
+                    <input id="cloudSyncInterval" type="number" min="10" max="900" value="30">
+                  </div>
+                  <div class="form-field">
+                    <label class="switch-line" for="cloudSyncOnStart"><input id="cloudSyncOnStart" type="checkbox" checked><span>Sincronizar ao abrir</span></label>
+                  </div>
+                  <div class="form-field">
+                    <label class="switch-line" for="cloudSyncOnShutdown"><input id="cloudSyncOnShutdown" type="checkbox" checked><span>Tentar sincronizar ao fechar</span></label>
+                  </div>
+                </form>
+                <div class="network-detected" id="cloudSyncStatusText">A sincronização ainda não foi configurada.</div>
+                <div class="cloud-activation-inline" id="cloudActivationSummary" aria-live="polite"></div>
+                <div class="network-actions">
+                  <button class="button" type="button" id="testCloudSync">Testar Turso</button>
+                  <button class="button button--primary" type="button" id="safeActivateCloudSync">Ativação segura</button>
+                  <button class="button" type="button" id="syncCloudNow">Sincronizar agora</button>
+                  <button class="button" type="button" id="saveCloudSyncSettings">Salvar configuração</button>
+                </div>
+              </div>
+            </article>
+            <article class="panel panel--wide ai-provider-panel">
+              <div class="panel-header">
+                <div><h2>Provedores de IA</h2><p>Escolha a IA externa usada pelo Tutor. As chaves ficam protegidas pelo Windows (DPAPI) e nunca são salvas em texto no config.json.</p></div>
+                <span class="status-pill" id="aiProviderStatusPill">Local</span>
+              </div>
+              <div class="panel-body">
+                <div class="ai-provider-grid">
+                  <div class="form-field form-field--wide"><label for="aiActiveProvider">Provedor ativo</label><select id="aiActiveProvider"><option value="local">QuestFlow local (RAG)</option><option value="google_ai_mode">Google Modo IA (navegador)</option><option value="openai">OpenAI / ChatGPT API</option><option value="gemini">Google Gemini API</option><option value="anthropic">Anthropic Claude API</option></select></div>
+                  <section class="ai-provider-card"><h3>OpenAI / ChatGPT API</h3><label>Modelo<input id="aiOpenaiModel" type="text" placeholder="Informe um modelo disponível na sua conta"></label><label>API key<input id="aiOpenaiKey" type="password" autocomplete="new-password" placeholder="Deixe vazio para manter a chave"></label><div class="ai-cost-fields"><label>US$/1M entrada<input id="aiOpenaiInputCost" type="number" min="0" step="0.0001" value="0"></label><label>US$/1M saída<input id="aiOpenaiOutputCost" type="number" min="0" step="0.0001" value="0"></label></div><small id="aiOpenaiHint">Não configurada.</small></section>
+                  <section class="ai-provider-card"><h3>Google Gemini API</h3><label>Modelo<input id="aiGeminiModel" type="text" placeholder="gemini-3.6-flash"></label><label>API key<input id="aiGeminiKey" type="password" autocomplete="new-password" placeholder="Deixe vazio para manter a chave"></label><div class="ai-cost-fields"><label>US$/1M entrada<input id="aiGeminiInputCost" type="number" min="0" step="0.0001" value="0"></label><label>US$/1M saída<input id="aiGeminiOutputCost" type="number" min="0" step="0.0001" value="0"></label></div><small id="aiGeminiHint">Não configurada.</small></section>
+                  <section class="ai-provider-card"><h3>Anthropic Claude API</h3><label>Modelo<input id="aiAnthropicModel" type="text" placeholder="Informe um modelo Claude da sua conta"></label><label>API key<input id="aiAnthropicKey" type="password" autocomplete="new-password" placeholder="Deixe vazio para manter a chave"></label><div class="ai-cost-fields"><label>US$/1M entrada<input id="aiAnthropicInputCost" type="number" min="0" step="0.0001" value="0"></label><label>US$/1M saída<input id="aiAnthropicOutputCost" type="number" min="0" step="0.0001" value="0"></label></div><small id="aiAnthropicHint">Não configurada.</small></section>
+                </div>
+                <div class="network-note"><strong>Google Modo IA:</strong> continua disponível pela automação do navegador, sem chave. OpenAI, Gemini e Claude usam suas APIs oficiais e respeitam a configuração de rede/proxy do QuestFlow.</div>
+                <div class="network-actions"><button class="button" type="button" id="testAiProvider">Testar provedor ativo</button><button class="button button--primary" type="button" id="saveAiProviderSettings">Salvar provedores de IA</button></div>
+              </div>
+            </article>
+
+            <article class="panel panel--wide ai-privacy-panel">
+              <div class="panel-header">
+                <div><h2>Centro de Privacidade da IA</h2><p>Defina exatamente quais dados podem sair do computador quando você escolher uma IA externa. Materiais RAG são tratados como dados não confiáveis e passam por defesa contra prompt injection.</p></div>
+                <span class="status-pill" id="aiPrivacyStatusPill">Equilibrado</span>
+              </div>
+              <div class="panel-body">
+                <div class="ai-privacy-grid">
+                  <label class="form-field"><span>Modo</span><select id="aiPrivacyMode"><option value="private">Privado · nada sai do computador</option><option value="balanced">Equilibrado · conteúdo necessário, sem perfil do aluno</option><option value="custom">Personalizado</option></select></label>
+                  <div class="ai-privacy-toggles">
+                    <label><input id="aiShareTaxonomy" type="checkbox"> Matéria/assunto/banca</label>
+                    <label><input id="aiShareStatement" type="checkbox"> Enunciado</label>
+                    <label><input id="aiShareAlternatives" type="checkbox"> Alternativas</label>
+                    <label><input id="aiShareAnswer" type="checkbox"> Gabarito</label>
+                    <label><input id="aiShareRag" type="checkbox"> Evidências RAG</label>
+                    <label><input id="aiShareBinaryMedia" type="checkbox"> Enviar imagem/PDF para IA externa <strong>(opt-in)</strong></label>
+                    <label><input id="aiShareLearner" type="checkbox"> Resumo FSRS/KT/IRT</label>
+                    <label><input id="aiShareUserPrompt" type="checkbox"> Pergunta digitada</label>
+                    <label><input id="aiShareNotes" type="checkbox"> Anotações pessoais</label>
+                  </div>
+                </div>
+                <div class="network-note"><strong>Proteção ativa:</strong> documentos, PDFs e trechos recuperados nunca recebem privilégio de instrução. Linhas com sinais de prompt injection são sinalizadas e sanitizadas antes da chamada externa. <strong>Imagem/PDF binário permanece local por padrão</strong> e só pode ser enviado no modo Personalizado após marcar o opt-in acima.</div>
+                <div class="network-actions"><button class="button button--primary" type="button" id="saveAiPrivacySettings">Salvar privacidade</button></div>
+              </div>
+            </article>
+
+            <article class="panel panel--wide ai-telemetry-panel">
+              <div class="panel-header"><div><h2>Telemetria da IA</h2><p>Latência, sucesso, tokens, Structured Outputs, sinais de prompt injection e custo estimado — sem registrar suas chaves.</p></div><span class="status-pill" id="aiTelemetryStatusPill">30 dias</span></div>
+              <div class="panel-body" id="aiTelemetryBody"><div class="skeleton" style="height:7rem"></div></div>
+            </article>
+
+            <article class="panel panel--wide update-monitor-panel">
+              <div class="panel-header">
+                <div><h2>Monitor quinzenal de atualizações</h2><p>Verifica mudanças relevantes nas APIs de IA, Turso e plataformas de concursos apenas quando você autorizar.</p></div>
+                <span class="status-pill" id="updateMonitorStatusPill">Aguardando</span>
+              </div>
+              <div class="panel-body">
+                <div class="update-monitor-grid">
+                  <label class="tutor-online-toggle"><input id="updateMonitorEnabled" type="checkbox" checked> <span><strong>Ativar lembrete duas vezes ao mês</strong><small>O agendador local não usa internet sozinho e não acessa o banco.</small></span></label>
+                  <div class="update-monitor-days">
+                    <label>1ª verificação do mês<input id="updateMonitorDay1" type="number" min="1" max="28" value="1"></label>
+                    <label>2ª verificação do mês<input id="updateMonitorDay2" type="number" min="1" max="28" value="15"></label>
+                  </div>
+                </div>
+                <div class="network-note" id="updateMonitorStatusText">Dias padrão: 1 e 15. Quando chegar a data, o QuestFlow perguntará se você quer verificar naquele momento.</div>
+                <div class="network-actions">
+                  <button class="button" type="button" id="runUpdateMonitorNow">Verificar agora</button>
+                  <button class="button" type="button" id="showUpdateMonitorHistory">Ver histórico</button>
+                  <button class="button button--primary" type="button" id="saveUpdateMonitorSettings">Salvar monitor</button>
+                </div>
+              </div>
+            </article>
+
+            <article class="panel panel--wide runtime-watchdog-panel">
+              <div class="panel-header">
+                <div><h2>Watchdog central e autorrecuperação</h2><p>Supervisiona os serviços internos sem tocar no SQLite quando a rede estiver indisponível. Reinicializações são limitadas para evitar loops.</p></div>
+                <span class="status-pill" id="runtimeWatchdogStatusPill">Inicializando</span>
+              </div>
+              <div class="panel-body">
+                <div class="network-note"><strong>Self-healing seguro:</strong> o supervisor pode reiniciar apenas serviços isolados e recuperáveis. Ele nunca apaga filas, não mata transações SQLite e considera ausência de internet um estado offline normal.</div>
+                <form class="network-settings-grid" id="runtimeWatchdogSettings">
+                  <div class="form-field"><label class="switch-line"><input id="watchdogEnabled" type="checkbox" checked><span>Ativar supervisor central</span></label></div>
+                  <div class="form-field"><label class="switch-line"><input id="watchdogAutoRecover" type="checkbox" checked><span>Autorrecuperação segura</span></label></div>
+                  <div class="form-field"><label for="watchdogInterval">Intervalo de verificação (s)</label><input id="watchdogInterval" type="number" min="2" max="60" value="5"></div>
+                  <div class="form-field"><label for="watchdogTaskStall">Tarefa suspeita após (s)</label><input id="watchdogTaskStall" type="number" min="30" max="3600" value="240"></div>
+                  <div class="form-field"><label for="runtimeIoConcurrency">Concorrência I/O assíncrona</label><input id="runtimeIoConcurrency" type="number" min="2" max="12" value="4"></div>
+                  <div class="form-field"><label for="runtimeTaskHistory">Histórico de tarefas</label><input id="runtimeTaskHistory" type="number" min="64" max="1000" value="160"></div>
+                  <div class="form-field"><label for="aiRateLimit">Limite local IA (req/min)</label><input id="aiRateLimit" type="number" min="1" max="600" value="30"></div>
+                  <div class="form-field"><label for="cloudRateLimit">Limite local Turso (req/min)</label><input id="cloudRateLimit" type="number" min="10" max="1200" value="120"></div>
+                </form>
+                <div class="runtime-watchdog-summary" id="runtimeWatchdogSummary"><div class="skeleton" style="height:6rem"></div></div>
+                <details class="panel panel--flat runtime-compatibility"><summary>Compatibilidade e versões do runtime</summary><div id="runtimeCompatibilityBody" class="runtime-compatibility-body"></div></details>
+                <details class="panel panel--flat runtime-history"><summary>Histórico recente do supervisor</summary><div id="runtimeWatchdogHistory" class="runtime-watchdog-history"></div></details>
+                <div class="network-actions">
+                  <button class="button" type="button" id="runRuntimeWatchdogCheck">Verificar agora</button>
+                  <button class="button" type="button" id="refreshRuntimeWatchdog">Atualizar saúde</button>
+                  <button class="button button--primary" type="button" id="saveRuntimeWatchdogSettings">Salvar Watchdog</button>
+                </div>
+              </div>
+            </article>
+
+            <article class="panel panel--wide danger-zone-panel">
+              <div class="panel-header">
+                <div><h2>Reiniciar ciclo de estudos</h2><p>Volte todas as questões elegíveis ao estado de não estudadas, sem apagar o banco de questões.</p></div>
+                <span class="status-pill status-pill--warning">Ação protegida</span>
+              </div>
+              <div class="panel-body danger-zone-body">
+                <div class="danger-zone-copy">
+                  <strong>O que será zerado</strong>
+                  <p>Envios e respostas do Telegram, acertos e erros, repetição espaçada, retenção aprendida, prioridades adaptativas, XP, sequências e histórico dos ciclos.</p>
+                  <strong>O que será preservado</strong>
+                  <p>Questões, matérias, aulas, assuntos, aprovações, imagens, configurações, proxy e solicitações de correção. Questões com correção pendente continuam suspensas.</p>
+                  <p class="field-help">Antes do reinício, o QuestFlow cria automaticamente um backup SQLite de segurança na pasta <code>data/backups</code>.</p>
+                </div>
+                <button class="button button--danger" id="resetStudyCycle" type="button">Reiniciar estudos do zero</button>
+              </div>
+            </article>
+
+            <article class="panel panel--wide">
+              <div class="panel-header"><div><h2>Backup e exportação</h2><p>Salve ou transfira sua base sem perder dados.</p></div></div>
+              <div class="panel-body action-grid">
+                <button class="action-card" data-export="sqlite"><strong>Backup SQLite</strong><span>Cópia completa do banco.</span></button>
+                <button class="action-card" data-export="questflow"><strong>Base QuestFlow</strong><span>JSON compatível.</span></button>
+                <button class="action-card" data-export="json"><strong>JSON técnico</strong><span>Todos os metadados.</span></button>
+                <button class="action-card" data-export="csv"><strong>CSV</strong><span>Planilha para conferência.</span></button>
+                <button class="action-card" id="importDatabase"><strong>Importar banco</strong><span>SQLite, JSON ou QFLOW.</span></button>
+              </div>
+            </article>
+          </div>
+          <div class="settings-actions"><button class="button button--primary" id="saveSettings">Salvar configurações</button></div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div class="modal-layer" id="modalLayer" hidden>
+    <div class="modal-backdrop" data-modal-close></div>
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <header class="modal-header"><div><p class="eyebrow" id="modalEyebrow"></p><h2 id="modalTitle">Detalhes</h2></div><button class="icon-button" type="button" data-modal-close aria-label="Fechar janela">×</button></header>
+      <div class="modal-body" id="modalBody"></div>
+      <footer class="modal-footer" id="modalFooter"></footer>
+    </section>
+  </div>
+
+  <div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="true"></div>
+  <div class="visually-hidden" id="screenReaderStatus" aria-live="assertive"></div>
+  <script src="app.js?v=6.23.2" defer></script>
+  <script src="questflow621.js?v=6.23.2" defer></script>
+  <script src="questflow622.js?v=6.23.2" defer></script>
+  <script type="module" src="modules/bootstrap.js?v=6.23.2"></script>
+</body>
+</html>

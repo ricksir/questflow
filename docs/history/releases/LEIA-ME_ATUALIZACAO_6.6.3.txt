@@ -1,0 +1,19 @@
+QUESTFLOW STUDIO 6.6.3 — CURADORIA REATIVA
+
+PROBLEMA CORRIGIDO
+A Curadoria podia continuar mostrando os mesmos números mesmo depois da edição das questões.
+
+O QUE MUDOU
+1. O botão passou a se chamar “Recalcular curadoria” e agora recalcula de verdade o banco inteiro.
+2. Ao salvar ou aprovar uma questão, os indicadores da Curadoria são atualizados automaticamente.
+3. A fonte primária digitada no editor agora conta como fonte rastreável.
+4. Se existe uma explicação, a questão não pode continuar classificada como “Sem comentário”.
+5. Dificuldade empírica é recalculada a partir das respostas registradas.
+6. Os cartões “Revisar curadoria”, “Adicionar comentários”, “Coletar dificuldade real” e “Conferir duplicidades” agora abrem uma fila com as questões reais e o motivo de cada pendência.
+7. Recalcular/consultar a Curadoria não cria alterações artificiais no Cloud Sync.
+
+IMPORTANTE
+“Coletar dificuldade real” não diminui ao editar a questão. Esse número só muda quando existem respostas reais suficientes para calcular a dificuldade empírica.
+
+PRIMEIRO USO APÓS ATUALIZAR
+Abra Curadoria inteligente e clique uma vez em “Recalcular curadoria”. A versão irá corrigir qualquer coluna derivada antiga que tenha ficado defasada.

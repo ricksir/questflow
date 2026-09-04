@@ -1,0 +1,34 @@
+QUESTFLOW STUDIO 5.9.0 — CURADORIA 2.0 / CONHECIMENTO HÍBRIDO
+==============================================================
+
+Esta versão evolui a base 5.8.0 sem alterar o motor FSRS, Learning Analytics,
+Telegram ou Turso. A etapa 1 da evolução técnica adiciona quatro camadas:
+
+1. DEDUPLICAÇÃO SEMÂNTICA HÍBRIDA
+   - similaridade textual;
+   - assinatura vetorial local por hashing;
+   - sobreposição de taxonomia;
+   - reforço de banca/ano;
+   - decisão sempre humana: nenhuma questão é apagada automaticamente.
+
+2. TAXONOMIA EM GRAFO
+   - nós de matéria, assunto, tópico, aula, banca, órgão, referência legal e tag;
+   - relações explícitas e auditáveis;
+   - reindexação automática ao editar uma questão.
+
+3. RAG HÍBRIDO OFFLINE-FIRST
+   - chunks de enunciados e comentários;
+   - busca lexical + sinal semântico + metadados;
+   - reranking local;
+   - exibição dos sinais de relevância para auditoria;
+   - arquitetura preparada para embeddings externos no futuro.
+
+4. CURADORIA 2.0
+   - painel de cobertura do índice semântico;
+   - mapa de conceitos por questão;
+   - evidências híbridas acessíveis no editor;
+   - contexto RAG incorporado ao pacote auditável usado pela assistência de IA;
+   - limpeza automática de índices quando uma questão é excluída/arquivada.
+
+Migração do banco: question_bank v6 (incremental e idempotente).
+A versão 5.8.0 permanece compatível como ponto de rollback.

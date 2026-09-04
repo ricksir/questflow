@@ -1,0 +1,65 @@
+QUESTFLOW STUDIO 6.9.1 + QUESTFLOW MOBILE 0.1 ALPHA
+====================================================
+
+Esta evolução transforma a fundação mobile da 6.9.0 em um primeiro aplicativo funcional para iPhone/Android, mantendo o QuestFlow Studio como cérebro, curadoria e backend local do ecossistema.
+
+PRINCIPAIS ENTREGAS
+-------------------
+- Cliente React Native/Expo/TypeScript em /mobile.
+- Navegação Hoje / Questões / Progresso / Perfil.
+- Pareamento por QR temporário contendo token de uso único + endereço local seguro da API.
+- SQLite local com cache de questões, tentativas e outbox persistente.
+- Sincronização automática na abertura, ao recuperar a rede e por ação manual.
+- Resposta offline sem perda de dados.
+- Gabarito não é armazenado antecipadamente no cache.
+- Confiança obrigatória antes de ver o resultado; dificuldade percebida opcional.
+- Explicação, “entendi” e “ainda tenho dúvida / preciso revisar”.
+- Progresso e prioridades simplificados para uso móvel.
+- Push opt-in por aparelho preparado para APNs/FCM.
+- Revogação de aparelho e limpeza dos dados locais na desconexão.
+
+TEMPO DE RESPOSTA
+-----------------
+O aplicativo NÃO considera o tempo total que a tela ficou aberta como velocidade do usuário.
+
+O Mobile 0.1 mede:
+- wall_response_seconds: tempo total de relógio;
+- active_response_seconds: tempo ativo estimado;
+- idle_seconds: tempo ocioso;
+- max_idle_gap_seconds: maior intervalo sem interação;
+- interaction_count: interações agregadas;
+- timing_source: client_active_timer_v1.
+
+Após 60 segundos sem interação, o tempo ativo deixa de crescer até ocorrer nova interação. Background/inatividade do app também não contam.
+
+Teste de referência da release:
+- questão aberta: 3.600 s;
+- atividade real: 42 s;
+- tempo usado como atividade: 42 s;
+- ociosidade: 3.558 s.
+
+O Studio mantém um segundo Quality Gate. Se a qualidade da temporização for duvidosa, a resposta continua válida para acerto/erro e aprendizagem, mas o tempo fica fora das médias/modelos de velocidade.
+
+COMO TESTAR O ALPHA
+-------------------
+1. Abra o QuestFlow Studio 6.9.1.
+2. Em Configurações, habilite o acesso móvel pela rede local e reinicie o Studio se solicitado.
+3. Execute INSTALAR_QUESTFLOW_MOBILE_ALPHA.bat uma vez.
+4. Execute INICIAR_QUESTFLOW_MOBILE_ALPHA.bat.
+5. Abra o cliente no aparelho compatível com o ambiente Expo/desenvolvimento.
+6. No Studio, abra QuestFlow Mobile 0.1 e clique em Conectar novo aparelho.
+7. Leia o QR pelo celular.
+
+LIMITAÇÃO CONSCIENTE DESTA FASE
+-------------------------------
+O Alpha usa a rede local e o Studio como servidor. Portanto, o computador precisa estar acessível ao celular durante a sincronização. O contrato já foi separado para permitir a próxima evolução com Gateway Cloud e identidade OAuth/OIDC + PKCE sem fazer o aplicativo ler diretamente o banco do desktop.
+
+ARQUIVOS IMPORTANTES
+--------------------
+- mobile/README.md
+- MOBILE_API_V1_6.9.1.md
+- MOBILE_API_V1_6.9.1.openapi.json
+- MOBILE_DATA_CATALOG.md
+- VALIDACAO_6.9.1.md
+- INSTALAR_QUESTFLOW_MOBILE_ALPHA.bat
+- INICIAR_QUESTFLOW_MOBILE_ALPHA.bat

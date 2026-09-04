@@ -1,0 +1,7 @@
+{
+  "studio": "6.18.2",
+  "mobile": "0.13.1",
+  "upgrade_from": ["6.18.1"],
+  "database_migration": "none",
+  "notes": ["Hotfix de inicialização da Web UI; preserva banco e estado pedagógico."]
+}

@@ -1,0 +1,28 @@
+QUESTFLOW STUDIO 6.14.4 + MOBILE 0.10.1
+Correção: Retomar primeira sincronização com Recovery Guard
+
+CENÁRIO CORRIGIDO
+- A 6.14.3 podia mostrar que a primeira sincronização "avançou" mesmo mantendo exatamente a mesma fila.
+- A causa é compatível com RECOVERY_GUARD.json ativo após uma recuperação: o motor bloqueava a escrita, mas a camada de ativação não mostrava o bloqueio corretamente.
+
+NOVO COMPORTAMENTO
+- O preflight identifica a Proteção pós-recuperação.
+- A Ativação segura cria/valida o backup e só então arquiva o RECOVERY_GUARD com SHA-256.
+- O arquivo original é retirado da posição ativa porque a reconciliação humana já foi iniciada.
+- A ativação continua bloqueando o automático até fila=0 e conflitos=0.
+- Uma fila retomada NÃO é semeada novamente.
+- Se nenhum evento for enviado, a UI não diz mais que houve avanço.
+
+INSTALAÇÃO
+1. Não repita Retomar primeira sincronização na 6.14.3 se a fila não diminui.
+2. Não extraia este ZIP.
+3. Abra C:\Users\user\QuestFlow\QUESTFLOW.bat.
+4. Escolha Atualizar QuestFlow.
+5. Selecione QuestFlow_Studio_6.14.4_Mobile_0.10.1_UPDATE.zip.
+6. Confirme 6.14.3 -> 6.14.4.
+7. Abra Configurações > Cloud Sync > Ativação segura.
+8. Confira a etapa Proteção pós-recuperação, se exibida.
+9. Clique em Retomar primeira sincronização.
+10. Considere o Cloud Sync ativo somente com fila 0 e conflitos 0.
+
+O Mobile permanece 0.10.1. Não há dependência nativa nova.

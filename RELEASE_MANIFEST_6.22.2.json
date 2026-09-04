@@ -1,0 +1,12 @@
+{
+  "release": "QuestFlow Studio 6.22.2 + Mobile 0.15.1",
+  "studio_version": "6.22.2",
+  "mobile_version": "0.15.1",
+  "package_type": "safe-studio-only-hotfix",
+  "from_versions_targeted": ["6.22.1"],
+  "purpose": "Correct the Mobile source-version label in QuestFlow Studio",
+  "database_migration": "none",
+  "learning_engine_changed": false,
+  "mobile_changed": false,
+  "cloud_sync_changed": false
+}

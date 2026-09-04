@@ -1,0 +1,15 @@
+{
+  "schema": "questflow.update-manifest.v1",
+  "release": "6.22.15",
+  "from_version": "6.22.14",
+  "package_root": "QuestFlow",
+  "preserves": ["data", ".venv", "venv", "runtime", "backups"],
+  "excludes": ["data", "node_modules", ".expo", ".git", "dist", "__pycache__", ".pytest_cache", "*.pyc"],
+  "changed_focus": ["web/app.js", "web/styles.css"],
+  "database_migration": "none",
+  "mobile_version": "0.15.4",
+  "mobile_changed": false,
+  "learning_engine_changed": false,
+  "cloud_sync_changed": false,
+  "feature": "Scalable priority-by-subject summary with complete searchable list"
+}

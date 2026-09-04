@@ -1,0 +1,10 @@
+QuestFlow 6.9.8 HOTFIX2 - Easy Manager
+
+Correcao:
+- O PowerShell nao mistura mais o texto [INFO]/[OK] produzido pelo migrador com o codigo numerico de retorno.
+- Migracao concluida com exit code 0 passa a ser reconhecida corretamente como sucesso.
+- Instalador agora e idempotente: se C:\Users\<usuario>\QuestFlow ja contem a mesma versao 6.9.8 e banco migrado, ele nao copia nem migra novamente; apenas conclui o atalho QuestFlow e oferece iniciar Studio + Mobile.
+- A mesma correcao protege o fluxo de atualizacoes futuras executadas pelo QuestFlow Manager.
+
+Caso recuperado:
+O HOTFIX foi criado especificamente para o cenario em que o log mostra [OK] Backup validado e [OK] Dados migrados com sucesso, seguido por uma falsa mensagem [ERRO] Migracao nao concluida (codigo [INFO] ... 0).

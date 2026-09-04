@@ -1,0 +1,83 @@
+{
+  "schema": "questflow.release-manifest.v1",
+  "studio_version": "6.9.7",
+  "mobile_version": "0.4.0",
+  "release": "Study Triage",
+  "generated_at": "2026-08-19T01:13:16.781052+00:00",
+  "validation": {
+    "python_tests": 487,
+    "python_tests_passed": 487,
+    "mobile_critical_tests": "18/18",
+    "npm_test_core": "ok",
+    "sqlite_integrity": "ok",
+    "lock_check": "ok",
+    "smoke": "ok"
+  },
+  "key_files": [
+    {
+      "path": "VERSION.txt",
+      "sha256": "df46e1e608f6675debf652969b34419d98e4fe07b4b0fc7de9504841f95cb1eb",
+      "bytes": 6
+    },
+    {
+      "path": "README.md",
+      "sha256": "b5d8da0a4df6726f61d10ff3d5111ef8b44d25f4ccedd926d19cda312dbdb692",
+      "bytes": 1989
+    },
+    {
+      "path": "CHANGELOG.md",
+      "sha256": "c8a6782ca4d0d202690a6d57d2968e7964d615fe68b1712ee5d10583b82fb0ff",
+      "bytes": 14743
+    },
+    {
+      "path": "VALIDACAO_6.9.7.md",
+      "sha256": "96aa86f28353ffa531ea880c6d3efa1adfc485973b82ce7d2e8b830ab2b11275",
+      "bytes": 2061
+    },
+    {
+      "path": "MOBILE_API_V1_6.9.7.md",
+      "sha256": "c4c965cc5316df4310d63e69dbe4ce3a5d3d4adf32456f1db98d18b46a15f330",
+      "bytes": 1993
+    },
+    {
+      "path": "core/mobile_foundation.py",
+      "sha256": "6d545737dbd01ef1e3b8c37af79f1ea6e9da45281c6a6d3b8c3d96bec148a129",
+      "bytes": 102282
+    },
+    {
+      "path": "mobile/app/(tabs)/questions.tsx",
+      "sha256": "7c2b0a34a96012639db54f199868c9b11c210c6374015041b98ee65c2d7ace67",
+      "bytes": 22251
+    },
+    {
+      "path": "mobile/app/(tabs)/progress.tsx",
+      "sha256": "2ff09a29cccde78faa97e5c57fa1387f6485b97325f1ebcee3e3c4824a94b52c",
+      "bytes": 12885
+    },
+    {
+      "path": "mobile/app/(tabs)/today.tsx",
+      "sha256": "fc00556f4ee290ba5c3c4b7e5d145c335b6f1b3ffa62e4c7cae4177221525c36",
+      "bytes": 9611
+    },
+    {
+      "path": "mobile/src/lib/types.ts",
+      "sha256": "ca8e0fdc0b49f0cd7c2f0a151a3368227a388fe3e8c3b130cf0f89019999ddbf",
+      "bytes": 5902
+    },
+    {
+      "path": "web/app.js",
+      "sha256": "f0e4785bfce8d654c8ff2d70de26e8920c516e952af18d52f861c6d9941ed9a7",
+      "bytes": 481119
+    },
+    {
+      "path": "web/index.html",
+      "sha256": "d064dd7155be4c85a50279aa85ceff35d5c24ade595d2164c232ae9ba2e4e93b",
+      "bytes": 96047
+    },
+    {
+      "path": "tests/test_mobile_study_triage_697.py",
+      "sha256": "08f2ddeea8bdf374cdc29133c94ab49278b895626dc5270aea338e0f0d31d127",
+      "bytes": 6666
+    }
+  ]
+}

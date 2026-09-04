@@ -1,0 +1,22 @@
+QUESTFLOW STUDIO 6.12.1 + MOBILE 0.8.1
+
+OBJETIVO
+- Deixar o Mobile dedicado ao estudo.
+- Manter Saúde da IA, saúde do programa, serviços, arquitetura e diagnósticos apenas no Studio.
+
+ATUALIZACAO
+1. Mantenha um backup da pasta atual por precaução.
+2. Não extraia o ZIP de atualização.
+3. Execute C:\Users\user\QuestFlow\QUESTFLOW.bat.
+4. Escolha Atualizar QuestFlow.
+5. Selecione QuestFlow_Studio_6.12.1_Mobile_0.8.1_UPDATE.zip.
+6. Confirme a atualização 6.12.0 -> 6.12.1.
+
+MOBILE
+- Recarregue/reinicie o app após a atualização.
+- Não há dependência nativa nova; não é necessário novo Dev Client apenas por esta release.
+- A aba Perfil não mostra mais Saúde da IA, diagnóstico técnico, endpoint, rota, cursor, Cloud Bridge ou versão.
+- O Perfil passa a mostrar revisões do dia, questões sugeridas, respostas para salvar, lembretes e controle do Telegram.
+
+STUDIO
+- Retrieval Health, Observabilidade, Quality Gates, Watchdog, Cloud Bridge e demais diagnósticos continuam disponíveis no programa.

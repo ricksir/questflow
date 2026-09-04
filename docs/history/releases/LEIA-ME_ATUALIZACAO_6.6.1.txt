@@ -1,0 +1,45 @@
+QUESTFLOW STUDIO 6.6.1 — EVALUATION & GOVERNANCE 2.0
+
+O QUE MUDA
+- A IA deixa de ser avaliada principalmente pela semelhança de palavras da resposta inteira.
+- A resposta é dividida em afirmações verificáveis.
+- Cada afirmação recebe um veredito: SUPORTADA, CONTRADITA ou EVIDÊNCIA INSUFICIENTE.
+- O sistema mostra a melhor evidência associada e a confiança da avaliação.
+- Referências legais citadas sem respaldo passam a gerar alerta explícito.
+- Quando houver data de prova/referência, a vigência temporal da fonte legislativa participa da avaliação.
+- Quando houver gabarito oficial, o alinhamento da resposta também é verificado.
+
+TUTOR IA E AUDITORIA
+- A análise por afirmação aparece no resultado do Tutor e na Auditoria de IA.
+- A geração continua sendo rascunho; o modelo que gera não pode aprovar a própria saída.
+
+QUESTÕES OURO
+- O banco Ouro passa a testar também grounding por afirmação/evidência.
+- Questões Ouro antigas são preservadas e recebem expectativas mínimas automaticamente quando possível.
+
+GERAÇÃO CONTROLADA
+- O crítico evolui para qf-generation-critic-2 e usa o mesmo mecanismo independente de afirmação/evidência antes da aprovação humana.
+
+BANCO
+- question_bank permanece v8.
+- study permanece v10.
+- ai_governance evolui de v3 para v4.
+- Interações, questões, tentativas, FSRS e Questões Ouro anteriores são preservados.
+
+ATUALIZAÇÃO
+1. Feche o QuestFlow antigo.
+2. Faça cópia da pasta/banco por segurança.
+3. Extraia TODO o ZIP 6.6.1 em uma pasta nova.
+4. Preserve/copiar seu data/questflow_questions.sqlite e configurações necessárias conforme o procedimento habitual.
+5. Execute INSTALAR_E_DIAGNOSTICAR.bat, se necessário.
+6. Execute INICIAR_QUESTFLOW_STUDIO.bat.
+
+VALIDAÇÃO DA RELEASE
+- 337/337 testes automatizados aprovados.
+- Upgrade real 6.6.0 → 6.6.1 validado.
+- PRAGMA quick_check = ok.
+- Zero violações de foreign key no teste de upgrade.
+- JavaScript e módulos Python validados.
+
+PRÓXIMA ETAPA PLANEJADA
+6.7.0 — Tutor IA com scaffolding progressivo e evolução multimodal, mantendo a governança por afirmação/evidência.

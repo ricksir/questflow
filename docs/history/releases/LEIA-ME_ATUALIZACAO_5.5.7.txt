@@ -1,0 +1,27 @@
+QUESTFLOW STUDIO 5.5.7 - LEITOR NATIVO QCONCURSOS
+
+Esta versão corrige a importação de PDFs gerados pelo QConcursos em que a página
+é exibida corretamente, mas a ordem interna dos objetos do PDF mistura cabeçalhos,
+enunciados e alternativas.
+
+O novo leitor usa as coordenadas reais da página e, quando há texto nativo, não
+precisa executar OCR para esse formato. São reconhecidos código Qxxxx, matéria e
+assunto de origem, ano, banca, órgão, prova, enunciado, alternativas e gabarito.
+
+QUESTÕES VISUAIS
+Questões com diagramas/imagens nas alternativas são recortadas e marcadas para
+revisão. O programa não inventa o conteúdo visual ausente.
+
+REIMPORTAÇÃO
+Se o mesmo código Qxxxx já estiver no banco com enunciado/alternativas/gabarito
+incompletos por causa do extrator antigo, uma nova importação pelo leitor nativo
+pode reparar o registro existente sem trocar seu UID. Explicações escritas pelo
+usuário são preservadas.
+
+NOME DO ARQUIVO
+Um nome como fluencia-dados_Aula01.pdf é usado como dica forte de matéria/aula
+quando a matéria existe na taxonomia da planilha. Uma importação iniciada por
+Estudos e questões continua tendo prioridade e permanece autoritativa.
+
+ANTES DE ATUALIZAR UMA INSTALAÇÃO EM USO, faça backup da pasta data,
+principalmente data/questflow_questions.sqlite.

@@ -1,0 +1,33 @@
+{
+  "release": "QuestFlow Studio 6.17.0 + Mobile 0.12.0",
+  "studio_version": "6.17.0",
+  "mobile_version": "0.12.0",
+  "package_type": "safe-update-feature",
+  "from_version_validated": "6.16.1",
+  "purpose": "Mobile offline answer history with official Studio feedback and development UI cleanup",
+  "database_migration": "no destructive Studio migration; additive Mobile local state",
+  "learning_engine_changed": false,
+  "mobile_changed": true,
+  "tests": {
+    "focused_pytest_passed": 81,
+    "functional_failures": 0,
+    "mobile_core": "passed",
+    "typescript": "passed",
+    "expo_android_export": "passed",
+    "expo_android_modules": 1369,
+    "python_smoke": "passed"
+  },
+  "known_limitations": [
+    "A native rebuild is required to remove a development tools button already embedded in an older Dev Client.",
+    "EAS signed build generation was not executed because it requires external service credentials.",
+    "Physical-device interaction was not available in this runtime."
+  ],
+  "artifacts": [
+    "ARQUITETURA_MOBILE_OFFLINE_RESULTS_6.17.0.md",
+    "INSTRUCOES_ATUALIZACAO_6.17.0.md",
+    "RELATORIO_VALIDACAO_6.17.0.md",
+    "MATRIZ_COMPATIBILIDADE_6.17.0.json",
+    "SBOM_6.17.0.cdx.json",
+    "AUDITORIA_VULNERABILIDADES_6.17.0.json"
+  ]
+}
