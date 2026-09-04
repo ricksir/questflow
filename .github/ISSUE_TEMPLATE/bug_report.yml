@@ -1,0 +1,89 @@
+name: Relatar problema
+description: Registre um defeito reproduzível no Studio, Mobile, importador ou atualizador.
+title: "[Bug] "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Não publique tokens, QR codes, dados pessoais, bancos SQLite, PDFs protegidos ou outros segredos.
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Área afetada
+      options:
+        - Studio
+        - Mobile
+        - Importação/OCR
+        - Sincronização
+        - Instalador/atualizador
+        - Empacotamento/release
+    validations:
+      required: true
+
+  - type: input
+    id: versions
+    attributes:
+      label: Versões instaladas
+      description: Informe as versões exibidas na interface.
+      placeholder: "Studio 6.23.2; Mobile 0.15.6"
+    validations:
+      required: true
+
+  - type: input
+    id: screen
+    attributes:
+      label: Tela, aba ou rota
+      placeholder: "Painel visual > Evolução temporal"
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Passos para reproduzir
+      description: Liste o menor caminho que sempre produz o problema.
+      placeholder: |
+        1. Abrir ...
+        2. Selecionar ...
+        3. Clicar em ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Resultado esperado
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Resultado atual
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidências
+      description: Anexe captura, trecho de log sem segredos e horário aproximado. Para layout, informe resolução e zoom/tamanho da fonte.
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Critério de aceite
+      description: Descreva como confirmar que o problema foi resolvido.
+      placeholder: "Ao repetir os passos, ..."
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Segurança dos dados
+      options:
+        - label: Removi tokens, QR codes, dados pessoais e outros segredos dos anexos.
+          required: true

@@ -1,0 +1,67 @@
+name: Solicitar melhoria
+description: Proponha uma mudança de produto com resultado e validação objetivos.
+title: "[Melhoria] "
+labels: [enhancement]
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Área principal
+      options:
+        - Studio
+        - Mobile
+        - Importação/OCR
+        - Sincronização
+        - Instalador/atualizador
+        - Empacotamento/release
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problema que precisa ser resolvido
+      description: Explique o que impede ou atrasa o usuário hoje.
+    validations:
+      required: true
+
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Comportamento desejado
+      description: Descreva o resultado; evite limitar a solução a uma implementação específica quando houver alternativas.
+    validations:
+      required: true
+
+  - type: textarea
+    id: flow
+    attributes:
+      label: Fluxo do usuário
+      placeholder: |
+        1. Usuário abre ...
+        2. Usuário escolhe ...
+        3. Sistema mostra ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: data
+    attributes:
+      label: Dados e regras envolvidos
+      description: Informe origem dos dados, estados vazio/erro/offline, amostras pequenas e compatibilidade necessária.
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Critérios de aceite
+      placeholder: |
+        - [ ] ...
+        - [ ] ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: references
+    attributes:
+      label: Referências visuais ou técnicas
+      description: Anexe imagens apenas como referência; explique quais características devem ser aplicadas.
