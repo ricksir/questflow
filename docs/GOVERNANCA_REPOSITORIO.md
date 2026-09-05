@@ -6,8 +6,11 @@ O repositório `ricksir/questflow` é privado. A integração contínua valida a
 
 Os checks atuais são:
 
+- higiene do repositório, executada antes da instalação das dependências Python;
 - `Python tests`
 - `Studio web and Mobile`
+
+O gate de higiene recusa dados persistentes, credenciais, artefatos instaláveis, diretórios gerados, links simbólicos e arquivos versionados acima de 10 MiB. Ele também confere as versões canônicas e o checksum do lock Python.
 
 No plano atual do GitHub, regras de proteção não são aplicadas a este repositório privado. Portanto, a aprovação da CI é uma política operacional do projeto, mas ainda não é uma trava do servidor. Não interprete a ausência de bloqueio do botão de merge como aprovação técnica.
 

@@ -30,6 +30,7 @@ npm ci
 Na raiz do repositório:
 
 ```powershell
+.venv\Scripts\python.exe tools/repository_hygiene.py
 .venv\Scripts\python.exe run_tests.py
 npm --prefix mobile run typecheck
 npm --prefix mobile run test:core
