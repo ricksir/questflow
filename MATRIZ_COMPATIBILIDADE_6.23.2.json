@@ -1,6 +1,6 @@
 {
   "app_version": "6.23.2",
-  "generated_at": "2026-08-28T12:07:30Z",
+  "generated_at": "2026-09-05T12:53:23Z",
   "current_python": "3.14.5",
   "matrix": [
     {
@@ -62,7 +62,7 @@
           "detail": "sem banco no pacote de teste",
           "path": "C:\\Users\\user\\OneDrive\\UNB\\ChatGPT\\Rick\\QuestFlow\\data\\questflow_questions.sqlite"
         },
-        "tested_at": "2026-08-28T12:07:30Z"
+        "tested_at": "2026-09-05T12:53:23Z"
       }
     }
   ],
