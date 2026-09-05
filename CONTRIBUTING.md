@@ -48,3 +48,5 @@ Antes de abrir um pull request, execute também o fluxo alterado manualmente. Mu
 ## Pull requests
 
 Mantenha cada PR focado em um problema. Explique o resultado para o usuário, indique os testes executados e registre riscos de migração, sincronização ou compatibilidade. A integração contínua precisa estar verde antes da incorporação.
+
+Enquanto o plano do GitHub não aplicar proteção a este repositório privado, essa exigência é operacional e não uma trava automática do servidor. Siga o fluxo completo descrito em [`docs/GOVERNANCA_REPOSITORIO.md`](docs/GOVERNANCA_REPOSITORIO.md) e não envie alterações funcionais diretamente para `main`.
