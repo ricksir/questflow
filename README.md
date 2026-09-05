@@ -1,5 +1,7 @@
 # QuestFlow Studio 6.23.2 + QuestFlow Mobile 0.15.6
 
+[![CI](https://github.com/ricksir/questflow/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/ricksir/questflow/actions/workflows/ci.yml)
+
 QuestFlow é um sistema local-first de banco editorial, estudo adaptativo e revisão no Mobile. O backend é um monólito modular com limites hexagonais, módulos verticais e um único SQLite com proprietário explícito para cada tabela.
 
 ## Arquitetura atual
@@ -31,3 +33,5 @@ npm run test:core
 ```
 
 Dados e credenciais não devem ser versionados. A API Key da APIdasQuestões é armazenada pelo backend com Windows DPAPI e nunca é enviada ao navegador ou ao Mobile.
+
+O fluxo de branches, pull requests, dependências e proteção da `main` está documentado em [docs/GOVERNANCA_REPOSITORIO.md](docs/GOVERNANCA_REPOSITORIO.md).
