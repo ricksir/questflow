@@ -56,7 +56,8 @@
           "skipOnboarding": true,
           "showMenuAtLaunch": false
         }
-      ]
+      ],
+      "expo-sqlite"
     ],
     "experiments": {
       "typedRoutes": true
