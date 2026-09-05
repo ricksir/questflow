@@ -31,9 +31,11 @@ O Dependabot verifica semanalmente:
 - dependências npm do Mobile;
 - versões das ações usadas pela CI.
 
-Somente atualizações de correção (`patch`) do Mobile são agrupadas. Atualizações menores permanecem separadas para que cada incompatibilidade seja visível. React Native `0.x` exige cuidado adicional: uma troca como `0.86` para `0.87` pode conter mudanças incompatíveis, embora ferramentas semânticas a classifiquem como `minor`.
+Somente atualizações de correção (`patch`) das dependências que não pertencem à matriz da plataforma Mobile são agrupadas. Atualizações menores permanecem separadas para que cada incompatibilidade seja visível.
 
-Upgrades de plataforma são deliberados e ficam fora dos PRs automáticos: Expo SDK major, React/React DOM major, React Native minor/major e TypeScript major. Eles devem ser feitos juntos em uma branch própria, seguindo a matriz oficial do Expo e executando:
+Todos os membros da matriz Expo ficam fora dos PRs automáticos, inclusive patches: `expo`, pacotes `expo-*`, React, React DOM, React Native, React Native Web, Safe Area Context, Screens e SVG. O Expo fixa versões compatíveis específicas e um patch isolado pode invalidar `expo install --check`, como ocorreu nos PRs #7, #8 e #9. Esses pacotes devem ser atualizados juntos em uma branch própria de migração do SDK, seguindo a matriz oficial do Expo. TypeScript continua bloqueado apenas para atualizações major. React Native `0.x` exige cuidado adicional: uma troca como `0.86` para `0.87` pode conter mudanças incompatíveis, embora ferramentas semânticas a classifiquem como `minor`.
+
+Toda migração da matriz deve executar:
 
 ```powershell
 Set-Location mobile

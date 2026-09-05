@@ -9,14 +9,29 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class MobileDependencyPolicyTests(unittest.TestCase):
-    def test_dependabot_does_not_group_platform_upgrades(self) -> None:
+    def test_dependabot_does_not_update_expo_matrix_members_in_isolation(self) -> None:
         policy = (ROOT / ".github" / "dependabot.yml").read_text(encoding="utf-8")
 
         self.assertIn("mobile-patches:", policy)
         self.assertNotIn("mobile-minor-and-patch:", policy)
-        self.assertIn('dependency-name: "react-native"', policy)
+        expo_matrix = (
+            "expo",
+            "expo-*",
+            "react",
+            "react-dom",
+            "react-native",
+            "react-native-safe-area-context",
+            "react-native-screens",
+            "react-native-svg",
+            "react-native-web",
+        )
+        for dependency in expo_matrix:
+            marker = f'dependency-name: "{dependency}"'
+            self.assertIn(marker, policy)
+            block = policy.split(marker, maxsplit=1)[1].split("- dependency-name:", maxsplit=1)[0]
+            self.assertNotIn("update-types:", block)
+
         self.assertIn('dependency-name: "typescript"', policy)
-        self.assertIn('"version-update:semver-minor"', policy)
         self.assertIn('"version-update:semver-major"', policy)
 
     def test_ci_enforces_the_expo_matrix_through_the_mobile_script(self) -> None:

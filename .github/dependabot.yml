@@ -18,24 +18,18 @@ updates:
         update-types:
           - "patch"
     ignore:
-      # Expo SDK, React and the React Native toolchain are upgraded together,
-      # deliberately, after the target SDK matrix has been validated.
+      # Expo SDK, React and the React Native toolchain form one compatibility
+      # matrix. Dependabot must not update any member in isolation; the whole
+      # matrix is upgraded deliberately in a dedicated SDK migration.
       - dependency-name: "expo"
-        update-types:
-          - "version-update:semver-major"
       - dependency-name: "expo-*"
-        update-types:
-          - "version-update:semver-major"
-      - dependency-name: "react-native"
-        update-types:
-          - "version-update:semver-major"
-          - "version-update:semver-minor"
       - dependency-name: "react"
-        update-types:
-          - "version-update:semver-major"
       - dependency-name: "react-dom"
-        update-types:
-          - "version-update:semver-major"
+      - dependency-name: "react-native"
+      - dependency-name: "react-native-safe-area-context"
+      - dependency-name: "react-native-screens"
+      - dependency-name: "react-native-svg"
+      - dependency-name: "react-native-web"
       - dependency-name: "typescript"
         update-types:
           - "version-update:semver-major"
