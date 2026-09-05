@@ -1,0 +1,4 @@
+# Arquivos protegidos por SHA-256 precisam ter bytes idênticos em qualquer SO.
+requirements.lock text eol=lf
+requirements.lock.sha256 text eol=lf
+requirements-dev.lock text eol=lf
