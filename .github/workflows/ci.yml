@@ -73,6 +73,10 @@ jobs:
         working-directory: mobile
         run: npm run check:expo
 
+      - name: Audit high-severity Mobile dependencies
+        working-directory: mobile
+        run: npm run audit:high
+
       - name: Type-check Mobile
         working-directory: mobile
         run: npm run typecheck
