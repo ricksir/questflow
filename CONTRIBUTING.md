@@ -35,6 +35,7 @@ Na raiz do repositório:
 npm --prefix mobile run typecheck
 npm --prefix mobile run test:core
 npm --prefix mobile run check:expo
+npm --prefix mobile run audit:high
 npm --prefix web-src run typecheck
 ```
 
@@ -54,3 +55,5 @@ Mantenha cada PR focado em um problema. Explique o resultado para o usuário, in
 Enquanto o plano do GitHub não aplicar proteção a este repositório privado, essa exigência é operacional e não uma trava automática do servidor. Siga o fluxo completo descrito em [`docs/GOVERNANCA_REPOSITORIO.md`](docs/GOVERNANCA_REPOSITORIO.md) e não envie alterações funcionais diretamente para `main`.
 
 Atualizações de plataforma do Mobile não são upgrades comuns de dependência. Expo SDK, React, React Native e TypeScript major devem ser atualizados em uma branch própria, usando a matriz indicada pelo Expo, `expo install --fix`, `expo install --check`, Expo Doctor, typecheck, testes e smoke test Android. Não use `--force` nem `--legacy-peer-deps` para ocultar conflitos.
+
+O gate `audit:high` bloqueia vulnerabilidades altas ou críticas. Alertas moderados sem correção compatível devem ser documentados e acompanhados; nunca use `npm audit fix --force` para fazê-los desaparecer por meio de downgrade ou migração implícita da plataforma.

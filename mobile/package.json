@@ -8,6 +8,7 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
+    "audit:high": "npm audit --audit-level=high",
     "check:expo": "expo install --check",
     "typecheck": "tsc --noEmit",
     "test:core": "tsc src/lib/config.ts src/lib/timing.ts src/lib/format.ts src/lib/pairing.ts src/lib/networkDiscovery.ts src/lib/studySession.ts --ignoreConfig --target ES2022 --module commonjs --outDir .core-test-build --lib ES2022,DOM --strict && node scripts/test-core.mjs && node scripts/cleanup-core.mjs"
@@ -39,5 +40,10 @@
   "devDependencies": {
     "@types/react": "^19.2.0",
     "typescript": "~6.0.3"
+  },
+  "overrides": {
+    "metro": "0.84.5",
+    "metro-config": "0.84.5",
+    "metro-transform-worker": "0.84.5"
   }
 }
