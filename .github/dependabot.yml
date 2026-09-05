@@ -12,12 +12,33 @@ updates:
     commit-message:
       prefix: "deps(mobile)"
     groups:
-      mobile-minor-and-patch:
+      mobile-patches:
         patterns:
           - "*"
         update-types:
-          - "minor"
           - "patch"
+    ignore:
+      # Expo SDK, React and the React Native toolchain are upgraded together,
+      # deliberately, after the target SDK matrix has been validated.
+      - dependency-name: "expo"
+        update-types:
+          - "version-update:semver-major"
+      - dependency-name: "expo-*"
+        update-types:
+          - "version-update:semver-major"
+      - dependency-name: "react-native"
+        update-types:
+          - "version-update:semver-major"
+          - "version-update:semver-minor"
+      - dependency-name: "react"
+        update-types:
+          - "version-update:semver-major"
+      - dependency-name: "react-dom"
+        update-types:
+          - "version-update:semver-major"
+      - dependency-name: "typescript"
+        update-types:
+          - "version-update:semver-major"
 
   - package-ecosystem: "github-actions"
     directory: "/"

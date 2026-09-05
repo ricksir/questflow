@@ -69,6 +69,10 @@ jobs:
         working-directory: mobile
         run: npm ci
 
+      - name: Validate Expo dependency matrix
+        working-directory: mobile
+        run: npm run check:expo
+
       - name: Type-check Mobile
         working-directory: mobile
         run: npm run typecheck

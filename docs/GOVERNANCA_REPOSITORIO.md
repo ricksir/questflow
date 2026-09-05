@@ -8,7 +8,7 @@ Os checks atuais são:
 
 - higiene do repositório, executada antes da instalação das dependências Python;
 - `Python tests`
-- `Studio web and Mobile`
+- `Studio web and Mobile`, incluindo validação da matriz de dependências do Expo;
 
 O gate de higiene recusa dados persistentes, credenciais, artefatos instaláveis, diretórios gerados, links simbólicos e arquivos versionados acima de 10 MiB. Ele também confere as versões canônicas e o checksum do lock Python.
 
@@ -31,7 +31,21 @@ O Dependabot verifica semanalmente:
 - dependências npm do Mobile;
 - versões das ações usadas pela CI.
 
-Atualizações menores e de correção do Mobile são agrupadas para reduzir ruído. Atualizações maiores permanecem separadas e exigem validação explícita.
+Somente atualizações de correção (`patch`) do Mobile são agrupadas. Atualizações menores permanecem separadas para que cada incompatibilidade seja visível. React Native `0.x` exige cuidado adicional: uma troca como `0.86` para `0.87` pode conter mudanças incompatíveis, embora ferramentas semânticas a classifiquem como `minor`.
+
+Upgrades de plataforma são deliberados e ficam fora dos PRs automáticos: Expo SDK major, React/React DOM major, React Native minor/major e TypeScript major. Eles devem ser feitos juntos em uma branch própria, seguindo a matriz oficial do Expo e executando:
+
+```powershell
+Set-Location mobile
+npm ci
+npx expo install --fix
+npx expo install --check
+npx expo-doctor
+npm run typecheck
+npm run test:core
+```
+
+`expo install --check` também roda na CI. Um conflito de peer dependency deve ser resolvido pela matriz compatível; `--force` e `--legacy-peer-deps` não são aceitos como correção.
 
 As dependências Python não são atualizadas automaticamente: o projeto mantém `requirements.txt`, `requirements.lock` e `requirements-dev.lock`, e a atualização precisa preservar o lock e seu checksum entre plataformas.
 

@@ -34,6 +34,7 @@ Na raiz do repositório:
 .venv\Scripts\python.exe run_tests.py
 npm --prefix mobile run typecheck
 npm --prefix mobile run test:core
+npm --prefix mobile run check:expo
 npm --prefix web-src run typecheck
 ```
 
@@ -51,3 +52,5 @@ Antes de abrir um pull request, execute também o fluxo alterado manualmente. Mu
 Mantenha cada PR focado em um problema. Explique o resultado para o usuário, indique os testes executados e registre riscos de migração, sincronização ou compatibilidade. A integração contínua precisa estar verde antes da incorporação.
 
 Enquanto o plano do GitHub não aplicar proteção a este repositório privado, essa exigência é operacional e não uma trava automática do servidor. Siga o fluxo completo descrito em [`docs/GOVERNANCA_REPOSITORIO.md`](docs/GOVERNANCA_REPOSITORIO.md) e não envie alterações funcionais diretamente para `main`.
+
+Atualizações de plataforma do Mobile não são upgrades comuns de dependência. Expo SDK, React, React Native e TypeScript major devem ser atualizados em uma branch própria, usando a matriz indicada pelo Expo, `expo install --fix`, `expo install --check`, Expo Doctor, typecheck, testes e smoke test Android. Não use `--force` nem `--legacy-peer-deps` para ocultar conflitos.
