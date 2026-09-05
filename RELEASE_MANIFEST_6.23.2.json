@@ -3,11 +3,24 @@
   "studio_version": "6.23.2",
   "mobile_version": "0.15.6",
   "mobile_version_code": 21,
+  "validated_at": "2026-09-05T13:20:24Z",
   "package_type": "safe-studio-only-update",
   "from_versions_targeted": ["6.23.1"],
   "purpose": "Keep Studio alive across Windows suspend/hibernate and reopen its Chrome app window after resume",
   "database_migration": "none",
   "learning_engine_changed": false,
   "mobile_changed": false,
-  "cloud_sync_changed": false
+  "cloud_sync_changed": false,
+  "artifacts": [
+    {
+      "name": "QuestFlow_Studio_6.23.2_UPDATE.zip",
+      "size_bytes": 3740409,
+      "sha256": "92685AC2F94DC71D8866569BA8A567F6EFA704CB181C95235D4BD5F9F9AC4997"
+    },
+    {
+      "name": "QuestFlow_Mobile_0.15.6.apk",
+      "size_bytes": 136791801,
+      "sha256": "892D5F5D86CA2E5F7EC2BB72B21DDB76A940435C2EF50AA17DFB1AAE387C3779"
+    }
+  ]
 }
