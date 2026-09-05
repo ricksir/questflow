@@ -1,7 +1,7 @@
 (() => {
   'use strict';
-  const RELEASE = '6.23.2';
-  const MOBILE_RELEASE = '0.15.6';
+  const RELEASE = '6.24.0';
+  const MOBILE_RELEASE = '0.16.0';
 
   function applyRelease() {
     document.body.dataset.questflowRelease = RELEASE;
@@ -12,7 +12,7 @@
     document.querySelectorAll('.mobile-studio-kicker').forEach((node) => { node.textContent = `MOBILE ${MOBILE_RELEASE}`; });
     document.querySelectorAll('[data-mobile-source-version]').forEach((node) => { node.textContent = MOBILE_RELEASE; });
     document.querySelectorAll('.page[data-page="mobile"] h2, .page[data-page="mobile"] p').forEach((node) => {
-      if (/0\.15\.[1-5]/.test(node.textContent || '')) node.textContent = node.textContent.replaceAll(/0\.15\.[1-5]/g, MOBILE_RELEASE);
+      if (/0\.(?:14|15)\.\d+/.test(node.textContent || '')) node.textContent = node.textContent.replaceAll(/0\.(?:14|15)\.\d+/g, MOBILE_RELEASE);
     });
     document.querySelectorAll('.page[data-page]').forEach((page) => {
       page.dataset.visualSystem = 'qf622';

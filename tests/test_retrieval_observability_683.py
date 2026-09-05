@@ -87,8 +87,8 @@ class RetrievalObservability683Tests(unittest.TestCase):
 
     def test_release_files_expose_683_features(self):
         root=Path(__file__).resolve().parents[1]
-        self.assertEqual((root/"VERSION.txt").read_text(encoding="utf-8").strip(),"6.23.2")
-        self.assertIn('version = "6.23.2"',(root/"pyproject.toml").read_text(encoding="utf-8"))
+        self.assertEqual((root/"VERSION.txt").read_text(encoding="utf-8").strip(),"6.24.0")
+        self.assertIn('version = "6.24.0"',(root/"pyproject.toml").read_text(encoding="utf-8"))
         self.assertIn('version = "qf-knowledge-engine-3.4"',(root/"core/engines/knowledge_engine.py").read_text(encoding="utf-8"))
         server=(root/"web_server.py").read_text(encoding="utf-8")
         for name in ("get_retrieval_observability","record_retrieval_observability","suggest_gold_question_expansion","export_retrieval_observability_report"):

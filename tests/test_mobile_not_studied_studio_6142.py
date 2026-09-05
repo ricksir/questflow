@@ -107,7 +107,7 @@ class MobileNotStudiedStudio6142Tests(unittest.TestCase):
 
     def test_mobile_statusbar_and_studio_window_are_present(self):
         config = json.loads((ROOT / "mobile" / "app.json").read_text(encoding="utf-8"))
-        self.assertEqual(config["expo"]["version"], "0.15.6")
+        self.assertEqual(config["expo"]["version"], "0.16.0")
         self.assertEqual(config["expo"]["androidStatusBar"]["backgroundColor"], "#080D16")
         self.assertFalse(config["expo"]["androidStatusBar"]["translucent"])
         layout = (ROOT / "mobile" / "app" / "_layout.tsx").read_text(encoding="utf-8")

@@ -101,8 +101,8 @@ class RetrievalIncremental6103Tests(unittest.TestCase):
         self.assertIn("retrievalEngineEyebrow", js)
 
     def test_release_is_6103(self):
-        self.assertEqual((ROOT / "VERSION.txt").read_text(encoding="utf-8").strip(), "6.23.2")
-        self.assertIn('version = "6.23.2"', (ROOT / "pyproject.toml").read_text(encoding="utf-8"))
+        self.assertEqual((ROOT / "VERSION.txt").read_text(encoding="utf-8").strip(), "6.24.0")
+        self.assertIn('version = "6.24.0"', (ROOT / "pyproject.toml").read_text(encoding="utf-8"))
 
 
 if __name__ == "__main__":

@@ -394,9 +394,9 @@ class CloudSyncSafeActivation6141Tests(unittest.TestCase):
                 service.stop(flush=False, timeout=2)
 
     def test_version_is_6143_and_mobile_remains_0101(self):
-        self.assertEqual((BASE / "VERSION.txt").read_text(encoding="utf-8").strip(), "6.23.2")
+        self.assertEqual((BASE / "VERSION.txt").read_text(encoding="utf-8").strip(), "6.24.0")
         package = json.loads((BASE / "mobile" / "package.json").read_text(encoding="utf-8"))
-        self.assertEqual(package["version"], "0.15.6")
+        self.assertEqual(package["version"], "0.16.0")
 
 
 if __name__ == "__main__":

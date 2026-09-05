@@ -1,0 +1,20 @@
+{
+  "schema": "questflow.update-manifest.v1",
+  "release": "6.24.0",
+  "from_version": "6.23.2",
+  "package_root": "QuestFlow",
+  "preserves": ["data", ".venv", "venv", "runtime", "backups"],
+  "excludes": ["data", "node_modules", ".expo", ".git", "dist", "work", "__pycache__", ".pytest_cache", "*.pyc"],
+  "changed_focus": [
+    "web/app.js",
+    "web/styles.css",
+    "mobile/app/(tabs)/today.tsx",
+    "mobile/app/(tabs)/progress.tsx"
+  ],
+  "database_migration": "none",
+  "mobile_version": "0.16.0",
+  "mobile_changed": true,
+  "learning_engine_changed": false,
+  "cloud_sync_changed": false,
+  "feature": "Responsive priority workspace and guided Mobile study route"
+}

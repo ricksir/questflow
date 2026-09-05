@@ -19,9 +19,9 @@ class Hardening641Tests(unittest.TestCase):
         root = Path(__file__).resolve().parents[1]
         version = (root / "VERSION.txt").read_text(encoding="utf-8").strip()
         project = (root / "pyproject.toml").read_text(encoding="utf-8")
-        self.assertEqual(version, "6.23.2")
+        self.assertEqual(version, "6.24.0")
         self.assertEqual(app_shared.APP_VERSION, version)
-        self.assertIn('version = "6.23.2"', project)
+        self.assertIn('version = "6.24.0"', project)
 
     def test_privacy_first_ai_defaults_and_capabilities(self):
         self.assertEqual(app_shared.DEFAULT_CONFIG["ai_active_provider"], "local")

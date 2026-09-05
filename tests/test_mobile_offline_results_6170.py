@@ -10,12 +10,12 @@ ROOT = Path(__file__).resolve().parents[1]
 
 class MobileOfflineResults6170Tests(unittest.TestCase):
     def test_release_versions(self):
-        self.assertEqual((ROOT / "VERSION.txt").read_text(encoding="utf-8").strip(), "6.23.2")
-        self.assertIn('version = "6.23.2"', (ROOT / "pyproject.toml").read_text(encoding="utf-8"))
+        self.assertEqual((ROOT / "VERSION.txt").read_text(encoding="utf-8").strip(), "6.24.0")
+        self.assertIn('version = "6.24.0"', (ROOT / "pyproject.toml").read_text(encoding="utf-8"))
         app = json.loads((ROOT / "mobile" / "app.json").read_text(encoding="utf-8"))
         package = json.loads((ROOT / "mobile" / "package.json").read_text(encoding="utf-8"))
-        self.assertEqual(app["expo"]["version"], "0.15.6")
-        self.assertEqual(package["version"], "0.15.6")
+        self.assertEqual(app["expo"]["version"], "0.16.0")
+        self.assertEqual(package["version"], "0.16.0")
 
     def test_dev_client_chrome_is_hidden_without_disabling_background_refresh(self):
         app = json.loads((ROOT / "mobile" / "app.json").read_text(encoding="utf-8"))

@@ -42,7 +42,7 @@ def test_pairing_is_qr_first_and_manual_form_is_collapsed():
 def test_release_numbers_identify_the_fixed_build():
     app = json.loads(read(MOBILE / "app.json"))
     package = json.loads(read(MOBILE / "package.json"))
-    assert app["expo"]["version"] == "0.15.6"
-    assert app["expo"]["android"]["versionCode"] == 21
-    assert package["version"] == "0.15.6"
-    assert read(ROOT / "VERSION.txt").strip() == "6.23.2"
+    assert app["expo"]["version"] == "0.16.0"
+    assert app["expo"]["android"]["versionCode"] == 22
+    assert package["version"] == "0.16.0"
+    assert read(ROOT / "VERSION.txt").strip() == "6.24.0"

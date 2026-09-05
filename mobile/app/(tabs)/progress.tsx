@@ -48,6 +48,7 @@ export default function ProgressScreen() {
   const [range, setRange] = useState<'all' | '4w' | '12w'>('all');
   const [analytics, setAnalytics] = useState<AnalyticsSnapshotV2 | null>(bootstrap?.analytics || null);
   const [analyticsLoading, setAnalyticsLoading] = useState(false);
+  const [visibleSubjectCount, setVisibleSubjectCount] = useState(5);
   useFocusEffect(useCallback(() => { refresh().catch(() => undefined); }, [refresh]));
   const progress = bootstrap?.progress;
 
@@ -95,6 +96,9 @@ export default function ProgressScreen() {
   const wrong = Number(progress?.summary.wrong || 0);
   const attempts = Number(progress?.summary.attempts || 0);
   const accuracy = progress?.summary.accuracy || 0;
+  const prioritySubjects = progress?.subjects || [];
+  const visibleSubjects = prioritySubjects.slice(0, visibleSubjectCount);
+  const hiddenSubjectCount = Math.max(0, prioritySubjects.length - visibleSubjects.length);
 
   return (
     <Screen>
@@ -143,7 +147,7 @@ export default function ProgressScreen() {
           {analytics ? (
             <>
               <Card style={styles.chartCard}>
-                <View style={styles.rowBetween}><Text style={styles.chartTitle}>Resultado por resposta</Text><Pill text={`${analytics.sample_size} respostas`} tone="info" /></View>
+                <View style={styles.chartHeading}><Text style={styles.chartTitle}>Resultado por resposta</Text><Pill text={`${analytics.sample_size} respostas`} tone="info" /></View>
                 <Muted>Pontos ciano são acertos, pontos laranja são erros e a linha mostra o percentual acumulado.</Muted>
                 <TrendLineChart points={analytics.timeline} />
               </Card>
@@ -192,8 +196,11 @@ export default function ProgressScreen() {
         ) : null}
 
         <View style={styles.sectionGap}>
-          <SectionTitle eyebrow="Mapa de desempenho" title="Prioridade por matéria" detail="Toque em uma matéria para entender a recomendação do QuestFlow." />
-          {(progress?.subjects || []).map((item, idx) => {
+          <View style={styles.priorityHeading}>
+            <SectionTitle eyebrow="Mapa de desempenho" title="Prioridade por matéria" detail="Toque em uma matéria para entender a recomendação do QuestFlow." />
+            {prioritySubjects.length ? <Pill text={`${prioritySubjects.length} ${prioritySubjects.length === 1 ? 'matéria' : 'matérias'}`} tone="violet" /> : null}
+          </View>
+          {visibleSubjects.map((item, idx) => {
             const open = Boolean(expanded[item.subject_id]);
             const gap = item.insight?.learning_gap;
             const recent = item.insight?.recent_accuracy ?? item.performance.accuracy ?? 0;
@@ -201,7 +208,8 @@ export default function ProgressScreen() {
             return (
               <Pressable key={item.subject_id} onPress={() => setExpanded((current) => ({ ...current, [item.subject_id]: !open }))}>
                 <Card style={{ gap: 11 }}>
-                  <View style={styles.rowBetween}>
+                  <View style={styles.subjectHeading}>
+                    <View style={styles.rankBadge}><Text style={styles.rankBadgeText}>{idx + 1}</Text></View>
                     <Text style={styles.subject}>{item.label}</Text>
                     <Pill text={item.priority.level === 'high' ? 'Alta' : item.priority.level === 'medium' ? 'Média' : 'Baixa'} tone={item.priority.level === 'high' ? 'warning' : item.priority.level === 'medium' ? 'info' : 'success'} />
                   </View>
@@ -237,6 +245,8 @@ export default function ProgressScreen() {
               </Pressable>
             );
           })}
+          {hiddenSubjectCount ? <Button title={`Mostrar mais ${hiddenSubjectCount} ${hiddenSubjectCount === 1 ? 'matéria' : 'matérias'}`} onPress={() => setVisibleSubjectCount(prioritySubjects.length)} tone="secondary" /> : null}
+          {prioritySubjects.length > 5 && !hiddenSubjectCount ? <Button title="Mostrar somente as 5 prioridades principais" onPress={() => setVisibleSubjectCount(5)} tone="secondary" /> : null}
           {progress && !(progress.subjects || []).length ? <StatePanel state="empty" title="Sem matérias avaliadas" detail="Responda algumas questões para iniciar o mapa de desempenho." /> : null}
         </View>
 
@@ -276,8 +286,13 @@ const styles = StyleSheet.create({
   analyticsHeader: { gap: 10 },
   chartCard: { gap: 12 },
   chartTitle: { color: palette.text, fontSize: 17, fontWeight: '900' },
+  chartHeading: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 10 },
   rowBetween: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 10 },
   sectionGap: { gap: 10 },
+  priorityHeading: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'flex-end', justifyContent: 'space-between', gap: 10 },
+  subjectHeading: { flexDirection: 'row', alignItems: 'center', gap: 10 },
+  rankBadge: { width: 28, height: 28, borderRadius: 10, alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255,122,24,0.14)', borderWidth: 1, borderColor: 'rgba(255,122,24,0.32)' },
+  rankBadgeText: { color: palette.primary, fontSize: 12, fontWeight: '900' },
   subject: { color: palette.text, fontSize: 16, fontWeight: '800', flex: 1 },
   accuracy: { color: palette.text, fontWeight: '900' },
   trend: { color: palette.accent2, fontSize: 13, fontWeight: '800' },

@@ -46,8 +46,8 @@ class WindowsUpdateLongPathHotfix6102Tests(unittest.TestCase):
         self.assertLess(updater.index(install_runner), updater.index(runtime_runner))
 
     def test_current_release_is_6103(self) -> None:
-        self.assertEqual((ROOT / 'VERSION.txt').read_text(encoding='utf-8').strip(), '6.23.2')
-        self.assertIn('version = "6.23.2"', (ROOT / 'pyproject.toml').read_text(encoding='utf-8'))
+        self.assertEqual((ROOT / 'VERSION.txt').read_text(encoding='utf-8').strip(), '6.24.0')
+        self.assertIn('version = "6.24.0"', (ROOT / 'pyproject.toml').read_text(encoding='utf-8'))
 
 
 if __name__ == '__main__':

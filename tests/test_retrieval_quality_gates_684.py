@@ -111,8 +111,8 @@ class RetrievalQualityGates684Tests(unittest.TestCase):
 
     def test_release_api_and_ui_expose_quality_gates(self):
         root=Path(__file__).resolve().parents[1]
-        self.assertEqual((root/"VERSION.txt").read_text(encoding="utf-8").strip(),"6.23.2")
-        self.assertIn('version = "6.23.2"',(root/"pyproject.toml").read_text(encoding="utf-8"))
+        self.assertEqual((root/"VERSION.txt").read_text(encoding="utf-8").strip(),"6.24.0")
+        self.assertIn('version = "6.24.0"',(root/"pyproject.toml").read_text(encoding="utf-8"))
         self.assertIn('version = "qf-knowledge-engine-3.4"',(root/"core/engines/knowledge_engine.py").read_text(encoding="utf-8"))
         for method in ("get_retrieval_quality_gate","promote_retrieval_release","override_retrieval_quality_gate","rollback_retrieval_release_gate","export_retrieval_quality_gate_report"):
             self.assertIn(method,ALLOWED_API_METHODS)

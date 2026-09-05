@@ -54,7 +54,7 @@ class EvidenceBenchmark671Tests(unittest.TestCase):
         return uid
 
     def test_release_and_six_engines(self) -> None:
-        self.assertEqual(app_shared.APP_VERSION, "6.23.2")
+        self.assertEqual(app_shared.APP_VERSION, "6.24.0")
         architecture = self.engines.architecture()
         self.assertGreaterEqual(architecture["engine_count"], 6)
         self.assertTrue(architecture["extensible"])

@@ -1,0 +1,21 @@
+{
+  "release": "QuestFlow Studio 6.24.0 + Mobile 0.16.0",
+  "studio_version": "6.24.0",
+  "mobile_version": "0.16.0",
+  "mobile_version_code": 22,
+  "validated_at": "2026-09-05T19:11:04Z",
+  "package_type": "safe-studio-and-mobile-update",
+  "from_versions_targeted": ["6.23.2"],
+  "purpose": "Responsive priority workspace and guided Mobile study route",
+  "database_migration": "none",
+  "learning_engine_changed": false,
+  "mobile_changed": true,
+  "cloud_sync_changed": false,
+  "artifacts": [
+    {
+      "name": "QuestFlow_Studio_6.24.0_UPDATE.zip",
+      "size_bytes": 3255428,
+      "sha256": "A673B834905750CBD3E7AFA0E0A8C5780E002DD263205536537DFFE1C3D5B26C"
+    }
+  ]
+}

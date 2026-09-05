@@ -158,7 +158,7 @@ class GoogleCommentary672Tests(unittest.TestCase):
                 self.engines.ai.research_google_commentary(uid)
 
     def test_version_allowlist_and_editor_are_wired(self) -> None:
-        self.assertEqual(app_shared.APP_VERSION, "6.23.2")
+        self.assertEqual(app_shared.APP_VERSION, "6.24.0")
         self.assertIn("start_google_commentary_research", ALLOWED_API_METHODS)
         html = (BASE / "web" / "index.html").read_text(encoding="utf-8")
         js = (BASE / "web" / "app.js").read_text(encoding="utf-8")

@@ -1,4 +1,4 @@
-export const MOBILE_APP_VERSION = '0.15.6';
+export const MOBILE_APP_VERSION = '0.16.0';
 export const MOBILE_SCHEMA_VERSION = 1;
 export const MOBILE_CONTRACT = 'questflow.mobile.v1';
 

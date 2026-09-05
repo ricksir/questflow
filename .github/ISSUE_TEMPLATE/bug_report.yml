@@ -27,7 +27,7 @@ body:
     attributes:
       label: Versões instaladas
       description: Informe as versões exibidas na interface.
-      placeholder: "Studio 6.23.2; Mobile 0.15.6"
+      placeholder: "Studio 6.24.0; Mobile 0.16.0"
     validations:
       required: true
 

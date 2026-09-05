@@ -413,7 +413,7 @@ function createMockApi() {
     { subject: 'DIREITO TRIBUTÁRIO', questions: 185, sent: 66, correct: 29, wrong: 31, attempts: 60, accuracy: 48.3, has_answers: true, performance_label: 'Prioridade alta', performance_tone: 'danger' },
     { subject: 'AUDITORIA', questions: 96, sent: 0, correct: 0, wrong: 0, attempts: 0, accuracy: 0, has_answers: false, performance_label: 'Sem respostas', performance_tone: 'neutral' },
   ], recent: [], flow: {}, pending_reviews: 3, elapsed_seconds: 0.02 };
-  const bootstrapMock = { app: { name: 'QuestFlow Studio', version: '6.23.2' }, stats: { total: 668, pending: 139, approved: 421 }, config: {}, taxonomy: { loaded: true, materias: ['CONTABILIDADE PÚBLICA', 'DIREITO TRIBUTÁRIO'], task_count: 473 }, flow: {}, pending_reviews: 3 };
+  const bootstrapMock = { app: { name: 'QuestFlow Studio', version: '6.24.0' }, stats: { total: 668, pending: 139, approved: 421 }, config: {}, taxonomy: { loaded: true, materias: ['CONTABILIDADE PÚBLICA', 'DIREITO TRIBUTÁRIO'], task_count: 473 }, flow: {}, pending_reviews: 3 };
   return {
     bootstrap_shell: async () => ({ ...bootstrapMock, stats: {}, pending_reviews: 0, deferred: true }),
     bootstrap: async () => bootstrapMock,
@@ -1027,7 +1027,7 @@ function renderLearningPulsePanel(data) {
     ? priorityFocus
     : context.prioritized.filter((item) => item.studied || item.has_answers)
   );
-  const visibleFocus = focusSubjects.slice(0, 4);
+  const visibleFocus = focusSubjects.slice(0, 6);
   const hiddenFocusCount = Math.max(0, focusSubjects.length - visibleFocus.length);
   const retention = context.retentionWeighted;
   const recent = context.recentWeighted;
@@ -1039,9 +1039,11 @@ function renderLearningPulsePanel(data) {
   const focusRows = visibleFocus.length ? visibleFocus.map((item, index) => {
     const value = item.recent_accuracy == null ? 0 : Math.max(0, Math.min(100, Number(item.recent_accuracy)));
     const label = textOrMissing(item.subject || item.materia, 'Matéria');
-    const tone = ['orange', 'cyan', 'violet', 'green'][index] || 'orange';
-    return `<div class="learning-focus-row learning-focus-row--${tone}"><div><strong>${escapeHtml(label)}</strong><span>${escapeHtml(textOrMissing(item.priority_label, 'Em acompanhamento'))}</span></div><b>${analyticsPct(item.recent_accuracy)}</b><i aria-hidden="true"><span style="width:${value}%"></span></i></div>`;
-  }).join('') : '<div class="learning-pulse-empty">Responda algumas questões para formar o primeiro mapa de prioridades.</div>';
+    const tone = ['orange', 'cyan', 'violet', 'green'][index % 4];
+    const sourceIndex = context.subjects.indexOf(item);
+    const attempts = numberOrZero(item.attempts);
+    return `<button class="learning-focus-row learning-focus-row--${tone}" type="button" data-pulse-subject-key="${sourceIndex}" aria-label="Abrir diagnóstico de ${escapeHtml(label)}"><span class="learning-focus-rank">${String(index + 1).padStart(2, '0')}</span><div><strong>${escapeHtml(label)}</strong><span>${escapeHtml(textOrMissing(item.priority_label, 'Em acompanhamento'))} · ${formatNumber(attempts)} ${attempts === 1 ? 'resposta' : 'respostas'}</span></div><b>${analyticsPct(item.recent_accuracy)}</b><i aria-hidden="true"><span style="width:${value}%"></span></i></button>`;
+  }).join('') : '';
   const focusMore = hiddenFocusCount
     ? `<div class="learning-focus-more"><span><strong>+${formatNumber(hiddenFocusCount)}</strong> ${hiddenFocusCount === 1 ? 'outra prioridade' : 'outras prioridades'}</span><button class="button button--secondary" type="button" data-pulse-all>Ver todas</button></div>`
     : '';
@@ -1062,10 +1064,11 @@ function renderLearningPulsePanel(data) {
       <div class="learning-retention-ring" style="${ringStyle}" role="img" aria-label="Retenção estimada ${analyticsPct(retention)}"><div><strong>${analyticsPct(retention)}</strong><span>retenção hoje</span></div></div>
       <div class="learning-retention-copy"><strong>${context.dueTotal ? `${formatNumber(context.dueTotal)} revisões no ponto ideal` : 'Memória em dia'}</strong><span>${context.due7Total ? `${formatNumber(context.due7Total)} entram na janela de 7 dias.` : 'Nenhuma revisão próxima exige atenção.'}</span></div>
     </section>
-    <section class="learning-pulse-focus"><div class="learning-pulse-section-head"><div><span>Prioridade por matéria</span><strong>${formatNumber(focusSubjects.length)} ${focusSubjects.length === 1 ? 'matéria em foco' : 'matérias em foco'}</strong></div><small>ordenadas pela prioridade calculada</small></div>${focusRows}${focusMore}</section>
+    <section class="learning-pulse-focus"><div class="learning-pulse-section-head"><div><span>Prioridade por matéria</span><strong>${formatNumber(focusSubjects.length)} ${focusSubjects.length === 1 ? 'matéria em foco' : 'matérias em foco'}</strong></div><small>clique para abrir o diagnóstico</small></div>${focusRows ? `<div class="learning-focus-grid">${focusRows}</div>` : '<div class="learning-pulse-empty">Responda algumas questões para formar o primeiro mapa de prioridades.</div>'}${focusMore}</section>
   </div>`;
   panel.querySelector('[data-pulse-action]')?.addEventListener('click', () => navigate('visualanalytics'));
   panel.querySelector('[data-pulse-all]')?.addEventListener('click', () => openFocusSubjectsModal(context));
+  panel.querySelectorAll('[data-pulse-subject-key]').forEach((row) => row.addEventListener('click', () => openSubjectAnalyticsModal(context, row.dataset.pulseSubjectKey)));
 }
 
 function renderStudyCommandPanel(data) {
