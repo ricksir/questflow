@@ -41,5 +41,10 @@
 
 ## APK Android
 
-- Versão solicitada: 0.16.0 (`versionCode` 22), Expo SDK 57.
-- A geração final depende de autorização explícita para o build no serviço EAS/Expo, pois este computador não possui Java, Android SDK ou Gradle instalados.
+- Arquivo: `QuestFlow_Mobile_0.16.0.apk`.
+- Versão: 0.16.0 (`versionCode` 22), Expo SDK 57.
+- Tamanho: 136.867.645 bytes.
+- Estrutura ZIP/APK: 1.386 entradas, `AndroidManifest.xml` presente, cinco arquivos DEX e leitura integral aprovada.
+- Evidência EAS: build `5f27da7e-f849-43bb-95f6-a1cdc93783a1`, status `FINISHED`.
+- Aplicativo: `br.questflow.mobile`; distribuição interna; perfil `preview`/APK.
+- SHA-256: `44743C2C5FE546C05CB4305EC5234796F340CD04999E12A1BCA699650546EE97`.
