@@ -18,7 +18,7 @@ from web_server import ALLOWED_API_METHODS, QuestFlowLocalServer
 
 class RuntimeWatchdog668Tests(unittest.TestCase):
     def test_release_and_watchdog_defaults(self):
-        self.assertEqual(app_shared.APP_VERSION, "6.23.2")
+        self.assertEqual(app_shared.APP_VERSION, "6.24.0")
         self.assertTrue(app_shared.DEFAULT_CONFIG["watchdog_enabled"])
         self.assertTrue(app_shared.DEFAULT_CONFIG["watchdog_auto_recover"])
         self.assertGreaterEqual(app_shared.DEFAULT_CONFIG["runtime_io_max_concurrency"], 2)
@@ -115,7 +115,7 @@ class RuntimeWatchdog668Tests(unittest.TestCase):
             try:
                 result = api.get_runtime_watchdog_status()
                 self.assertTrue(result["ok"])
-                self.assertEqual(result["compatibility"]["app_version"], "6.23.2")
+                self.assertEqual(result["compatibility"]["app_version"], "6.24.0")
                 self.assertIn("python", result["compatibility"])
             finally:
                 api.shutdown()

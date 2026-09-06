@@ -1,6 +1,6 @@
 [project]
 name = "questflow-studio"
-version = "6.23.2"
+version = "6.24.0"
 requires-python = ">=3.11"
 description = "Banco local de questões, OCR, Telegram e ciclo de estudos adaptativo."
 

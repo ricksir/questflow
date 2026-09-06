@@ -30,7 +30,7 @@ from core.production_hardening import (
 
 class ProductionHardening673Tests(unittest.TestCase):
     def test_release_version(self) -> None:
-        self.assertEqual(app_shared.APP_VERSION, "6.23.2")
+        self.assertEqual(app_shared.APP_VERSION, "6.24.0")
 
     def test_lock_is_exact_and_sha256_verified(self) -> None:
         report = verify_lock_integrity()
@@ -62,7 +62,7 @@ class ProductionHardening673Tests(unittest.TestCase):
             output = Path(temp_name) / "sbom.json"
             payload = generate_sbom(output)
             self.assertEqual(payload["bomFormat"], "CycloneDX")
-            self.assertEqual(payload["metadata"]["component"]["version"], "6.23.2")
+            self.assertEqual(payload["metadata"]["component"]["version"], "6.24.0")
             self.assertGreaterEqual(len(payload["components"]), 7)
             self.assertTrue(output.exists())
 

@@ -69,6 +69,34 @@ export default function TodayScreen() {
           </HeroCard>
         ) : null}
 
+        {bootstrap ? (
+          <Card style={styles.routeCard}>
+            <View style={styles.rowBetween}>
+              <View style={{ flex: 1, gap: 3 }}>
+                <Text style={styles.routeEyebrow}>ROTEIRO DA SESSÃO</Text>
+                <Text style={styles.routeTitle}>Do reforço à consolidação</Text>
+              </View>
+              <Pill text="3 etapas" tone="violet" />
+            </View>
+            <View style={styles.routeSteps}>
+              <View style={styles.routeStep}>
+                <View style={[styles.routeIndex, styles.routeIndexOrange]}><Text style={styles.routeIndexText}>1</Text></View>
+                <View style={styles.routeCopy}><Text style={styles.routeLabel}>Recuperar</Text><Muted>{today?.today.reviews_due ? `${today.today.reviews_due} revisões no ponto ideal` : 'Memória em dia agora'}</Muted></View>
+              </View>
+              <View style={styles.routeConnector} />
+              <View style={styles.routeStep}>
+                <View style={[styles.routeIndex, styles.routeIndexCyan]}><Text style={styles.routeIndexText}>2</Text></View>
+                <View style={styles.routeCopy}><Text style={styles.routeLabel}>Intercalar</Text><Muted>{coach?.question_count || today?.today.recommended_questions || 0} questões entre prioridades</Muted></View>
+              </View>
+              <View style={styles.routeConnector} />
+              <View style={styles.routeStep}>
+                <View style={[styles.routeIndex, styles.routeIndexViolet]}><Text style={styles.routeIndexText}>3</Text></View>
+                <View style={styles.routeCopy}><Text style={styles.routeLabel}>Consolidar</Text><Muted>{pendingEvents ? `${pendingEvents} registros seguros aguardando envio` : 'Progresso sincronizado'}</Muted></View>
+              </View>
+            </View>
+          </Card>
+        ) : null}
+
         <View style={styles.sectionGap}>
           <SectionTitle eyebrow="Performance" title="Seu desempenho" detail="Uma leitura rápida do que as questões estão mostrando agora." />
           <Card style={styles.performanceCard}>
@@ -181,6 +209,19 @@ const styles = StyleSheet.create({
   heroMeta: { flex: 1, backgroundColor: 'rgba(7,16,31,0.32)', borderRadius: 16, padding: 11, borderWidth: 1, borderColor: 'rgba(255,255,255,0.08)' },
   heroMetaValue: { color: palette.text, fontSize: 20, fontWeight: '900' },
   heroMetaLabel: { color: palette.primarySoft, fontSize: 10, marginTop: 2 },
+  routeCard: { gap: 14, borderColor: 'rgba(167,121,255,0.28)' },
+  routeEyebrow: { color: palette.violet, fontSize: 10, fontWeight: '900', letterSpacing: 1.1 },
+  routeTitle: { color: palette.text, fontSize: 18, fontWeight: '900' },
+  routeSteps: { gap: 0 },
+  routeStep: { flexDirection: 'row', alignItems: 'center', gap: 11, minHeight: 48 },
+  routeConnector: { width: 2, height: 12, marginLeft: 17, backgroundColor: palette.white08 },
+  routeIndex: { width: 36, height: 36, borderRadius: 12, alignItems: 'center', justifyContent: 'center', borderWidth: 1 },
+  routeIndexOrange: { backgroundColor: 'rgba(255,122,24,0.14)', borderColor: 'rgba(255,122,24,0.35)' },
+  routeIndexCyan: { backgroundColor: 'rgba(37,199,217,0.12)', borderColor: 'rgba(37,199,217,0.32)' },
+  routeIndexViolet: { backgroundColor: 'rgba(167,121,255,0.12)', borderColor: 'rgba(167,121,255,0.32)' },
+  routeIndexText: { color: palette.text, fontSize: 13, fontWeight: '900' },
+  routeCopy: { flex: 1, gap: 2 },
+  routeLabel: { color: palette.text, fontSize: 14, fontWeight: '900' },
   sectionGap: { gap: 10 },
   performanceCard: { gap: 15 },
   performanceTop: { flexDirection: 'row', alignItems: 'center', gap: 16 },

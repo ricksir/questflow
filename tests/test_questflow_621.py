@@ -22,16 +22,16 @@ def read(relative: str) -> str:
 
 
 def test_release_versions_and_mobile_payload_policy():
-    assert read("VERSION.txt").strip() == "6.23.2"
-    assert 'version = "6.23.2"' in read("pyproject.toml")
+    assert read("VERSION.txt").strip() == "6.24.0"
+    assert 'version = "6.24.0"' in read("pyproject.toml")
     package = json.loads(read("mobile/package.json"))
     app = json.loads(read("mobile/app.json"))
-    manifest = json.loads(read("MANIFEST_UPDATE_6.23.2.json"))
-    assert package["version"] == "0.15.6"
-    assert app["expo"]["version"] == "0.15.6"
-    assert app["expo"]["android"]["versionCode"] == 21
+    manifest = json.loads(read("MANIFEST_UPDATE_6.24.0.json"))
+    assert package["version"] == "0.16.0"
+    assert app["expo"]["version"] == "0.16.0"
+    assert app["expo"]["android"]["versionCode"] == 22
     assert package["dependencies"]["react-native-svg"]
-    assert manifest["mobile_changed"] is False
+    assert manifest["mobile_changed"] is True
     assert "mobile" not in manifest["preserves"]
     assert "mobile" not in manifest["excludes"]
 
@@ -40,7 +40,7 @@ def test_mobile_studio_source_version_tracks_the_current_mobile_release():
     enhancement = read("web/questflow621.js")
     release = read("web/questflow622.js")
     assert '<strong data-mobile-source-version>${sourceVersion}</strong>' in enhancement
-    assert "const MOBILE_RELEASE = '0.15.6'" in release
+    assert "const MOBILE_RELEASE = '0.16.0'" in release
     assert "node.textContent = MOBILE_RELEASE" in release
 
 

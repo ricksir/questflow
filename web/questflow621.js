@@ -1,4 +1,4 @@
-/* QuestFlow Studio 6.23.2 — modular architecture with compatible Mobile feedback. */
+/* QuestFlow Studio 6.24.0 — modular architecture with compatible Mobile feedback. */
 (() => {
   'use strict';
 
@@ -402,7 +402,7 @@
   }
 
   function enhanceAll() {
-    document.body.dataset.questflowRelease = '6.23.2';
+    document.body.dataset.questflowRelease = '6.24.0';
     document.querySelectorAll('.page[data-page]').forEach(insertActionStrip);
     enhanceDashboard(); enhanceCuration(); enhanceStage5(); enhanceImport(); enhanceCorrections(); enhanceCoverage(); enhanceFlow(); enhanceSettings(); enhanceMobileStudio(); createAnalyticsSurface();
     document.querySelectorAll('.panel').forEach((panel) => {

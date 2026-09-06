@@ -29,8 +29,8 @@ class MobileUx0130Tests(unittest.TestCase):
         self.assertNotIn("{accuracy == null ? '—' : `${Math.round(accuracy * 100)}%`}", source)
 
     def test_mobile_version_is_0130(self) -> None:
-        self.assertIn('"version": "0.15.6"', (MOBILE / "package.json").read_text(encoding="utf-8"))
-        self.assertIn("MOBILE_APP_VERSION = '0.15.6'", (MOBILE / "src" / "lib" / "config.ts").read_text(encoding="utf-8"))
+        self.assertIn('"version": "0.16.0"', (MOBILE / "package.json").read_text(encoding="utf-8"))
+        self.assertIn("MOBILE_APP_VERSION = '0.16.0'", (MOBILE / "src" / "lib" / "config.ts").read_text(encoding="utf-8"))
 
 
 if __name__ == "__main__":

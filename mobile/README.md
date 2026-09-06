@@ -1,4 +1,4 @@
-# QuestFlow Mobile 0.15.6 — avanço imediato e rotação entre blocos
+# QuestFlow Mobile 0.16.0 — avanço imediato e rotação entre blocos
 
 Cliente Expo do QuestFlow Studio 6.18.0.
 

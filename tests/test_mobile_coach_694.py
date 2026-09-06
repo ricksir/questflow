@@ -98,7 +98,7 @@ class MobileCoach694Tests(unittest.TestCase):
         self.assertIn("Últimas respostas", today)
         self.assertIn("Prioridade por matéria", progress)
         self.assertIn("Por que esta prioridade?", progress)
-        self.assertIn("0.15.6", config)
+        self.assertIn("0.16.0", config)
 
 
 if __name__ == "__main__":

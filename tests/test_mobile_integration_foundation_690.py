@@ -286,7 +286,7 @@ class MobileIntegrationFoundation690Tests(unittest.TestCase):
         root = Path(__file__).resolve().parents[1]
         html = (root / "web" / "index.html").read_text(encoding="utf-8")
         js = (root / "web" / "app.js").read_text(encoding="utf-8")
-        self.assertIn("MOBILE 0.15.6", html)
+        self.assertIn("MOBILE 0.16.0", html)
         self.assertIn('id="createMobilePairing"', html)
         self.assertIn('id="mobilePairingQr"', html)
         self.assertIn("create_mobile_pairing", js)

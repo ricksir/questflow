@@ -54,7 +54,7 @@ class TutorScaffolding670Tests(unittest.TestCase):
         return uid
 
     def test_release_and_study_v11(self) -> None:
-        self.assertEqual(app_shared.APP_VERSION, "6.23.2")
+        self.assertEqual(app_shared.APP_VERSION, "6.24.0")
         with self.db.connect() as connection:
             versions = [int(r["version"]) for r in migration_history(connection) if r["component"] == "study"]
             tables = {r[0] for r in connection.execute("SELECT name FROM sqlite_master WHERE type='table'")}

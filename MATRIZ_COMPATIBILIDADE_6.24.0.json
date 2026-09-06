@@ -1,0 +1,70 @@
+{
+  "app_version": "6.24.0",
+  "generated_at": "2026-09-05T18:38:28Z",
+  "current_python": "3.14.5",
+  "matrix": [
+    {
+      "python": "3.11",
+      "tier": "validated",
+      "executable": null,
+      "available": false,
+      "smoke": null
+    },
+    {
+      "python": "3.12",
+      "tier": "validated",
+      "executable": null,
+      "available": false,
+      "smoke": null
+    },
+    {
+      "python": "3.13",
+      "tier": "validated",
+      "executable": null,
+      "available": false,
+      "smoke": null
+    },
+    {
+      "python": "3.14",
+      "tier": "controlled_experimental",
+      "executable": "C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python314\\python.exe",
+      "available": true,
+      "smoke": {
+        "ok": true,
+        "commands": [
+          {
+            "command": [
+              "C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python314\\python.exe",
+              "-m",
+              "compileall",
+              "-q",
+              "core",
+              "app_shared.py",
+              "web_api.py",
+              "installer.py",
+              "release_tools.py"
+            ],
+            "returncode": 0,
+            "detail": ""
+          },
+          {
+            "command": [
+              "C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python314\\python.exe",
+              "-c",
+              "import app_shared, sqlite3; assert app_shared.APP_VERSION; print(app_shared.APP_VERSION)"
+            ],
+            "returncode": 0,
+            "detail": "6.24.0"
+          }
+        ],
+        "database": {
+          "ok": true,
+          "detail": "sem banco no pacote de teste",
+          "path": "C:\\Users\\user\\OneDrive\\UNB\\ChatGPT\\Rick\\QuestFlow\\data\\questflow_questions.sqlite"
+        },
+        "tested_at": "2026-09-05T18:38:28Z"
+      }
+    }
+  ],
+  "policy": "3.11–3.13 validados; 3.14 é validação controlada/experimental até a pilha completa passar no CI."
+}

@@ -143,12 +143,12 @@ class MobileStudyBoundary6122Tests(unittest.TestCase):
                 store.projection(tenant_id, "ai_health")
 
     def test_release_and_mobile_versions(self):
-        self.assertEqual((ROOT / "VERSION.txt").read_text(encoding="utf-8").strip(), "6.23.2")
-        self.assertIn('version = "6.23.2"', (ROOT / "pyproject.toml").read_text(encoding="utf-8"))
-        self.assertEqual(json.loads((ROOT / "mobile" / "app.json").read_text(encoding="utf-8"))["expo"]["version"], "0.15.6")
-        self.assertEqual(json.loads((ROOT / "mobile" / "package.json").read_text(encoding="utf-8"))["version"], "0.15.6")
+        self.assertEqual((ROOT / "VERSION.txt").read_text(encoding="utf-8").strip(), "6.24.0")
+        self.assertIn('version = "6.24.0"', (ROOT / "pyproject.toml").read_text(encoding="utf-8"))
+        self.assertEqual(json.loads((ROOT / "mobile" / "app.json").read_text(encoding="utf-8"))["expo"]["version"], "0.16.0")
+        self.assertEqual(json.loads((ROOT / "mobile" / "package.json").read_text(encoding="utf-8"))["version"], "0.16.0")
         config = (ROOT / "mobile" / "src" / "lib" / "config.ts").read_text(encoding="utf-8")
-        self.assertIn("MOBILE_APP_VERSION = '0.15.6'", config)
+        self.assertIn("MOBILE_APP_VERSION = '0.16.0'", config)
 
 
 if __name__ == "__main__":

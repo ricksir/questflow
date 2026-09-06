@@ -48,4 +48,4 @@ def test_no_active_studio_copy_mentions_mobile_014():
     assert "Mobile 0.14.0" not in app
     assert "build 0.14" not in enhancement
     assert "currentMobileRelease()" in app
-    assert "app.js?v=6.23.2" in html
+    assert "app.js?v=6.24.0" in html

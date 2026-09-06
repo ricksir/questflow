@@ -1,4 +1,4 @@
-# QuestFlow Studio 6.23.2 + QuestFlow Mobile 0.15.6
+# QuestFlow Studio 6.24.0 + QuestFlow Mobile 0.16.0
 
 [![CI](https://github.com/ricksir/questflow/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/ricksir/questflow/actions/workflows/ci.yml)
 

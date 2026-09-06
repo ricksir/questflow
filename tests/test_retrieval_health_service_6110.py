@@ -178,10 +178,10 @@ class RetrievalHealthService6110Tests(unittest.TestCase):
         self.assertNotIn("force?'reevaluate_retrieval_quality_gate':'get_retrieval_quality_gate'", js)
 
     def test_release_is_6110_mobile_contract_unchanged(self):
-        self.assertEqual((ROOT / "VERSION.txt").read_text(encoding="utf-8").strip(), "6.23.2")
-        self.assertIn('version = "6.23.2"', (ROOT / "pyproject.toml").read_text(encoding="utf-8"))
+        self.assertEqual((ROOT / "VERSION.txt").read_text(encoding="utf-8").strip(), "6.24.0")
+        self.assertIn('version = "6.24.0"', (ROOT / "pyproject.toml").read_text(encoding="utf-8"))
         package = (ROOT / "mobile" / "package.json").read_text(encoding="utf-8")
-        self.assertIn('"version": "0.15.6"', package)
+        self.assertIn('"version": "0.16.0"', package)
 
 
 if __name__ == "__main__":

@@ -1,3 +1,13 @@
+# QuestFlow Studio 6.24.0 + Mobile 0.16.0 — prioridades responsivas e roteiro de estudo
+
+- Reorganiza as prioridades da Visão geral do Studio em uma grade responsiva, numerada e clicável, com até seis matérias visíveis e acesso filtrável à lista completa.
+- Mantém o total de matérias coerente com a coleção real e abre o diagnóstico detalhado diretamente em cada cartão.
+- Adiciona ao Mobile um roteiro visual de sessão em três etapas: recuperar, intercalar e consolidar, sempre alimentado pelos dados reais do estudante.
+- Limita inicialmente o mapa de matérias no Mobile a cinco prioridades, informa o total e permite expandir ou recolher a lista quando o banco crescer.
+- Reforça a quebra responsiva dos títulos e contadores do gráfico “Resultado por resposta”.
+- Identifica inequivocamente os novos instaladores como Studio 6.24.0 e Mobile 0.16.0 (`versionCode` 22).
+- Sem migração de banco; respostas, histórico, FSRS, KT, IRT, fila offline e pareamentos são preservados.
+
 # QuestFlow Studio 6.23.2 + Mobile 0.15.6 — retomada segura após suspensão
 
 - Detecta lacunas longas do agendador e do relógio como suspensão/hibernação do Windows, sem confundi-las com fechamento da janela.

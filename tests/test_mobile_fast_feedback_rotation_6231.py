@@ -62,7 +62,7 @@ class MobileFastFeedbackRotation6231Tests(unittest.TestCase):
             "device_id": "mobile-fast-6231",
             "platform": "android",
             "name": "Fast Feedback Test",
-            "app_version": "0.15.6",
+            "app_version": "0.16.0",
         })
         return db, study, mobile, mobile.authenticate(exchange["access_token"]), exchange["access_token"]
 
@@ -78,7 +78,7 @@ class MobileFastFeedbackRotation6231Tests(unittest.TestCase):
             "question_revision": 1,
             "occurred_at": datetime.now(timezone.utc).isoformat(),
             "sequence_no": sequence,
-            "client": {"platform": "android", "version": "0.15.6"},
+            "client": {"platform": "android", "version": "0.16.0"},
             "payload": payload,
         }
 
