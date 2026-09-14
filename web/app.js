@@ -1072,6 +1072,27 @@ function renderLearningPulsePanel(data) {
   panel.querySelectorAll('[data-pulse-subject-key]').forEach((row) => row.addEventListener('click', () => openSubjectAnalyticsModal(context, row.dataset.pulseSubjectKey)));
 }
 
+async function openQuestAiInsightInTutor({ headline = '', explanation = '', topName = '' } = {}) {
+  const prompt = [
+    'Quero aprofundar este diagnóstico do meu painel de estudos:',
+    String(headline || '').trim(),
+    String(explanation || '').trim(),
+    topName ? 'Foco atual: ' + String(topName).trim() + '.' : '',
+    '',
+    'Use a questão que eu selecionar como contexto. Explique de forma clara qual regra, conceito ou padrão de erro merece atenção e proponha uma recuperação ativa curta. Não invente métricas ou fatos que não estejam no contexto.',
+  ].filter(Boolean).join('\n');
+  await navigate('tutor');
+  if (state.route !== 'tutor') return;
+  const field = $('#tutorUserPrompt');
+  if (!field) return;
+  field.value = prompt;
+  field.focus();
+  field.dispatchEvent(new Event('change', { bubbles: true }));
+  toast(state.tutorSelectedUid
+    ? 'Insight levado ao Tutor. Revise o pedido e gere a orientação quando quiser.'
+    : 'Insight levado ao Tutor. Selecione uma questão para usar como contexto antes de gerar a orientação.', 'info', 6500);
+}
+
 function renderQuestAiInsightPanel(data) {
   const panel = $('#questAiInsightPanel');
   if (!panel) return;
@@ -1120,7 +1141,7 @@ function renderQuestAiInsightPanel(data) {
     + '<p>' + escapeHtml(explanation) + '</p>'
     + '<div class="quest-ai-actions">'
     + '<button class="button button--primary" type="button" data-quest-ai-study>' + escapeHtml(action) + '</button>'
-    + '<button class="button button--secondary" type="button" data-quest-ai-tutor>Perguntar ao Tutor</button>'
+    + '<button class="button button--secondary" type="button" data-quest-ai-tutor>Levar insight ao Tutor</button>'
     + '<button class="button button--ghost" type="button" data-quest-ai-analytics>Ver diagnóstico</button>'
     + '</div></div></section>'
     + '<section class="quest-ai-signals" aria-label="Sinais usados no insight">'
@@ -1130,7 +1151,9 @@ function renderQuestAiInsightPanel(data) {
     + '</section></div>';
 
   panel.querySelector('[data-quest-ai-study]')?.addEventListener('click', () => navigate('recommend'));
-  panel.querySelector('[data-quest-ai-tutor]')?.addEventListener('click', () => navigate('tutor'));
+  panel.querySelector('[data-quest-ai-tutor]')?.addEventListener('click', () => {
+    openQuestAiInsightInTutor({ headline, explanation, topName }).catch((error) => toast(error?.message || 'Não foi possível abrir o Tutor.', 'error'));
+  });
   panel.querySelector('[data-quest-ai-analytics]')?.addEventListener('click', () => navigate('visualanalytics'));
 }
 
