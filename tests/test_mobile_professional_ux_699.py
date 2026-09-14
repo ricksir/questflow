@@ -42,6 +42,20 @@ class MobileProfessionalUX699Tests(unittest.TestCase):
         self.assertNotIn("Estratégia:", questions)
         self.assertNotIn("Plano ", questions)
 
+    def test_result_coach_uses_correctness_and_confidence_without_fake_metrics(self):
+        questions = (self.root / "mobile" / "app" / "(tabs)" / "questions.tsx").read_text(encoding="utf-8")
+        self.assertIn("function resultCoach", questions)
+        self.assertIn("ERRO DE ALTA CONFIANÇA", questions)
+        self.assertIn("ACERTO FRÁGIL", questions)
+        self.assertIn("DOMÍNIO CONSISTENTE", questions)
+        self.assertIn("RESULTADO PROVISÓRIO", questions)
+        self.assertEqual(questions.count("RESULTADO PROVISÓRIO"), 1)
+        self.assertNotIn("Feedback provisório disponível.", questions)
+        self.assertIn("feedback.is_correct && confidence === 'high'", questions)
+        self.assertIn("!feedback.is_correct && confidence === 'high'", questions)
+        self.assertIn("coach ? (", questions)
+        self.assertNotIn("QuestFlow Score", questions)
+
     def test_profile_is_study_only_and_does_not_surface_technical_diagnostics(self):
         profile = (self.root / "mobile" / "app" / "(tabs)" / "profile.tsx").read_text(encoding="utf-8")
         self.assertIn("MEU ESTUDO", profile)
