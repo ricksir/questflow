@@ -175,9 +175,12 @@ class SafeCloseAndHealth543Tests(unittest.TestCase):
             def shutdown(self, reason='runtime'): order.append(f'shutdown:{reason}')
 
         fake_browser = BASE / 'chrome.exe'
-        with patch.object(desktop_runtime, 'browser_candidates', return_value=[fake_browser]), \
+        with patch.object(desktop_runtime, '_wait_for_server_transport', return_value=True), \
+             patch.object(desktop_runtime, 'terminate_stale_questflow_chrome', return_value=0), \
+             patch.object(desktop_runtime, 'browser_candidates', return_value=[fake_browser]), \
              patch.object(desktop_runtime.subprocess, 'Popen', return_value=FakeProcess()), \
              patch.object(desktop_runtime.time, 'monotonic', side_effect=[0.0, 0.0, 10.0, 20.0, 30.0, 40.0]), \
+             patch.object(desktop_runtime.time, 'time', return_value=0.0), \
              patch.object(desktop_runtime.time, 'sleep', return_value=None):
             self.assertTrue(desktop_runtime.run_chrome(FakeServer(), FakeApi()))
         self.assertIn('shutdown:janela_fechada', order)
@@ -203,9 +206,12 @@ class SafeCloseAndHealth543Tests(unittest.TestCase):
             def shutdown(self, reason='runtime'): order.append(f'shutdown:{reason}')
 
         fake_browser = BASE / 'chrome.exe'
-        with patch.object(desktop_runtime, 'browser_candidates', return_value=[fake_browser]), \
+        with patch.object(desktop_runtime, '_wait_for_server_transport', return_value=True), \
+             patch.object(desktop_runtime, 'terminate_stale_questflow_chrome', return_value=0), \
+             patch.object(desktop_runtime, 'browser_candidates', return_value=[fake_browser]), \
              patch.object(desktop_runtime.subprocess, 'Popen', return_value=FakeProcess()), \
              patch.object(desktop_runtime.time, 'monotonic', return_value=0.0), \
+             patch.object(desktop_runtime.time, 'time', return_value=0.0), \
              patch.object(desktop_runtime.time, 'sleep', return_value=None):
             self.assertTrue(desktop_runtime.run_chrome(FakeServer(), FakeApi()))
         self.assertIn('shutdown:botao_fechar', order)
