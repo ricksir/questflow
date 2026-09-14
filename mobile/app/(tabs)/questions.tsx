@@ -127,6 +127,55 @@ function transferReasonLabel(reason: string | null | undefined): string {
   return 'Esta questão também verifica o mesmo conceito em uma formulação diferente.';
 }
 
+function resultCoach(feedback: Feedback, confidence: Confidence | null, difficulty: Difficulty | null) {
+  if (feedback.provisional) {
+    return {
+      tone: 'info' as const,
+      eyebrow: 'RESULTADO PROVISÓRIO',
+      title: 'Continue estudando, mas aguarde a confirmação do Studio',
+      detail: 'A resposta está preservada no aparelho. O QuestFlow confirmará o resultado e recalibrará o seu histórico assim que a sincronização estiver disponível.',
+    };
+  }
+  if (feedback.is_correct && confidence === 'high') {
+    return {
+      tone: 'success' as const,
+      eyebrow: 'DOMÍNIO CONSISTENTE',
+      title: difficulty === 'hard' ? 'Acerto forte em uma questão que você considerou difícil' : 'Acerto com confiança alta',
+      detail: 'É um bom sinal de domínio. Confira a explicação apenas se quiser consolidar a regra ou comparar o seu raciocínio.',
+    };
+  }
+  if (feedback.is_correct && confidence === 'low') {
+    return {
+      tone: 'warning' as const,
+      eyebrow: 'ACERTO FRÁGIL',
+      title: 'Você acertou, mas ainda não estava seguro',
+      detail: 'Vale abrir a explicação e confirmar por que a alternativa correta funciona antes de seguir. Isso reduz o risco de um acerto por dúvida ou eliminação.',
+    };
+  }
+  if (!feedback.is_correct && confidence === 'high') {
+    return {
+      tone: 'danger' as const,
+      eyebrow: 'ERRO DE ALTA CONFIANÇA',
+      title: 'Revise o raciocínio antes da próxima questão',
+      detail: 'Você estava seguro da resposta e errou. Esse padrão pode indicar uma regra confundida ou uma pegadinha que merece recuperação imediata.',
+    };
+  }
+  if (!feedback.is_correct) {
+    return {
+      tone: 'warning' as const,
+      eyebrow: 'PONTO PARA REVISÃO',
+      title: 'Use este erro para fortalecer a próxima tentativa',
+      detail: 'Abra a explicação, identifique a regra que faltou e marque que ainda precisa revisar se a dúvida permanecer.',
+    };
+  }
+  return {
+    tone: 'info' as const,
+    eyebrow: 'ACERTO PARA CONSOLIDAR',
+    title: 'Bom resultado — confirme o raciocínio',
+    detail: 'Se a resposta não foi totalmente segura, use a explicação para consolidar a regra antes de avançar.',
+  };
+}
+
 function summaryCoach(stats: StudySessionStats): string {
   const accuracy = sessionAccuracy(stats);
   if (stats.answered === 0) return 'Sessão encerrada sem respostas contabilizadas. Você pode iniciar um novo bloco quando quiser.';
@@ -169,6 +218,7 @@ export default function QuestionsScreen() {
   const confidence = active?.confidence ?? null;
   const difficulty = active?.difficulty ?? null;
   const eliminated = active?.eliminated ?? [];
+  const coach = feedback ? resultCoach(feedback, confidence, difficulty) : null;
   const { interaction, snapshot, live } = useActiveResponseTimer(
     current && active ? `${current.question_id}:${current.question_revision}:${active.attempt_id}` : 'none',
     questionScreenFocused && viewMode === 'running',
@@ -1347,6 +1397,13 @@ export default function QuestionsScreen() {
                   <Pill text={`Gabarito: ${feedback.correct_key || (feedback.correct_index == null ? '—' : String.fromCharCode(65 + feedback.correct_index))}`} tone={feedback.is_correct ? 'success' : 'danger'} />
                 </View>
                 <Muted>Tempo usado nas métricas: {feedback.timing.active_response_seconds == null ? 'não elegível' : formatDuration(feedback.timing.active_response_seconds)} • qualidade: {feedback.timing.quality}</Muted>
+                {coach ? (
+                  <View style={[styles.resultCoachCard, styles[`resultCoach${coach.tone[0].toUpperCase() + coach.tone.slice(1) as 'Success' | 'Warning' | 'Danger' | 'Info'}`]]}>
+                    <Text style={styles.resultCoachEyebrow}>✦ {coach.eyebrow}</Text>
+                    <Text style={styles.resultCoachTitle}>{coach.title}</Text>
+                    <Text style={styles.resultCoachDetail}>{coach.detail}</Text>
+                  </View>
+                ) : null}
                 {feedback.provisional ? <Card style={styles.provisional}><Text style={styles.provisionalText}>Feedback provisório disponível. Suas métricas serão confirmadas quando o QuestFlow receber esta resposta.</Text></Card> : null}
                 {feedback.explanation ? <Button title={explanationOpen ? 'Ocultar explicação' : 'Abrir explicação'} onPress={markExplanationOpen} tone="secondary" /> : <Muted>Esta questão ainda não possui explicação cadastrada.</Muted>}
                 {explanationOpen ? <View style={styles.explanation}><Text style={styles.explanationText}>{feedback.explanation}</Text></View> : null}
@@ -1483,6 +1540,14 @@ const styles = StyleSheet.create({
   choiceText: { color: palette.text, fontWeight: '800' },
   resultRow: { flexDirection: 'row', justifyContent: 'space-between', gap: 10, alignItems: 'center' },
   resultTitle: { fontSize: 22, fontWeight: '900' },
+  resultCoachCard: { gap: 5, padding: 13, borderRadius: 16, borderWidth: 1 },
+  resultCoachSuccess: { backgroundColor: 'rgba(33,184,154,0.09)', borderColor: 'rgba(33,184,154,0.24)' },
+  resultCoachWarning: { backgroundColor: 'rgba(243,181,74,0.12)', borderColor: 'rgba(220,151,46,0.26)' },
+  resultCoachDanger: { backgroundColor: 'rgba(239,120,104,0.09)', borderColor: 'rgba(239,120,104,0.26)' },
+  resultCoachInfo: { backgroundColor: 'rgba(85,169,214,0.08)', borderColor: 'rgba(85,169,214,0.24)' },
+  resultCoachEyebrow: { color: palette.muted, fontSize: 10, fontWeight: '900', letterSpacing: 0.8 },
+  resultCoachTitle: { color: palette.text, fontSize: 15, lineHeight: 21, fontWeight: '900' },
+  resultCoachDetail: { color: palette.muted, fontSize: 13, lineHeight: 19 },
   explanation: { borderLeftWidth: 3, borderLeftColor: palette.primary, paddingLeft: 14 },
   explanationText: { color: palette.text, fontSize: 15, lineHeight: 23 },
   message: { color: palette.warning, fontWeight: '700', lineHeight: 20 },
