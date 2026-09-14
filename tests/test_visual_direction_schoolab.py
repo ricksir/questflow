@@ -11,6 +11,7 @@ class SchoolabAprovaCheckmateUiTests(unittest.TestCase):
         cls.html = (ROOT / "web" / "index.html").read_text(encoding="utf-8")
         cls.script = (ROOT / "web" / "app.js").read_text(encoding="utf-8")
         cls.theme = (ROOT / "web" / "questflow-schoolab.css").read_text(encoding="utf-8")
+        cls.base_styles = (ROOT / "web" / "styles.css").read_text(encoding="utf-8")
         cls.version = (ROOT / "VERSION.txt").read_text(encoding="utf-8").strip()
 
     def test_reference_theme_is_loaded_after_legacy_styles(self):
@@ -186,6 +187,21 @@ class SchoolabAprovaCheckmateUiTests(unittest.TestCase):
         self.assertIn('.global-search--questions:focus-within', self.theme)
         self.assertIn('.global-search--questions .global-search__scope', self.theme)
         self.assertNotIn('Buscar em tudo', self.html)
+
+    def test_final_visual_qa_keeps_responsive_and_accessible_contracts(self):
+        self.assertIn('@media (max-width: 58rem)', self.base_styles)
+        self.assertIn('.global-search { display: none; }', self.base_styles)
+        self.assertIn('@media (max-width: 64rem)', self.theme)
+        self.assertIn('@media (max-width: 48rem)', self.theme)
+        self.assertIn('.settings-page .settings-grid {', self.theme)
+        self.assertIn('.global-search--questions .global-search__scope', self.theme)
+        self.assertIn('@media (prefers-color-scheme: dark)', self.theme)
+        self.assertIn('@media (prefers-reduced-motion: reduce)', self.theme)
+        self.assertIn(':focus-visible', self.theme)
+        self.assertIn('overflow-x: hidden', self.base_styles)
+        self.assertIn('container-type', self.base_styles)
+        self.assertIn('@container', self.base_styles)
+        self.assertIn('overflow-wrap: anywhere', self.base_styles)
 
     def test_checkmate_analytics_bento_is_decision_first(self):
         self.assertIn('Analytics de estudo', self.html)
