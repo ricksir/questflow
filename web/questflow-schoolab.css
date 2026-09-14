@@ -2071,3 +2071,227 @@ html[data-theme="dark"] .not-studied-modal .not-studied-guidance strong {
     color: #62d8bf;
   }
 }
+/* Study coverage: turn spreadsheet comparison into a calm, decision-first Schoolab workspace. */
+.page[data-page="coverage"] > .page-header {
+  margin-bottom: 1.25rem;
+}
+
+.page[data-page="coverage"] .page-actions {
+  flex-wrap: wrap;
+}
+
+.page[data-page="coverage"] .coverage-summary {
+  gap: 1rem;
+}
+
+.page[data-page="coverage"] .coverage-summary .metric-card {
+  position: relative;
+  min-height: 8.4rem;
+  overflow: hidden;
+  border-color: color-mix(in srgb, var(--qf-sky-500) 24%, var(--border-subtle));
+  background:
+    radial-gradient(circle at 100% 0%, rgba(85,169,214,.10), transparent 15rem),
+    var(--surface-panel);
+  box-shadow: var(--shadow-1);
+}
+
+.page[data-page="coverage"] .coverage-summary .metric-card:nth-child(2) {
+  border-color: color-mix(in srgb, var(--qf-gold-500) 30%, var(--border-subtle));
+  background:
+    radial-gradient(circle at 100% 0%, rgba(243,181,74,.13), transparent 15rem),
+    var(--surface-panel);
+}
+
+.page[data-page="coverage"] .coverage-summary .metric-card:nth-child(3) {
+  border-color: color-mix(in srgb, var(--qf-coral-500) 27%, var(--border-subtle));
+  background:
+    radial-gradient(circle at 100% 0%, rgba(239,120,104,.10), transparent 15rem),
+    var(--surface-panel);
+}
+
+.page[data-page="coverage"] .coverage-summary .metric-card:nth-child(4) {
+  border-color: color-mix(in srgb, var(--qf-teal-500) 28%, var(--border-subtle));
+  background:
+    radial-gradient(circle at 100% 0%, rgba(33,184,154,.10), transparent 15rem),
+    var(--surface-panel);
+}
+
+.page[data-page="coverage"] .coverage-summary .metric-card span {
+  color: var(--text-muted);
+  letter-spacing: .075em;
+}
+
+.page[data-page="coverage"] .coverage-summary .metric-card strong {
+  color: var(--qf-ink-900);
+}
+
+.page[data-page="coverage"] .coverage-summary .metric-card small {
+  color: var(--text-secondary);
+}
+
+.page[data-page="coverage"] .coverage-sync-note {
+  border-color: color-mix(in srgb, var(--qf-teal-500) 26%, var(--border-subtle));
+  background: color-mix(in srgb, var(--qf-teal-soft) 38%, var(--surface-panel));
+}
+
+.page[data-page="coverage"] .coverage-sync-note strong {
+  color: #187b68;
+}
+
+.page[data-page="coverage"] .trail-guide-status {
+  border-color: color-mix(in srgb, var(--qf-sky-500) 26%, var(--border-subtle));
+  background: color-mix(in srgb, var(--qf-sky-500) 6%, var(--surface-panel));
+}
+
+.page[data-page="coverage"] .trail-guide-knowledge {
+  border-color: color-mix(in srgb, var(--qf-gold-500) 26%, var(--border-subtle));
+  background: color-mix(in srgb, var(--qf-gold-soft) 24%, var(--surface-panel));
+}
+
+.page[data-page="coverage"] .trail-guide-knowledge > summary {
+  color: var(--qf-ink-900);
+}
+
+.page[data-page="coverage"] .trail-guide-knowledge-grid > div {
+  border-color: color-mix(in srgb, var(--qf-gold-500) 20%, var(--border-subtle));
+  background: color-mix(in srgb, var(--qf-warm-100) 64%, var(--surface-panel));
+}
+
+.page[data-page="coverage"] .coverage-toolbar {
+  gap: .8rem;
+  padding: .85rem;
+  border-color: color-mix(in srgb, var(--qf-sky-500) 24%, var(--border-subtle));
+  background: color-mix(in srgb, var(--qf-warm-100) 46%, var(--surface-panel));
+  box-shadow: var(--shadow-1);
+}
+
+.page[data-page="coverage"] .coverage-toolbar .search-field,
+.page[data-page="coverage"] .coverage-toolbar .select-field {
+  border-color: var(--border-subtle);
+  background: var(--surface-panel);
+}
+
+.page[data-page="coverage"] > article.panel {
+  overflow: hidden;
+  border-color: color-mix(in srgb, var(--qf-sky-500) 24%, var(--border-subtle));
+  box-shadow: var(--shadow-1);
+}
+
+.page[data-page="coverage"] .coverage-explainer {
+  background:
+    linear-gradient(90deg, rgba(85,169,214,.09), rgba(33,184,154,.04) 64%, transparent);
+}
+
+.page[data-page="coverage"] .coverage-explainer h2 {
+  color: var(--qf-ink-900);
+}
+
+.page[data-page="coverage"] .data-table-wrap--coverage {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-2);
+  background: var(--surface-panel);
+}
+
+.page[data-page="coverage"] .data-table--coverage thead {
+  background: color-mix(in srgb, var(--qf-warm-100) 78%, var(--surface-panel));
+}
+
+.page[data-page="coverage"] .data-table--coverage tbody tr:hover {
+  background: color-mix(in srgb, var(--qf-sky-500) 5%, var(--surface-panel));
+}
+
+.page[data-page="coverage"] .coverage-missing[data-attention="1"] {
+  color: #a64d41;
+  background: color-mix(in srgb, var(--qf-coral-500) 15%, var(--surface-panel));
+}
+
+.page[data-page="coverage"] .coverage-status[data-status="faltam_questoes"],
+.page[data-page="coverage"] .coverage-status[data-status="sem_questoes"] {
+  color: #a64d41;
+  background: color-mix(in srgb, var(--qf-coral-500) 13%, var(--surface-panel));
+}
+
+.page[data-page="coverage"] .coverage-status[data-status="cobertura_parcial"] {
+  color: #8b651b;
+  background: color-mix(in srgb, var(--qf-gold-soft) 60%, var(--surface-panel));
+}
+
+.page[data-page="coverage"] .coverage-status[data-status="coberto"],
+.page[data-page="coverage"] .coverage-status[data-status="coberto_sem_meta"] {
+  color: #187b68;
+  background: color-mix(in srgb, var(--qf-teal-soft) 58%, var(--surface-panel));
+}
+
+html[data-theme="dark"] .page[data-page="coverage"] .coverage-summary .metric-card,
+html[data-theme="dark"] .page[data-page="coverage"] .coverage-sync-note,
+html[data-theme="dark"] .page[data-page="coverage"] .trail-guide-status,
+html[data-theme="dark"] .page[data-page="coverage"] .trail-guide-knowledge,
+html[data-theme="dark"] .page[data-page="coverage"] .trail-guide-knowledge-grid > div,
+html[data-theme="dark"] .page[data-page="coverage"] .coverage-toolbar {
+  background: var(--surface-panel);
+}
+
+html[data-theme="dark"] .page[data-page="coverage"] .coverage-summary .metric-card strong,
+html[data-theme="dark"] .page[data-page="coverage"] .trail-guide-knowledge > summary,
+html[data-theme="dark"] .page[data-page="coverage"] .coverage-explainer h2 {
+  color: var(--text-primary);
+}
+
+html[data-theme="dark"] .page[data-page="coverage"] .coverage-sync-note strong,
+html[data-theme="dark"] .page[data-page="coverage"] .coverage-status[data-status="coberto"],
+html[data-theme="dark"] .page[data-page="coverage"] .coverage-status[data-status="coberto_sem_meta"] {
+  color: #62d8bf;
+}
+
+html[data-theme="dark"] .page[data-page="coverage"] .coverage-status[data-status="cobertura_parcial"] {
+  color: #f3c86a;
+}
+
+html[data-theme="dark"] .page[data-page="coverage"] .coverage-missing[data-attention="1"],
+html[data-theme="dark"] .page[data-page="coverage"] .coverage-status[data-status="faltam_questoes"],
+html[data-theme="dark"] .page[data-page="coverage"] .coverage-status[data-status="sem_questoes"] {
+  color: #f09a8e;
+}
+
+@media (prefers-color-scheme: dark) {
+  html[data-theme="system"] .page[data-page="coverage"] .coverage-summary .metric-card,
+  html[data-theme="system"] .page[data-page="coverage"] .coverage-sync-note,
+  html[data-theme="system"] .page[data-page="coverage"] .trail-guide-status,
+  html[data-theme="system"] .page[data-page="coverage"] .trail-guide-knowledge,
+  html[data-theme="system"] .page[data-page="coverage"] .trail-guide-knowledge-grid > div,
+  html[data-theme="system"] .page[data-page="coverage"] .coverage-toolbar {
+    background: var(--surface-panel);
+  }
+
+  html[data-theme="system"] .page[data-page="coverage"] .coverage-summary .metric-card strong,
+  html[data-theme="system"] .page[data-page="coverage"] .trail-guide-knowledge > summary,
+  html[data-theme="system"] .page[data-page="coverage"] .coverage-explainer h2 {
+    color: var(--text-primary);
+  }
+
+  html[data-theme="system"] .page[data-page="coverage"] .coverage-sync-note strong,
+  html[data-theme="system"] .page[data-page="coverage"] .coverage-status[data-status="coberto"],
+  html[data-theme="system"] .page[data-page="coverage"] .coverage-status[data-status="coberto_sem_meta"] {
+    color: #62d8bf;
+  }
+
+  html[data-theme="system"] .page[data-page="coverage"] .coverage-status[data-status="cobertura_parcial"] {
+    color: #f3c86a;
+  }
+
+  html[data-theme="system"] .page[data-page="coverage"] .coverage-missing[data-attention="1"],
+  html[data-theme="system"] .page[data-page="coverage"] .coverage-status[data-status="faltam_questoes"],
+  html[data-theme="system"] .page[data-page="coverage"] .coverage-status[data-status="sem_questoes"] {
+    color: #f09a8e;
+  }
+}
+
+@media (max-width: 64rem) {
+  .page[data-page="coverage"] .page-actions .button {
+    flex: 1 1 12rem;
+  }
+
+  .page[data-page="coverage"] .coverage-toolbar {
+    padding: .75rem;
+  }
+}
