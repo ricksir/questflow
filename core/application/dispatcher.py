@@ -59,11 +59,13 @@ class StudioUseCaseDispatcher:
         architecture: Any,
         persist_config: Callable[[], None],
         present_question: Callable[[str, dict[str, Any]], dict[str, Any]] | None = None,
+        create_question: Callable[[], dict[str, Any]] | None = None,
     ) -> None:
         self.catalog = catalog
         self.architecture = architecture
         self.persist_config = persist_config
         self.present_question = present_question
+        self.create_question = create_question
         self._definitions: dict[str, UseCaseDefinition] = {}
         self._register_defaults()
 
@@ -80,6 +82,7 @@ class StudioUseCaseDispatcher:
         self.register(UseCaseDefinition("system.events.drain", self._events_drain, mutating=True, module="platform"))
         self.register(UseCaseDefinition("questions.list", self._questions_list, module="editorial_bank"))
         self.register(UseCaseDefinition("questions.get", self._questions_get, module="editorial_bank"))
+        self.register(UseCaseDefinition("questions.create", self._questions_create, mutating=True, module="editorial_bank"))
         self.register(UseCaseDefinition("questions.source.settings", self._source_settings, module="editorial_bank"))
         self.register(UseCaseDefinition("questions.source.save", self._source_save, mutating=True, module="editorial_bank"))
         self.register(UseCaseDefinition("questions.source.test", self._source_test, module="editorial_bank"))
@@ -171,6 +174,14 @@ class StudioUseCaseDispatcher:
                 raise UseCaseError("Apresentação da questão inválida.", code="internal_error", status=500)
             return detail
         return {"question": question, "image": None}
+
+    def _questions_create(self, _payload: dict[str, Any]) -> dict[str, Any]:
+        if self.create_question is None:
+            raise UseCaseError("Criação manual indisponível.", code="unavailable", status=503)
+        result = self.create_question()
+        if not isinstance(result, dict) or not str(result.get("uid") or "").strip():
+            raise UseCaseError("Criação manual retornou um resultado inválido.", code="internal_error", status=500)
+        return result
 
     def _source_settings(self, _payload: dict[str, Any]) -> dict[str, Any]:
         return self.catalog.public_settings()
