@@ -113,6 +113,21 @@ class ModularArchitectureTests(unittest.TestCase):
         self.assertEqual(result["module"], "editorial_bank")
         self.assertEqual(result["data"]["meta"]["provider"], "local")
 
+    def test_question_detail_is_equivalent_between_studio_v1_and_legacy_facade(self) -> None:
+        created = self.api.create_manual_question()
+        self.assertTrue(created["ok"])
+        uid = str(created["uid"])
+
+        studio = self.api.dispatch_studio_v1("questions.get", {"uid": uid})
+        legacy = self.api.get_question(uid)
+
+        self.assertTrue(studio["ok"])
+        self.assertTrue(legacy["ok"])
+        self.assertEqual(studio["data"]["question"], legacy["question"])
+        self.assertEqual(studio["data"]["image"], legacy["image"])
+        self.assertEqual(studio["data"]["question"]["database_uid"], uid)
+        self.assertIn("historico_codigos", studio["data"]["question"])
+
     def test_http_studio_v1_requires_session_token_and_serves_typed_modules(self) -> None:
         server = QuestFlowLocalServer(
             self.api,
@@ -146,22 +161,47 @@ class ModularArchitectureTests(unittest.TestCase):
             self.assertEqual(questions_payload["module"], "editorial_bank")
             self.assertIn("items", questions_payload["data"])
 
+            created = self.api.create_manual_question()
+            self.assertTrue(created["ok"])
+            uid = str(created["uid"])
+            detail_request = urllib.request.Request(
+                f"{server.base_url}/api/v1/studio/questions/{urllib.parse.quote(uid, safe='')}",
+                headers={"X-QuestFlow-Token": server.token},
+            )
+            with urllib.request.urlopen(detail_request, timeout=5) as response:
+                detail_payload = json.loads(response.read().decode("utf-8"))
+            self.assertTrue(detail_payload["ok"])
+            self.assertEqual(detail_payload["contract"], "questflow.studio.v1")
+            self.assertEqual(detail_payload["operation"], "questions.get")
+            self.assertEqual(detail_payload["data"]["question"]["database_uid"], uid)
+            self.assertIn("historico_codigos", detail_payload["data"]["question"])
+            self.assertIn("image", detail_payload["data"])
+
             with urllib.request.urlopen(f"{server.base_url}/modules/bootstrap.js", timeout=5) as response:
                 frontend = response.read().decode("utf-8")
             self.assertIn("typed-route-modules-v1", frontend)
         finally:
             server.stop()
 
-    def test_review_list_uses_studio_v1_with_legacy_fallback(self) -> None:
+    def test_review_list_and_detail_use_studio_v1_with_legacy_fallback(self) -> None:
         script = (Path(__file__).resolve().parents[1] / "web" / "app.js").read_text(encoding="utf-8")
         self.assertIn("async studioGet(path, fallbackMethod = '', fallbackArgs = [])", script)
         self.assertIn("/api/v1/studio/", script)
-        start = script.index("async function loadQuestions()")
-        end = script.index("async function ensureMatterOptions", start)
-        load_questions = script[start:end]
+
+        list_start = script.index("async function loadQuestions()")
+        list_end = script.index("async function ensureMatterOptions", list_start)
+        load_questions = script[list_start:list_end]
         self.assertIn("bridge.studioGet(", load_questions)
         self.assertIn("'list_questions'", load_questions)
         self.assertNotIn("bridge.call('list_questions'", load_questions)
+
+        detail_start = script.index("async function selectQuestion")
+        detail_end = script.index("const metadataFields", detail_start)
+        select_question = script[detail_start:detail_end]
+        self.assertIn("bridge.studioGet(", select_question)
+        self.assertIn("'get_question'", select_question)
+        self.assertIn("encodeURIComponent(uid)", select_question)
+        self.assertNotIn("bridge.call('get_question'", select_question)
 
     def test_fsrs_kt_irt_and_analytics_are_declared_rebuildable(self) -> None:
         architecture = self.api.get_engine_architecture()["architecture"]

@@ -376,7 +376,9 @@ class Bridge {
     if (!this.ready) await this.init(fallbackMethod || 'bootstrap_shell');
     if (!this.httpMode) {
       if (!fallbackMethod) throw new Error('O contrato Studio v1 requer o transporte HTTP local.');
-      return this.call(fallbackMethod, ...fallbackArgs);
+      const fallback = await this.call(fallbackMethod, ...fallbackArgs);
+      if (fallback?.ok === false) throw new Error(fallback.error || 'Falha no recurso legado.');
+      return fallback?.data ?? fallback;
     }
     const response = await this.httpRequest(`/api/v1/studio/${String(path || '').replace(/^\//, '')}`, {
       method: 'GET',
@@ -4343,8 +4345,11 @@ async function selectQuestion(uid) {
   $('#questionForm').hidden = false;
   $('#questionForm').classList.add('is-loading');
   try {
-    const result = await bridge.call('get_question', uid);
-    if (!result.ok) throw new Error(result.error || 'Questão não encontrada.');
+    const result = await bridge.studioGet(
+      `questions/${encodeURIComponent(uid)}`,
+      'get_question',
+      [uid],
+    );
     await ensureMatterOptions(result.question?.materia || '');
     state.currentQuestion = structuredClone(result.question);
     state.originalQuestion = structuredClone(result.question);

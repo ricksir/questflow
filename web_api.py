@@ -282,6 +282,7 @@ class QuestFlowWebApi:
                     catalog=question_catalog,
                     architecture=architecture_kernel,
                     persist_config=self._persist_config,
+                    present_question=self._present_question_detail,
                 )
                 # 6.11.0: Observabilidade/Quality Gates saem do AI Engine e passam
                 # a um serviço de controle dedicado com worker serial e Snapshot Store.
@@ -2263,13 +2264,10 @@ class QuestFlowWebApi:
             return result
         return _jsonable(result.get("data") or {"total": 0, "items": []})
 
-    def get_question(self, uid: str) -> dict:
-        result = self.dispatch_studio_v1("questions.get", {"uid": uid})
-        if not result.get("ok"):
-            return result
-        question = dict((result.get("data") or {}).get("question") or {})
+    def _present_question_detail(self, uid: str, raw_question: dict) -> dict:
+        question = dict(raw_question or {})
         if not question:
-            return {"ok": False, "error": "Questão não encontrada."}
+            return {"question": {}, "image": None}
         question.setdefault("database_uid", str(uid))
         if not question.get("external_read_only") and self.queries is not None:
             try:
@@ -2302,7 +2300,16 @@ class QuestFlowWebApi:
             } if remote_src.lower().startswith("https://") else None
         else:
             image = self._image_data(question)
-        return {"ok": True, "question": _jsonable(question), "image": image}
+        return {"question": _jsonable(question), "image": image}
+
+    def get_question(self, uid: str) -> dict:
+        result = self.dispatch_studio_v1("questions.get", {"uid": uid})
+        if not result.get("ok"):
+            return result
+        detail = dict(result.get("data") or {})
+        if not isinstance(detail.get("question"), dict) or not detail.get("question"):
+            return {"ok": False, "error": "Questão não encontrada."}
+        return {"ok": True, **_jsonable(detail)}
 
     def create_manual_question(self) -> dict:
         self._ensure_core()
