@@ -32,6 +32,29 @@ class QuietHandler(SimpleHTTPRequestHandler):
     def log_message(self, format: str, *args: Any) -> None:
         return
 
+    def do_GET(self) -> None:
+        if self.path.split("?", 1)[0] == "/api/v1/studio/question-source":
+            payload = json.dumps(
+                {
+                    "ok": True,
+                    "data": {
+                        "provider": "local",
+                        "api_das_questoes": {
+                            "base_url": "https://api.apidasquestoes.com.br/api/v1",
+                            "timeout_seconds": 20,
+                            "api_key_configured": False,
+                        },
+                    },
+                }
+            ).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Content-Length", str(len(payload)))
+            self.end_headers()
+            self.wfile.write(payload)
+            return
+        super().do_GET()
+
 
 def _visible(driver: webdriver.Chrome, selector: str) -> bool:
     return bool(
