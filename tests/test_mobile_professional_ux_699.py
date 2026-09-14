@@ -51,6 +51,13 @@ class MobileProfessionalUX699Tests(unittest.TestCase):
         self.assertIn("stateAction: { minHeight: 44", ui)
         self.assertIn("button: { borderRadius: 16, minHeight: 50", ui)
 
+    def test_progress_priority_cards_expose_expand_state(self):
+        progress = (self.root / "mobile" / "app" / "(tabs)" / "progress.tsx").read_text(encoding="utf-8")
+        self.assertIn('accessibilityRole="button"', progress)
+        self.assertIn('accessibilityState={{ expanded: open }}', progress)
+        self.assertIn('accessibilityHint={open ?', progress)
+        self.assertIn("rankBadgeText: { color: palette.primaryDeep", progress)
+
     def test_studio_has_dedicated_mobile_navigation_and_page(self):
         html = (self.root / "web" / "index.html").read_text(encoding="utf-8")
         js = (self.root / "web" / "app.js").read_text(encoding="utf-8")
