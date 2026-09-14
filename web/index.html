@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="color-scheme" content="light dark">
-  <meta id="themeColorMeta" name="theme-color" content="#f3f7fb">
+  <meta id="themeColorMeta" name="theme-color" content="#fbfaf6">
   <meta name="application-name" content="QuestFlow Studio">
   <link id="appFavicon" rel="icon" type="image/png" sizes="32x32" href="assets/questflow_logo_light_32.png">
   <link id="appTouchIcon" rel="apple-touch-icon" href="assets/questflow_logo_light_256.png">
@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="styles.css?v=6.24.0">
   <link rel="stylesheet" href="questflow621.css">
   <link rel="stylesheet" href="questflow622.css">
+  <link rel="stylesheet" href="questflow-schoolab.css?v=schoolab-foundation">
 </head>
 <body>
   <a class="skip-link" href="#workspace">Pular para o conteúdo principal</a>
@@ -133,42 +134,49 @@
         <div class="route-progress" id="routeProgress" aria-hidden="true"><span></span></div>
         <div class="visually-hidden" id="pageStateAnnouncer" role="status" aria-live="polite" aria-atomic="true"></div>
         <section class="page is-active" data-page="dashboard" aria-labelledby="dashboardTitle">
-          <div class="page-header">
+          <div class="page-header dashboard-welcome">
             <div>
               <p class="eyebrow">Banco inteligente de questões</p>
               <h1 id="dashboardTitle">Visão geral</h1>
-              <p>Questões de alto nível, desempenho, revisão adaptativa e sincronização em um único painel.</p>
+              <p>Questões de alto nível organizadas para mostrar primeiro o que merece sua atenção agora; depois aprofunde desempenho, memória e cobertura.</p>
             </div>
             <div class="page-actions">
               <button class="button button--secondary" id="refreshDashboard">Atualizar painel</button>
             </div>
           </div>
-          <div class="metric-grid" id="metricGrid" aria-live="polite"></div>
-          <article class="panel learning-pulse-panel" aria-labelledby="learningPulseTitle">
+          <article class="panel learning-pulse-panel dashboard-priority-card" aria-labelledby="learningPulseTitle">
             <div class="panel-header learning-pulse-header">
               <div>
-                <p class="eyebrow">Cockpit adaptativo</p>
-                <h2 id="learningPulseTitle">Pulso de aprendizagem</h2>
-                <p>Retenção, ritmo e prioridade reunidos para transformar diagnóstico em uma próxima ação clara.</p>
+                <p class="eyebrow">Próxima melhor ação</p>
+                <h2 id="learningPulseTitle">Seu foco agora</h2>
+                <p>O QuestFlow cruza memória, desempenho e cobertura para indicar onde o próximo bloco de estudo rende mais.</p>
               </div>
               <span class="learning-pulse-live"><i aria-hidden="true"></i> Modelo atualizado</span>
             </div>
             <div id="learningPulsePanel" class="panel-body" aria-live="polite"><div class="skeleton" style="height:15rem"></div></div>
           </article>
+          <article class="panel today-panel dashboard-today-card" aria-labelledby="todayTitle">
+            <div class="panel-header today-panel__header">
+              <div><p class="eyebrow">Plano adaptativo</p><h2 id="todayTitle">Seu estudo de hoje</h2><p>Revisões, edital e domínio viram uma sequência objetiva para você apenas seguir.</p></div>
+              <button class="button button--secondary button--compact" id="refreshToday" type="button">Recalcular plano</button>
+            </div>
+            <div id="todayPanel" class="panel-body" aria-live="polite"><div class="skeleton" style="height:8rem"></div></div>
+          </article>
+          <article class="panel quest-ai-insight-panel" aria-labelledby="questAiInsightTitle">
+            <div class="panel-header quest-ai-insight-header">
+              <div><p class="eyebrow">Quest AI · insight contextual</p><h2 id="questAiInsightTitle">O que os seus dados estão dizendo?</h2><p>Uma síntese curta do Learning Engine para transformar sinais de estudo em uma decisão prática.</p></div>
+              <span class="quest-ai-badge" aria-label="Insight calculado com dados reais"><i aria-hidden="true">✦</i> Dados reais</span>
+            </div>
+            <div id="questAiInsightPanel" class="panel-body" aria-live="polite"><div class="skeleton" style="height:9rem"></div></div>
+          </article>
+          <div class="metric-grid dashboard-metric-grid" id="metricGrid" aria-live="polite"></div>
           <article class="panel study-command-panel" aria-labelledby="studyCommandTitle">
-            <div class="panel-header"><div><p class="eyebrow">Leitura rápida do seu estudo</p><h2 id="studyCommandTitle">Entenda em 30 segundos</h2><p>O painel resume o que aconteceu, por que isso importa e qual é a próxima ação recomendada.</p></div></div>
+            <div class="panel-header"><div><p class="eyebrow">Leitura rápida do seu estudo</p><h2 id="studyCommandTitle">Entenda em 30 segundos</h2><p>Veja o que aconteceu, por que importa e qual decisão de estudo faz mais sentido em seguida.</p></div></div>
             <div id="studyCommandPanel" class="panel-body" aria-live="polite"><div class="skeleton" style="height:10rem"></div></div>
           </article>
           <article class="panel adaptive-decision-panel" aria-labelledby="adaptiveDecisionTitle">
             <div class="panel-header"><div><p class="eyebrow">Learning Engine · explicabilidade</p><h2 id="adaptiveDecisionTitle">Por que esta questão?</h2><p>Audite as decisões recentes das sessões adaptativas. Esta informação fica no Studio e não é exibida no aplicativo.</p></div></div>
             <div id="adaptiveDecisionPanel" class="panel-body" aria-live="polite"><div class="skeleton" style="height:6rem"></div></div>
-          </article>
-          <article class="panel today-panel" aria-labelledby="todayTitle">
-            <div class="panel-header today-panel__header">
-              <div><p class="eyebrow">Plano diário orientado pelo edital</p><h2 id="todayTitle">O que fazer hoje?</h2><p>FSRS mantém a agenda; edital, KT, IRT, cobertura e banca explicam onde concentrar esforço.</p></div>
-              <button class="button button--secondary button--compact" id="refreshToday" type="button">Recalcular plano</button>
-            </div>
-            <div id="todayPanel" class="panel-body" aria-live="polite"><div class="skeleton" style="height:8rem"></div></div>
           </article>
           <article class="panel database-health-panel" aria-labelledby="databaseHealthTitle">
             <div class="panel-header database-health-header">
@@ -193,7 +201,7 @@
               <div id="flowHealthPanel" class="panel-body"></div>
             </article>
             <article class="panel panel--wide" aria-labelledby="recentTitle">
-              <div class="panel-header"><div><h2 id="recentTitle">Atividade recente</h2><p>Últimos envios, respostas e falhas.</p></div></div>
+              <div class="panel-header"><div><p class="eyebrow">Histórico operacional</p><h2 id="recentTitle">Atividade recente</h2><p>Respostas e eventos recentes em uma leitura compacta, com acesso direto às questões.</p></div></div>
               <div id="recentActivity" class="panel-body"></div>
             </article>
           </div>
@@ -202,9 +210,9 @@
         <section class="page" data-page="visualanalytics" aria-labelledby="visualAnalyticsTitle">
           <div class="page-header">
             <div>
-              <p class="eyebrow">Learning analytics avançado</p>
-              <h1 id="visualAnalyticsTitle">Painel visual</h1>
-              <p>Dashboard visual com comparativos, evolução temporal, proporções, insights rápidos e detalhamento das matérias e aulas.</p>
+              <p class="eyebrow">Desempenho e memória</p>
+              <h1 id="visualAnalyticsTitle">Analytics de estudo</h1>
+              <p>Entenda sua evolução, compare matérias e transforme os sinais do modelo em decisões práticas de estudo.</p>
             </div>
             <div class="page-actions">
               <button class="button button--secondary" id="rebuildLearnerModel" type="button">Reconstruir modelo do aluno</button>
@@ -212,7 +220,7 @@
             </div>
           </div>
           <article class="panel" aria-labelledby="visualAnalyticsPanelTitle">
-            <div class="panel-header"><div><h2 id="visualAnalyticsPanelTitle">Painel de desempenho visual</h2><p>Clique nos cards, gráficos, tabelas e linhas para ver explicações e mais detalhes por matéria/aula.</p></div></div>
+            <div class="panel-header"><div><p class="eyebrow">Visão analítica</p><h2 id="visualAnalyticsPanelTitle">Seu aprendizado em números</h2><p>Clique em cards, gráficos e matérias para aprofundar o diagnóstico sem perder a próxima ação de vista.</p></div></div>
             <div id="visualAnalyticsPanel" class="panel-body"></div>
           </article>
         </section>
@@ -423,6 +431,16 @@
                     <span>Sua dúvida ou pedido específico</span>
                     <textarea id="tutorUserPrompt" rows="3" placeholder="Ex.: por que minha alternativa está errada? Qual regra e qual exceção devo memorizar?"></textarea>
                   </label>
+                  <div class="tutor-quick-prompts" aria-label="Pedidos rápidos para o Tutor">
+                    <span>Pedidos rápidos</span>
+                    <div>
+                      <button type="button" data-tutor-quick-prompt="Explique esta questão de forma ultra-fácil, sem perder a regra jurídica ou técnica importante.">Explique ultra-fácil</button>
+                      <button type="button" data-tutor-quick-prompt="Explique por que a minha resposta está errada e qual raciocínio eu deveria ter usado.">Por que eu errei?</button>
+                      <button type="button" data-tutor-quick-prompt="Mostre a principal pegadinha de banca desta questão e como reconhecê-la em uma prova.">Pegadinha da banca</button>
+                      <button type="button" data-tutor-quick-prompt="Resuma a regra, a exceção e o ponto que eu preciso memorizar para não errar novamente.">Regra + exceção</button>
+                      <button type="button" data-tutor-quick-prompt="Transforme este erro em uma revisão curta de recuperação ativa, com uma pergunta de checagem no final.">Criar revisão</button>
+                    </div>
+                  </div>
                   <div class="tutor-provider-box">
                     <label class="tutor-online-toggle"><input id="tutorOnlineAi" type="checkbox"> <span><strong>Complementar com IA externa</strong><small id="tutorProviderHint">Usa o provedor escolhido em Configurações. Se falhar, mantém o RAG local.</small></span></label>
                     <div class="tutor-provider-status"><span>Provedor ativo</span><strong id="tutorActiveProvider">QuestFlow local</strong><button class="button button--ghost button--small" id="openAiSettings" type="button">Configurar IAs</button></div>
@@ -448,9 +466,9 @@
         <section class="page page--recommend" data-page="recommend" aria-labelledby="recommendTitle">
           <div class="page-header">
             <div>
-              <p class="eyebrow">Etapa 4 · decisão pedagógica multiobjetivo</p>
-              <h1 id="recommendTitle">Recomendador e simulados adaptativos</h1>
-              <p>Prioriza o próximo melhor esforço combinando FSRS, domínio KT, informação IRT, cobertura, incidência observada da banca, prova-alvo e diversidade.</p>
+              <p class="eyebrow">Próxima melhor ação</p>
+              <h1 id="recommendTitle">O que estudar agora</h1>
+              <p>O QuestFlow transforma memória, domínio, cobertura e contexto da prova em uma ordem prática de estudo — com os detalhes avançados preservados quando você quiser aprofundar.</p>
             </div>
             <div class="page-actions">
               <button class="button button--secondary" id="refreshRecommendations" type="button">Atualizar recomendações</button>
@@ -461,14 +479,14 @@
 
           <div class="stage4-grid">
             <article class="panel stage4-recommendations-panel">
-              <div class="panel-header"><div><h2>Próximas melhores ações</h2><p>O FSRS define a classe de urgência; o score multiobjetivo ordena e explica o que fazer dentro dela.</p></div>
+              <div class="panel-header"><div><p class="eyebrow">Plano priorizado</p><h2>Próximas melhores ações</h2><p>Revisões urgentes vêm primeiro; depois o QuestFlow ordena o restante pelo ganho esperado de aprendizagem e explica os principais motivos.</p></div>
                 <label class="select-field stage4-mode-filter"><span class="visually-hidden">Perfil do recomendador</span><select id="recommendationMode"><option value="equilibrado">Equilibrado</option><option value="diagnostico">Diagnóstico</option><option value="revisao">Revisão</option><option value="edital">Cobertura do edital</option></select></label>
               </div>
               <div class="panel-body" id="recommendationList"><div class="skeleton" style="height:12rem"></div></div>
             </article>
 
             <article class="panel stage4-simulation-setup">
-              <div class="panel-header"><div><h2>Novo simulado adaptativo</h2><p>A próxima questão é escolhida somente depois da resposta anterior atualizar FSRS + KT + IRT.</p></div></div>
+              <div class="panel-header"><div><p class="eyebrow">Treino adaptativo</p><h2>Novo simulado</h2><p>Cada resposta atualiza o seu estado de aprendizagem antes de o QuestFlow escolher a próxima questão.</p></div></div>
               <div class="panel-body stage4-setup-form">
                 <label><span>Objetivo</span><select id="simulationMode"><option value="equilibrado">Equilibrado</option><option value="diagnostico">Diagnóstico do nível</option><option value="revisao">Revisão e retenção</option><option value="edital">Cobertura do edital</option></select></label>
                 <label><span>Quantidade</span><input id="simulationCount" type="number" min="5" max="100" value="10"></label>
@@ -483,7 +501,7 @@
             <article class="panel panel--wide stage4-simulation-workspace">
               <div class="panel-header"><div><h2>Simulado em execução</h2><p id="simulationStatusText">Nenhuma sessão ativa.</p></div><button class="button button--danger-ghost button--compact" id="abandonAdaptiveSimulation" type="button" hidden>Encerrar</button></div>
               <div class="panel-body" id="simulationWorkspace">
-                <div class="empty-state"><h3>Pronto para começar</h3><p>Configure o objetivo do simulado. O motor preservará a precedência FSRS e diversificará matéria, aula, assunto e banca.</p></div>
+                <div class="empty-state"><h3>Pronto para começar</h3><p>Configure o objetivo do simulado. O QuestFlow respeita a urgência das revisões e diversifica matéria, aula, assunto e banca.</p></div>
               </div>
             </article>
 

@@ -22,7 +22,7 @@ export default function RootLayout() {
     <SafeAreaProvider>
       <View style={{ flex: 1, backgroundColor: palette.bg }}>
         <QuestFlowProvider>
-          <StatusBar barStyle="light-content" backgroundColor={palette.bg} translucent={false} />
+          <StatusBar barStyle="dark-content" backgroundColor={palette.bg} translucent={false} />
           <Stack screenOptions={{ headerStyle: { backgroundColor: palette.bg }, headerTintColor: palette.text, headerShadowVisible: false, contentStyle: { backgroundColor: palette.bg }, animation: 'fade' }}>
             <Stack.Screen name="index" options={{ headerShown: false }} />
             <Stack.Screen name="pair" options={{ title: 'Conectar ao QuestFlow' }} />

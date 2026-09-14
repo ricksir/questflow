@@ -148,7 +148,7 @@ export default function ProgressScreen() {
             <>
               <Card style={styles.chartCard}>
                 <View style={styles.chartHeading}><Text style={styles.chartTitle}>Resultado por resposta</Text><Pill text={`${analytics.sample_size} respostas`} tone="info" /></View>
-                <Muted>Pontos ciano são acertos, pontos laranja são erros e a linha mostra o percentual acumulado.</Muted>
+                <Muted>Pontos verde-água indicam resultados mais altos, dourados os mais baixos, e a linha mostra o percentual acumulado.</Muted>
                 <TrendLineChart points={analytics.timeline} />
               </Card>
               <ProjectionInterval analytics={analytics} />
@@ -206,7 +206,14 @@ export default function ProgressScreen() {
             const recent = item.insight?.recent_accuracy ?? item.performance.accuracy ?? 0;
             const tones = ['primary', 'accent', 'violet', 'warning'] as const;
             return (
-              <Pressable key={item.subject_id} onPress={() => setExpanded((current) => ({ ...current, [item.subject_id]: !open }))}>
+              <Pressable
+                key={item.subject_id}
+                accessibilityRole="button"
+                accessibilityState={{ expanded: open }}
+                accessibilityLabel={`${item.label}. Prioridade ${item.priority.level === 'high' ? 'alta' : item.priority.level === 'medium' ? 'média' : 'baixa'}. Acerto recente ${pct(recent)}.`}
+                accessibilityHint={open ? 'Toque para recolher os motivos desta prioridade.' : 'Toque para ver os motivos desta prioridade e os assuntos mais fracos.'}
+                onPress={() => setExpanded((current) => ({ ...current, [item.subject_id]: !open }))}
+              >
                 <Card style={{ gap: 11 }}>
                   <View style={styles.subjectHeading}>
                     <View style={styles.rankBadge}><Text style={styles.rankBadgeText}>{idx + 1}</Text></View>
@@ -291,8 +298,8 @@ const styles = StyleSheet.create({
   sectionGap: { gap: 10 },
   priorityHeading: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'flex-end', justifyContent: 'space-between', gap: 10 },
   subjectHeading: { flexDirection: 'row', alignItems: 'center', gap: 10 },
-  rankBadge: { width: 28, height: 28, borderRadius: 10, alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255,122,24,0.14)', borderWidth: 1, borderColor: 'rgba(255,122,24,0.32)' },
-  rankBadgeText: { color: palette.primary, fontSize: 12, fontWeight: '900' },
+  rankBadge: { width: 28, height: 28, borderRadius: 10, alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(243,181,74,0.18)', borderWidth: 1, borderColor: 'rgba(220,151,46,0.28)' },
+  rankBadgeText: { color: palette.primaryDeep, fontSize: 12, fontWeight: '900' },
   subject: { color: palette.text, fontSize: 16, fontWeight: '800', flex: 1 },
   accuracy: { color: palette.text, fontWeight: '900' },
   trend: { color: palette.accent2, fontSize: 13, fontWeight: '800' },

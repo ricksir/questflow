@@ -987,10 +987,10 @@ function renderDashboardData(data, { cached = false } = {}) {
   const activity = data.activity_summary || {};
   const avgActive = activity.avg_active_seconds == null ? '—' : `${Number(activity.avg_active_seconds).toFixed(1)} s`;
   const metrics = [
-    { label: 'Respostas registradas', value: formatNumber(activity.attempts ?? s.attempts ?? 0), detail: 'Evidências que já alimentaram o modelo', icon: '↗', tone: 'blue', progress: Math.min(100, Number(activity.attempts ?? s.attempts ?? 0) / 5) },
+    { label: 'Questões respondidas', value: formatNumber(activity.attempts ?? s.attempts ?? 0), detail: 'Evidências reais que já alimentaram seu modelo', icon: '↗', tone: 'blue', progress: Math.min(100, Number(activity.attempts ?? s.attempts ?? 0) / 5) },
     { label: 'Acerto geral', value: activity.attempts ? `${Number(activity.accuracy || accuracy || 0).toFixed(1)}%` : '—', detail: `${formatNumber(activity.correct ?? s.correct ?? 0)} acertos · ${formatNumber(activity.wrong ?? s.wrong ?? 0)} erros`, icon: '✓', tone: 'green', progress: Number(activity.accuracy || accuracy || 0) },
     { label: 'Tempo médio ativo', value: avgActive, detail: `${formatNumber(activity.speed_samples||0)} amostras confiáveis; ociosidade excluída`, icon: '◷', tone: 'cyan', progress: Math.min(100, Number(activity.speed_samples || 0) * 4) },
-    { label: 'Revisões prioritárias', value: formatNumber(adaptive.overdue ?? adaptive.reviews_due ?? analytics.dueTotal ?? 0), detail: 'Memória FSRS no ponto certo de recuperação', icon: '⟳', tone: 'orange', progress: Math.min(100, Number(adaptive.overdue ?? adaptive.reviews_due ?? analytics.dueTotal ?? 0) * 4) },
+    { label: 'Revisões para priorizar', value: formatNumber(adaptive.overdue ?? adaptive.reviews_due ?? analytics.dueTotal ?? 0), detail: 'Memória FSRS no ponto certo de recuperação', icon: '⟳', tone: 'orange', progress: Math.min(100, Number(adaptive.overdue ?? adaptive.reviews_due ?? analytics.dueTotal ?? 0) * 4) },
   ];
   $('#metricGrid').innerHTML = metrics.map((item) => `<article class="metric-card metric-card--explained metric-card--${item.tone}">
     <div class="metric-card__top"><span>${escapeHtml(item.label)}</span><i aria-hidden="true">${escapeHtml(item.icon)}</i></div>
@@ -999,6 +999,7 @@ function renderDashboardData(data, { cached = false } = {}) {
     <small>${escapeHtml(item.detail)}</small>
   </article>`).join('');
   renderLearningPulsePanel(data);
+  renderQuestAiInsightPanel(data);
   renderStudyCommandPanel(data);
   loadAdaptiveDecisionPanel().catch(()=>undefined);
   renderAdaptivePanel(data);
@@ -1053,7 +1054,7 @@ function renderLearningPulsePanel(data) {
       <h3>${top ? `Reforce ${escapeHtml(textOrMissing(top.subject || top.materia, 'a matéria prioritária'))}` : 'Inicie uma sessão diagnóstica'}</h3>
       <p>${top ? escapeHtml((top.priority_reasons || [])[0] || 'É a maior prioridade calculada a partir de memória, desempenho e cobertura.') : 'O QuestFlow precisa de uma amostra curta para personalizar a rotação.'}</p>
       <div class="learning-session-plan"><strong>${sessionCount}</strong><span>questões · prática intercalada · feedback imediato</span></div>
-      <button class="button button--primary" type="button" data-pulse-action>Ver plano e começar</button>
+      <button class="button button--primary" type="button" data-pulse-action>Abrir sessão recomendada</button>
     </section>
     <section class="learning-pulse-chart">
       <div class="learning-pulse-section-head"><div><span>Evolução recente</span><strong>${analyticsPct(recent)}</strong></div><small>${context.aggregateTrend.length >= 2 ? 'tendência por janelas de estudo' : 'coletando novas janelas'}</small></div>
@@ -1066,9 +1067,71 @@ function renderLearningPulsePanel(data) {
     </section>
     <section class="learning-pulse-focus"><div class="learning-pulse-section-head"><div><span>Prioridade por matéria</span><strong>${formatNumber(focusSubjects.length)} ${focusSubjects.length === 1 ? 'matéria em foco' : 'matérias em foco'}</strong></div><small>clique para abrir o diagnóstico</small></div>${focusRows ? `<div class="learning-focus-grid">${focusRows}</div>` : '<div class="learning-pulse-empty">Responda algumas questões para formar o primeiro mapa de prioridades.</div>'}${focusMore}</section>
   </div>`;
-  panel.querySelector('[data-pulse-action]')?.addEventListener('click', () => navigate('visualanalytics'));
+  panel.querySelector('[data-pulse-action]')?.addEventListener('click', () => navigate('recommend'));
   panel.querySelector('[data-pulse-all]')?.addEventListener('click', () => openFocusSubjectsModal(context));
   panel.querySelectorAll('[data-pulse-subject-key]').forEach((row) => row.addEventListener('click', () => openSubjectAnalyticsModal(context, row.dataset.pulseSubjectKey)));
+}
+
+function renderQuestAiInsightPanel(data) {
+  const panel = $('#questAiInsightPanel');
+  if (!panel) return;
+  const context = analyticsBuildContext(data);
+  const activity = data.activity_summary || {};
+  const candidates = context.prioritized.filter((item) => item.studied || item.has_answers);
+  const top = candidates[0] || context.prioritized[0] || null;
+  const topName = top ? textOrMissing(top.subject || top.materia, 'matéria prioritária') : '';
+  const attempts = numberOrZero(activity.attempts);
+  const due = numberOrZero(context.dueTotal);
+  const recent = context.recentWeighted;
+  const retention = context.retentionWeighted;
+  const coverage = context.studiedCoverage;
+
+  let headline = 'Forme a primeira evidência para personalizar o seu estudo';
+  let explanation = 'O QuestFlow ainda precisa de respostas suficientes para comparar memória, desempenho e cobertura com segurança.';
+  let action = 'Iniciar sessão diagnóstica';
+
+  if (attempts && top) {
+    const reason = (Array.isArray(top.priority_reasons) ? top.priority_reasons[0] : '') || 'é a prioridade mais alta calculada neste momento';
+    if (due > 0) {
+      headline = 'Recupere ' + topName + ' antes de avançar';
+      explanation = formatNumber(due) + ' revisão(ões) estão no ponto de recuperação e ' + reason + '.';
+      action = 'Começar revisão recomendada';
+    } else if (recent != null && Number(recent) < 65) {
+      headline = 'Consolide ' + topName + ' antes de aumentar o ritmo';
+      explanation = 'O desempenho recente consolidado está em ' + analyticsPct(recent) + ' e ' + reason + '.';
+      action = 'Abrir sessão de consolidação';
+    } else if (coverage != null && Number(coverage) < 60) {
+      headline = 'Amplie a cobertura sem perder ' + topName + ' de vista';
+      explanation = 'A cobertura estudada está em ' + analyticsPct(coverage) + '. O melhor próximo passo é avançar o escopo mantendo a matéria prioritária na rotação.';
+      action = 'Continuar plano adaptativo';
+    } else {
+      headline = 'Mantenha ' + topName + ' na rotação inteligente';
+      explanation = 'Seu histórico já permite uma recomendação confiável. Continue o ciclo de questões e revisões para preservar retenção e estabilidade.';
+      action = 'Continuar estudo';
+    }
+  }
+
+  panel.innerHTML = '<div class="quest-ai-insight-grid">'
+    + '<section class="quest-ai-message">'
+    + '<div class="quest-ai-avatar" aria-hidden="true">Q</div>'
+    + '<div class="quest-ai-copy">'
+    + '<span>Síntese do Learning Engine</span>'
+    + '<h3>' + escapeHtml(headline) + '</h3>'
+    + '<p>' + escapeHtml(explanation) + '</p>'
+    + '<div class="quest-ai-actions">'
+    + '<button class="button button--primary" type="button" data-quest-ai-study>' + escapeHtml(action) + '</button>'
+    + '<button class="button button--secondary" type="button" data-quest-ai-tutor>Perguntar ao Tutor</button>'
+    + '<button class="button button--ghost" type="button" data-quest-ai-analytics>Ver diagnóstico</button>'
+    + '</div></div></section>'
+    + '<section class="quest-ai-signals" aria-label="Sinais usados no insight">'
+    + '<div><span>Desempenho recente</span><strong>' + analyticsPct(recent) + '</strong><small>' + (attempts ? formatNumber(attempts) + ' resposta(s) no histórico' : 'aguardando respostas') + '</small></div>'
+    + '<div><span>Retenção estimada</span><strong>' + analyticsPct(retention) + '</strong><small>' + (due ? formatNumber(due) + ' revisão(ões) vencidas' : 'memória sem pendência crítica') + '</small></div>'
+    + '<div><span>Cobertura estudada</span><strong>' + analyticsPct(coverage) + '</strong><small>' + (top ? 'foco atual: ' + escapeHtml(topName) : 'aguardando escopo estudado') + '</small></div>'
+    + '</section></div>';
+
+  panel.querySelector('[data-quest-ai-study]')?.addEventListener('click', () => navigate('recommend'));
+  panel.querySelector('[data-quest-ai-tutor]')?.addEventListener('click', () => navigate('tutor'));
+  panel.querySelector('[data-quest-ai-analytics]')?.addEventListener('click', () => navigate('visualanalytics'));
 }
 
 function renderStudyCommandPanel(data) {
@@ -1096,6 +1159,7 @@ async function loadDashboard({ force = false } = {}) {
   } else {
     renderSkeletonCards($('#metricGrid'));
     if ($('#learningPulsePanel')) $('#learningPulsePanel').innerHTML = '<div class="skeleton" style="height:15rem"></div>';
+    if ($('#questAiInsightPanel')) $('#questAiInsightPanel').innerHTML = '<div class="skeleton" style="height:9rem"></div>';
     $('#adaptivePanel').innerHTML = '<div class="skeleton" style="height:7rem"></div>';
     if ($('#visualAnalyticsPanel')) $('#visualAnalyticsPanel').innerHTML = '<div class="skeleton" style="height:18rem"></div>';
     $('#flowHealthPanel').innerHTML = '<div class="skeleton" style="height:7rem"></div>';
@@ -1122,6 +1186,7 @@ async function loadDashboard({ force = false } = {}) {
     setSystemStatus('Painel indisponível; interface continua ativa', 'warning');
     $('#metricGrid').innerHTML = emptyStateHtml({ title: 'O painel demorou mais que o esperado', text: error.message, button: '<button class="button button--secondary" id="retryDashboardInline">Tentar novamente</button>' });
     if ($('#learningPulsePanel')) $('#learningPulsePanel').innerHTML = emptyStateHtml({ text: 'O pulso de aprendizagem será recalculado na próxima tentativa.' });
+    if ($('#questAiInsightPanel')) $('#questAiInsightPanel').innerHTML = emptyStateHtml({ text: 'O insight contextual será reconstruído assim que os dados do painel voltarem a carregar.' });
     $('#retryDashboardInline')?.addEventListener('click', loadDashboard, { once: true });
     $('#adaptivePanel').innerHTML = emptyStateHtml({ text: 'Os dados adaptativos serão carregados na próxima tentativa.' });
     if ($('#visualAnalyticsPanel')) $('#visualAnalyticsPanel').innerHTML = emptyStateHtml({ text: 'O painel visual será carregado na próxima tentativa.' });
@@ -1503,6 +1568,7 @@ function renderTutorWorkspace(workspace = {}) {
   const refreshDiagnosis = $('#refreshTutorDiagnosis');
   if (generate) { generate.disabled = !selected; generate.title = selected ? 'Gerar orientação com o contexto atual' : 'Selecione uma questão acima para habilitar'; }
   if (refreshDiagnosis) { refreshDiagnosis.disabled = !selected; refreshDiagnosis.title = selected ? 'Recalcular a hipótese diagnóstica' : 'Selecione uma questão acima para habilitar'; }
+  $('[data-tutor-quick-prompt]').forEach((button) => { button.disabled = !selected; });
   const meta = $('#tutorSelectedMeta');
   const questionTarget = $('#tutorSelectedQuestion');
   const diagnosisTarget = $('#tutorDiagnosis');
@@ -1545,10 +1611,20 @@ function stage4Pct(value, digits = 0) {
   return Number.isFinite(number) ? `${(number * 100).toFixed(digits)}%` : '—';
 }
 
+function stage4UrgencyLabel(bucket) {
+  const value = Number(bucket);
+  if (value === 0) return 'Revisão marcada';
+  if (value === 1) return 'Recuperar agora';
+  if (value === 2) return 'Revisar agora';
+  if (value === 3) return 'Conteúdo novo';
+  if (value === 4) return 'Antecipar revisão';
+  return 'Prioridade calculada';
+}
+
 function stage4ComponentLabel(key) {
   const labels = {
-    mastery_gap: 'Lacuna KT', forgetting_risk: 'Risco FSRS', coverage_gap: 'Cobertura',
-    board_incidence: 'Banca', irt_information: 'Informação IRT', exam_urgency: 'Urgência',
+    mastery_gap: 'Domínio', forgetting_risk: 'Memória', coverage_gap: 'Cobertura',
+    board_incidence: 'Banca', irt_information: 'Valor diagnóstico', exam_urgency: 'Urgência',
     uncertainty: 'Incerteza', recency: 'Recência',
   };
   return labels[key] || String(key || '').replaceAll('_', ' ');
@@ -1566,8 +1642,8 @@ function renderRecommendationDashboard(data = {}) {
     const interval = overall.low == null || overall.high == null ? 'Sem intervalo ainda' : `${stage4Pct(overall.low)}–${stage4Pct(overall.high)}`;
     metrics.innerHTML = [
       ['Projeção de acerto', estimate, interval],
-      ['Ações priorizadas', formatNumber(recommendations.length), `${urgent} na faixa FSRS urgente`],
-      ['Matérias modeladas', formatNumber(projections.length), 'KT + IRT + histórico'],
+      ['Ações priorizadas', formatNumber(recommendations.length), `${urgent} pedem revisão primeiro`],
+      ['Matérias modeladas', formatNumber(projections.length), 'domínio + histórico real'],
       ['Bancas observadas', formatNumber(boards.length), data.active_simulation ? 'simulado em andamento' : 'distribuição do banco local'],
     ].map(([label, value, detail]) => `<article class="metric-card"><span>${escapeHtml(label)}</span><strong>${escapeHtml(value)}</strong><small>${escapeHtml(detail)}</small></article>`).join('');
   }
@@ -1580,7 +1656,7 @@ function renderRecommendationDashboard(data = {}) {
       return `<article class="stage4-recommendation-card" data-recommend-uid="${escapeHtml(item.uid)}">
         <div class="stage4-recommendation-rank"><span>${index + 1}</span><strong>${Number(item.score || 0).toFixed(0)}</strong><small>/100</small></div>
         <div class="stage4-recommendation-main">
-          <div class="stage4-recommendation-head"><div><strong>${escapeHtml(textOrMissing(item.code, 'Questão'))}</strong><span>${escapeHtml(textOrMissing(item.subject, 'Matéria não informada'))} · ${escapeHtml(textOrMissing(item.topic, 'Sem assunto'))}</span></div><span class="status-pill">FSRS ${escapeHtml(String(item.bucket ?? '—'))}</span></div>
+          <div class="stage4-recommendation-head"><div><strong>${escapeHtml(textOrMissing(item.code, 'Questão'))}</strong><span>${escapeHtml(textOrMissing(item.subject, 'Matéria não informada'))} · ${escapeHtml(textOrMissing(item.topic, 'Sem assunto'))}</span></div><span class="status-pill" title="Classe interna de urgência ${escapeHtml(String(item.bucket ?? '—'))}">${escapeHtml(stage4UrgencyLabel(item.bucket))}</span></div>
           <p>${escapeHtml(String(item.statement || '').slice(0, 210))}${String(item.statement || '').length > 210 ? '…' : ''}</p>
           ${reasons.length ? `<div class="stage4-reasons">${reasons.map((reason) => `<span>${escapeHtml(reason)}</span>`).join('')}</div>` : ''}
           <div class="stage4-components">${components.map(([key, value]) => `<div title="${escapeHtml(stage4ComponentLabel(key))}: ${Number(value || 0).toFixed(2)}"><span>${escapeHtml(stage4ComponentLabel(key))}</span><div><i style="width:${Math.max(0, Math.min(100, Number(value || 0) * 4))}%"></i></div></div>`).join('')}</div>
@@ -3669,6 +3745,12 @@ function renderVisualAnalyticsPanel(data) {
   const topName=top?textOrMissing(top.subject||top.materia,'Matéria prioritária'):'Sem prioridade definida';
   const actionReason=top&&Array.isArray(top.priority_reasons)&&top.priority_reasons.length?top.priority_reasons[0]:'Ainda faltam respostas suficientes para uma recomendação forte.';
   const accuracyText=activity.accuracy==null?'Sem amostra':`${Number(activity.accuracy).toFixed(1)}%`;
+  const memoryMax=Math.max(1, context.dueTotal, context.due7Total, context.due30Total);
+  const memoryHorizon=`<div class="analytics-memory-horizon">
+    <div><span>Agora</span><div><i style="width:${Math.max(2,(context.dueTotal/memoryMax)*100)}%"></i></div><strong>${formatNumber(context.dueTotal)}</strong></div>
+    <div><span>Até 7 dias</span><div><i style="width:${Math.max(2,(context.due7Total/memoryMax)*100)}%"></i></div><strong>${formatNumber(context.due7Total)}</strong></div>
+    <div><span>Até 30 dias</span><div><i style="width:${Math.max(2,(context.due30Total/memoryMax)*100)}%"></i></div><strong>${formatNumber(context.due30Total)}</strong></div>
+  </div>`;
   const visualGuide=`<section class="analytics-decision-guide"><div class="analytics-decision-guide__main"><span class="eyebrow">Decisão de estudo</span><h3>${escapeHtml(topName)}</h3><p><strong>Por que aparece:</strong> ${escapeHtml(actionReason)}</p><p><strong>O que fazer:</strong> ${top?`responda/revise primeiro esta matéria e depois volte ao painel para verificar se a prioridade caiu.`:'responda algumas questões no aplicativo para formar evidência.'}</p></div><div class="analytics-decision-guide__facts"><div><span>Seu acerto</span><strong>${escapeHtml(accuracyText)}</strong><small>${formatNumber(activity.correct||0)} certas · ${formatNumber(activity.wrong||0)} erradas</small></div><div><span>Tempo médio ativo</span><strong>${activity.avg_active_seconds==null?'—':`${Number(activity.avg_active_seconds).toFixed(1)} s`}</strong><small>só ${formatNumber(activity.speed_samples||0)} amostra(s) confiáveis</small></div><div><span>Origem das respostas</span><strong>${formatNumber(activity.mobile_attempts||0)} app</strong><small>${formatNumber(activity.telegram_attempts||0)} Telegram · histórico unificado</small></div></div></section>`;
   container.innerHTML = `
     ${visualGuide}
@@ -3679,12 +3761,13 @@ function renderVisualAnalyticsPanel(data) {
       <article class="analytics-hero-card is-clickable" data-analytics-info="leader"><span>Resumo rápido</span><strong>${context.strongest ? escapeHtml(textOrMissing(context.strongest.subject || context.strongest.materia, 'Sem líder')) : 'Sem líder'}</strong><small>${context.strongest ? `Melhor recente: ${analyticsPct(context.strongest.recent_accuracy)} · ${formatNumber(context.strongest.attempts)} resp.` : 'Sem respostas suficientes ainda'}</small></article>
     </div>
     <div class="analytics-dashboard-grid analytics-dashboard-grid--main">
-      <article class="analytics-card analytics-card--wide is-clickable" data-analytics-info="trend"><div class="analytics-card__head"><div><h3>Evolução temporal consolidada</h3><p>Média ponderada do desempenho recente por janelas temporais das matérias respondidas.</p></div></div>${analyticsLineChart(context.aggregateTrend, 'Evolução temporal consolidada do desempenho')}</article>
-      <article class="analytics-card is-clickable" data-analytics-info="composition"><div class="analytics-card__head"><div><h3>Proporção de matérias</h3><p>Estado geral das matérias dentro do escopo estudado.</p></div></div>${studiedDonut}</article>
-      <article class="analytics-card is-clickable" data-analytics-info="completion"><div class="analytics-card__head"><div><h3>Proporção de conclusão</h3><p>Questões únicas já praticadas em relação ao tamanho do banco por matéria.</p></div></div>${bankCoverageDonut}</article>
-      <article class="analytics-card analytics-card--wide is-clickable" data-analytics-info="compare"><div class="analytics-card__head"><div><h3>Comparativo por matéria</h3><p>Clique em uma linha para abrir os detalhes completos da matéria, aulas e assuntos.</p></div></div><div class="analytics-bar-legend"><span><i style="background:var(--chart-accent-1)"></i>Recente</span><span><i style="background:var(--chart-accent-2)"></i>Retenção</span><span><i style="background:var(--chart-accent-3)"></i>Cobertura</span></div><div class="analytics-bar-chart">${comparisonRows || '<div class="analytics-empty-chart">Sem matérias suficientes para comparação.</div>'}</div></article>
-      <article class="analytics-card analytics-card--wide is-clickable" data-analytics-info="summary"><div class="analytics-card__head"><div><h3>Resumo condensado</h3><p>Visão executiva para decidir rapidamente onde revisar e qual matéria está mais madura.</p></div></div><div class="analytics-summary-table-wrap"><table class="analytics-summary-table"><thead><tr><th>Matéria</th><th>Prioridade</th><th>Recente</th><th>Retenção</th><th>Cobertura</th><th>Última revisão</th></tr></thead><tbody>${summaryRows}</tbody></table></div></article>
-      <article class="analytics-card is-clickable" data-analytics-info="insights"><div class="analytics-card__head"><div><h3>Insights rápidos</h3><p>Clique para entender por que o painel destacou estes pontos.</p></div></div><div class="analytics-insights"><div><span>Matéria mais urgente</span><strong>${context.mostUrgent ? escapeHtml(textOrMissing(context.mostUrgent.subject || context.mostUrgent.materia, '—')) : '—'}</strong><small>${context.mostUrgent ? `${formatNumber(numberOrZero(context.mostUrgent.due_count))} vencidas agora` : 'Sem revisões vencidas'}</small></div><div><span>Melhor tendência</span><strong>${context.strongest ? escapeHtml(textOrMissing(context.strongest.subject || context.strongest.materia, '—')) : '—'}</strong><small>${context.strongest ? `${analyticsPct(context.strongest.recent_accuracy)} recente` : 'Sem amostra'}</small></div><div><span>Janela de atenção</span><strong>${escapeHtml(context.recentWeighted != null ? `${analyticsPct(context.recentWeighted)} recente` : 'Sem dados')}</strong><small>${formatNumber(context.studiedOnly.length)} matéria(s) já estudadas</small></div></div></article>
+      <article class="analytics-card analytics-card--wide is-clickable" data-analytics-info="trend"><div class="analytics-card__head"><div><span class="analytics-card__kicker">Evolução</span><h3>Desempenho ao longo do tempo</h3><p>Média ponderada do desempenho recente por janelas temporais das matérias respondidas.</p></div></div>${analyticsLineChart(context.aggregateTrend, 'Evolução temporal consolidada do desempenho')}</article>
+      <article class="analytics-card is-clickable analytics-card--insight" data-analytics-info="insights"><div class="analytics-card__head"><div><span class="analytics-card__kicker">Agora</span><h3>Onde agir primeiro</h3><p>Os três sinais mais úteis para decidir o próximo bloco de estudo.</p></div></div><div class="analytics-insights"><div><span>Matéria mais urgente</span><strong>${context.mostUrgent ? escapeHtml(textOrMissing(context.mostUrgent.subject || context.mostUrgent.materia, '—')) : '—'}</strong><small>${context.mostUrgent ? `${formatNumber(numberOrZero(context.mostUrgent.due_count))} vencidas agora` : 'Sem revisões vencidas'}</small></div><div><span>Melhor tendência</span><strong>${context.strongest ? escapeHtml(textOrMissing(context.strongest.subject || context.strongest.materia, '—')) : '—'}</strong><small>${context.strongest ? `${analyticsPct(context.strongest.recent_accuracy)} recente` : 'Sem amostra'}</small></div><div><span>Janela de atenção</span><strong>${escapeHtml(context.recentWeighted != null ? `${analyticsPct(context.recentWeighted)} recente` : 'Sem dados')}</strong><small>${formatNumber(context.studiedOnly.length)} matéria(s) já estudadas</small></div></div></article>
+      <article class="analytics-card analytics-card--wide is-clickable" data-analytics-info="compare"><div class="analytics-card__head"><div><span class="analytics-card__kicker">Comparação</span><h3>Matérias lado a lado</h3><p>Compare desempenho recente, retenção e cobertura; clique em uma linha para aprofundar.</p></div></div><div class="analytics-bar-legend"><span><i style="background:var(--chart-accent-1)"></i>Recente</span><span><i style="background:var(--chart-accent-2)"></i>Retenção</span><span><i style="background:var(--chart-accent-3)"></i>Cobertura</span></div><div class="analytics-bar-chart">${comparisonRows || '<div class="analytics-empty-chart">Sem matérias suficientes para comparação.</div>'}</div></article>
+      <article class="analytics-card is-clickable" data-analytics-info="composition"><div class="analytics-card__head"><div><span class="analytics-card__kicker">Escopo</span><h3>Estado das matérias</h3><p>Como as matérias se distribuem entre prática, estudo e espera.</p></div></div>${studiedDonut}</article>
+      <article class="analytics-card analytics-card--wide is-clickable" data-analytics-info="summary"><div class="analytics-card__head"><div><span class="analytics-card__kicker">Diagnóstico</span><h3>Resumo por matéria</h3><p>Prioridade, desempenho, memória e cobertura em uma leitura única.</p></div></div><div class="analytics-summary-table-wrap"><table class="analytics-summary-table"><thead><tr><th>Matéria</th><th>Prioridade</th><th>Recente</th><th>Retenção</th><th>Cobertura</th><th>Última revisão</th></tr></thead><tbody>${summaryRows}</tbody></table></div></article>
+      <article class="analytics-card is-clickable" data-analytics-info="completion"><div class="analytics-card__head"><div><span class="analytics-card__kicker">Cobertura</span><h3>Prática do banco</h3><p>Questões únicas já praticadas em relação ao banco disponível.</p></div></div>${bankCoverageDonut}</article>
+      <article class="analytics-card analytics-card--full is-clickable" data-analytics-info="reviews"><div class="analytics-card__head"><div><span class="analytics-card__kicker">Memória</span><h3>Horizonte de revisões</h3><p>Volume previsto pelo scheduler agora, até 7 dias e até 30 dias. As janelas são cumulativas.</p></div></div>${memoryHorizon}</article>
     </div>
     <details class="analytics-advanced-disclosure"><summary><div><strong>Análise avançada do modelo do aluno</strong><span>FSRS, Knowledge Tracing, IRT, incerteza e calibração. Abra somente quando quiser entender o diagnóstico técnico.</span></div><b>Ver detalhes</b></summary>${learnerModelPanelHtml(learnerModel)}</details>`;
   bindVisualAnalyticsInteractions(container, context);
@@ -7334,6 +7417,13 @@ function bindEvents() {
   $('#resumeAdaptiveSimulation')?.addEventListener('click', (event) => resumeAdaptiveSimulation(event.currentTarget.dataset.sessionId || ''));
   $('#abandonAdaptiveSimulation')?.addEventListener('click', abandonAdaptiveSimulation);
   $('#generateTutorAnswer')?.addEventListener('click', generateTutorAnswer);
+  $('[data-tutor-quick-prompt]').forEach((button) => button.addEventListener('click', () => {
+    const field = $('#tutorUserPrompt');
+    if (!field || button.disabled) return;
+    field.value = button.dataset.tutorQuickPrompt || '';
+    field.focus();
+    field.dispatchEvent(new Event('change', { bubbles: true }));
+  }));
   $('#refreshTutorDiagnosis')?.addEventListener('click', refreshTutorDiagnosis);
   $('#openAiSettings')?.addEventListener('click', () => navigate('settings'));
   $('#saveAiProviderSettings')?.addEventListener('click', saveAiProviderSettings);

@@ -108,6 +108,25 @@ function filterBatchForConfig(batch: MobileQuestion[], config: StudySessionConfi
   }).slice(0, config.count);
 }
 
+function selectionReasonLabel(reason: string | null | undefined): string {
+  const normalized = String(reason || '').trim().toLocaleLowerCase('pt-BR');
+  if (!normalized) return 'Selecionada pelo QuestFlow com base no seu histórico de estudo.';
+  if (normalized.includes('correção/revisão marcada')) return 'Esta questão foi marcada para revisão antes de voltar ao fluxo normal.';
+  if (normalized.includes('recuperação pós-erro')) return 'Você errou esta questão antes e ela chegou a um bom momento para tentar novamente.';
+  if (normalized.includes('revisão fsrs vencida')) return 'Este conteúdo chegou ao momento de revisão para fortalecer a memória.';
+  if (normalized.includes('questão nova')) return 'Esta é uma questão nova de um conteúdo que você já estudou.';
+  if (normalized.includes('revisão antecipada por risco')) return 'O QuestFlow antecipou esta revisão porque a lembrança pode enfraquecer em breve.';
+  if (normalized.includes('prioridade adaptativa')) return 'Selecionada pelo QuestFlow com base no seu histórico de estudo.';
+  return 'Selecionada pelo QuestFlow porque este item ajuda a avançar a sua sessão atual.';
+}
+
+function transferReasonLabel(reason: string | null | undefined): string {
+  const normalized = String(reason || '').trim().toLocaleLowerCase('pt-BR');
+  if (normalized.includes('misconception')) return 'A formulação também verifica um conceito ligado a um erro recente.';
+  if (normalized.includes('uncertain_knowledge')) return 'A formulação também verifica um conceito em que sua evidência ainda é incerta.';
+  return 'Esta questão também verifica o mesmo conceito em uma formulação diferente.';
+}
+
 function summaryCoach(stats: StudySessionStats): string {
   const accuracy = sessionAccuracy(stats);
   if (stats.answered === 0) return 'Sessão encerrada sem respostas contabilizadas. Você pode iniciar um novo bloco quando quiser.';
@@ -1247,6 +1266,22 @@ export default function QuestionsScreen() {
           </View>
         </HeroCard>
 
+        {current.selection?.reason ? (
+          <Card style={styles.selectionInsightCard}>
+            <View style={styles.selectionInsightTop}>
+              <View style={styles.selectionInsightIcon}><Text style={styles.selectionInsightIconText}>✦</Text></View>
+              <View style={styles.selectionInsightCopy}>
+                <Text style={styles.selectionInsightEyebrow}>POR QUE ESTA QUESTÃO?</Text>
+                <Text style={styles.selectionInsightTitle}>{selectionReasonLabel(current.selection.reason)}</Text>
+              </View>
+              <Pill text="QuestFlow explica" tone="info" />
+            </View>
+            {current.selection.topic_transfer ? (
+              <Muted>{transferReasonLabel(current.selection.transfer_reason)}</Muted>
+            ) : null}
+          </Card>
+        ) : null}
+
         {active.adaptive?.goal ? (
           <Card style={styles.goalCard}>
             <Text style={styles.goalTitle}>{active.adaptive.goal.headline}</Text>
@@ -1378,17 +1413,17 @@ const styles = StyleSheet.create({
   resumeCounter: { color: palette.text, fontSize: 27, fontWeight: '900' },
   modeGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 10 },
   modeCard: { width: '48%', minWidth: 150, gap: 8, padding: 14, borderRadius: 20, backgroundColor: palette.surface, borderWidth: 1, borderColor: palette.border },
-  modeCardSelected: { borderColor: palette.primary, backgroundColor: 'rgba(255,138,42,0.12)' },
+  modeCardSelected: { borderColor: palette.primary, backgroundColor: 'rgba(243,181,74,0.18)' },
   modeIcon: { color: palette.accent, fontSize: 24, fontWeight: '900' },
   modeTitle: { color: palette.text, fontSize: 17, fontWeight: '900' },
   subjectChips: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
   subjectChip: { borderRadius: 999, paddingHorizontal: 13, paddingVertical: 9, backgroundColor: palette.surface2, borderWidth: 1, borderColor: palette.border },
-  subjectChipSelected: { borderColor: palette.accent2, backgroundColor: 'rgba(37,199,217,0.12)' },
+  subjectChipSelected: { borderColor: palette.accent2, backgroundColor: 'rgba(33,184,154,0.12)' },
   subjectChipText: { color: palette.muted, fontSize: 13, fontWeight: '800' },
   subjectChipTextSelected: { color: palette.text },
   countRow: { flexDirection: 'row', gap: 8 },
   countChip: { flex: 1, alignItems: 'center', gap: 2, paddingVertical: 12, borderRadius: 16, backgroundColor: palette.surface2, borderWidth: 1, borderColor: palette.border },
-  countChipSelected: { borderColor: palette.primary, backgroundColor: 'rgba(255,138,42,0.18)' },
+  countChipSelected: { borderColor: palette.primary, backgroundColor: 'rgba(243,181,74,0.22)' },
   countValue: { color: palette.text, fontSize: 21, fontWeight: '900' },
   countValueSelected: { color: palette.primarySoft },
   countLabel: { color: palette.muted, fontSize: 10, fontWeight: '700' },
@@ -1407,24 +1442,31 @@ const styles = StyleSheet.create({
   summaryTimeCopy: { flex: 1, minWidth: 0, gap: 4 },
   summaryLabel: { color: palette.accent, fontSize: 11, fontWeight: '900', textTransform: 'uppercase', letterSpacing: 0.85, flexShrink: 1 },
   summaryTimeHint: { color: palette.muted, fontSize: 13, lineHeight: 19, flexShrink: 1 },
-  summaryTimeValueBox: { minHeight: 64, justifyContent: 'center', paddingHorizontal: 14, paddingVertical: 9, borderRadius: 16, backgroundColor: 'rgba(37,199,217,0.10)', borderWidth: 1, borderColor: 'rgba(37,199,217,0.24)' },
+  summaryTimeValueBox: { minHeight: 64, justifyContent: 'center', paddingHorizontal: 14, paddingVertical: 9, borderRadius: 16, backgroundColor: 'rgba(33,184,154,0.10)', borderWidth: 1, borderColor: 'rgba(33,184,154,0.22)' },
   summaryTime: { color: palette.text, fontSize: 31, lineHeight: 38, fontWeight: '900', letterSpacing: -0.6, flexShrink: 1 },
   summaryTimeFootnote: { fontSize: 12, lineHeight: 18 },
   sessionTopline: { flexDirection: 'row', alignItems: 'center', gap: 10, paddingHorizontal: 2 },
-  goalCard: { gap: 5, borderColor: 'rgba(255,138,42,0.24)' },
+  selectionInsightCard: { gap: 9, borderColor: 'rgba(85,169,214,0.24)', backgroundColor: '#F7FBFD' },
+  selectionInsightTop: { flexDirection: 'row', alignItems: 'center', gap: 10 },
+  selectionInsightIcon: { width: 34, height: 34, borderRadius: 12, alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(85,169,214,0.13)' },
+  selectionInsightIconText: { color: palette.violet, fontSize: 16, fontWeight: '900' },
+  selectionInsightCopy: { flex: 1, minWidth: 0, gap: 2 },
+  selectionInsightEyebrow: { color: palette.violet, fontSize: 9, fontWeight: '900', letterSpacing: 0.9 },
+  selectionInsightTitle: { color: palette.text, fontSize: 13, lineHeight: 18, fontWeight: '800' },
+  goalCard: { gap: 5, borderColor: 'rgba(220,151,46,0.24)' },
   goalTitle: { color: palette.text, fontSize: 14, fontWeight: '900', lineHeight: 20 },
   endSession: { color: palette.danger, fontSize: 13, fontWeight: '900' },
   subject: { color: palette.text, fontSize: 21, fontWeight: '900' },
-  timerCard: { backgroundColor: 'rgba(7,16,31,0.32)', borderRadius: 18, padding: 14, borderWidth: 1, borderColor: 'rgba(255,255,255,0.08)', flexDirection: 'row', gap: 10, alignItems: 'flex-start' },
+  timerCard: { backgroundColor: 'rgba(246,242,233,0.88)', borderRadius: 18, padding: 14, borderWidth: 1, borderColor: 'rgba(37,40,58,0.08)', flexDirection: 'row', gap: 10, alignItems: 'flex-start' },
   timerLabel: { color: palette.muted, fontSize: 12, fontWeight: '800', textTransform: 'uppercase', letterSpacing: 0.5 },
   timerValue: { color: palette.text, fontSize: 24, fontWeight: '900' },
   statement: { color: palette.text, fontSize: 17, lineHeight: 26, fontWeight: '600' },
   option: { flexDirection: 'row', gap: 12, borderWidth: 1, borderColor: palette.border, borderRadius: 18, padding: 14, backgroundColor: palette.surface2, alignItems: 'flex-start' },
-  optionSelected: { borderColor: palette.primary, borderWidth: 2, backgroundColor: 'rgba(255,138,42,0.12)' },
-  optionCorrect: { borderColor: palette.success, backgroundColor: 'rgba(66,217,138,0.14)' },
-  optionWrong: { borderColor: palette.danger, backgroundColor: 'rgba(255,107,125,0.14)' },
-  optionBadge: { width: 34, height: 34, borderRadius: 12, backgroundColor: 'rgba(255,138,42,0.11)', alignItems: 'center', justifyContent: 'center' },
-  optionBadgeSelected: { backgroundColor: 'rgba(255,138,42,0.23)' },
+  optionSelected: { borderColor: palette.primary, borderWidth: 2, backgroundColor: 'rgba(243,181,74,0.18)' },
+  optionCorrect: { borderColor: palette.success, backgroundColor: 'rgba(33,184,154,0.13)' },
+  optionWrong: { borderColor: palette.danger, backgroundColor: 'rgba(239,120,104,0.13)' },
+  optionBadge: { width: 34, height: 34, borderRadius: 12, backgroundColor: 'rgba(243,181,74,0.16)', alignItems: 'center', justifyContent: 'center' },
+  optionBadgeSelected: { backgroundColor: 'rgba(243,181,74,0.28)' },
   optionBadgeStruck: { backgroundColor: 'rgba(255,107,125,0.20)', borderWidth: 1, borderColor: 'rgba(255,107,125,0.75)' },
   optionKey: { color: palette.primarySoft, fontWeight: '900' },
   optionKeyStruck: { color: palette.danger },

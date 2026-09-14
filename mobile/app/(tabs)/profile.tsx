@@ -146,7 +146,6 @@ export default function ProfileScreen() {
           </View>
           <LabelValue label="Aplicativo" value={`QuestFlow Mobile ${MOBILE_APP_VERSION}`} />
           <LabelValue label="Build instalado" value={Application.nativeBuildVersion || 'preview'} />
-          <LabelValue label="Contrato de dados" value={bootstrap?.analytics?.contract || bootstrap?.contract || 'questflow.mobile.v1'} />
         </Card>
 
 

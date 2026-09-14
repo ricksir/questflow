@@ -2,9 +2,7 @@ import { router, useFocusEffect } from 'expo-router';
 import { useCallback } from 'react';
 import { RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Button, Card, HeroCard, Metric, MicroBars, Muted, Pill, ProgressBar, Screen, ScreenHeader, SectionTitle, StatePanel, StatRing, palette } from '../../src/components/ui';
-import { formatDuration } from '../../src/lib/format';
 import { useQuestFlow } from '../../src/context/QuestFlowContext';
-import { ReviewQueuePreview, TrendLineChart } from '../../src/components/analytics';
 
 function reasonLabel(reason: string) {
   return ({
@@ -20,18 +18,12 @@ function pct(value: number | null | undefined) {
   return value == null ? '—' : `${Math.round(value * 100)}%`;
 }
 
-function timeLabel(value: number | null) {
-  if (value == null) return 'tempo fora da métrica';
-  return formatDuration(value, { suffix: 'ativos' });
-}
-
 export default function TodayScreen() {
   const { bootstrap, refresh, syncing, syncNow, pendingEvents, error } = useQuestFlow();
   useFocusEffect(useCallback(() => { refresh().catch(() => undefined); }, [refresh]));
 
   const today = bootstrap?.today;
   const progress = bootstrap?.progress;
-  const analytics = bootstrap?.analytics;
   const top = today?.top_priority;
   const coach = today?.coach;
   const projectName = bootstrap?.active_project?.name || 'Projeto de prova ativo';
@@ -65,7 +57,7 @@ export default function TodayScreen() {
               <View style={styles.heroMeta}><Text style={styles.heroMetaValue}>{today?.today.reviews_due ?? 0}</Text><Text style={styles.heroMetaLabel}>revisões devidas</Text></View>
               <View style={styles.heroMeta}><Text style={styles.heroMetaValue}>{today?.today.not_studied_topics ?? 0}</Text><Text style={styles.heroMetaLabel}>a estudar</Text></View>
             </View>
-            <Button title={`Começar sessão de ${coach.question_count} questões`} onPress={() => router.push('/(tabs)/questions')} tone="success" />
+            <Button title={`Começar sessão de ${coach.question_count} questões`} onPress={() => router.push('/(tabs)/questions')} tone="primary" />
           </HeroCard>
         ) : null}
 
@@ -146,22 +138,9 @@ export default function TodayScreen() {
           <Metric label="Fila offline" value={pendingEvents} tone={pendingEvents ? 'warning' : 'success'} />
         </View>
 
-        {analytics ? (
-          <View style={styles.analyticsGrid}>
-            <Card style={styles.analyticsCard}>
-              <SectionTitle eyebrow="Percurso" title="Da primeira à última resposta" detail={`${analytics.sample_size} respostas reais • atualizado ${new Date(analytics.generated_at).toLocaleDateString('pt-BR')}`} />
-              <TrendLineChart points={analytics.timeline} />
-            </Card>
-            <Card style={styles.analyticsCard}>
-              <SectionTitle eyebrow="Memória" title="Revisões que pedem ação" detail="Barras mostram o volume vencido; não são uma nota de domínio." />
-              <ReviewQueuePreview analytics={analytics} />
-            </Card>
-          </View>
-        ) : null}
-
         <View style={styles.sectionGap}>
           <SectionTitle eyebrow="Foco" title="Onde concentrar esforço" detail="As matérias abaixo combinam desempenho recente, memória e lacunas de estudo." />
-          {(today?.focus || []).slice(0, 5).map((item) => (
+          {(today?.focus || []).slice(0, 3).map((item) => (
             <Card key={item.subject_id} style={styles.focusCard}>
               <View style={styles.rowBetween}>
                 <Text style={styles.subjectSmall}>{item.label}</Text>
@@ -179,21 +158,7 @@ export default function TodayScreen() {
           {bootstrap && !(today?.focus || []).length ? <StatePanel state="empty" title="Nenhum foco crítico agora" detail="Continue estudando; cada nova resposta atualiza imediatamente as prioridades." /> : null}
         </View>
 
-        {(today?.recent_activity || []).length ? (
-          <View style={styles.sectionGap}>
-            <SectionTitle eyebrow="Histórico" title="Últimas respostas" detail="Todas as respostas registradas fazem parte do mesmo histórico de aprendizagem." />
-            {today!.recent_activity.map((item) => (
-              <Card key={`${item.attempt_id}-${item.answered_at}`} style={styles.activityRow}>
-                <View style={{ flex: 1, gap: 3 }}>
-                  <Text style={styles.activityTitle}>{item.code} • {item.subject}</Text>
-                  <Muted>{timeLabel(item.active_response_seconds)}</Muted>
-                </View>
-                <Pill text={item.is_correct ? 'Acertou' : 'Errou'} tone={item.is_correct ? 'success' : 'danger'} />
-              </Card>
-            ))}
-          </View>
-        ) : null}
-
+        <Button title="Ver progresso completo" onPress={() => router.push('/(tabs)/progress')} tone="secondary" />
         <Button title={syncing ? 'Sincronizando…' : 'Sincronizar agora'} onPress={() => syncNow().catch(() => undefined)} disabled={syncing} tone="secondary" />
       </ScrollView>
     </Screen>
@@ -204,21 +169,21 @@ const styles = StyleSheet.create({
   content: { paddingVertical: 14, gap: 18, paddingBottom: 34 },
   rowBetween: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 10 },
   heroHeadline: { color: palette.text, fontSize: 27, fontWeight: '900', lineHeight: 32, letterSpacing: -0.6 },
-  heroBody: { color: palette.primarySoft, fontSize: 15, lineHeight: 22, fontWeight: '600' },
+  heroBody: { color: palette.primarySoft, fontSize: 15, lineHeight: 22, fontWeight: '700' },
   heroMetaRow: { flexDirection: 'row', gap: 8 },
-  heroMeta: { flex: 1, backgroundColor: 'rgba(7,16,31,0.32)', borderRadius: 16, padding: 11, borderWidth: 1, borderColor: 'rgba(255,255,255,0.08)' },
+  heroMeta: { flex: 1, backgroundColor: 'rgba(255,255,255,0.64)', borderRadius: 16, padding: 11, borderWidth: 1, borderColor: 'rgba(220,151,46,0.14)' },
   heroMetaValue: { color: palette.text, fontSize: 20, fontWeight: '900' },
   heroMetaLabel: { color: palette.primarySoft, fontSize: 10, marginTop: 2 },
-  routeCard: { gap: 14, borderColor: 'rgba(167,121,255,0.28)' },
+  routeCard: { gap: 14, borderColor: 'rgba(85,169,214,0.26)' },
   routeEyebrow: { color: palette.violet, fontSize: 10, fontWeight: '900', letterSpacing: 1.1 },
   routeTitle: { color: palette.text, fontSize: 18, fontWeight: '900' },
   routeSteps: { gap: 0 },
   routeStep: { flexDirection: 'row', alignItems: 'center', gap: 11, minHeight: 48 },
   routeConnector: { width: 2, height: 12, marginLeft: 17, backgroundColor: palette.white08 },
   routeIndex: { width: 36, height: 36, borderRadius: 12, alignItems: 'center', justifyContent: 'center', borderWidth: 1 },
-  routeIndexOrange: { backgroundColor: 'rgba(255,122,24,0.14)', borderColor: 'rgba(255,122,24,0.35)' },
-  routeIndexCyan: { backgroundColor: 'rgba(37,199,217,0.12)', borderColor: 'rgba(37,199,217,0.32)' },
-  routeIndexViolet: { backgroundColor: 'rgba(167,121,255,0.12)', borderColor: 'rgba(167,121,255,0.32)' },
+  routeIndexOrange: { backgroundColor: 'rgba(243,181,74,0.18)', borderColor: 'rgba(220,151,46,0.28)' },
+  routeIndexCyan: { backgroundColor: 'rgba(33,184,154,0.12)', borderColor: 'rgba(33,184,154,0.26)' },
+  routeIndexViolet: { backgroundColor: 'rgba(85,169,214,0.12)', borderColor: 'rgba(85,169,214,0.26)' },
   routeIndexText: { color: palette.text, fontSize: 13, fontWeight: '900' },
   routeCopy: { flex: 1, gap: 2 },
   routeLabel: { color: palette.text, fontSize: 14, fontWeight: '900' },
@@ -243,14 +208,10 @@ const styles = StyleSheet.create({
   subjectBarLabel: { color: palette.muted, fontSize: 12, fontWeight: '700', flex: 1 },
   subjectBarPct: { color: palette.text, fontSize: 12, fontWeight: '900' },
   metrics: { flexDirection: 'row', gap: 8, flexWrap: 'wrap' },
-  analyticsGrid: { gap: 12 },
-  analyticsCard: { gap: 12 },
   focusCard: { gap: 10 },
   subjectSmall: { color: palette.text, fontSize: 16, fontWeight: '800', flex: 1 },
   focusMetrics: { flexDirection: 'row', gap: 12, flexWrap: 'wrap' },
   focusMetric: { color: palette.muted, fontSize: 12 },
   focusStrong: { color: palette.text, fontWeight: '900' },
   reason: { color: palette.muted, lineHeight: 19, fontSize: 13 },
-  activityRow: { flexDirection: 'row', alignItems: 'center', gap: 10 },
-  activityTitle: { color: palette.text, fontWeight: '800' },
 });

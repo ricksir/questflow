@@ -14,7 +14,7 @@ const tabIcon = (symbol: string, color: ColorValue, focused: boolean) => (
     borderWidth: focused ? 1 : 0,
     borderColor: focused ? palette.primary : 'transparent',
   }}>
-    <Text style={{ color: focused ? '#080A0E' : color, fontSize: 17, fontWeight: '900' }}>{symbol}</Text>
+    <Text style={{ color: focused ? palette.text : color, fontSize: 17, fontWeight: '900' }}>{symbol}</Text>
   </View>
 );
 
@@ -39,14 +39,14 @@ export default function TabsLayout() {
         borderRadius: 20,
         position: 'absolute',
         elevation: 12,
-        shadowColor: '#000',
-        shadowOpacity: 0.28,
+        shadowColor: '#25283A',
+        shadowOpacity: 0.10,
         shadowRadius: 14,
-        shadowOffset: { width: 0, height: -6 },
+        shadowOffset: { width: 0, height: -5 },
       },
       tabBarItemStyle: { minHeight: 52, paddingVertical: 2 },
       tabBarLabelStyle: { fontSize: 11, fontWeight: '800', marginTop: 1 },
-      tabBarActiveTintColor: '#FFFFFF',
+      tabBarActiveTintColor: palette.text,
       tabBarInactiveTintColor: palette.muted,
       sceneStyle: { backgroundColor: palette.bg, paddingBottom: 72 + bottom },
     }}>

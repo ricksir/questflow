@@ -45,8 +45,13 @@ class QuestFlowCockpit619Tests(unittest.TestCase):
         palette = (ROOT / "mobile" / "src" / "components" / "ui.tsx").read_text(encoding="utf-8")
         self.assertEqual(app["expo"]["version"], "0.16.0")
         self.assertEqual(package["version"], "0.16.0")
-        self.assertEqual(app["expo"]["primaryColor"], "#FF7A18")
-        self.assertIn("primary: '#FF7A18'", palette)
+        self.assertEqual(app["expo"]["primaryColor"], "#F3B54A")
+        self.assertEqual(app["expo"]["backgroundColor"], "#FBFAF6")
+        self.assertEqual(app["expo"]["userInterfaceStyle"], "light")
+        self.assertEqual(app["expo"]["androidStatusBar"]["barStyle"], "dark-content")
+        self.assertIn("primary: '#F3B54A'", palette)
+        self.assertIn("bg: '#FBFAF6'", palette)
+        self.assertIn("success: '#21B89A'", palette)
 
 
 if __name__ == "__main__":
