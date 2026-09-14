@@ -123,6 +123,18 @@ class SchoolabAprovaCheckmateUiTests(unittest.TestCase):
         self.assertIn('.not-studied-modal .not-studied-guidance', self.theme)
         self.assertIn("color: #8b651b !important", self.theme)
 
+    def test_study_coverage_uses_schoolab_decision_hierarchy(self):
+        self.assertIn('data-page="coverage"', self.html)
+        self.assertIn('Cobertura dos estudos', self.html)
+        self.assertIn('O que ainda precisa ser importado', self.html)
+        self.assertIn('.page[data-page="coverage"] .coverage-summary .metric-card', self.theme)
+        self.assertIn('.page[data-page="coverage"] .coverage-sync-note', self.theme)
+        self.assertIn('.page[data-page="coverage"] .trail-guide-knowledge', self.theme)
+        self.assertIn('.page[data-page="coverage"] .coverage-toolbar', self.theme)
+        self.assertIn('.page[data-page="coverage"] .data-table-wrap--coverage', self.theme)
+        self.assertIn('.page[data-page="coverage"] .coverage-status[data-status="cobertura_parcial"]', self.theme)
+        self.assertIn('html[data-theme="dark"] .page[data-page="coverage"]', self.theme)
+
     def test_checkmate_analytics_bento_is_decision_first(self):
         self.assertIn('Analytics de estudo', self.html)
         self.assertIn('Seu aprendizado em números', self.html)
