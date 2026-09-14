@@ -53,6 +53,15 @@ class SchoolabAprovaCheckmateUiTests(unittest.TestCase):
         self.assertIn('Histórico operacional', self.html)
         self.assertNotIn('QuestFlow Score', self.script)
 
+    def test_tutor_has_contextual_quick_actions(self):
+        self.assertIn('data-tutor-quick-prompt', self.html)
+        self.assertIn('Explique ultra-fácil', self.html)
+        self.assertIn('Por que eu errei?', self.html)
+        self.assertIn('Pegadinha da banca', self.html)
+        self.assertIn("button.dataset.tutorQuickPrompt", self.script)
+        self.assertIn("field.dispatchEvent(new Event('change'", self.script)
+        self.assertIn('.tutor-quick-prompts', self.theme)
+
     def test_checkmate_analytics_bento_is_decision_first(self):
         self.assertIn('Analytics de estudo', self.html)
         self.assertIn('Seu aprendizado em números', self.html)
