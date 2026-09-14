@@ -25,9 +25,11 @@ class SchoolabAprovaCheckmateUiTests(unittest.TestCase):
     def test_dashboard_is_action_first(self):
         pulse = self.html.index('id="learningPulsePanel"')
         today = self.html.index('id="todayPanel"')
+        quest_ai = self.html.index('id="questAiInsightPanel"')
         metrics = self.html.index('id="metricGrid"')
         self.assertLess(pulse, today)
-        self.assertLess(today, metrics)
+        self.assertLess(today, quest_ai)
+        self.assertLess(quest_ai, metrics)
         self.assertIn('Seu foco agora', self.html)
         self.assertIn('Seu estudo de hoje', self.html)
 
@@ -47,6 +49,8 @@ class SchoolabAprovaCheckmateUiTests(unittest.TestCase):
         self.assertIn("data-quest-ai-tutor", self.script)
         self.assertIn("data-quest-ai-analytics", self.script)
         self.assertIn('.quest-ai-insight-grid', self.theme)
+        self.assertIn('#recentActivity .data-table-wrap', self.theme)
+        self.assertIn('Histórico operacional', self.html)
         self.assertNotIn('QuestFlow Score', self.script)
 
     def test_checkmate_analytics_bento_is_decision_first(self):
