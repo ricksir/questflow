@@ -68,11 +68,11 @@
         "projectId": "f6973b2c-c748-424a-a074-56cff9511951"
       }
     },
-    "backgroundColor": "#080D16",
-    "primaryColor": "#FF7A18",
+    "backgroundColor": "#FBFAF6",
+    "primaryColor": "#F3B54A",
     "androidStatusBar": {
-      "backgroundColor": "#080D16",
-      "barStyle": "light-content",
+      "backgroundColor": "#FBFAF6",
+      "barStyle": "dark-content",
       "translucent": false
     }
   }
