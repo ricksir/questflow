@@ -35,6 +35,20 @@ class SchoolabAprovaCheckmateUiTests(unittest.TestCase):
         self.assertIn('Abrir sessão recomendada', self.script)
         self.assertIn("navigate('recommend')", self.script)
 
+    def test_contextual_quest_ai_uses_real_learning_signals(self):
+        self.assertIn('id="questAiInsightPanel"', self.html)
+        self.assertIn('Quest AI · insight contextual', self.html)
+        self.assertIn('function renderQuestAiInsightPanel(data)', self.script)
+        self.assertIn('analyticsBuildContext(data)', self.script)
+        self.assertIn('Desempenho recente', self.script)
+        self.assertIn('Retenção estimada', self.script)
+        self.assertIn('Cobertura estudada', self.script)
+        self.assertIn("data-quest-ai-study", self.script)
+        self.assertIn("data-quest-ai-tutor", self.script)
+        self.assertIn("data-quest-ai-analytics", self.script)
+        self.assertIn('.quest-ai-insight-grid', self.theme)
+        self.assertNotIn('QuestFlow Score', self.script)
+
     def test_checkmate_analytics_bento_is_decision_first(self):
         self.assertIn('Analytics de estudo', self.html)
         self.assertIn('Seu aprendizado em números', self.html)
