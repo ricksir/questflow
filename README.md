@@ -10,7 +10,7 @@ QuestFlow é um sistema local-first de banco editorial, estudo adaptativo e revi
 - Eventos internos duráveis em `qf_internal_events`, capturados pela outbox de sincronização existente.
 - Event sourcing seletivo em `qf_event_store`: tentativas, eventos de aprendizagem, sincronização e auditoria de IA.
 - FSRS, KT, IRT e analytics são projeções reconstruíveis.
-- API versionada do Studio em `/api/v1/studio`; Configurações e o Revisar Banco já usam o contrato v1 para lista, detalhe e criação manual, enquanto o RPC `/api/call` permanece para fluxos ainda não migrados.
+- API versionada do Studio em `/api/v1/studio`; Configurações e o Revisar Banco já usam o contrato v1 para lista, detalhe, criação manual e salvamento/aprovação, enquanto o RPC `/api/call` permanece para fluxos ainda não migrados.
 - Frontend do Studio com bootstrap e módulos por rota em TypeScript; a interface legada continua compatível.
 - Fonte de questões selecionável entre o SQLite local e a APIdasQuestões, com resposta externa normalizada para o modelo QuestFlow.
 - Mobile preservado em `questflow.mobile.v1` e `/api/v1/mobile`, incluindo uso offline e sincronização.
