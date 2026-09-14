@@ -156,6 +156,24 @@ class SchoolabAprovaCheckmateUiTests(unittest.TestCase):
         self.assertIn('.page[data-page="coverage"] .coverage-status[data-status="cobertura_parcial"]', self.theme)
         self.assertIn('html[data-theme="dark"] .page[data-page="coverage"]', self.theme)
 
+    def test_settings_and_ai_use_schoolab_system_hierarchy(self):
+        self.assertIn('class="page settings-page" data-page="settings"', self.html)
+        self.assertIn('settings-appearance-panel', self.html)
+        self.assertIn('settings-processing-panel', self.html)
+        self.assertIn('settings-catalog-panel', self.html)
+        self.assertIn('settings-network-panel', self.html)
+        self.assertIn('settings-sync-panel', self.html)
+        self.assertIn('settings-ai-provider-panel', self.html)
+        self.assertIn('settings-ai-privacy-panel', self.html)
+        self.assertIn('settings-ai-telemetry-panel', self.html)
+        self.assertIn('settings-runtime-panel', self.html)
+        self.assertIn('settings-backup-panel', self.html)
+        self.assertIn('.settings-page .ai-provider-card', self.theme)
+        self.assertIn('.settings-page .ai-privacy-toggles > label', self.theme)
+        self.assertIn('.settings-page .settings-actions', self.theme)
+        self.assertIn('html[data-theme="dark"] .settings-page', self.theme)
+        self.assertIn('html[data-theme="system"] .settings-page', self.theme)
+
     def test_checkmate_analytics_bento_is_decision_first(self):
         self.assertIn('Analytics de estudo', self.html)
         self.assertIn('Seu aprendizado em números', self.html)

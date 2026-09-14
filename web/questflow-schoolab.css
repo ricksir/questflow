@@ -2544,3 +2544,262 @@ html[data-theme="dark"] .page[data-page="flow"] #fsrsStatusPanel .stack > .inlin
     align-items: flex-start;
   }
 }
+
+
+/* Settings & AI: organize a dense technical surface by user intent without changing behavior. */
+.settings-page > .page-header {
+  margin-bottom: 1.25rem;
+}
+
+.settings-page .settings-grid {
+  gap: 1rem;
+  align-items: start;
+}
+
+.settings-page .settings-grid > .panel {
+  overflow: hidden;
+  box-shadow: var(--shadow-1);
+}
+
+.settings-page .settings-grid > .panel > .panel-header {
+  position: relative;
+  min-height: 5.35rem;
+}
+
+.settings-page .settings-grid > .panel > .panel-header::after {
+  content: "";
+  position: absolute;
+  inset: auto 1rem 0;
+  height: 1px;
+  background: var(--border-subtle);
+  opacity: .75;
+}
+
+.settings-page .settings-appearance-panel,
+.settings-page .settings-update-panel {
+  border-color: color-mix(in srgb, var(--qf-gold-500) 30%, var(--border-subtle));
+}
+
+.settings-page .settings-processing-panel,
+.settings-page .settings-network-panel,
+.settings-page .settings-ai-telemetry-panel,
+.settings-page .settings-runtime-panel {
+  border-color: color-mix(in srgb, var(--qf-sky-500) 28%, var(--border-subtle));
+}
+
+.settings-page .settings-catalog-panel,
+.settings-page .settings-sync-panel,
+.settings-page .settings-ai-privacy-panel,
+.settings-page .settings-backup-panel {
+  border-color: color-mix(in srgb, var(--qf-teal-500) 27%, var(--border-subtle));
+}
+
+.settings-page .settings-ai-provider-panel {
+  border-color: color-mix(in srgb, var(--qf-gold-500) 38%, var(--border-subtle));
+}
+
+.settings-page .settings-danger-panel {
+  border-color: color-mix(in srgb, #c85c52 38%, var(--border-subtle));
+}
+
+.settings-page .settings-appearance-panel > .panel-header,
+.settings-page .settings-update-panel > .panel-header,
+.settings-page .settings-ai-provider-panel > .panel-header {
+  background: linear-gradient(90deg, rgba(243,181,74,.11), transparent 68%);
+}
+
+.settings-page .settings-processing-panel > .panel-header,
+.settings-page .settings-network-panel > .panel-header,
+.settings-page .settings-ai-telemetry-panel > .panel-header,
+.settings-page .settings-runtime-panel > .panel-header {
+  background: linear-gradient(90deg, rgba(85,169,214,.09), transparent 68%);
+}
+
+.settings-page .settings-catalog-panel > .panel-header,
+.settings-page .settings-sync-panel > .panel-header,
+.settings-page .settings-ai-privacy-panel > .panel-header,
+.settings-page .settings-backup-panel > .panel-header {
+  background: linear-gradient(90deg, rgba(33,184,154,.09), transparent 68%);
+}
+
+.settings-page .settings-danger-panel > .panel-header {
+  background: linear-gradient(90deg, rgba(200,92,82,.09), transparent 68%);
+}
+
+.settings-page .settings-grid .panel-header h2 {
+  color: var(--qf-ink-900);
+}
+
+.settings-page .form-grid > label,
+.settings-page .form-grid > .form-field,
+.settings-page .network-settings-grid > .form-field,
+.settings-page .ai-privacy-grid > .form-field {
+  padding: .75rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-2);
+  background: color-mix(in srgb, var(--qf-warm-100) 42%, var(--surface-panel));
+}
+
+.settings-page .network-note,
+.settings-page .network-detected {
+  border-radius: var(--radius-2);
+}
+
+.settings-page .settings-network-panel .network-note,
+.settings-page .settings-ai-telemetry-panel .network-note,
+.settings-page .settings-runtime-panel .network-note {
+  border-color: color-mix(in srgb, var(--qf-sky-500) 24%, var(--border-subtle));
+  background: color-mix(in srgb, var(--qf-sky-500) 5%, var(--surface-panel));
+}
+
+.settings-page .settings-catalog-panel .network-note,
+.settings-page .settings-sync-panel .network-note,
+.settings-page .settings-ai-privacy-panel .network-note {
+  border-color: color-mix(in srgb, var(--qf-teal-500) 22%, var(--border-subtle));
+  background: color-mix(in srgb, var(--qf-teal-soft) 18%, var(--surface-panel));
+}
+
+.settings-page .ai-provider-grid {
+  gap: .9rem;
+}
+
+.settings-page .ai-provider-card {
+  border: 1px solid color-mix(in srgb, var(--qf-gold-500) 22%, var(--border-subtle));
+  border-radius: var(--radius-3);
+  background: color-mix(in srgb, var(--qf-gold-soft) 14%, var(--surface-panel));
+  box-shadow: none;
+}
+
+.settings-page .ai-provider-card h3 {
+  color: var(--qf-ink-900);
+}
+
+.settings-page .ai-provider-card input,
+.settings-page .ai-provider-grid select,
+.settings-page .ai-privacy-grid select,
+.settings-page .network-settings-grid input,
+.settings-page .network-settings-grid select,
+.settings-page .catalog-url-field input {
+  border-color: var(--border-subtle);
+  background: var(--surface-panel);
+}
+
+.settings-page .ai-privacy-toggles {
+  gap: .55rem;
+}
+
+.settings-page .ai-privacy-toggles > label {
+  padding: .7rem .8rem;
+  border: 1px solid color-mix(in srgb, var(--qf-teal-500) 16%, var(--border-subtle));
+  border-radius: var(--radius-2);
+  background: color-mix(in srgb, var(--qf-teal-soft) 14%, var(--surface-panel));
+}
+
+.settings-page .settings-ai-telemetry-panel #aiTelemetryBody {
+  min-height: 7rem;
+  background: color-mix(in srgb, var(--qf-sky-500) 3%, var(--surface-panel));
+}
+
+.settings-page .runtime-watchdog-summary,
+.settings-page .cloud-activation-inline {
+  border-radius: var(--radius-2);
+}
+
+.settings-page .settings-backup-panel .action-grid {
+  gap: .75rem;
+}
+
+.settings-page .settings-backup-panel .action-card {
+  border-color: color-mix(in srgb, var(--qf-teal-500) 18%, var(--border-subtle));
+  background: color-mix(in srgb, var(--qf-teal-soft) 12%, var(--surface-panel));
+}
+
+.settings-page .settings-backup-panel .action-card:hover {
+  border-color: color-mix(in srgb, var(--qf-teal-500) 42%, var(--border-subtle));
+  transform: translateY(-1px);
+}
+
+.settings-page .settings-danger-panel .danger-zone-body {
+  background: color-mix(in srgb, #c85c52 4%, var(--surface-panel));
+}
+
+.settings-page .settings-actions {
+  position: sticky;
+  bottom: .75rem;
+  z-index: 3;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+  padding: .75rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-3);
+  background: color-mix(in srgb, var(--surface-panel) 92%, transparent);
+  box-shadow: var(--shadow-2);
+  backdrop-filter: blur(10px);
+}
+
+.settings-page .settings-actions .button {
+  min-width: 12rem;
+}
+
+html[data-theme="dark"] .settings-page .settings-grid .panel-header h2,
+html[data-theme="dark"] .settings-page .ai-provider-card h3 {
+  color: var(--text-primary);
+}
+
+html[data-theme="dark"] .settings-page .form-grid > label,
+html[data-theme="dark"] .settings-page .form-grid > .form-field,
+html[data-theme="dark"] .settings-page .network-settings-grid > .form-field,
+html[data-theme="dark"] .settings-page .ai-privacy-grid > .form-field,
+html[data-theme="dark"] .settings-page .ai-provider-card,
+html[data-theme="dark"] .settings-page .ai-privacy-toggles > label,
+html[data-theme="dark"] .settings-page .settings-backup-panel .action-card,
+html[data-theme="dark"] .settings-page .settings-danger-panel .danger-zone-body {
+  background: var(--surface-panel);
+}
+
+@media (prefers-color-scheme: dark) {
+  html[data-theme="system"] .settings-page .settings-grid .panel-header h2,
+  html[data-theme="system"] .settings-page .ai-provider-card h3 {
+    color: var(--text-primary);
+  }
+
+  html[data-theme="system"] .settings-page .form-grid > label,
+  html[data-theme="system"] .settings-page .form-grid > .form-field,
+  html[data-theme="system"] .settings-page .network-settings-grid > .form-field,
+  html[data-theme="system"] .settings-page .ai-privacy-grid > .form-field,
+  html[data-theme="system"] .settings-page .ai-provider-card,
+  html[data-theme="system"] .settings-page .ai-privacy-toggles > label,
+  html[data-theme="system"] .settings-page .settings-backup-panel .action-card,
+  html[data-theme="system"] .settings-page .settings-danger-panel .danger-zone-body {
+    background: var(--surface-panel);
+  }
+}
+
+@media (max-width: 64rem) {
+  .settings-page .settings-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .settings-page .settings-grid > .panel,
+  .settings-page .settings-grid > .panel--wide {
+    grid-column: 1;
+  }
+}
+
+@media (max-width: 48rem) {
+  .settings-page .network-actions,
+  .settings-page .settings-actions {
+    width: 100%;
+  }
+
+  .settings-page .network-actions .button,
+  .settings-page .settings-actions .button {
+    flex: 1 1 10rem;
+    min-width: 0;
+  }
+
+  .settings-page .settings-actions {
+    bottom: .4rem;
+  }
+}
