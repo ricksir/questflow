@@ -60,12 +60,14 @@ class StudioUseCaseDispatcher:
         persist_config: Callable[[], None],
         present_question: Callable[[str, dict[str, Any]], dict[str, Any]] | None = None,
         create_question: Callable[[], dict[str, Any]] | None = None,
+        save_question: Callable[[str, dict[str, Any], bool], dict[str, Any]] | None = None,
     ) -> None:
         self.catalog = catalog
         self.architecture = architecture
         self.persist_config = persist_config
         self.present_question = present_question
         self.create_question = create_question
+        self.save_question = save_question
         self._definitions: dict[str, UseCaseDefinition] = {}
         self._register_defaults()
 
@@ -83,6 +85,7 @@ class StudioUseCaseDispatcher:
         self.register(UseCaseDefinition("questions.list", self._questions_list, module="editorial_bank"))
         self.register(UseCaseDefinition("questions.get", self._questions_get, module="editorial_bank"))
         self.register(UseCaseDefinition("questions.create", self._questions_create, mutating=True, module="editorial_bank"))
+        self.register(UseCaseDefinition("questions.update", self._questions_update, mutating=True, module="editorial_bank"))
         self.register(UseCaseDefinition("questions.source.settings", self._source_settings, module="editorial_bank"))
         self.register(UseCaseDefinition("questions.source.save", self._source_save, mutating=True, module="editorial_bank"))
         self.register(UseCaseDefinition("questions.source.test", self._source_test, module="editorial_bank"))
@@ -182,6 +185,27 @@ class StudioUseCaseDispatcher:
         if not isinstance(result, dict) or not str(result.get("uid") or "").strip():
             raise UseCaseError("Criação manual retornou um resultado inválido.", code="internal_error", status=500)
         return result
+
+    def _questions_update(self, payload: dict[str, Any]) -> dict[str, Any]:
+        uid = str(payload.get("uid") or payload.get("id") or "").strip()
+        question = payload.get("question")
+        approve = bool(payload.get("approve", False))
+        if not uid:
+            raise UseCaseError("Informe o identificador da questão.", code="validation_error")
+        if not isinstance(question, dict):
+            raise UseCaseError("Dados inválidos.", code="validation_error")
+        if self.save_question is None:
+            raise UseCaseError("Salvamento editorial indisponível.", code="unavailable", status=503)
+        result = self.save_question(uid, question, approve)
+        if not isinstance(result, dict):
+            raise UseCaseError("Salvamento editorial retornou um resultado inválido.", code="internal_error", status=500)
+        if result.get("ok") is False:
+            raise UseCaseError(
+                str(result.get("error") or "Falha ao salvar a questão."),
+                code=str(result.get("code") or "validation_error"),
+                status=int(result.get("status") or 400),
+            )
+        return {key: value for key, value in result.items() if key != "ok"}
 
     def _source_settings(self, _payload: dict[str, Any]) -> dict[str, Any]:
         return self.catalog.public_settings()
