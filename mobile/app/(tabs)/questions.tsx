@@ -108,6 +108,25 @@ function filterBatchForConfig(batch: MobileQuestion[], config: StudySessionConfi
   }).slice(0, config.count);
 }
 
+function selectionReasonLabel(reason: string | null | undefined): string {
+  const normalized = String(reason || '').trim().toLocaleLowerCase('pt-BR');
+  if (!normalized) return 'Selecionada pelo QuestFlow com base no seu histórico de estudo.';
+  if (normalized.includes('correção/revisão marcada')) return 'Esta questão foi marcada para revisão antes de voltar ao fluxo normal.';
+  if (normalized.includes('recuperação pós-erro')) return 'Você errou esta questão antes e ela chegou a um bom momento para tentar novamente.';
+  if (normalized.includes('revisão fsrs vencida')) return 'Este conteúdo chegou ao momento de revisão para fortalecer a memória.';
+  if (normalized.includes('questão nova')) return 'Esta é uma questão nova de um conteúdo que você já estudou.';
+  if (normalized.includes('revisão antecipada por risco')) return 'O QuestFlow antecipou esta revisão porque a lembrança pode enfraquecer em breve.';
+  if (normalized.includes('prioridade adaptativa')) return 'Selecionada pelo QuestFlow com base no seu histórico de estudo.';
+  return 'Selecionada pelo QuestFlow porque este item ajuda a avançar a sua sessão atual.';
+}
+
+function transferReasonLabel(reason: string | null | undefined): string {
+  const normalized = String(reason || '').trim().toLocaleLowerCase('pt-BR');
+  if (normalized.includes('misconception')) return 'A formulação também verifica um conceito ligado a um erro recente.';
+  if (normalized.includes('uncertain_knowledge')) return 'A formulação também verifica um conceito em que sua evidência ainda é incerta.';
+  return 'Esta questão também verifica o mesmo conceito em uma formulação diferente.';
+}
+
 function summaryCoach(stats: StudySessionStats): string {
   const accuracy = sessionAccuracy(stats);
   if (stats.answered === 0) return 'Sessão encerrada sem respostas contabilizadas. Você pode iniciar um novo bloco quando quiser.';
@@ -1253,12 +1272,12 @@ export default function QuestionsScreen() {
               <View style={styles.selectionInsightIcon}><Text style={styles.selectionInsightIconText}>✦</Text></View>
               <View style={styles.selectionInsightCopy}>
                 <Text style={styles.selectionInsightEyebrow}>POR QUE ESTA QUESTÃO?</Text>
-                <Text style={styles.selectionInsightTitle}>{current.selection.reason}</Text>
+                <Text style={styles.selectionInsightTitle}>{selectionReasonLabel(current.selection.reason)}</Text>
               </View>
               <Pill text="QuestFlow explica" tone="info" />
             </View>
             {current.selection.topic_transfer ? (
-              <Muted>{current.selection.transfer_reason || 'Esta questão também verifica o mesmo conceito em uma formulação diferente.'}</Muted>
+              <Muted>{transferReasonLabel(current.selection.transfer_reason)}</Muted>
             ) : null}
           </Card>
         ) : null}
