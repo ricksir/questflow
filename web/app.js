@@ -4903,8 +4903,19 @@ async function attachImage() {
 
 async function removeImage() {
   if (!state.currentUid || !window.confirm('Remover a imagem desta questão?')) return;
-  const result = await bridge.call('remove_image', state.currentUid);
-  if (result.ok) { renderQuestionImage(null); toast('Imagem removida.', 'success'); }
+  const uid = state.currentUid;
+  try {
+    await bridge.studioPost(
+      `questions/${encodeURIComponent(uid)}/image/remove`,
+      {},
+      'remove_image',
+      [uid],
+    );
+    renderQuestionImage(null);
+    toast('Imagem removida.', 'success');
+  } catch (error) {
+    toast(error.message || 'Não foi possível remover a imagem.', 'error');
+  }
 }
 
 async function rereadQuestion() {
