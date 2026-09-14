@@ -4,7 +4,6 @@ import { RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native
 import { Button, Card, HeroCard, Metric, MicroBars, Muted, Pill, ProgressBar, Screen, ScreenHeader, SectionTitle, StatePanel, StatRing, palette } from '../../src/components/ui';
 import { formatDuration } from '../../src/lib/format';
 import { useQuestFlow } from '../../src/context/QuestFlowContext';
-import { ReviewQueuePreview, TrendLineChart } from '../../src/components/analytics';
 
 function reasonLabel(reason: string) {
   return ({
@@ -31,7 +30,6 @@ export default function TodayScreen() {
 
   const today = bootstrap?.today;
   const progress = bootstrap?.progress;
-  const analytics = bootstrap?.analytics;
   const top = today?.top_priority;
   const coach = today?.coach;
   const projectName = bootstrap?.active_project?.name || 'Projeto de prova ativo';
@@ -146,22 +144,9 @@ export default function TodayScreen() {
           <Metric label="Fila offline" value={pendingEvents} tone={pendingEvents ? 'warning' : 'success'} />
         </View>
 
-        {analytics ? (
-          <View style={styles.analyticsGrid}>
-            <Card style={styles.analyticsCard}>
-              <SectionTitle eyebrow="Percurso" title="Da primeira à última resposta" detail={`${analytics.sample_size} respostas reais • atualizado ${new Date(analytics.generated_at).toLocaleDateString('pt-BR')}`} />
-              <TrendLineChart points={analytics.timeline} />
-            </Card>
-            <Card style={styles.analyticsCard}>
-              <SectionTitle eyebrow="Memória" title="Revisões que pedem ação" detail="Barras mostram o volume vencido; não são uma nota de domínio." />
-              <ReviewQueuePreview analytics={analytics} />
-            </Card>
-          </View>
-        ) : null}
-
         <View style={styles.sectionGap}>
           <SectionTitle eyebrow="Foco" title="Onde concentrar esforço" detail="As matérias abaixo combinam desempenho recente, memória e lacunas de estudo." />
-          {(today?.focus || []).slice(0, 5).map((item) => (
+          {(today?.focus || []).slice(0, 3).map((item) => (
             <Card key={item.subject_id} style={styles.focusCard}>
               <View style={styles.rowBetween}>
                 <Text style={styles.subjectSmall}>{item.label}</Text>
@@ -179,21 +164,7 @@ export default function TodayScreen() {
           {bootstrap && !(today?.focus || []).length ? <StatePanel state="empty" title="Nenhum foco crítico agora" detail="Continue estudando; cada nova resposta atualiza imediatamente as prioridades." /> : null}
         </View>
 
-        {(today?.recent_activity || []).length ? (
-          <View style={styles.sectionGap}>
-            <SectionTitle eyebrow="Histórico" title="Últimas respostas" detail="Todas as respostas registradas fazem parte do mesmo histórico de aprendizagem." />
-            {today!.recent_activity.map((item) => (
-              <Card key={`${item.attempt_id}-${item.answered_at}`} style={styles.activityRow}>
-                <View style={{ flex: 1, gap: 3 }}>
-                  <Text style={styles.activityTitle}>{item.code} • {item.subject}</Text>
-                  <Muted>{timeLabel(item.active_response_seconds)}</Muted>
-                </View>
-                <Pill text={item.is_correct ? 'Acertou' : 'Errou'} tone={item.is_correct ? 'success' : 'danger'} />
-              </Card>
-            ))}
-          </View>
-        ) : null}
-
+        <Button title="Ver progresso completo" onPress={() => router.push('/(tabs)/progress')} tone="secondary" />
         <Button title={syncing ? 'Sincronizando…' : 'Sincronizar agora'} onPress={() => syncNow().catch(() => undefined)} disabled={syncing} tone="secondary" />
       </ScrollView>
     </Screen>
@@ -243,8 +214,6 @@ const styles = StyleSheet.create({
   subjectBarLabel: { color: palette.muted, fontSize: 12, fontWeight: '700', flex: 1 },
   subjectBarPct: { color: palette.text, fontSize: 12, fontWeight: '900' },
   metrics: { flexDirection: 'row', gap: 8, flexWrap: 'wrap' },
-  analyticsGrid: { gap: 12 },
-  analyticsCard: { gap: 12 },
   focusCard: { gap: 10 },
   subjectSmall: { color: palette.text, fontSize: 16, fontWeight: '800', flex: 1 },
   focusMetrics: { flexDirection: 'row', gap: 12, flexWrap: 'wrap' },
