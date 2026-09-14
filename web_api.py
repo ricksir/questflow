@@ -285,6 +285,8 @@ class QuestFlowWebApi:
                     present_question=self._present_question_detail,
                     create_question=self._create_manual_question_record,
                     save_question=self._save_question_record,
+                    delete_question=self._delete_question_record,
+                    annul_question=self._annul_question_record,
                 )
                 # 6.11.0: Observabilidade/Quality Gates saem do AI Engine e passam
                 # a um serviço de controle dedicado com worker serial e Snapshot Store.
@@ -2537,7 +2539,7 @@ class QuestFlowWebApi:
             review.setdefault("status", "pendente")
         return question
 
-    def delete_question(self, uid: str) -> dict:
+    def _delete_question_record(self, uid: str) -> dict:
         self._ensure_core()
         assert self.commands is not None and self.queries is not None and self.study is not None
         if not self.queries.get(uid):
@@ -2549,11 +2551,23 @@ class QuestFlowWebApi:
             pass
         return {"ok": True, "stats": self.queries.stats()}
 
-    def annul_question(self, uid: str, reason: str = "Questão anulada pela banca") -> dict:
+    def delete_question(self, uid: str) -> dict:
+        result = self.dispatch_studio_v1("questions.delete", {"uid": uid})
+        if not result.get("ok"):
+            return result
+        return {"ok": True, **_jsonable(result.get("data") or {})}
+
+    def _annul_question_record(self, uid: str, reason: str = "Questão anulada pela banca") -> dict:
         self._ensure_core()
         assert self.commands is not None and self.queries is not None
         archived = self.commands.archive(uid, kind="anulada", reason=str(reason or "").strip())
         return {"ok": bool(archived), "stats": self.queries.stats()}
+
+    def annul_question(self, uid: str, reason: str = "Questão anulada pela banca") -> dict:
+        result = self.dispatch_studio_v1("questions.annul", {"uid": uid, "reason": reason})
+        if not result.get("ok"):
+            return result
+        return {"ok": True, **_jsonable(result.get("data") or {})}
 
     def attach_image(self, uid: str) -> dict:
         self._ensure_core()
