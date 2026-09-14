@@ -42,8 +42,14 @@ class MobileProfessionalUX699Tests(unittest.TestCase):
         profile = (self.root / "mobile" / "app" / "(tabs)" / "profile.tsx").read_text(encoding="utf-8")
         self.assertIn("MEU ESTUDO", profile)
         self.assertIn("Revisões hoje", profile)
-        for technical in ("Diagnóstico técnico", "diagnosticsOpen", "Studio local", "Cloud Bridge", "Endpoint", "Cursor", "Saúde da IA", "Telegram", "Entrega de questões"):
+        for technical in ("Diagnóstico técnico", "diagnosticsOpen", "Studio local", "Cloud Bridge", "Endpoint", "Cursor", "Saúde da IA", "Telegram", "Entrega de questões", "Contrato de dados"):
             self.assertNotIn(technical, profile)
+
+    def test_shared_mobile_actions_keep_accessible_touch_targets(self):
+        ui = (self.root / "mobile" / "src" / "components" / "ui.tsx").read_text(encoding="utf-8")
+        self.assertIn('accessibilityState={{ disabled: Boolean(disabled) }}', ui)
+        self.assertIn("stateAction: { minHeight: 44", ui)
+        self.assertIn("button: { borderRadius: 16, minHeight: 50", ui)
 
     def test_studio_has_dedicated_mobile_navigation_and_page(self):
         html = (self.root / "web" / "index.html").read_text(encoding="utf-8")
