@@ -4697,8 +4697,13 @@ async function saveCurrentQuestion(approve = false) {
     // Na Curadoria, salvar e concluir são duas operações deliberadamente
     // separadas: primeiro persiste o que o usuário editou; depois o backend
     // valida os requisitos reais antes de registrar a decisão humana.
-    const result = await bridge.call('save_question', state.currentUid, payload, completingCuration ? false : approve);
-    if (!result.ok) throw new Error(result.error || 'Falha ao salvar.');
+    const approveOnSave = completingCuration ? false : approve;
+    const result = await bridge.studioPost(
+      `questions/${encodeURIComponent(state.currentUid)}`,
+      { question: payload, approve: approveOnSave },
+      'save_question',
+      [state.currentUid, payload, approveOnSave],
+    );
 
     let finalResult = result;
     if (completingCuration) {
