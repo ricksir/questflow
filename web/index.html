@@ -1053,20 +1053,20 @@
           </div>
 </section>
 
-        <section class="page" data-page="settings" aria-labelledby="settingsTitle">
+        <section class="page settings-page" data-page="settings" aria-labelledby="settingsTitle">
           <div class="page-header">
-            <div><p class="eyebrow">Preferências</p><h1 id="settingsTitle">Configurações e dados</h1><p>Interface, OCR, Telegram, backup e interoperabilidade.</p></div>
+            <div><p class="eyebrow">Preferências e infraestrutura</p><h1 id="settingsTitle">Configurações e dados</h1><p>Organize aparência, catálogo, conectividade, inteligência artificial, privacidade, proteção e backup em um só lugar.</p></div>
           </div>
           <div class="settings-grid">
-            <article class="panel">
+            <article class="panel settings-appearance-panel">
               <div class="panel-header"><div><h2>Aparência</h2><p>Tema, densidade e escala fluidos.</p></div></div>
               <form class="panel-body form-grid" id="appearanceSettings"></form>
             </article>
-            <article class="panel">
+            <article class="panel settings-processing-panel">
               <div class="panel-header"><div><h2>OCR e processamento</h2><p>Qualidade e idiomas da extração.</p></div></div>
               <form class="panel-body form-grid" id="processingSettings"></form>
             </article>
-            <article class="panel panel--wide catalog-settings-panel" id="courseCatalogSettingsPanel">
+            <article class="panel panel--wide catalog-settings-panel settings-catalog-panel" id="courseCatalogSettingsPanel">
               <div class="panel-header">
                 <div><h2>Estudos e Trilhas</h2><p>Planilha de estudos e trilhas — atualize a estrutura do curso sem perder o que você já estudou.</p></div>
                 <span class="status-pill" id="courseCatalogStatusPill">Carregando…</span>
@@ -1091,7 +1091,7 @@
               </div>
             </article>
 
-            <article class="panel panel--wide network-panel">
+            <article class="panel panel--wide network-panel settings-network-panel">
               <div class="panel-header">
                 <div><h2>Rede e Proxy</h2><p>Use a rede corporativa sem colocar o proxy entre a interface do QuestFlow e o motor local.</p></div>
                 <span class="status-pill" id="networkStatusPill">Não verificado</span>
@@ -1154,7 +1154,7 @@
               </div>
             </article>
 
-            <article class="panel panel--wide cloud-sync-panel">
+            <article class="panel panel--wide cloud-sync-panel settings-sync-panel">
               <div class="panel-header">
                 <div><h2>Cloud Sync — Turso</h2><p>Mantenha o mesmo banco de estudos atualizado entre os computadores, mesmo quando um deles estiver desligado.</p></div>
                 <span class="status-pill" id="cloudSyncStatusPill">Desativado</span>
@@ -1199,7 +1199,7 @@
                 </div>
               </div>
             </article>
-            <article class="panel panel--wide ai-provider-panel">
+            <article class="panel panel--wide ai-provider-panel settings-ai-provider-panel">
               <div class="panel-header">
                 <div><h2>Provedores de IA</h2><p>Escolha a IA externa usada pelo Tutor. As chaves ficam protegidas pelo Windows (DPAPI) e nunca são salvas em texto no config.json.</p></div>
                 <span class="status-pill" id="aiProviderStatusPill">Local</span>
@@ -1216,7 +1216,7 @@
               </div>
             </article>
 
-            <article class="panel panel--wide ai-privacy-panel">
+            <article class="panel panel--wide ai-privacy-panel settings-ai-privacy-panel">
               <div class="panel-header">
                 <div><h2>Centro de Privacidade da IA</h2><p>Defina exatamente quais dados podem sair do computador quando você escolher uma IA externa. Materiais RAG são tratados como dados não confiáveis e passam por defesa contra prompt injection.</p></div>
                 <span class="status-pill" id="aiPrivacyStatusPill">Equilibrado</span>
@@ -1241,12 +1241,12 @@
               </div>
             </article>
 
-            <article class="panel panel--wide ai-telemetry-panel">
+            <article class="panel panel--wide ai-telemetry-panel settings-ai-telemetry-panel">
               <div class="panel-header"><div><h2>Telemetria da IA</h2><p>Latência, sucesso, tokens, Structured Outputs, sinais de prompt injection e custo estimado — sem registrar suas chaves.</p></div><span class="status-pill" id="aiTelemetryStatusPill">30 dias</span></div>
               <div class="panel-body" id="aiTelemetryBody"><div class="skeleton" style="height:7rem"></div></div>
             </article>
 
-            <article class="panel panel--wide update-monitor-panel">
+            <article class="panel panel--wide update-monitor-panel settings-update-panel">
               <div class="panel-header">
                 <div><h2>Monitor quinzenal de atualizações</h2><p>Verifica mudanças relevantes nas APIs de IA, Turso e plataformas de concursos apenas quando você autorizar.</p></div>
                 <span class="status-pill" id="updateMonitorStatusPill">Aguardando</span>
@@ -1268,7 +1268,7 @@
               </div>
             </article>
 
-            <article class="panel panel--wide runtime-watchdog-panel">
+            <article class="panel panel--wide runtime-watchdog-panel settings-runtime-panel">
               <div class="panel-header">
                 <div><h2>Watchdog central e autorrecuperação</h2><p>Supervisiona os serviços internos sem tocar no SQLite quando a rede estiver indisponível. Reinicializações são limitadas para evitar loops.</p></div>
                 <span class="status-pill" id="runtimeWatchdogStatusPill">Inicializando</span>
@@ -1296,7 +1296,7 @@
               </div>
             </article>
 
-            <article class="panel panel--wide danger-zone-panel">
+            <article class="panel panel--wide danger-zone-panel settings-danger-panel">
               <div class="panel-header">
                 <div><h2>Reiniciar ciclo de estudos</h2><p>Volte todas as questões elegíveis ao estado de não estudadas, sem apagar o banco de questões.</p></div>
                 <span class="status-pill status-pill--warning">Ação protegida</span>
@@ -1313,7 +1313,7 @@
               </div>
             </article>
 
-            <article class="panel panel--wide">
+            <article class="panel panel--wide settings-backup-panel">
               <div class="panel-header"><div><h2>Backup e exportação</h2><p>Salve ou transfira sua base sem perder dados.</p></div></div>
               <div class="panel-body action-grid">
                 <button class="action-card" data-export="sqlite"><strong>Backup SQLite</strong><span>Cópia completa do banco.</span></button>
