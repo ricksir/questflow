@@ -33,6 +33,10 @@ class MobileProfessionalUX699Tests(unittest.TestCase):
         questions = (self.root / "mobile" / "app" / "(tabs)" / "questions.tsx").read_text(encoding="utf-8")
         self.assertIn("POR QUE ESTA QUESTÃO?", questions)
         self.assertIn("current.selection?.reason", questions)
+        self.assertIn("selectionReasonLabel(current.selection.reason)", questions)
+        self.assertIn("transferReasonLabel(current.selection.transfer_reason)", questions)
+        self.assertIn("Você errou esta questão antes", questions)
+        self.assertIn("chegou ao momento de revisão", questions)
         self.assertIn("QuestFlow explica", questions)
         self.assertIn("current.selection.topic_transfer", questions)
         self.assertNotIn("Estratégia:", questions)
@@ -50,6 +54,8 @@ class MobileProfessionalUX699Tests(unittest.TestCase):
         self.assertIn('accessibilityState={{ disabled: Boolean(disabled) }}', ui)
         self.assertIn("stateAction: { minHeight: 44", ui)
         self.assertIn("button: { borderRadius: 16, minHeight: 50", ui)
+        self.assertIn("flexWrap: 'wrap'", ui)
+        self.assertIn("screenHeaderCopy: { flex: 1, minWidth: 210", ui)
 
     def test_progress_priority_cards_expose_expand_state(self):
         progress = (self.root / "mobile" / "app" / "(tabs)" / "progress.tsx").read_text(encoding="utf-8")
