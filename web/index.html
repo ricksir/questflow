@@ -108,10 +108,11 @@
         </button>
         <div class="breadcrumbs" id="breadcrumbs" aria-live="polite">Visão geral</div>
         <div class="topbar-actions">
-          <label class="global-search" for="globalSearch">
-            <span aria-hidden="true">⌕</span>
-            <input id="globalSearch" type="search" placeholder="Buscar questão…" autocomplete="off" aria-label="Buscar questão em todo o banco">
-            <kbd>Ctrl K</kbd>
+          <label class="global-search global-search--questions" for="globalSearch">
+            <span class="global-search__icon" aria-hidden="true">⌕</span>
+            <span class="global-search__scope" aria-hidden="true">Questões</span>
+            <input id="globalSearch" type="search" placeholder="Buscar no banco de questões…" autocomplete="off" aria-label="Buscar questão em todo o banco">
+            <kbd aria-hidden="true">Ctrl K</kbd>
           </label>
           <button class="icon-button fullscreen-button" id="fullscreenToggle" type="button" aria-label="Ativar tela cheia" title="Tela cheia (F11)">
             <span aria-hidden="true">⛶</span>
