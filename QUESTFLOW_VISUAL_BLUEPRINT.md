@@ -49,6 +49,25 @@ Aproveitar variedade e composição de visualizações:
 
 Princípio: **gráfico só entra quando responde a uma pergunta de estudo**.
 
+### Fynix — referência de inteligência contextual e densidade
+
+Aproveitar:
+
+- assistente contextual integrado ao dashboard, não isolado em uma tela de chat;
+- síntese curta de sinais complexos com uma ação recomendada;
+- cards compactos e bem hierarquizados;
+- dashboards densos sem parecerem pesados;
+- atividade recente como registro operacional de fácil leitura;
+- indicadores que respondem perguntas específicas.
+
+No QuestFlow, o bloco **Quest AI · insight contextual** deve ser montado apenas com evidências reais já disponíveis no Learning Engine. Ele não cria um “score” artificial e não substitui FSRS, KT, IRT ou o Recomendador.
+
+Princípio: **inteligência contextual deve explicar o que os dados significam e oferecer um próximo passo, sem inventar métricas**.
+
+### Fórmula do produto
+
+**QuestFlow = Schoolab (identidade visual) + Aprova.ai (jornada de estudo) + Checkmate (capacidade analítica) + Fynix (inteligência contextual e densidade controlada).**
+
 ## Design tokens
 
 A paleta abaixo é uma adaptação operacional da linguagem visual observada no Schoolab. Os HEX não são apresentados pelo Behance em texto estruturado, portanto são aproximações deliberadas para o QuestFlow, não uma alegação de cópia exata.
@@ -78,10 +97,11 @@ Ordem de atenção da tela inicial:
 
 1. **Próxima melhor ação**
 2. plano de estudo do dia
-3. revisões vencidas/próximas
-4. consistência/meta semanal
-5. prioridades por matéria
-6. analytics aprofundado
+3. **Quest AI · insight contextual**
+4. revisões vencidas/próximas
+5. consistência/meta semanal
+6. prioridades por matéria
+7. analytics aprofundado
 
 O painel analítico deve permitir aprofundamento por matéria, assunto, banca e período sem inventar séries temporais.
 
@@ -115,6 +135,7 @@ Analytics detalhado permanece no Studio; o Mobile mostra apenas o necessário pa
 1. Fundação visual compartilhada.
 2. Home/Visão geral orientada à próxima ação.
 3. Analytics com linguagem Checkmate.
-4. Fluxos de questões e revisão.
-5. Mobile Today/Progress com a mesma identidade.
-6. Polimento responsivo, acessibilidade e dark mode.
+4. Insight contextual e densidade de dashboard com linguagem Fynix.
+5. Fluxos de questões e revisão.
+6. Mobile Today/Progress com a mesma identidade.
+7. Polimento responsivo, acessibilidade e dark mode.
