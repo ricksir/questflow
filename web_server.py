@@ -581,7 +581,16 @@ class QuestFlowLocalServer:
                         return
                     question_prefix = "/api/v1/studio/questions/"
                     if parsed.path.startswith(question_prefix):
-                        request_body["uid"] = unquote(parsed.path[len(question_prefix):])
+                        question_suffix = parsed.path[len(question_prefix):]
+                        if question_suffix.endswith("/delete"):
+                            request_body["uid"] = unquote(question_suffix[:-len("/delete")])
+                            self._studio_v1_result("questions.delete", request_body)
+                            return
+                        if question_suffix.endswith("/annul"):
+                            request_body["uid"] = unquote(question_suffix[:-len("/annul")])
+                            self._studio_v1_result("questions.annul", request_body)
+                            return
+                        request_body["uid"] = unquote(question_suffix)
                         self._studio_v1_result("questions.update", request_body)
                         return
                     if parsed.path == "/api/v1/studio/question-source":
