@@ -2295,3 +2295,252 @@ html[data-theme="dark"] .page[data-page="coverage"] .coverage-status[data-status
     padding: .75rem;
   }
 }
+/* Study flow: separate service health, cycle tuning, memory, channel and history with Schoolab hierarchy. */
+.page[data-page="flow"] > .page-header {
+  margin-bottom: 1.25rem;
+}
+
+.page[data-page="flow"] .flow-layout {
+  gap: 1rem;
+  align-items: start;
+}
+
+.page[data-page="flow"] .flow-layout > .panel {
+  overflow: hidden;
+  box-shadow: var(--shadow-1);
+}
+
+.page[data-page="flow"] .flow-service-panel {
+  border-color: color-mix(in srgb, var(--qf-sky-500) 30%, var(--border-subtle));
+}
+
+.page[data-page="flow"] .flow-cycle-panel {
+  border-color: color-mix(in srgb, var(--qf-gold-500) 32%, var(--border-subtle));
+}
+
+.page[data-page="flow"] .flow-fsrs-panel {
+  border-color: color-mix(in srgb, var(--qf-teal-500) 30%, var(--border-subtle));
+}
+
+.page[data-page="flow"] .flow-telegram-panel {
+  border-color: color-mix(in srgb, var(--qf-sky-500) 30%, var(--border-subtle));
+}
+
+.page[data-page="flow"] .flow-history-panel {
+  border-color: color-mix(in srgb, var(--qf-warm-200) 78%, var(--border-subtle));
+}
+
+.page[data-page="flow"] .flow-service-panel > .panel-header {
+  background: linear-gradient(90deg, rgba(85,169,214,.10), transparent 64%);
+}
+
+.page[data-page="flow"] .flow-cycle-panel > .panel-header {
+  background: linear-gradient(90deg, rgba(243,181,74,.12), transparent 64%);
+}
+
+.page[data-page="flow"] .flow-fsrs-panel > .panel-header {
+  background: linear-gradient(90deg, rgba(33,184,154,.10), transparent 64%);
+}
+
+.page[data-page="flow"] .flow-telegram-panel > .panel-header {
+  background: linear-gradient(90deg, rgba(85,169,214,.10), rgba(243,181,74,.04) 70%, transparent);
+}
+
+.page[data-page="flow"] .flow-history-panel > .panel-header {
+  background: linear-gradient(90deg, color-mix(in srgb, var(--qf-warm-100) 72%, transparent), transparent 70%);
+}
+
+.page[data-page="flow"] .flow-layout .panel-header h2 {
+  color: var(--qf-ink-900);
+}
+
+.page[data-page="flow"] #flowStatusPanel .stack {
+  gap: .65rem;
+}
+
+.page[data-page="flow"] #flowStatusPanel .stack > .inline-cluster {
+  min-height: 2.6rem;
+  padding: .6rem .75rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-2);
+  background: color-mix(in srgb, var(--qf-warm-100) 52%, var(--surface-panel));
+}
+
+.page[data-page="flow"] #flowStatusPanel .flow-value {
+  color: var(--qf-ink-900);
+}
+
+.page[data-page="flow"] #flowStatusPanel .notice {
+  margin: .1rem 0;
+  border-color: color-mix(in srgb, var(--qf-sky-500) 26%, var(--border-subtle));
+  background: color-mix(in srgb, var(--qf-sky-500) 6%, var(--surface-panel));
+}
+
+.page[data-page="flow"] .flow-service-panel > .panel-actions {
+  border-top: 1px solid var(--border-subtle);
+  background: color-mix(in srgb, var(--qf-warm-100) 42%, var(--surface-panel));
+}
+
+.page[data-page="flow"] .flow-service-panel > .telegram-question-controls {
+  border-top-color: color-mix(in srgb, var(--qf-gold-500) 24%, var(--border-subtle));
+  background: color-mix(in srgb, var(--qf-gold-soft) 30%, var(--surface-panel));
+}
+
+.page[data-page="flow"] .telegram-question-controls small {
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+
+.page[data-page="flow"] #flowSettingsForm {
+  gap: .85rem;
+}
+
+.page[data-page="flow"] #flowSettingsForm > label,
+.page[data-page="flow"] #flowSettingsForm .form-field {
+  padding: .75rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-2);
+  background: color-mix(in srgb, var(--qf-warm-100) 44%, var(--surface-panel));
+}
+
+.page[data-page="flow"] #flowSettingsForm input,
+.page[data-page="flow"] #flowSettingsForm select,
+.page[data-page="flow"] #telegramBotForm input {
+  border-color: var(--border-subtle);
+  background: var(--surface-panel);
+}
+
+.page[data-page="flow"] .flow-cycle-panel > .panel-actions {
+  border-top: 1px solid color-mix(in srgb, var(--qf-gold-500) 22%, var(--border-subtle));
+  background: color-mix(in srgb, var(--qf-gold-soft) 18%, var(--surface-panel));
+}
+
+.page[data-page="flow"] #fsrsStatusPanel .stack {
+  gap: .55rem;
+}
+
+.page[data-page="flow"] #fsrsStatusPanel .stack > .inline-cluster {
+  min-height: 2.7rem;
+  padding: .65rem .8rem;
+  border: 1px solid color-mix(in srgb, var(--qf-teal-500) 16%, var(--border-subtle));
+  border-radius: var(--radius-2);
+  background: color-mix(in srgb, var(--qf-teal-soft) 20%, var(--surface-panel));
+}
+
+.page[data-page="flow"] #fsrsStatusPanel .stack > .inline-cluster strong {
+  color: var(--qf-ink-900);
+}
+
+.page[data-page="flow"] .flow-telegram-panel .telegram-config-grid {
+  gap: 1rem;
+}
+
+.page[data-page="flow"] .flow-telegram-panel .form-field {
+  padding: .85rem;
+  border: 1px solid color-mix(in srgb, var(--qf-sky-500) 20%, var(--border-subtle));
+  border-radius: var(--radius-2);
+  background: color-mix(in srgb, var(--qf-sky-500) 5%, var(--surface-panel));
+}
+
+.page[data-page="flow"] .flow-telegram-panel #telegramConfigStatus {
+  border-color: color-mix(in srgb, var(--qf-sky-500) 30%, var(--border-subtle));
+  background: color-mix(in srgb, var(--qf-sky-500) 8%, var(--surface-panel));
+}
+
+.page[data-page="flow"] .flow-telegram-panel > .panel-actions {
+  border-top: 1px solid color-mix(in srgb, var(--qf-sky-500) 20%, var(--border-subtle));
+  background: color-mix(in srgb, var(--qf-warm-100) 38%, var(--surface-panel));
+}
+
+.page[data-page="flow"] #flowHistory .data-table-wrap {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-2);
+  background: var(--surface-panel);
+}
+
+.page[data-page="flow"] #flowHistory .data-table thead,
+.page[data-page="flow"] #flowHistory .data-table--managed thead {
+  background: color-mix(in srgb, var(--qf-warm-100) 78%, var(--surface-panel));
+}
+
+.page[data-page="flow"] #flowHistory .data-table tbody tr:hover,
+.page[data-page="flow"] #flowHistory .data-table--managed tbody tr:hover {
+  background: color-mix(in srgb, var(--qf-sky-500) 5%, var(--surface-panel));
+}
+
+.page[data-page="flow"] #flowHistory .empty-state {
+  border-color: color-mix(in srgb, var(--qf-warm-200) 80%, var(--border-subtle));
+  background: color-mix(in srgb, var(--qf-warm-100) 50%, var(--surface-panel));
+}
+
+html[data-theme="dark"] .page[data-page="flow"] #flowStatusPanel .stack > .inline-cluster,
+html[data-theme="dark"] .page[data-page="flow"] #flowStatusPanel .notice,
+html[data-theme="dark"] .page[data-page="flow"] .flow-service-panel > .panel-actions,
+html[data-theme="dark"] .page[data-page="flow"] .flow-service-panel > .telegram-question-controls,
+html[data-theme="dark"] .page[data-page="flow"] #flowSettingsForm > label,
+html[data-theme="dark"] .page[data-page="flow"] #flowSettingsForm .form-field,
+html[data-theme="dark"] .page[data-page="flow"] .flow-cycle-panel > .panel-actions,
+html[data-theme="dark"] .page[data-page="flow"] #fsrsStatusPanel .stack > .inline-cluster,
+html[data-theme="dark"] .page[data-page="flow"] .flow-telegram-panel .form-field,
+html[data-theme="dark"] .page[data-page="flow"] .flow-telegram-panel #telegramConfigStatus,
+html[data-theme="dark"] .page[data-page="flow"] .flow-telegram-panel > .panel-actions,
+html[data-theme="dark"] .page[data-page="flow"] #flowHistory .empty-state {
+  background: var(--surface-panel);
+}
+
+html[data-theme="dark"] .page[data-page="flow"] .flow-layout .panel-header h2,
+html[data-theme="dark"] .page[data-page="flow"] #flowStatusPanel .flow-value,
+html[data-theme="dark"] .page[data-page="flow"] #fsrsStatusPanel .stack > .inline-cluster strong {
+  color: var(--text-primary);
+}
+
+@media (prefers-color-scheme: dark) {
+  html[data-theme="system"] .page[data-page="flow"] #flowStatusPanel .stack > .inline-cluster,
+  html[data-theme="system"] .page[data-page="flow"] #flowStatusPanel .notice,
+  html[data-theme="system"] .page[data-page="flow"] .flow-service-panel > .panel-actions,
+  html[data-theme="system"] .page[data-page="flow"] .flow-service-panel > .telegram-question-controls,
+  html[data-theme="system"] .page[data-page="flow"] #flowSettingsForm > label,
+  html[data-theme="system"] .page[data-page="flow"] #flowSettingsForm .form-field,
+  html[data-theme="system"] .page[data-page="flow"] .flow-cycle-panel > .panel-actions,
+  html[data-theme="system"] .page[data-page="flow"] #fsrsStatusPanel .stack > .inline-cluster,
+  html[data-theme="system"] .page[data-page="flow"] .flow-telegram-panel .form-field,
+  html[data-theme="system"] .page[data-page="flow"] .flow-telegram-panel #telegramConfigStatus,
+  html[data-theme="system"] .page[data-page="flow"] .flow-telegram-panel > .panel-actions,
+  html[data-theme="system"] .page[data-page="flow"] #flowHistory .empty-state {
+    background: var(--surface-panel);
+  }
+
+  html[data-theme="system"] .page[data-page="flow"] .flow-layout .panel-header h2,
+  html[data-theme="system"] .page[data-page="flow"] #flowStatusPanel .flow-value,
+  html[data-theme="system"] .page[data-page="flow"] #fsrsStatusPanel .stack > .inline-cluster strong {
+    color: var(--text-primary);
+  }
+}
+
+@media (max-width: 64rem) {
+  .page[data-page="flow"] .flow-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .page[data-page="flow"] .flow-layout > .panel,
+  .page[data-page="flow"] .flow-layout > .panel--wide {
+    grid-column: 1;
+  }
+}
+
+@media (max-width: 48rem) {
+  .page[data-page="flow"] .page-actions,
+  .page[data-page="flow"] .panel-actions {
+    width: 100%;
+  }
+
+  .page[data-page="flow"] .page-actions .button,
+  .page[data-page="flow"] .panel-actions .button {
+    flex: 1 1 10rem;
+  }
+
+  .page[data-page="flow"] #flowStatusPanel .stack > .inline-cluster,
+  .page[data-page="flow"] #fsrsStatusPanel .stack > .inline-cluster {
+    align-items: flex-start;
+  }
+}
