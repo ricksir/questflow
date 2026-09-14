@@ -111,14 +111,17 @@ class ModularArchitectureTests(unittest.TestCase):
         self.assertIn("questions.update", operation_names)
         self.assertIn("questions.delete", operation_names)
         self.assertIn("questions.annul", operation_names)
+        self.assertIn("questions.image.remove", operation_names)
         create_contract = next(item for item in contract["operations"] if item["name"] == "questions.create")
         update_contract = next(item for item in contract["operations"] if item["name"] == "questions.update")
         delete_contract = next(item for item in contract["operations"] if item["name"] == "questions.delete")
         annul_contract = next(item for item in contract["operations"] if item["name"] == "questions.annul")
+        remove_image_contract = next(item for item in contract["operations"] if item["name"] == "questions.image.remove")
         self.assertTrue(create_contract["mutating"])
         self.assertTrue(update_contract["mutating"])
         self.assertTrue(delete_contract["mutating"])
         self.assertTrue(annul_contract["mutating"])
+        self.assertTrue(remove_image_contract["mutating"])
         result = self.api.dispatch_studio_v1("questions.list", {"limit": 10})
         self.assertTrue(result["ok"])
         self.assertEqual(result["contract"], "questflow.studio.v1")
@@ -207,6 +210,38 @@ class ModularArchitectureTests(unittest.TestCase):
         legacy_delete = self.api.delete_question(legacy_delete_uid)
         self.assertTrue(legacy_delete["ok"])
         self.assertFalse(self.api.get_question(legacy_delete_uid)["ok"])
+
+    def test_question_image_removal_is_available_in_studio_v1_and_legacy_facade(self) -> None:
+        assert self.api.commands is not None and self.api.queries is not None
+
+        studio_created = self.api.create_manual_question()
+        self.assertTrue(studio_created["ok"])
+        studio_uid = str(studio_created["uid"])
+        studio_question = dict(self.api.queries.get(studio_uid) or {})
+        studio_question["imagem_questao"] = {
+            "path": str(self.root / "external-studio-image.png"),
+            "origem": "manual",
+        }
+        self.api.commands.update(studio_uid, studio_question)
+        self.assertIn("imagem_questao", self.api.queries.get(studio_uid) or {})
+
+        studio = self.api.dispatch_studio_v1("questions.image.remove", {"uid": studio_uid})
+        self.assertTrue(studio["ok"])
+        self.assertEqual(studio["operation"], "questions.image.remove")
+        self.assertNotIn("imagem_questao", self.api.queries.get(studio_uid) or {})
+
+        legacy_created = self.api.create_manual_question()
+        self.assertTrue(legacy_created["ok"])
+        legacy_uid = str(legacy_created["uid"])
+        legacy_question = dict(self.api.queries.get(legacy_uid) or {})
+        legacy_question["imagem_questao"] = {
+            "path": str(self.root / "external-legacy-image.png"),
+            "origem": "manual",
+        }
+        self.api.commands.update(legacy_uid, legacy_question)
+        legacy = self.api.remove_image(legacy_uid)
+        self.assertTrue(legacy["ok"])
+        self.assertNotIn("imagem_questao", self.api.queries.get(legacy_uid) or {})
 
     def test_question_detail_is_equivalent_between_studio_v1_and_legacy_facade(self) -> None:
         created = self.api.create_manual_question()
@@ -361,13 +396,38 @@ class ModularArchitectureTests(unittest.TestCase):
             self.assertIn("stats", delete_payload["data"])
             self.assertFalse(self.api.get_question(delete_uid)["ok"])
 
+            image_created = self.api.create_manual_question()
+            self.assertTrue(image_created["ok"])
+            image_uid = str(image_created["uid"])
+            assert self.api.commands is not None and self.api.queries is not None
+            image_question = dict(self.api.queries.get(image_uid) or {})
+            image_question["imagem_questao"] = {
+                "path": str(self.root / "external-http-image.png"),
+                "origem": "manual",
+            }
+            self.api.commands.update(image_uid, image_question)
+            remove_image_request = urllib.request.Request(
+                f"{server.base_url}/api/v1/studio/questions/{urllib.parse.quote(image_uid, safe='')}/image/remove",
+                data=b"{}",
+                headers={
+                    "X-QuestFlow-Token": server.token,
+                    "Content-Type": "application/json",
+                },
+                method="POST",
+            )
+            with urllib.request.urlopen(remove_image_request, timeout=5) as response:
+                remove_image_payload = json.loads(response.read().decode("utf-8"))
+            self.assertTrue(remove_image_payload["ok"])
+            self.assertEqual(remove_image_payload["operation"], "questions.image.remove")
+            self.assertNotIn("imagem_questao", self.api.queries.get(image_uid) or {})
+
             with urllib.request.urlopen(f"{server.base_url}/modules/bootstrap.js", timeout=5) as response:
                 frontend = response.read().decode("utf-8")
             self.assertIn("typed-route-modules-v1", frontend)
         finally:
             server.stop()
 
-    def test_review_read_create_save_and_lifecycle_use_studio_v1_with_legacy_fallback(self) -> None:
+    def test_review_core_editorial_actions_use_studio_v1_with_legacy_fallback(self) -> None:
         script = (Path(__file__).resolve().parents[1] / "web" / "app.js").read_text(encoding="utf-8")
         self.assertIn("async studioGet(path, fallbackMethod = '', fallbackArgs = [])", script)
         self.assertIn("/api/v1/studio/", script)
@@ -418,6 +478,14 @@ class ModularArchitectureTests(unittest.TestCase):
         self.assertIn("/annul", annul_question)
         self.assertIn("'annul_question'", annul_question)
         self.assertNotIn("bridge.call('annul_question'", annul_question)
+
+        remove_image_start = script.index("async function removeImage()")
+        remove_image_end = script.index("async function rereadQuestion()", remove_image_start)
+        remove_image = script[remove_image_start:remove_image_end]
+        self.assertIn("bridge.studioPost(", remove_image)
+        self.assertIn("/image/remove", remove_image)
+        self.assertIn("'remove_image'", remove_image)
+        self.assertNotIn("bridge.call('remove_image'", remove_image)
 
     def test_fsrs_kt_irt_and_analytics_are_declared_rebuildable(self) -> None:
         architecture = self.api.get_engine_architecture()["architecture"]

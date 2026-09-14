@@ -287,6 +287,7 @@ class QuestFlowWebApi:
                     save_question=self._save_question_record,
                     delete_question=self._delete_question_record,
                     annul_question=self._annul_question_record,
+                    remove_image=self._remove_image_record,
                 )
                 # 6.11.0: Observabilidade/Quality Gates saem do AI Engine e passam
                 # a um serviço de controle dedicado com worker serial e Snapshot Store.
@@ -2593,7 +2594,7 @@ class QuestFlowWebApi:
         self.commands.update(uid, question)
         return {"ok": True, "image": self._image_data(question)}
 
-    def remove_image(self, uid: str) -> dict:
+    def _remove_image_record(self, uid: str) -> dict:
         self._ensure_core()
         assert self.commands is not None and self.queries is not None
         question = self.queries.get(uid)
@@ -2609,6 +2610,12 @@ class QuestFlowWebApi:
                 pass
         self.commands.update(uid, question)
         return {"ok": True}
+
+    def remove_image(self, uid: str) -> dict:
+        result = self.dispatch_studio_v1("questions.image.remove", {"uid": uid})
+        if not result.get("ok"):
+            return result
+        return {"ok": True, **_jsonable(result.get("data") or {})}
 
     def _image_data(self, question: dict) -> dict | None:
         info = question.get("imagem_questao", {}) if isinstance(question.get("imagem_questao"), dict) else {}
