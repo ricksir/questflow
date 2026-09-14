@@ -431,6 +431,16 @@
                     <span>Sua dúvida ou pedido específico</span>
                     <textarea id="tutorUserPrompt" rows="3" placeholder="Ex.: por que minha alternativa está errada? Qual regra e qual exceção devo memorizar?"></textarea>
                   </label>
+                  <div class="tutor-quick-prompts" aria-label="Pedidos rápidos para o Tutor">
+                    <span>Pedidos rápidos</span>
+                    <div>
+                      <button type="button" data-tutor-quick-prompt="Explique esta questão de forma ultra-fácil, sem perder a regra jurídica ou técnica importante.">Explique ultra-fácil</button>
+                      <button type="button" data-tutor-quick-prompt="Explique por que a minha resposta está errada e qual raciocínio eu deveria ter usado.">Por que eu errei?</button>
+                      <button type="button" data-tutor-quick-prompt="Mostre a principal pegadinha de banca desta questão e como reconhecê-la em uma prova.">Pegadinha da banca</button>
+                      <button type="button" data-tutor-quick-prompt="Resuma a regra, a exceção e o ponto que eu preciso memorizar para não errar novamente.">Regra + exceção</button>
+                      <button type="button" data-tutor-quick-prompt="Transforme este erro em uma revisão curta de recuperação ativa, com uma pergunta de checagem no final.">Criar revisão</button>
+                    </div>
+                  </div>
                   <div class="tutor-provider-box">
                     <label class="tutor-online-toggle"><input id="tutorOnlineAi" type="checkbox"> <span><strong>Complementar com IA externa</strong><small id="tutorProviderHint">Usa o provedor escolhido em Configurações. Se falhar, mantém o RAG local.</small></span></label>
                     <div class="tutor-provider-status"><span>Provedor ativo</span><strong id="tutorActiveProvider">QuestFlow local</strong><button class="button button--ghost button--small" id="openAiSettings" type="button">Configurar IAs</button></div>
