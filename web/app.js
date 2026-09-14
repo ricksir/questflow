@@ -4856,24 +4856,42 @@ async function createQuestion() {
 
 async function deleteQuestion() {
   if (!state.currentUid || !window.confirm('Excluir definitivamente esta questão da base ativa?')) return;
-  const result = await bridge.call('delete_question', state.currentUid);
-  if (!result.ok) return toast(result.error || 'Não foi possível excluir.', 'error');
-  clearQuestionEditor();
-  await loadQuestions();
-  await refreshBootstrap();
-  toast('Questão excluída.', 'success');
+  const uid = state.currentUid;
+  try {
+    await bridge.studioPost(
+      `questions/${encodeURIComponent(uid)}/delete`,
+      {},
+      'delete_question',
+      [uid],
+    );
+    clearQuestionEditor();
+    await loadQuestions();
+    await refreshBootstrap();
+    toast('Questão excluída.', 'success');
+  } catch (error) {
+    toast(error.message || 'Não foi possível excluir.', 'error');
+  }
 }
 
 async function annulQuestion() {
   if (!state.currentUid) return;
   const reason = window.prompt('Motivo da anulação:', 'Questão anulada pela banca');
   if (reason === null) return;
-  const result = await bridge.call('annul_question', state.currentUid, reason);
-  if (!result.ok) return toast(result.error || 'Não foi possível arquivar.', 'error');
-  clearQuestionEditor();
-  await loadQuestions();
-  await refreshBootstrap();
-  toast('Questão marcada como anulada e removida da base ativa.', 'success');
+  const uid = state.currentUid;
+  try {
+    await bridge.studioPost(
+      `questions/${encodeURIComponent(uid)}/annul`,
+      { reason },
+      'annul_question',
+      [uid, reason],
+    );
+    clearQuestionEditor();
+    await loadQuestions();
+    await refreshBootstrap();
+    toast('Questão marcada como anulada e removida da base ativa.', 'success');
+  } catch (error) {
+    toast(error.message || 'Não foi possível arquivar.', 'error');
+  }
 }
 
 async function attachImage() {

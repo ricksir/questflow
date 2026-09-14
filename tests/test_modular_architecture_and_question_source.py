@@ -109,10 +109,16 @@ class ModularArchitectureTests(unittest.TestCase):
         self.assertIn("questions.list", operation_names)
         self.assertIn("questions.create", operation_names)
         self.assertIn("questions.update", operation_names)
+        self.assertIn("questions.delete", operation_names)
+        self.assertIn("questions.annul", operation_names)
         create_contract = next(item for item in contract["operations"] if item["name"] == "questions.create")
         update_contract = next(item for item in contract["operations"] if item["name"] == "questions.update")
+        delete_contract = next(item for item in contract["operations"] if item["name"] == "questions.delete")
+        annul_contract = next(item for item in contract["operations"] if item["name"] == "questions.annul")
         self.assertTrue(create_contract["mutating"])
         self.assertTrue(update_contract["mutating"])
+        self.assertTrue(delete_contract["mutating"])
+        self.assertTrue(annul_contract["mutating"])
         result = self.api.dispatch_studio_v1("questions.list", {"limit": 10})
         self.assertTrue(result["ok"])
         self.assertEqual(result["contract"], "questflow.studio.v1")
@@ -165,6 +171,42 @@ class ModularArchitectureTests(unittest.TestCase):
         self.assertTrue(persisted["ok"])
         self.assertEqual(persisted["question"]["enunciado"], "Enunciado salvo pela fachada legada")
         self.assertEqual(persisted["question"]["revisao"]["status"], "aprovado")
+
+    def test_question_lifecycle_is_available_in_studio_v1_and_legacy_facades(self) -> None:
+        studio_annulled = self.api.create_manual_question()
+        self.assertTrue(studio_annulled["ok"])
+        studio_annul_uid = str(studio_annulled["uid"])
+        annul = self.api.dispatch_studio_v1(
+            "questions.annul",
+            {"uid": studio_annul_uid, "reason": "Anulada no teste Studio v1"},
+        )
+        self.assertTrue(annul["ok"])
+        self.assertEqual(annul["operation"], "questions.annul")
+        self.assertIn("stats", annul["data"])
+        self.assertFalse(self.api.get_question(studio_annul_uid)["ok"])
+
+        studio_deleted = self.api.create_manual_question()
+        self.assertTrue(studio_deleted["ok"])
+        studio_delete_uid = str(studio_deleted["uid"])
+        deleted = self.api.dispatch_studio_v1("questions.delete", {"uid": studio_delete_uid})
+        self.assertTrue(deleted["ok"])
+        self.assertEqual(deleted["operation"], "questions.delete")
+        self.assertIn("stats", deleted["data"])
+        self.assertFalse(self.api.get_question(studio_delete_uid)["ok"])
+
+        legacy_annulled = self.api.create_manual_question()
+        self.assertTrue(legacy_annulled["ok"])
+        legacy_annul_uid = str(legacy_annulled["uid"])
+        legacy_annul = self.api.annul_question(legacy_annul_uid, "Anulada pela fachada legada")
+        self.assertTrue(legacy_annul["ok"])
+        self.assertFalse(self.api.get_question(legacy_annul_uid)["ok"])
+
+        legacy_deleted = self.api.create_manual_question()
+        self.assertTrue(legacy_deleted["ok"])
+        legacy_delete_uid = str(legacy_deleted["uid"])
+        legacy_delete = self.api.delete_question(legacy_delete_uid)
+        self.assertTrue(legacy_delete["ok"])
+        self.assertFalse(self.api.get_question(legacy_delete_uid)["ok"])
 
     def test_question_detail_is_equivalent_between_studio_v1_and_legacy_facade(self) -> None:
         created = self.api.create_manual_question()
@@ -275,13 +317,57 @@ class ModularArchitectureTests(unittest.TestCase):
             self.assertIn("stats", update_payload["data"])
             self.assertIn("curation", update_payload["data"])
 
+            annul_request = urllib.request.Request(
+                f"{server.base_url}/api/v1/studio/questions/{urllib.parse.quote(created_uid, safe='')}/annul",
+                data=json.dumps({"reason": "Anulada via HTTP Studio v1"}, ensure_ascii=False).encode("utf-8"),
+                headers={
+                    "X-QuestFlow-Token": server.token,
+                    "Content-Type": "application/json",
+                },
+                method="POST",
+            )
+            with urllib.request.urlopen(annul_request, timeout=5) as response:
+                annul_payload = json.loads(response.read().decode("utf-8"))
+            self.assertTrue(annul_payload["ok"])
+            self.assertEqual(annul_payload["operation"], "questions.annul")
+            self.assertIn("stats", annul_payload["data"])
+            self.assertFalse(self.api.get_question(created_uid)["ok"])
+
+            delete_create_request = urllib.request.Request(
+                f"{server.base_url}/api/v1/studio/questions",
+                data=b"{}",
+                headers={
+                    "X-QuestFlow-Token": server.token,
+                    "Content-Type": "application/json",
+                },
+                method="POST",
+            )
+            with urllib.request.urlopen(delete_create_request, timeout=5) as response:
+                delete_create_payload = json.loads(response.read().decode("utf-8"))
+            delete_uid = str(delete_create_payload["data"]["uid"])
+            delete_request = urllib.request.Request(
+                f"{server.base_url}/api/v1/studio/questions/{urllib.parse.quote(delete_uid, safe='')}/delete",
+                data=b"{}",
+                headers={
+                    "X-QuestFlow-Token": server.token,
+                    "Content-Type": "application/json",
+                },
+                method="POST",
+            )
+            with urllib.request.urlopen(delete_request, timeout=5) as response:
+                delete_payload = json.loads(response.read().decode("utf-8"))
+            self.assertTrue(delete_payload["ok"])
+            self.assertEqual(delete_payload["operation"], "questions.delete")
+            self.assertIn("stats", delete_payload["data"])
+            self.assertFalse(self.api.get_question(delete_uid)["ok"])
+
             with urllib.request.urlopen(f"{server.base_url}/modules/bootstrap.js", timeout=5) as response:
                 frontend = response.read().decode("utf-8")
             self.assertIn("typed-route-modules-v1", frontend)
         finally:
             server.stop()
 
-    def test_review_read_create_and_save_use_studio_v1_with_legacy_fallback(self) -> None:
+    def test_review_read_create_save_and_lifecycle_use_studio_v1_with_legacy_fallback(self) -> None:
         script = (Path(__file__).resolve().parents[1] / "web" / "app.js").read_text(encoding="utf-8")
         self.assertIn("async studioGet(path, fallbackMethod = '', fallbackArgs = [])", script)
         self.assertIn("/api/v1/studio/", script)
@@ -316,6 +402,22 @@ class ModularArchitectureTests(unittest.TestCase):
         self.assertIn("encodeURIComponent(state.currentUid)", save_question)
         self.assertIn("'save_question'", save_question)
         self.assertNotIn("bridge.call('save_question'", save_question)
+
+        delete_start = script.index("async function deleteQuestion()")
+        delete_end = script.index("async function annulQuestion()", delete_start)
+        delete_question = script[delete_start:delete_end]
+        self.assertIn("bridge.studioPost(", delete_question)
+        self.assertIn("/delete", delete_question)
+        self.assertIn("'delete_question'", delete_question)
+        self.assertNotIn("bridge.call('delete_question'", delete_question)
+
+        annul_start = script.index("async function annulQuestion()")
+        annul_end = script.index("async function attachImage()", annul_start)
+        annul_question = script[annul_start:annul_end]
+        self.assertIn("bridge.studioPost(", annul_question)
+        self.assertIn("/annul", annul_question)
+        self.assertIn("'annul_question'", annul_question)
+        self.assertNotIn("bridge.call('annul_question'", annul_question)
 
     def test_fsrs_kt_irt_and_analytics_are_declared_rebuildable(self) -> None:
         architecture = self.api.get_engine_architecture()["architecture"]
