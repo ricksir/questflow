@@ -35,6 +35,20 @@ class SchoolabAprovaCheckmateUiTests(unittest.TestCase):
         self.assertIn('Abrir sessão recomendada', self.script)
         self.assertIn("navigate('recommend')", self.script)
 
+    def test_checkmate_analytics_bento_is_decision_first(self):
+        self.assertIn('Analytics de estudo', self.html)
+        self.assertIn('Seu aprendizado em números', self.html)
+        trend = self.script.index('data-analytics-info="trend"')
+        insights = self.script.index('data-analytics-info="insights"', trend)
+        compare = self.script.index('data-analytics-info="compare"', insights)
+        summary = self.script.index('data-analytics-info="summary"', compare)
+        self.assertLess(trend, insights)
+        self.assertLess(insights, compare)
+        self.assertLess(compare, summary)
+        self.assertIn('analytics-card__kicker', self.script)
+        self.assertIn('--chart-accent-1: var(--qf-gold-500)', self.theme)
+        self.assertIn('#visualAnalyticsPanel .analytics-hero-card', self.theme)
+
     def test_visual_work_does_not_bump_release(self):
         self.assertEqual(self.version, '6.24.0')
 
