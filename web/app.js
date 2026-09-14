@@ -1591,7 +1591,7 @@ function renderTutorWorkspace(workspace = {}) {
   const refreshDiagnosis = $('#refreshTutorDiagnosis');
   if (generate) { generate.disabled = !selected; generate.title = selected ? 'Gerar orientação com o contexto atual' : 'Selecione uma questão acima para habilitar'; }
   if (refreshDiagnosis) { refreshDiagnosis.disabled = !selected; refreshDiagnosis.title = selected ? 'Recalcular a hipótese diagnóstica' : 'Selecione uma questão acima para habilitar'; }
-  $('[data-tutor-quick-prompt]').forEach((button) => { button.disabled = !selected; });
+  $$('[data-tutor-quick-prompt]').forEach((button) => { button.disabled = !selected; });
   const meta = $('#tutorSelectedMeta');
   const questionTarget = $('#tutorSelectedQuestion');
   const diagnosisTarget = $('#tutorDiagnosis');
@@ -7440,7 +7440,7 @@ function bindEvents() {
   $('#resumeAdaptiveSimulation')?.addEventListener('click', (event) => resumeAdaptiveSimulation(event.currentTarget.dataset.sessionId || ''));
   $('#abandonAdaptiveSimulation')?.addEventListener('click', abandonAdaptiveSimulation);
   $('#generateTutorAnswer')?.addEventListener('click', generateTutorAnswer);
-  $('[data-tutor-quick-prompt]').forEach((button) => button.addEventListener('click', () => {
+  $$('[data-tutor-quick-prompt]').forEach((button) => button.addEventListener('click', () => {
     const field = $('#tutorUserPrompt');
     if (!field || button.disabled) return;
     field.value = button.dataset.tutorQuickPrompt || '';
