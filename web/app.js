@@ -1611,10 +1611,20 @@ function stage4Pct(value, digits = 0) {
   return Number.isFinite(number) ? `${(number * 100).toFixed(digits)}%` : '—';
 }
 
+function stage4UrgencyLabel(bucket) {
+  const value = Number(bucket);
+  if (value === 0) return 'Revisão marcada';
+  if (value === 1) return 'Recuperar agora';
+  if (value === 2) return 'Revisar agora';
+  if (value === 3) return 'Conteúdo novo';
+  if (value === 4) return 'Antecipar revisão';
+  return 'Prioridade calculada';
+}
+
 function stage4ComponentLabel(key) {
   const labels = {
-    mastery_gap: 'Lacuna KT', forgetting_risk: 'Risco FSRS', coverage_gap: 'Cobertura',
-    board_incidence: 'Banca', irt_information: 'Informação IRT', exam_urgency: 'Urgência',
+    mastery_gap: 'Domínio', forgetting_risk: 'Memória', coverage_gap: 'Cobertura',
+    board_incidence: 'Banca', irt_information: 'Valor diagnóstico', exam_urgency: 'Urgência',
     uncertainty: 'Incerteza', recency: 'Recência',
   };
   return labels[key] || String(key || '').replaceAll('_', ' ');
@@ -1632,8 +1642,8 @@ function renderRecommendationDashboard(data = {}) {
     const interval = overall.low == null || overall.high == null ? 'Sem intervalo ainda' : `${stage4Pct(overall.low)}–${stage4Pct(overall.high)}`;
     metrics.innerHTML = [
       ['Projeção de acerto', estimate, interval],
-      ['Ações priorizadas', formatNumber(recommendations.length), `${urgent} na faixa FSRS urgente`],
-      ['Matérias modeladas', formatNumber(projections.length), 'KT + IRT + histórico'],
+      ['Ações priorizadas', formatNumber(recommendations.length), `${urgent} pedem revisão primeiro`],
+      ['Matérias modeladas', formatNumber(projections.length), 'domínio + histórico real'],
       ['Bancas observadas', formatNumber(boards.length), data.active_simulation ? 'simulado em andamento' : 'distribuição do banco local'],
     ].map(([label, value, detail]) => `<article class="metric-card"><span>${escapeHtml(label)}</span><strong>${escapeHtml(value)}</strong><small>${escapeHtml(detail)}</small></article>`).join('');
   }
@@ -1646,7 +1656,7 @@ function renderRecommendationDashboard(data = {}) {
       return `<article class="stage4-recommendation-card" data-recommend-uid="${escapeHtml(item.uid)}">
         <div class="stage4-recommendation-rank"><span>${index + 1}</span><strong>${Number(item.score || 0).toFixed(0)}</strong><small>/100</small></div>
         <div class="stage4-recommendation-main">
-          <div class="stage4-recommendation-head"><div><strong>${escapeHtml(textOrMissing(item.code, 'Questão'))}</strong><span>${escapeHtml(textOrMissing(item.subject, 'Matéria não informada'))} · ${escapeHtml(textOrMissing(item.topic, 'Sem assunto'))}</span></div><span class="status-pill">FSRS ${escapeHtml(String(item.bucket ?? '—'))}</span></div>
+          <div class="stage4-recommendation-head"><div><strong>${escapeHtml(textOrMissing(item.code, 'Questão'))}</strong><span>${escapeHtml(textOrMissing(item.subject, 'Matéria não informada'))} · ${escapeHtml(textOrMissing(item.topic, 'Sem assunto'))}</span></div><span class="status-pill" title="Classe interna de urgência ${escapeHtml(String(item.bucket ?? '—'))}">${escapeHtml(stage4UrgencyLabel(item.bucket))}</span></div>
           <p>${escapeHtml(String(item.statement || '').slice(0, 210))}${String(item.statement || '').length > 210 ? '…' : ''}</p>
           ${reasons.length ? `<div class="stage4-reasons">${reasons.map((reason) => `<span>${escapeHtml(reason)}</span>`).join('')}</div>` : ''}
           <div class="stage4-components">${components.map(([key, value]) => `<div title="${escapeHtml(stage4ComponentLabel(key))}: ${Number(value || 0).toFixed(2)}"><span>${escapeHtml(stage4ComponentLabel(key))}</span><div><i style="width:${Math.max(0, Math.min(100, Number(value || 0) * 4))}%"></i></div></div>`).join('')}</div>
