@@ -53,6 +53,17 @@ class SchoolabAprovaCheckmateUiTests(unittest.TestCase):
         self.assertIn('Histórico operacional', self.html)
         self.assertNotIn('QuestFlow Score', self.script)
 
+    def test_recommender_uses_student_facing_next_action_language(self):
+        self.assertIn('Próxima melhor ação', self.html)
+        self.assertIn('id="recommendTitle">O que estudar agora', self.html)
+        self.assertIn('Revisões urgentes vêm primeiro', self.html)
+        self.assertIn("function stage4UrgencyLabel", self.script)
+        self.assertIn("'Recuperar agora'", self.script)
+        self.assertIn("'Revisar agora'", self.script)
+        self.assertIn("mastery_gap: 'Domínio'", self.script)
+        self.assertIn("forgetting_risk: 'Memória'", self.script)
+        self.assertIn('.page[data-page="recommend"] .stage4-recommendations-panel', self.theme)
+
     def test_visual_layer_respects_keyboard_and_reduced_motion(self):
         self.assertIn(':focus-visible', self.theme)
         self.assertIn('outline: 3px solid var(--focus-ring)', self.theme)
