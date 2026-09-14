@@ -113,6 +113,16 @@ class SchoolabAprovaCheckmateUiTests(unittest.TestCase):
         self.assertIn('.page[data-page="review"] .question-editor', self.theme)
         self.assertIn('.page[data-page="review"] .question-intelligence-section', self.theme)
 
+    def test_corrections_triage_uses_schoolab_semantics(self):
+        self.assertIn('data-page="corrections"', self.html)
+        self.assertIn('Correções e Matérias não Estudadas', self.html)
+        self.assertIn('.page[data-page="corrections"] .corrections-overview article', self.theme)
+        self.assertIn('.page[data-page="corrections"] .corrections-section--editorial', self.theme)
+        self.assertIn('.page[data-page="corrections"] .corrections-section--study', self.theme)
+        self.assertIn('.not-studied-modal .not-studied-callout', self.theme)
+        self.assertIn('.not-studied-modal .not-studied-guidance', self.theme)
+        self.assertIn("color: #8b651b !important", self.theme)
+
     def test_checkmate_analytics_bento_is_decision_first(self):
         self.assertIn('Analytics de estudo', self.html)
         self.assertIn('Seu aprendizado em números', self.html)
