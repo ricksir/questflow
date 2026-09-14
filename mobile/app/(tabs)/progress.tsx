@@ -148,7 +148,7 @@ export default function ProgressScreen() {
             <>
               <Card style={styles.chartCard}>
                 <View style={styles.chartHeading}><Text style={styles.chartTitle}>Resultado por resposta</Text><Pill text={`${analytics.sample_size} respostas`} tone="info" /></View>
-                <Muted>Pontos ciano são acertos, pontos laranja são erros e a linha mostra o percentual acumulado.</Muted>
+                <Muted>Pontos verde-água indicam resultados mais altos, dourados os mais baixos, e a linha mostra o percentual acumulado.</Muted>
                 <TrendLineChart points={analytics.timeline} />
               </Card>
               <ProjectionInterval analytics={analytics} />
