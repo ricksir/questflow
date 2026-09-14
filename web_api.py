@@ -283,6 +283,7 @@ class QuestFlowWebApi:
                     architecture=architecture_kernel,
                     persist_config=self._persist_config,
                     present_question=self._present_question_detail,
+                    create_question=self._create_manual_question_record,
                 )
                 # 6.11.0: Observabilidade/Quality Gates saem do AI Engine e passam
                 # a um serviço de controle dedicado com worker serial e Snapshot Store.
@@ -2311,12 +2312,18 @@ class QuestFlowWebApi:
             return {"ok": False, "error": "Questão não encontrada."}
         return {"ok": True, **_jsonable(detail)}
 
-    def create_manual_question(self) -> dict:
+    def _create_manual_question_record(self) -> dict:
         self._ensure_core()
         assert self.commands is not None and self.queries is not None
         uid = self.commands.create_manual(self.taxonomy)
         question = self.queries.get(uid)
-        return {"ok": True, "uid": uid, "question": _jsonable(question)}
+        return {"uid": uid, "question": _jsonable(question)}
+
+    def create_manual_question(self) -> dict:
+        result = self.dispatch_studio_v1("questions.create", {})
+        if not result.get("ok"):
+            return result
+        return {"ok": True, **_jsonable(result.get("data") or {})}
 
     def save_question(self, uid: str, payload: dict, approve: bool = False) -> dict:
         self._ensure_core()
