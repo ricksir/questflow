@@ -2,7 +2,6 @@ import { router, useFocusEffect } from 'expo-router';
 import { useCallback } from 'react';
 import { RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Button, Card, HeroCard, Metric, MicroBars, Muted, Pill, ProgressBar, Screen, ScreenHeader, SectionTitle, StatePanel, StatRing, palette } from '../../src/components/ui';
-import { formatDuration } from '../../src/lib/format';
 import { useQuestFlow } from '../../src/context/QuestFlowContext';
 
 function reasonLabel(reason: string) {
@@ -17,11 +16,6 @@ function reasonLabel(reason: string) {
 
 function pct(value: number | null | undefined) {
   return value == null ? '—' : `${Math.round(value * 100)}%`;
-}
-
-function timeLabel(value: number | null) {
-  if (value == null) return 'tempo fora da métrica';
-  return formatDuration(value, { suffix: 'ativos' });
 }
 
 export default function TodayScreen() {
@@ -220,6 +214,4 @@ const styles = StyleSheet.create({
   focusMetric: { color: palette.muted, fontSize: 12 },
   focusStrong: { color: palette.text, fontWeight: '900' },
   reason: { color: palette.muted, lineHeight: 19, fontSize: 13 },
-  activityRow: { flexDirection: 'row', alignItems: 'center', gap: 10 },
-  activityTitle: { color: palette.text, fontWeight: '800' },
 });
