@@ -159,7 +159,9 @@ def run() -> None:
             )
             segmented_visible = _visible(driver, ".segmented-control")
 
-            expected_search = inner_width > 928
+            # O hardening responsivo mais recente mantém a busca entre
+            # 48rem e 58rem e a oculta apenas abaixo de 48rem.
+            expected_search = inner_width > 768
             if search_visible != expected_search:
                 raise AssertionError(
                     f"Busca global em {label}: visível={search_visible}, "
