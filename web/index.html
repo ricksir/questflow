@@ -134,42 +134,42 @@
         <div class="route-progress" id="routeProgress" aria-hidden="true"><span></span></div>
         <div class="visually-hidden" id="pageStateAnnouncer" role="status" aria-live="polite" aria-atomic="true"></div>
         <section class="page is-active" data-page="dashboard" aria-labelledby="dashboardTitle">
-          <div class="page-header">
+          <div class="page-header dashboard-welcome">
             <div>
-              <p class="eyebrow">Banco inteligente de questões</p>
+              <p class="eyebrow">Seu plano inteligente de estudos</p>
               <h1 id="dashboardTitle">Visão geral</h1>
-              <p>Questões de alto nível, desempenho, revisão adaptativa e sincronização em um único painel.</p>
+              <p>Veja primeiro o que merece sua atenção agora; depois aprofunde desempenho, memória e cobertura.</p>
             </div>
             <div class="page-actions">
               <button class="button button--secondary" id="refreshDashboard">Atualizar painel</button>
             </div>
           </div>
-          <div class="metric-grid" id="metricGrid" aria-live="polite"></div>
-          <article class="panel learning-pulse-panel" aria-labelledby="learningPulseTitle">
+          <article class="panel learning-pulse-panel dashboard-priority-card" aria-labelledby="learningPulseTitle">
             <div class="panel-header learning-pulse-header">
               <div>
-                <p class="eyebrow">Cockpit adaptativo</p>
-                <h2 id="learningPulseTitle">Pulso de aprendizagem</h2>
-                <p>Retenção, ritmo e prioridade reunidos para transformar diagnóstico em uma próxima ação clara.</p>
+                <p class="eyebrow">Próxima melhor ação</p>
+                <h2 id="learningPulseTitle">Seu foco agora</h2>
+                <p>O QuestFlow cruza memória, desempenho e cobertura para indicar onde o próximo bloco de estudo rende mais.</p>
               </div>
               <span class="learning-pulse-live"><i aria-hidden="true"></i> Modelo atualizado</span>
             </div>
             <div id="learningPulsePanel" class="panel-body" aria-live="polite"><div class="skeleton" style="height:15rem"></div></div>
           </article>
+          <article class="panel today-panel dashboard-today-card" aria-labelledby="todayTitle">
+            <div class="panel-header today-panel__header">
+              <div><p class="eyebrow">Plano adaptativo</p><h2 id="todayTitle">Seu estudo de hoje</h2><p>Revisões, edital e domínio viram uma sequência objetiva para você apenas seguir.</p></div>
+              <button class="button button--secondary button--compact" id="refreshToday" type="button">Recalcular plano</button>
+            </div>
+            <div id="todayPanel" class="panel-body" aria-live="polite"><div class="skeleton" style="height:8rem"></div></div>
+          </article>
+          <div class="metric-grid dashboard-metric-grid" id="metricGrid" aria-live="polite"></div>
           <article class="panel study-command-panel" aria-labelledby="studyCommandTitle">
-            <div class="panel-header"><div><p class="eyebrow">Leitura rápida do seu estudo</p><h2 id="studyCommandTitle">Entenda em 30 segundos</h2><p>O painel resume o que aconteceu, por que isso importa e qual é a próxima ação recomendada.</p></div></div>
+            <div class="panel-header"><div><p class="eyebrow">Leitura rápida do seu estudo</p><h2 id="studyCommandTitle">Entenda em 30 segundos</h2><p>Veja o que aconteceu, por que importa e qual decisão de estudo faz mais sentido em seguida.</p></div></div>
             <div id="studyCommandPanel" class="panel-body" aria-live="polite"><div class="skeleton" style="height:10rem"></div></div>
           </article>
           <article class="panel adaptive-decision-panel" aria-labelledby="adaptiveDecisionTitle">
             <div class="panel-header"><div><p class="eyebrow">Learning Engine · explicabilidade</p><h2 id="adaptiveDecisionTitle">Por que esta questão?</h2><p>Audite as decisões recentes das sessões adaptativas. Esta informação fica no Studio e não é exibida no aplicativo.</p></div></div>
             <div id="adaptiveDecisionPanel" class="panel-body" aria-live="polite"><div class="skeleton" style="height:6rem"></div></div>
-          </article>
-          <article class="panel today-panel" aria-labelledby="todayTitle">
-            <div class="panel-header today-panel__header">
-              <div><p class="eyebrow">Plano diário orientado pelo edital</p><h2 id="todayTitle">O que fazer hoje?</h2><p>FSRS mantém a agenda; edital, KT, IRT, cobertura e banca explicam onde concentrar esforço.</p></div>
-              <button class="button button--secondary button--compact" id="refreshToday" type="button">Recalcular plano</button>
-            </div>
-            <div id="todayPanel" class="panel-body" aria-live="polite"><div class="skeleton" style="height:8rem"></div></div>
           </article>
           <article class="panel database-health-panel" aria-labelledby="databaseHealthTitle">
             <div class="panel-header database-health-header">
