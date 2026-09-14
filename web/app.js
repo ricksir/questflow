@@ -386,6 +386,21 @@ class Bridge {
     return response.data ?? response;
   }
 
+  async studioPost(path, payload = {}, fallbackMethod = '', fallbackArgs = []) {
+    if (!this.ready) await this.init(fallbackMethod || 'bootstrap_shell');
+    if (!this.httpMode) {
+      if (!fallbackMethod) throw new Error('O contrato Studio v1 requer o transporte HTTP local.');
+      const fallback = await this.call(fallbackMethod, ...fallbackArgs);
+      if (fallback?.ok === false) throw new Error(fallback.error || 'Falha no recurso legado.');
+      return fallback?.data ?? fallback;
+    }
+    const response = await this.httpRequest(`/api/v1/studio/${String(path || '').replace(/^\//, '')}`, {
+      method: 'POST',
+      body: JSON.stringify(payload || {}),
+    });
+    return response.data ?? response;
+  }
+
   startHeartbeat() {
     if (!this.httpMode) return;
     const beat = async () => {
@@ -4825,10 +4840,13 @@ function setupRichTextTools() {
 }
 
 async function createQuestion() {
-  const result = await bridge.call('create_manual_question');
-  if (!result.ok) return toast(result.error || 'Não foi possível criar a questão.', 'error');
-  await loadQuestions();
-  await selectQuestion(result.uid);
+  try {
+    const result = await bridge.studioPost('questions', {}, 'create_manual_question');
+    await loadQuestions();
+    await selectQuestion(result.uid);
+  } catch (error) {
+    toast(error.message || 'Não foi possível criar a questão.', 'error');
+  }
 }
 
 async function deleteQuestion() {
