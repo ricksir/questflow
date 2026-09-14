@@ -65,6 +65,12 @@ jobs:
           cache: npm
           cache-dependency-path: mobile/package-lock.json
 
+      - name: Temporary refresh Expo lock snapshot
+        working-directory: mobile
+        run: |
+          npm install --package-lock-only --ignore-scripts
+          git diff -- package-lock.json
+
       - name: Install Mobile dependencies
         working-directory: mobile
         run: npm ci
