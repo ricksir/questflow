@@ -579,6 +579,11 @@ class QuestFlowLocalServer:
                     if parsed.path == "/api/v1/studio/questions":
                         self._studio_v1_result("questions.create", request_body)
                         return
+                    question_prefix = "/api/v1/studio/questions/"
+                    if parsed.path.startswith(question_prefix):
+                        request_body["uid"] = unquote(parsed.path[len(question_prefix):])
+                        self._studio_v1_result("questions.update", request_body)
+                        return
                     if parsed.path == "/api/v1/studio/question-source":
                         self._studio_v1_result("questions.source.save", request_body)
                         return
