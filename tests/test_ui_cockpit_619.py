@@ -47,6 +47,7 @@ class QuestFlowCockpit619Tests(unittest.TestCase):
         self.assertEqual(package["version"], "0.16.0")
         self.assertEqual(app["expo"]["primaryColor"], "#F3B54A")
         self.assertEqual(app["expo"]["backgroundColor"], "#FBFAF6")
+        self.assertEqual(app["expo"]["userInterfaceStyle"], "light")
         self.assertEqual(app["expo"]["androidStatusBar"]["barStyle"], "dark-content")
         self.assertIn("primary: '#F3B54A'", palette)
         self.assertIn("bg: '#FBFAF6'", palette)
