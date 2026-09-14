@@ -1458,3 +1458,103 @@ html[data-theme="dark"] .tutor-quick-prompts button {
     transform: none;
   }
 }
+
+/* Recommender: Aprova.ai-style next-action hierarchy with Schoolab visual language. */
+.page[data-page="recommend"] > .page-header {
+  padding-bottom: .8rem;
+}
+
+.page[data-page="recommend"] > .page-header h1 {
+  max-width: none;
+  font-size: clamp(2rem, 2.8vw, 3rem);
+}
+
+.page[data-page="recommend"] .stage4-recommendations-panel {
+  overflow: hidden;
+  border-color: color-mix(in srgb, var(--qf-gold-500) 32%, var(--border-subtle));
+  background:
+    radial-gradient(circle at 100% 0%, rgba(243,181,74,.10), transparent 25rem),
+    var(--surface-panel);
+}
+
+.page[data-page="recommend"] .stage4-recommendations-panel > .panel-header {
+  align-items: center;
+  border-bottom-color: color-mix(in srgb, var(--qf-gold-500) 18%, var(--border-subtle));
+}
+
+.page[data-page="recommend"] .stage4-recommendation-card {
+  border-color: var(--border-subtle);
+  background: var(--surface-panel);
+  box-shadow: none;
+}
+
+.page[data-page="recommend"] .stage4-recommendation-card:hover,
+.page[data-page="recommend"] .stage4-recommendation-card:focus-within {
+  border-color: color-mix(in srgb, var(--qf-gold-500) 48%, var(--border-subtle));
+  background: color-mix(in srgb, var(--qf-gold-soft) 22%, var(--surface-panel));
+}
+
+.page[data-page="recommend"] .stage4-recommendation-rank {
+  color: var(--qf-ink-900);
+  border-color: color-mix(in srgb, var(--qf-gold-500) 24%, var(--border-subtle));
+  background: linear-gradient(150deg, var(--qf-gold-soft), color-mix(in srgb, var(--surface-panel) 88%, var(--qf-gold-soft)));
+}
+
+.page[data-page="recommend"] .stage4-recommendation-rank strong {
+  color: var(--qf-ink-900);
+}
+
+.page[data-page="recommend"] .stage4-reasons > span {
+  border-color: color-mix(in srgb, var(--qf-sky-500) 16%, var(--border-subtle));
+  background: color-mix(in srgb, var(--qf-sky-500) 6%, var(--surface-panel));
+}
+
+.page[data-page="recommend"] .stage4-simulation-setup {
+  border-color: color-mix(in srgb, var(--qf-teal-500) 22%, var(--border-subtle));
+  background:
+    radial-gradient(circle at 100% 0%, rgba(33,184,154,.07), transparent 18rem),
+    var(--surface-panel);
+}
+
+.page[data-page="recommend"] .stage4-components i,
+.page[data-page="recommend"] .stage4-board-row i,
+.page[data-page="recommend"] .adaptive-sim-progress i {
+  background: linear-gradient(90deg, var(--qf-gold-500), var(--qf-teal-500));
+}
+
+html[data-theme="dark"] .page[data-page="recommend"] .stage4-recommendations-panel,
+html[data-theme="dark"] .page[data-page="recommend"] .stage4-simulation-setup {
+  background: var(--surface-panel);
+}
+
+html[data-theme="dark"] .page[data-page="recommend"] .stage4-recommendation-rank {
+  color: var(--text-primary);
+  background: rgba(243,181,74,.12);
+}
+
+html[data-theme="dark"] .page[data-page="recommend"] .stage4-recommendation-rank strong {
+  color: var(--text-primary);
+}
+
+@media (prefers-color-scheme: dark) {
+  html[data-theme="system"] .page[data-page="recommend"] .stage4-recommendations-panel,
+  html[data-theme="system"] .page[data-page="recommend"] .stage4-simulation-setup {
+    background: var(--surface-panel);
+  }
+
+  html[data-theme="system"] .page[data-page="recommend"] .stage4-recommendation-rank,
+  html[data-theme="system"] .page[data-page="recommend"] .stage4-recommendation-rank strong {
+    color: var(--text-primary);
+  }
+}
+
+@media (max-width: 46rem) {
+  .page[data-page="recommend"] .stage4-recommendations-panel > .panel-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .page[data-page="recommend"] .stage4-mode-filter {
+    width: 100%;
+  }
+}
