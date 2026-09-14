@@ -71,6 +71,15 @@ class SchoolabAprovaCheckmateUiTests(unittest.TestCase):
         self.assertIn('animation-duration: .001ms !important', self.theme)
         self.assertIn('transition-duration: .001ms !important', self.theme)
 
+    def test_quest_ai_can_handoff_context_to_tutor_without_auto_generation(self):
+        self.assertIn("function openQuestAiInsightInTutor", self.script)
+        self.assertIn("Levar insight ao Tutor", self.script)
+        self.assertIn("await navigate('tutor')", self.script)
+        self.assertIn("field.value = prompt", self.script)
+        self.assertIn("field.dispatchEvent(new Event('change'", self.script)
+        self.assertIn("Use a questão que eu selecionar como contexto", self.script)
+        self.assertIn("Não invente métricas ou fatos", self.script)
+
     def test_tutor_has_contextual_quick_actions(self):
         self.assertIn('data-tutor-quick-prompt', self.html)
         self.assertIn('Explique ultra-fácil', self.html)
