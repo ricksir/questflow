@@ -1404,7 +1404,6 @@ export default function QuestionsScreen() {
                     <Text style={styles.resultCoachDetail}>{coach.detail}</Text>
                   </View>
                 ) : null}
-                {feedback.provisional ? <Card style={styles.provisional}><Text style={styles.provisionalText}>Feedback provisório disponível. Suas métricas serão confirmadas quando o QuestFlow receber esta resposta.</Text></Card> : null}
                 {feedback.explanation ? <Button title={explanationOpen ? 'Ocultar explicação' : 'Abrir explicação'} onPress={markExplanationOpen} tone="secondary" /> : <Muted>Esta questão ainda não possui explicação cadastrada.</Muted>}
                 {explanationOpen ? <View style={styles.explanation}><Text style={styles.explanationText}>{feedback.explanation}</Text></View> : null}
                 <View style={{ gap: 10 }}>
@@ -1551,8 +1550,6 @@ const styles = StyleSheet.create({
   explanation: { borderLeftWidth: 3, borderLeftColor: palette.primary, paddingLeft: 14 },
   explanationText: { color: palette.text, fontSize: 15, lineHeight: 23 },
   message: { color: palette.warning, fontWeight: '700', lineHeight: 20 },
-  provisional: { borderColor: palette.warning, backgroundColor: palette.surface2 },
-  provisionalText: { color: palette.warning, fontWeight: '700', lineHeight: 20 },
   preAnswerTitle: { color: palette.text, fontSize: 15, fontWeight: '900' },
   preAnswerActions: { flexDirection: 'row', gap: 8, flexWrap: 'wrap' },
   preAnswerButton: { flex: 1, minWidth: 150 },
