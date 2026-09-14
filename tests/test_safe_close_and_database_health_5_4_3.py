@@ -179,9 +179,8 @@ class SafeCloseAndHealth543Tests(unittest.TestCase):
              patch.object(desktop_runtime, 'terminate_stale_questflow_chrome', return_value=0), \
              patch.object(desktop_runtime, 'browser_candidates', return_value=[fake_browser]), \
              patch.object(desktop_runtime.subprocess, 'Popen', return_value=FakeProcess()), \
-             patch.object(desktop_runtime.time, 'monotonic', side_effect=[0.0, 0.0, 10.0, 20.0, 30.0, 40.0]), \
-             patch.object(desktop_runtime.time, 'time', return_value=0.0), \
-             patch.object(desktop_runtime.time, 'sleep', return_value=None):
+             patch.object(desktop_runtime, '_sampling_gap_seconds', return_value=0.0), \
+             patch.object(desktop_runtime, 'HEARTBEAT_CLOSE_GRACE_SECONDS', 0.0):
             self.assertTrue(desktop_runtime.run_chrome(FakeServer(), FakeApi()))
         self.assertIn('shutdown:janela_fechada', order)
         self.assertLess(order.index('shutdown:janela_fechada'), order.index('terminate'))
@@ -210,9 +209,7 @@ class SafeCloseAndHealth543Tests(unittest.TestCase):
              patch.object(desktop_runtime, 'terminate_stale_questflow_chrome', return_value=0), \
              patch.object(desktop_runtime, 'browser_candidates', return_value=[fake_browser]), \
              patch.object(desktop_runtime.subprocess, 'Popen', return_value=FakeProcess()), \
-             patch.object(desktop_runtime.time, 'monotonic', return_value=0.0), \
-             patch.object(desktop_runtime.time, 'time', return_value=0.0), \
-             patch.object(desktop_runtime.time, 'sleep', return_value=None):
+             patch.object(desktop_runtime, '_sampling_gap_seconds', return_value=0.0):
             self.assertTrue(desktop_runtime.run_chrome(FakeServer(), FakeApi()))
         self.assertIn('shutdown:botao_fechar', order)
         self.assertLess(order.index('shutdown:botao_fechar'), order.index('terminate'))
