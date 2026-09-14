@@ -107,11 +107,30 @@ class ModularArchitectureTests(unittest.TestCase):
         self.assertEqual(contract["contract"], "questflow.studio.v1")
         operation_names = {item["name"] for item in contract["operations"]}
         self.assertIn("questions.list", operation_names)
+        self.assertIn("questions.create", operation_names)
+        create_contract = next(item for item in contract["operations"] if item["name"] == "questions.create")
+        self.assertTrue(create_contract["mutating"])
         result = self.api.dispatch_studio_v1("questions.list", {"limit": 10})
         self.assertTrue(result["ok"])
         self.assertEqual(result["contract"], "questflow.studio.v1")
         self.assertEqual(result["module"], "editorial_bank")
         self.assertEqual(result["data"]["meta"]["provider"], "local")
+
+    def test_manual_question_creation_is_available_in_studio_v1_and_legacy_facade(self) -> None:
+        studio = self.api.dispatch_studio_v1("questions.create", {})
+        self.assertTrue(studio["ok"])
+        self.assertEqual(studio["operation"], "questions.create")
+        self.assertEqual(studio["module"], "editorial_bank")
+        studio_uid = str(studio["data"]["uid"])
+        self.assertTrue(studio_uid)
+        self.assertEqual(studio["data"]["question"]["database_uid"], studio_uid)
+
+        legacy = self.api.create_manual_question()
+        self.assertTrue(legacy["ok"])
+        legacy_uid = str(legacy["uid"])
+        self.assertTrue(legacy_uid)
+        self.assertEqual(legacy["question"]["database_uid"], legacy_uid)
+        self.assertNotEqual(studio_uid, legacy_uid)
 
     def test_question_detail_is_equivalent_between_studio_v1_and_legacy_facade(self) -> None:
         created = self.api.create_manual_question()
@@ -177,6 +196,26 @@ class ModularArchitectureTests(unittest.TestCase):
             self.assertIn("historico_codigos", detail_payload["data"]["question"])
             self.assertIn("image", detail_payload["data"])
 
+            create_request = urllib.request.Request(
+                f"{server.base_url}/api/v1/studio/questions",
+                data=b"{}",
+                headers={
+                    "X-QuestFlow-Token": server.token,
+                    "Content-Type": "application/json",
+                },
+                method="POST",
+            )
+            with urllib.request.urlopen(create_request, timeout=5) as response:
+                create_payload = json.loads(response.read().decode("utf-8"))
+            self.assertTrue(create_payload["ok"])
+            self.assertEqual(create_payload["contract"], "questflow.studio.v1")
+            self.assertEqual(create_payload["operation"], "questions.create")
+            self.assertTrue(create_payload["data"]["uid"])
+            self.assertEqual(
+                create_payload["data"]["question"]["database_uid"],
+                create_payload["data"]["uid"],
+            )
+
             with urllib.request.urlopen(f"{server.base_url}/modules/bootstrap.js", timeout=5) as response:
                 frontend = response.read().decode("utf-8")
             self.assertIn("typed-route-modules-v1", frontend)
@@ -202,6 +241,14 @@ class ModularArchitectureTests(unittest.TestCase):
         self.assertIn("'get_question'", select_question)
         self.assertIn("encodeURIComponent(uid)", select_question)
         self.assertNotIn("bridge.call('get_question'", select_question)
+
+        create_start = script.index("async function createQuestion()")
+        create_end = script.index("async function deleteQuestion()", create_start)
+        create_question = script[create_start:create_end]
+        self.assertIn("bridge.studioPost('questions'", create_question)
+        self.assertIn("'create_manual_question'", create_question)
+        self.assertNotIn("bridge.call('create_manual_question'", create_question)
+        self.assertIn("async studioPost(path, payload = {}, fallbackMethod = '', fallbackArgs = [])", script)
 
     def test_fsrs_kt_irt_and_analytics_are_declared_rebuildable(self) -> None:
         architecture = self.api.get_engine_architecture()["architecture"]
