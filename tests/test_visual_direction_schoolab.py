@@ -103,7 +103,7 @@ class SchoolabAprovaCheckmateUiTests(unittest.TestCase):
         self.assertIn('html[data-theme="dark"] .mobile-studio-page .mobile-studio-hero', self.theme)
 
     def test_question_bank_uses_schoolab_review_hierarchy(self):
-        self.assertIn('Banco inteligente de questões', self.html)
+        self.assertIn('Curadoria de questões', self.html)
         self.assertIn('Ferramentas avançadas do banco de questões', self.html)
         self.assertIn('Qualidade avançada', self.html)
         self.assertIn('Selecione uma questão para revisar', self.html)
