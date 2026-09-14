@@ -987,10 +987,10 @@ function renderDashboardData(data, { cached = false } = {}) {
   const activity = data.activity_summary || {};
   const avgActive = activity.avg_active_seconds == null ? '—' : `${Number(activity.avg_active_seconds).toFixed(1)} s`;
   const metrics = [
-    { label: 'Respostas registradas', value: formatNumber(activity.attempts ?? s.attempts ?? 0), detail: 'Evidências que já alimentaram o modelo', icon: '↗', tone: 'blue', progress: Math.min(100, Number(activity.attempts ?? s.attempts ?? 0) / 5) },
+    { label: 'Questões respondidas', value: formatNumber(activity.attempts ?? s.attempts ?? 0), detail: 'Evidências reais que já alimentaram seu modelo', icon: '↗', tone: 'blue', progress: Math.min(100, Number(activity.attempts ?? s.attempts ?? 0) / 5) },
     { label: 'Acerto geral', value: activity.attempts ? `${Number(activity.accuracy || accuracy || 0).toFixed(1)}%` : '—', detail: `${formatNumber(activity.correct ?? s.correct ?? 0)} acertos · ${formatNumber(activity.wrong ?? s.wrong ?? 0)} erros`, icon: '✓', tone: 'green', progress: Number(activity.accuracy || accuracy || 0) },
     { label: 'Tempo médio ativo', value: avgActive, detail: `${formatNumber(activity.speed_samples||0)} amostras confiáveis; ociosidade excluída`, icon: '◷', tone: 'cyan', progress: Math.min(100, Number(activity.speed_samples || 0) * 4) },
-    { label: 'Revisões prioritárias', value: formatNumber(adaptive.overdue ?? adaptive.reviews_due ?? analytics.dueTotal ?? 0), detail: 'Memória FSRS no ponto certo de recuperação', icon: '⟳', tone: 'orange', progress: Math.min(100, Number(adaptive.overdue ?? adaptive.reviews_due ?? analytics.dueTotal ?? 0) * 4) },
+    { label: 'Revisões para priorizar', value: formatNumber(adaptive.overdue ?? adaptive.reviews_due ?? analytics.dueTotal ?? 0), detail: 'Memória FSRS no ponto certo de recuperação', icon: '⟳', tone: 'orange', progress: Math.min(100, Number(adaptive.overdue ?? adaptive.reviews_due ?? analytics.dueTotal ?? 0) * 4) },
   ];
   $('#metricGrid').innerHTML = metrics.map((item) => `<article class="metric-card metric-card--explained metric-card--${item.tone}">
     <div class="metric-card__top"><span>${escapeHtml(item.label)}</span><i aria-hidden="true">${escapeHtml(item.icon)}</i></div>
@@ -1053,7 +1053,7 @@ function renderLearningPulsePanel(data) {
       <h3>${top ? `Reforce ${escapeHtml(textOrMissing(top.subject || top.materia, 'a matéria prioritária'))}` : 'Inicie uma sessão diagnóstica'}</h3>
       <p>${top ? escapeHtml((top.priority_reasons || [])[0] || 'É a maior prioridade calculada a partir de memória, desempenho e cobertura.') : 'O QuestFlow precisa de uma amostra curta para personalizar a rotação.'}</p>
       <div class="learning-session-plan"><strong>${sessionCount}</strong><span>questões · prática intercalada · feedback imediato</span></div>
-      <button class="button button--primary" type="button" data-pulse-action>Ver plano e começar</button>
+      <button class="button button--primary" type="button" data-pulse-action>Abrir sessão recomendada</button>
     </section>
     <section class="learning-pulse-chart">
       <div class="learning-pulse-section-head"><div><span>Evolução recente</span><strong>${analyticsPct(recent)}</strong></div><small>${context.aggregateTrend.length >= 2 ? 'tendência por janelas de estudo' : 'coletando novas janelas'}</small></div>
@@ -1066,7 +1066,7 @@ function renderLearningPulsePanel(data) {
     </section>
     <section class="learning-pulse-focus"><div class="learning-pulse-section-head"><div><span>Prioridade por matéria</span><strong>${formatNumber(focusSubjects.length)} ${focusSubjects.length === 1 ? 'matéria em foco' : 'matérias em foco'}</strong></div><small>clique para abrir o diagnóstico</small></div>${focusRows ? `<div class="learning-focus-grid">${focusRows}</div>` : '<div class="learning-pulse-empty">Responda algumas questões para formar o primeiro mapa de prioridades.</div>'}${focusMore}</section>
   </div>`;
-  panel.querySelector('[data-pulse-action]')?.addEventListener('click', () => navigate('visualanalytics'));
+  panel.querySelector('[data-pulse-action]')?.addEventListener('click', () => navigate('recommend'));
   panel.querySelector('[data-pulse-all]')?.addEventListener('click', () => openFocusSubjectsModal(context));
   panel.querySelectorAll('[data-pulse-subject-key]').forEach((row) => row.addEventListener('click', () => openSubjectAnalyticsModal(context, row.dataset.pulseSubjectKey)));
 }
