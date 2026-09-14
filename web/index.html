@@ -466,9 +466,9 @@
         <section class="page page--recommend" data-page="recommend" aria-labelledby="recommendTitle">
           <div class="page-header">
             <div>
-              <p class="eyebrow">Etapa 4 · decisão pedagógica multiobjetivo</p>
-              <h1 id="recommendTitle">Recomendador e simulados adaptativos</h1>
-              <p>Prioriza o próximo melhor esforço combinando FSRS, domínio KT, informação IRT, cobertura, incidência observada da banca, prova-alvo e diversidade.</p>
+              <p class="eyebrow">Próxima melhor ação</p>
+              <h1 id="recommendTitle">O que estudar agora</h1>
+              <p>O QuestFlow transforma memória, domínio, cobertura e contexto da prova em uma ordem prática de estudo — com os detalhes avançados preservados quando você quiser aprofundar.</p>
             </div>
             <div class="page-actions">
               <button class="button button--secondary" id="refreshRecommendations" type="button">Atualizar recomendações</button>
@@ -479,14 +479,14 @@
 
           <div class="stage4-grid">
             <article class="panel stage4-recommendations-panel">
-              <div class="panel-header"><div><h2>Próximas melhores ações</h2><p>O FSRS define a classe de urgência; o score multiobjetivo ordena e explica o que fazer dentro dela.</p></div>
+              <div class="panel-header"><div><p class="eyebrow">Plano priorizado</p><h2>Próximas melhores ações</h2><p>Revisões urgentes vêm primeiro; depois o QuestFlow ordena o restante pelo ganho esperado de aprendizagem e explica os principais motivos.</p></div>
                 <label class="select-field stage4-mode-filter"><span class="visually-hidden">Perfil do recomendador</span><select id="recommendationMode"><option value="equilibrado">Equilibrado</option><option value="diagnostico">Diagnóstico</option><option value="revisao">Revisão</option><option value="edital">Cobertura do edital</option></select></label>
               </div>
               <div class="panel-body" id="recommendationList"><div class="skeleton" style="height:12rem"></div></div>
             </article>
 
             <article class="panel stage4-simulation-setup">
-              <div class="panel-header"><div><h2>Novo simulado adaptativo</h2><p>A próxima questão é escolhida somente depois da resposta anterior atualizar FSRS + KT + IRT.</p></div></div>
+              <div class="panel-header"><div><p class="eyebrow">Treino adaptativo</p><h2>Novo simulado</h2><p>Cada resposta atualiza o seu estado de aprendizagem antes de o QuestFlow escolher a próxima questão.</p></div></div>
               <div class="panel-body stage4-setup-form">
                 <label><span>Objetivo</span><select id="simulationMode"><option value="equilibrado">Equilibrado</option><option value="diagnostico">Diagnóstico do nível</option><option value="revisao">Revisão e retenção</option><option value="edital">Cobertura do edital</option></select></label>
                 <label><span>Quantidade</span><input id="simulationCount" type="number" min="5" max="100" value="10"></label>
@@ -501,7 +501,7 @@
             <article class="panel panel--wide stage4-simulation-workspace">
               <div class="panel-header"><div><h2>Simulado em execução</h2><p id="simulationStatusText">Nenhuma sessão ativa.</p></div><button class="button button--danger-ghost button--compact" id="abandonAdaptiveSimulation" type="button" hidden>Encerrar</button></div>
               <div class="panel-body" id="simulationWorkspace">
-                <div class="empty-state"><h3>Pronto para começar</h3><p>Configure o objetivo do simulado. O motor preservará a precedência FSRS e diversificará matéria, aula, assunto e banca.</p></div>
+                <div class="empty-state"><h3>Pronto para começar</h3><p>Configure o objetivo do simulado. O QuestFlow respeita a urgência das revisões e diversifica matéria, aula, assunto e banca.</p></div>
               </div>
             </article>
 
