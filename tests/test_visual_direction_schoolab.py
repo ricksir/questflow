@@ -79,6 +79,8 @@ class SchoolabAprovaCheckmateUiTests(unittest.TestCase):
         self.assertIn("field.dispatchEvent(new Event('change'", self.script)
         self.assertIn("Use a questão que eu selecionar como contexto", self.script)
         self.assertIn("Não invente métricas ou fatos", self.script)
+        handoff = self.script.split("async function openQuestAiInsightInTutor", 1)[1].split("function renderQuestAiInsightPanel", 1)[0]
+        self.assertNotIn("generateTutorAnswer(", handoff)
 
     def test_tutor_has_contextual_quick_actions(self):
         self.assertIn('data-tutor-quick-prompt', self.html)
