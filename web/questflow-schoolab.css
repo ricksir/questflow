@@ -1235,3 +1235,91 @@ html[data-theme="dark"] .quest-ai-badge {
     width: 100%;
   }
 }
+
+/* Fynix-like recent activity treatment: compact operational history without changing table semantics. */
+.page[data-page="dashboard"] #recentActivity {
+  display: grid;
+  gap: .75rem;
+}
+
+.page[data-page="dashboard"] #recentActivity .recent-study-note {
+  margin: 0;
+  padding: .8rem .9rem;
+  border-color: color-mix(in srgb, var(--qf-sky-500) 18%, var(--border-subtle));
+  border-radius: .9rem;
+  background: color-mix(in srgb, var(--qf-sky-500) 5%, var(--surface-panel));
+}
+
+.page[data-page="dashboard"] #recentActivity .data-table-wrap {
+  overflow: auto;
+  border: 1px solid var(--border-subtle);
+  border-radius: 1rem;
+  background: var(--surface-panel);
+  box-shadow: none;
+}
+
+.page[data-page="dashboard"] #recentActivity .data-table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.page[data-page="dashboard"] #recentActivity .data-table thead {
+  background: color-mix(in srgb, var(--qf-warm-100) 70%, var(--surface-panel));
+}
+
+.page[data-page="dashboard"] #recentActivity .data-table th {
+  padding-block: .65rem;
+  color: var(--text-muted);
+  font-size: .68rem;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+
+.page[data-page="dashboard"] #recentActivity .data-table td {
+  padding-block: .72rem;
+  border-bottom-color: color-mix(in srgb, var(--border-subtle) 76%, transparent);
+}
+
+.page[data-page="dashboard"] #recentActivity .data-table tbody tr {
+  transition: background var(--duration-fast), transform var(--duration-fast);
+}
+
+.page[data-page="dashboard"] #recentActivity .data-table tbody tr:hover,
+.page[data-page="dashboard"] #recentActivity .data-table tbody tr:focus-within {
+  background: color-mix(in srgb, var(--qf-gold-500) 5%, var(--surface-panel));
+}
+
+.page[data-page="dashboard"] #recentActivity .table-link {
+  color: var(--qf-ink-900);
+  font-weight: 800;
+}
+
+.page[data-page="dashboard"] #recentActivity .result-chip.is-correct {
+  color: #177e6a;
+  background: color-mix(in srgb, var(--qf-teal-500) 12%, var(--surface-panel));
+}
+
+.page[data-page="dashboard"] #recentActivity .result-chip.is-wrong {
+  color: #b24e43;
+  background: color-mix(in srgb, var(--qf-coral-500) 11%, var(--surface-panel));
+}
+
+html[data-theme="dark"] .page[data-page="dashboard"] #recentActivity .data-table thead,
+html[data-theme="dark"] .page[data-page="dashboard"] #recentActivity .recent-study-note {
+  background: var(--surface-subtle);
+}
+
+html[data-theme="dark"] .page[data-page="dashboard"] #recentActivity .table-link {
+  color: var(--text-primary);
+}
+
+@media (prefers-color-scheme: dark) {
+  html[data-theme="system"] .page[data-page="dashboard"] #recentActivity .data-table thead,
+  html[data-theme="system"] .page[data-page="dashboard"] #recentActivity .recent-study-note {
+    background: var(--surface-subtle);
+  }
+
+  html[data-theme="system"] .page[data-page="dashboard"] #recentActivity .table-link {
+    color: var(--text-primary);
+  }
+}
