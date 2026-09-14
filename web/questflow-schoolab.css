@@ -424,10 +424,6 @@ textarea {
   border-color: var(--border-strong);
 }
 
-html[data-theme="dark"] body,
-@media (prefers-color-scheme: dark) {
-}
-
 /* Home: Aprova.ai-style action hierarchy expressed with QuestFlow real data. */
 .page[data-page="dashboard"] {
   --dashboard-gap: clamp(.9rem, 1.25vw, 1.25rem);
@@ -575,5 +571,56 @@ html[data-theme="dark"] body,
   .dashboard-today-card .panel-header {
     align-items: flex-start;
     flex-direction: column;
+  }
+}
+
+/* Dark mode keeps the same hierarchy without forcing a light card canvas. */
+html[data-theme="dark"] .dashboard-priority-card .learning-pulse-action {
+  background: linear-gradient(150deg, rgba(243,181,74,.16), var(--surface-elevated));
+  border-color: rgba(243,181,74,.30);
+}
+
+html[data-theme="dark"] .dashboard-priority-card .learning-pulse-action h3 {
+  color: var(--text-primary);
+}
+
+html[data-theme="dark"] .dashboard-priority-card .learning-session-plan {
+  background: rgba(255,255,255,.045);
+  border-color: rgba(243,181,74,.18);
+}
+
+html[data-theme="dark"] .dashboard-today-card .today-project {
+  background: rgba(243,181,74,.11);
+  border-color: rgba(243,181,74,.24);
+}
+
+html[data-theme="dark"] .dashboard-today-card .today-project > span,
+html[data-theme="dark"] .dashboard-today-card .today-project small {
+  color: var(--text-muted);
+}
+
+@media (prefers-color-scheme: dark) {
+  html[data-theme="system"] .dashboard-priority-card .learning-pulse-action {
+    background: linear-gradient(150deg, rgba(243,181,74,.16), var(--surface-elevated));
+    border-color: rgba(243,181,74,.30);
+  }
+
+  html[data-theme="system"] .dashboard-priority-card .learning-pulse-action h3 {
+    color: var(--text-primary);
+  }
+
+  html[data-theme="system"] .dashboard-priority-card .learning-session-plan {
+    background: rgba(255,255,255,.045);
+    border-color: rgba(243,181,74,.18);
+  }
+
+  html[data-theme="system"] .dashboard-today-card .today-project {
+    background: rgba(243,181,74,.11);
+    border-color: rgba(243,181,74,.24);
+  }
+
+  html[data-theme="system"] .dashboard-today-card .today-project > span,
+  html[data-theme="system"] .dashboard-today-card .today-project small {
+    color: var(--text-muted);
   }
 }
