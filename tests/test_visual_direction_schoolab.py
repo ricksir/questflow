@@ -89,6 +89,8 @@ class SchoolabAprovaCheckmateUiTests(unittest.TestCase):
         self.assertIn('Por que eu errei?', self.html)
         self.assertIn('Pegadinha da banca', self.html)
         self.assertIn("button.dataset.tutorQuickPrompt", self.script)
+        self.assertIn("$('[data-tutor-quick-prompt]').forEach", self.script)
+        self.assertNotIn("$('[data-tutor-quick-prompt]').forEach", self.script)
         self.assertIn("field.dispatchEvent(new Event('change'", self.script)
         self.assertIn('.tutor-quick-prompts', self.theme)
 
