@@ -48,6 +48,9 @@ class SchoolabAprovaCheckmateUiTests(unittest.TestCase):
         self.assertIn('analytics-card__kicker', self.script)
         self.assertIn('--chart-accent-1: var(--qf-gold-500)', self.theme)
         self.assertIn('#visualAnalyticsPanel .analytics-hero-card', self.theme)
+        self.assertIn('Horizonte de revisões', self.script)
+        self.assertIn('analytics-memory-horizon', self.script)
+        self.assertIn('.analytics-memory-horizon', self.theme)
 
     def test_visual_work_does_not_bump_release(self):
         self.assertEqual(self.version, '6.24.0')
