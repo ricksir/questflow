@@ -824,7 +824,7 @@
             </div>
           </div>
           <div class="flow-layout">
-            <article class="panel">
+            <article class="panel flow-service-panel">
               <div class="panel-header"><div><h2>Estado do serviço</h2><p>Listener, agendamento e próxima execução.</p></div></div>
               <div class="panel-body" id="flowStatusPanel"></div>
               <div class="panel-actions">
@@ -839,16 +839,16 @@
                 <small>O listener continua conectado para registrar respostas e comandos. A pausa bloqueia novos ciclos, reenvios e questões de relearning.</small>
               </div>
             </article>
-            <article class="panel">
+            <article class="panel flow-cycle-panel">
               <div class="panel-header"><div><h2>Configuração do ciclo</h2><p>Preferências de envio e retenção.</p></div></div>
               <form class="panel-body form-grid" id="flowSettingsForm"></form>
               <div class="panel-actions"><button class="button button--primary" id="saveFlowSettings" type="button">Salvar configuração</button></div>
             </article>
-            <article class="panel panel--wide">
+            <article class="panel panel--wide flow-fsrs-panel">
               <div class="panel-header"><div><h2>FSRS 6 · Memória personalizada</h2><p>Scheduler oficial, otimizador, carga diária e horizonte até a prova.</p></div><button class="button button--secondary button--small" id="optimizeFsrs" type="button">Otimizar agora</button></div>
               <div class="panel-body" id="fsrsStatusPanel"><div class="skeleton" style="height:5rem"></div></div>
             </article>
-            <article class="panel panel--wide telegram-config-panel">
+            <article class="panel panel--wide telegram-config-panel flow-telegram-panel">
               <div class="panel-header"><div><h2>Bot do Telegram</h2><p>Configure o token fornecido pelo BotFather e o Chat ID que receberá as questões.</p></div><span class="status-pill" id="telegramConfigStatus">Não verificado</span></div>
               <form class="panel-body telegram-config-grid" id="telegramBotForm" autocomplete="off">
                 <div class="form-field">
@@ -867,7 +867,7 @@
                 <button class="button button--primary" id="saveTelegramSettings" type="button">Salvar bot</button>
               </div>
             </article>
-            <article class="panel panel--wide">
+            <article class="panel panel--wide flow-history-panel">
               <div class="panel-header"><div><h2>Histórico recente</h2><p>Envios, respostas, tentativas e erros.</p></div><button class="button button--secondary button--small" id="retryFailures">Reenviar falhas</button></div>
               <div class="panel-body" id="flowHistory"></div>
             </article>
