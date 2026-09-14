@@ -1426,3 +1426,35 @@ html[data-theme="dark"] .tutor-quick-prompts button {
     text-align: left;
   }
 }
+
+/* Accessibility pass: visible keyboard focus and reduced-motion support. */
+:where(a, button, input, select, textarea, [role="button"], [tabindex]:not([tabindex="-1"])):focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+:where(.button, .icon-button, .nav-item, .tutor-quick-prompts button) {
+  touch-action: manipulation;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .learning-focus-row:hover,
+  .learning-focus-row:focus-visible,
+  .tutor-quick-prompts button:hover:not(:disabled),
+  .tutor-quick-prompts button:focus-visible:not(:disabled) {
+    transform: none;
+  }
+}
