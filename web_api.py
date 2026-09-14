@@ -284,6 +284,7 @@ class QuestFlowWebApi:
                     persist_config=self._persist_config,
                     present_question=self._present_question_detail,
                     create_question=self._create_manual_question_record,
+                    save_question=self._save_question_record,
                 )
                 # 6.11.0: Observabilidade/Quality Gates saem do AI Engine e passam
                 # a um serviço de controle dedicado com worker serial e Snapshot Store.
@@ -2325,7 +2326,7 @@ class QuestFlowWebApi:
             return result
         return {"ok": True, **_jsonable(result.get("data") or {})}
 
-    def save_question(self, uid: str, payload: dict, approve: bool = False) -> dict:
+    def _save_question_record(self, uid: str, payload: dict, approve: bool = False) -> dict:
         self._ensure_core()
         assert self.commands is not None and self.queries is not None and self.study is not None
         current = self.queries.get(uid)
@@ -2370,6 +2371,15 @@ class QuestFlowWebApi:
             "code_change": _jsonable(code_change),
             "curation": _jsonable(curation_state),
         }
+
+    def save_question(self, uid: str, payload: dict, approve: bool = False) -> dict:
+        result = self.dispatch_studio_v1(
+            "questions.update",
+            {"uid": uid, "question": payload, "approve": bool(approve)},
+        )
+        if not result.get("ok"):
+            return result
+        return {"ok": True, **_jsonable(result.get("data") or {})}
 
     def _merge_question(self, current: dict, payload: dict, *, approve: bool) -> dict:
         question = copy.deepcopy(current)
