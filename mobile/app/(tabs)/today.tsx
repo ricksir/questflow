@@ -65,7 +65,7 @@ export default function TodayScreen() {
               <View style={styles.heroMeta}><Text style={styles.heroMetaValue}>{today?.today.reviews_due ?? 0}</Text><Text style={styles.heroMetaLabel}>revisões devidas</Text></View>
               <View style={styles.heroMeta}><Text style={styles.heroMetaValue}>{today?.today.not_studied_topics ?? 0}</Text><Text style={styles.heroMetaLabel}>a estudar</Text></View>
             </View>
-            <Button title={`Começar sessão de ${coach.question_count} questões`} onPress={() => router.push('/(tabs)/questions')} tone="success" />
+            <Button title={`Começar sessão de ${coach.question_count} questões`} onPress={() => router.push('/(tabs)/questions')} tone="primary" />
           </HeroCard>
         ) : null}
 
