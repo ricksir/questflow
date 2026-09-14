@@ -102,6 +102,17 @@ class SchoolabAprovaCheckmateUiTests(unittest.TestCase):
         self.assertIn('.mobile-studio-page .mobile-cloud-advanced', self.theme)
         self.assertIn('html[data-theme="dark"] .mobile-studio-page .mobile-studio-hero', self.theme)
 
+    def test_question_bank_uses_schoolab_review_hierarchy(self):
+        self.assertIn('Curadoria de questões', self.html)
+        self.assertIn('Ferramentas avançadas do banco de questões', self.html)
+        self.assertIn('Qualidade avançada', self.html)
+        self.assertIn('Selecione uma questão para revisar', self.html)
+        self.assertIn('.page[data-page="review"] .review-toolbar', self.theme)
+        self.assertIn('.page[data-page="review"] .question-list-panel', self.theme)
+        self.assertIn('.page[data-page="review"] .virtual-row.is-selected', self.theme)
+        self.assertIn('.page[data-page="review"] .question-editor', self.theme)
+        self.assertIn('.page[data-page="review"] .question-intelligence-section', self.theme)
+
     def test_checkmate_analytics_bento_is_decision_first(self):
         self.assertIn('Analytics de estudo', self.html)
         self.assertIn('Seu aprendizado em números', self.html)
