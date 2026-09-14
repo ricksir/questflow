@@ -52,10 +52,18 @@ class StudioUseCaseDispatcher:
 
     contract = "questflow.studio.v1"
 
-    def __init__(self, *, catalog: Any, architecture: Any, persist_config: Callable[[], None]) -> None:
+    def __init__(
+        self,
+        *,
+        catalog: Any,
+        architecture: Any,
+        persist_config: Callable[[], None],
+        present_question: Callable[[str, dict[str, Any]], dict[str, Any]] | None = None,
+    ) -> None:
         self.catalog = catalog
         self.architecture = architecture
         self.persist_config = persist_config
+        self.present_question = present_question
         self._definitions: dict[str, UseCaseDefinition] = {}
         self._register_defaults()
 
@@ -157,7 +165,12 @@ class StudioUseCaseDispatcher:
         question = self.catalog.get(uid)
         if not question:
             raise UseCaseError("Questão não encontrada.", code="not_found", status=404)
-        return {"question": question}
+        if self.present_question is not None:
+            detail = self.present_question(uid, dict(question))
+            if not isinstance(detail, dict) or not isinstance(detail.get("question"), dict):
+                raise UseCaseError("Apresentação da questão inválida.", code="internal_error", status=500)
+            return detail
+        return {"question": question, "image": None}
 
     def _source_settings(self, _payload: dict[str, Any]) -> dict[str, Any]:
         return self.catalog.public_settings()
