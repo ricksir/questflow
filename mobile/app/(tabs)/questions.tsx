@@ -1247,6 +1247,22 @@ export default function QuestionsScreen() {
           </View>
         </HeroCard>
 
+        {current.selection?.reason ? (
+          <Card style={styles.selectionInsightCard}>
+            <View style={styles.selectionInsightTop}>
+              <View style={styles.selectionInsightIcon}><Text style={styles.selectionInsightIconText}>✦</Text></View>
+              <View style={styles.selectionInsightCopy}>
+                <Text style={styles.selectionInsightEyebrow}>POR QUE ESTA QUESTÃO?</Text>
+                <Text style={styles.selectionInsightTitle}>{current.selection.reason}</Text>
+              </View>
+              <Pill text="QuestFlow explica" tone="info" />
+            </View>
+            {current.selection.topic_transfer ? (
+              <Muted>{current.selection.transfer_reason || 'Esta questão também verifica o mesmo conceito em uma formulação diferente.'}</Muted>
+            ) : null}
+          </Card>
+        ) : null}
+
         {active.adaptive?.goal ? (
           <Card style={styles.goalCard}>
             <Text style={styles.goalTitle}>{active.adaptive.goal.headline}</Text>
@@ -1411,6 +1427,13 @@ const styles = StyleSheet.create({
   summaryTime: { color: palette.text, fontSize: 31, lineHeight: 38, fontWeight: '900', letterSpacing: -0.6, flexShrink: 1 },
   summaryTimeFootnote: { fontSize: 12, lineHeight: 18 },
   sessionTopline: { flexDirection: 'row', alignItems: 'center', gap: 10, paddingHorizontal: 2 },
+  selectionInsightCard: { gap: 9, borderColor: 'rgba(85,169,214,0.24)', backgroundColor: '#F7FBFD' },
+  selectionInsightTop: { flexDirection: 'row', alignItems: 'center', gap: 10 },
+  selectionInsightIcon: { width: 34, height: 34, borderRadius: 12, alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(85,169,214,0.13)' },
+  selectionInsightIconText: { color: palette.violet, fontSize: 16, fontWeight: '900' },
+  selectionInsightCopy: { flex: 1, minWidth: 0, gap: 2 },
+  selectionInsightEyebrow: { color: palette.violet, fontSize: 9, fontWeight: '900', letterSpacing: 0.9 },
+  selectionInsightTitle: { color: palette.text, fontSize: 13, lineHeight: 18, fontWeight: '800' },
   goalCard: { gap: 5, borderColor: 'rgba(220,151,46,0.24)' },
   goalTitle: { color: palette.text, fontSize: 14, fontWeight: '900', lineHeight: 20 },
   endSession: { color: palette.danger, fontSize: 13, fontWeight: '900' },
