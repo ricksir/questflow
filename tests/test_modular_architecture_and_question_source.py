@@ -134,11 +134,34 @@ class ModularArchitectureTests(unittest.TestCase):
                 payload = json.loads(response.read().decode("utf-8"))
             self.assertEqual(payload["contract"], "questflow.studio.v1")
 
+            questions_request = urllib.request.Request(
+                f"{server.base_url}/api/v1/studio/questions?search=&status=todos&offset=0&limit=10",
+                headers={"X-QuestFlow-Token": server.token},
+            )
+            with urllib.request.urlopen(questions_request, timeout=5) as response:
+                questions_payload = json.loads(response.read().decode("utf-8"))
+            self.assertTrue(questions_payload["ok"])
+            self.assertEqual(questions_payload["contract"], "questflow.studio.v1")
+            self.assertEqual(questions_payload["operation"], "questions.list")
+            self.assertEqual(questions_payload["module"], "editorial_bank")
+            self.assertIn("items", questions_payload["data"])
+
             with urllib.request.urlopen(f"{server.base_url}/modules/bootstrap.js", timeout=5) as response:
                 frontend = response.read().decode("utf-8")
             self.assertIn("typed-route-modules-v1", frontend)
         finally:
             server.stop()
+
+    def test_review_list_uses_studio_v1_with_legacy_fallback(self) -> None:
+        script = (Path(__file__).resolve().parents[1] / "web" / "app.js").read_text(encoding="utf-8")
+        self.assertIn("async studioGet(path, fallbackMethod = '', fallbackArgs = [])", script)
+        self.assertIn("/api/v1/studio/", script)
+        start = script.index("async function loadQuestions()")
+        end = script.index("async function ensureMatterOptions", start)
+        load_questions = script[start:end]
+        self.assertIn("bridge.studioGet(", load_questions)
+        self.assertIn("'list_questions'", load_questions)
+        self.assertNotIn("bridge.call('list_questions'", load_questions)
 
     def test_fsrs_kt_irt_and_analytics_are_declared_rebuildable(self) -> None:
         architecture = self.api.get_engine_architecture()["architecture"]
