@@ -576,6 +576,9 @@ class QuestFlowLocalServer:
                         except (json.JSONDecodeError, UnicodeDecodeError, ValueError) as error:
                             self._send_json(HTTPStatus.BAD_REQUEST, {"ok": False, "error": str(error)})
                             return
+                    if parsed.path == "/api/v1/studio/questions":
+                        self._studio_v1_result("questions.create", request_body)
+                        return
                     if parsed.path == "/api/v1/studio/question-source":
                         self._studio_v1_result("questions.source.save", request_body)
                         return
