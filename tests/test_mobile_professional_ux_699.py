@@ -21,6 +21,11 @@ class MobileProfessionalUX699Tests(unittest.TestCase):
         self.assertIn("Seu desempenho", today)
         self.assertIn("Acerto por matéria", today)
         self.assertIn("splitCorrect", today)
+        self.assertIn('slice(0, 3)', today)
+        self.assertIn("Ver progresso completo", today)
+        self.assertNotIn("ReviewQueuePreview", today)
+        self.assertNotIn("TrendLineChart", today)
+        self.assertNotIn("Últimas respostas", today)
         self.assertNotIn("Retomar questões no Telegram", today)
         self.assertNotIn("Pausar questões no Telegram", today)
 
