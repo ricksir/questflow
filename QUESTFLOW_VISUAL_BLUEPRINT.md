@@ -139,3 +139,17 @@ Analytics detalhado permanece no Studio; o Mobile mostra apenas o necessário pa
 5. Fluxos de questões e revisão.
 6. Mobile Today/Progress com a mesma identidade.
 7. Polimento responsivo, acessibilidade e dark mode.
+
+## Estado no PR #17
+
+A direção acima está aplicada no branch `feature/schoolab-aprova-checkmate-ui`:
+
+- Home reorganizada em **próxima ação → plano de hoje → Quest AI → métricas → aprofundamento**;
+- Analytics reorganizado para responder perguntas de estudo, preservando apenas séries sustentadas por dados reais;
+- Tutor com ações contextuais rápidas e decisão humana antes da geração;
+- Mobile Hoje simplificado para ação, com Analytics aprofundado concentrado em Progresso;
+- sessão Mobile explica **por que a questão foi escolhida** em linguagem de estudo, sem expor nomes técnicos do motor;
+- paleta Schoolab aplicada a Studio e Mobile, mantendo identidade QuestFlow;
+- Studio preserva tema escuro e recebeu foco de teclado e preferência por movimento reduzido;
+- Mobile mantém alvos de toque ampliados, estados acessíveis e cabeçalhos preparados para fontes maiores;
+- nenhuma mudança visual altera FSRS, KT, IRT, histórico, fila offline ou contratos de aprendizagem.
