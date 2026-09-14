@@ -174,6 +174,19 @@ class SchoolabAprovaCheckmateUiTests(unittest.TestCase):
         self.assertIn('html[data-theme="dark"] .settings-page', self.theme)
         self.assertIn('html[data-theme="system"] .settings-page', self.theme)
 
+    def test_global_search_stays_question_scoped_and_keyboard_friendly(self):
+        self.assertIn('global-search global-search--questions', self.html)
+        self.assertIn('global-search__scope', self.html)
+        self.assertIn('>Questões</span>', self.html)
+        self.assertIn('placeholder="Buscar no banco de questões…"', self.html)
+        self.assertIn("$('#globalSearch').addEventListener('keydown'", self.script)
+        self.assertIn("await navigate('review')", self.script)
+        self.assertIn("$('#questionSearch').value = event.currentTarget.value", self.script)
+        self.assertIn("await loadQuestions()", self.script)
+        self.assertIn('.global-search--questions:focus-within', self.theme)
+        self.assertIn('.global-search--questions .global-search__scope', self.theme)
+        self.assertNotIn('Buscar em tudo', self.html)
+
     def test_checkmate_analytics_bento_is_decision_first(self):
         self.assertIn('Analytics de estudo', self.html)
         self.assertIn('Seu aprendizado em números', self.html)
