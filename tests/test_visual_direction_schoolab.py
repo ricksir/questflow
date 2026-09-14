@@ -123,6 +123,27 @@ class SchoolabAprovaCheckmateUiTests(unittest.TestCase):
         self.assertIn('.not-studied-modal .not-studied-guidance', self.theme)
         self.assertIn("color: #8b651b !important", self.theme)
 
+    def test_study_flow_uses_schoolab_operational_hierarchy(self):
+        self.assertIn('data-page="flow"', self.html)
+        self.assertIn('Fluxo de estudos', self.html)
+        self.assertIn('Estado do serviço', self.html)
+        self.assertIn('Configuração do ciclo', self.html)
+        self.assertIn('FSRS 6 · Memória personalizada', self.html)
+        self.assertIn('Bot do Telegram', self.html)
+        self.assertIn('Histórico recente', self.html)
+        self.assertIn('flow-service-panel', self.html)
+        self.assertIn('flow-cycle-panel', self.html)
+        self.assertIn('flow-fsrs-panel', self.html)
+        self.assertIn('flow-telegram-panel', self.html)
+        self.assertIn('flow-history-panel', self.html)
+        self.assertIn('.page[data-page="flow"] .flow-service-panel', self.theme)
+        self.assertIn('.page[data-page="flow"] #flowStatusPanel', self.theme)
+        self.assertIn('.page[data-page="flow"] #flowSettingsForm', self.theme)
+        self.assertIn('.page[data-page="flow"] #fsrsStatusPanel', self.theme)
+        self.assertIn('.page[data-page="flow"] .flow-telegram-panel', self.theme)
+        self.assertIn('.page[data-page="flow"] #flowHistory', self.theme)
+        self.assertIn('html[data-theme="dark"] .page[data-page="flow"]', self.theme)
+
     def test_study_coverage_uses_schoolab_decision_hierarchy(self):
         self.assertIn('data-page="coverage"', self.html)
         self.assertIn('Cobertura dos estudos', self.html)
