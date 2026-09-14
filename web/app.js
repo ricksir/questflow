@@ -372,6 +372,18 @@ class Bridge {
     return target[method](...args);
   }
 
+  async studioGet(path, fallbackMethod = '', fallbackArgs = []) {
+    if (!this.ready) await this.init(fallbackMethod || 'bootstrap_shell');
+    if (!this.httpMode) {
+      if (!fallbackMethod) throw new Error('O contrato Studio v1 requer o transporte HTTP local.');
+      return this.call(fallbackMethod, ...fallbackArgs);
+    }
+    const response = await this.httpRequest(`/api/v1/studio/${String(path || '').replace(/^\//, '')}`, {
+      method: 'GET',
+    });
+    return response.data ?? response;
+  }
+
   startHeartbeat() {
     if (!this.httpMode) return;
     const beat = async () => {
@@ -4266,7 +4278,19 @@ async function loadQuestions() {
   const requestId = ++state.questionRequestId;
   $('#questionCount').textContent = 'Carregando…';
   try {
-    const result = await bridge.call('list_questions', $('#questionSearch').value, $('#questionStatus').value, 0, 2000);
+    const search = $('#questionSearch').value;
+    const status = $('#questionStatus').value;
+    const query = new URLSearchParams({
+      search,
+      status,
+      offset: '0',
+      limit: '2000',
+    });
+    const result = await bridge.studioGet(
+      `questions?${query.toString()}`,
+      'list_questions',
+      [search, status, 0, 2000],
+    );
     if (requestId !== state.questionRequestId) return;
     state.questions = sortQuestionItems(result.items || []);
     state.questionTotal = result.total || state.questions.length;
