@@ -25,7 +25,23 @@ VIEWPORTS = (
     ("mobile", 390, 844),
 )
 
-ROUTES = ("dashboard", "review", "coverage", "flow", "settings")
+ROUTES = (
+    "dashboard",
+    "visualanalytics",
+    "examproject",
+    "import",
+    "curation",
+    "tutor",
+    "recommend",
+    "stage5",
+    "review",
+    "bankfix",
+    "flow",
+    "corrections",
+    "coverage",
+    "mobile",
+    "settings",
+)
 
 
 class QuietHandler(SimpleHTTPRequestHandler):
@@ -70,6 +86,56 @@ def _visible(driver: webdriver.Chrome, selector: str) -> bool:
             selector,
         )
     )
+
+
+def _assert_route_contract(driver: webdriver.Chrome) -> None:
+    contract = driver.execute_script(
+        """
+        return {
+          pages: [...document.querySelectorAll('section.page[data-page]')]
+            .map((el) => el.dataset.page),
+          nav: [...document.querySelectorAll('.nav-item[data-route]')]
+            .map((el) => el.dataset.route),
+        };
+        """
+    )
+    expected = set(ROUTES)
+    pages = set(contract.get("pages") or [])
+    nav = set(contract.get("nav") or [])
+    if pages != expected:
+        raise AssertionError(
+            f"Contrato de páginas divergente: ausentes={sorted(expected - pages)} "
+            f"extras={sorted(pages - expected)}"
+        )
+    if nav != expected:
+        raise AssertionError(
+            f"Contrato da navegação divergente: ausentes={sorted(expected - nav)} "
+            f"extras={sorted(nav - expected)}"
+        )
+
+
+def _drain_console(
+    driver: webdriver.Chrome,
+    context: str,
+    report: dict[str, Any],
+) -> None:
+    entries = driver.get_log("browser")
+    for item in entries:
+        report["console"].append({"context": context, **item})
+    severe = [
+        item
+        for item in entries
+        if str(item.get("level", "")).upper() == "SEVERE"
+        and "favicon" not in str(item.get("message", "")).lower()
+    ]
+    if severe:
+        report.setdefault("severeConsole", []).extend(
+            {"context": context, **item} for item in severe
+        )
+        raise AssertionError(
+            f"Chrome registrou erro(s) SEVERE em {context}: "
+            + " | ".join(str(item.get("message", ""))[:300] for item in severe[:5])
+        )
 
 
 def _assert_no_global_overflow(driver: webdriver.Chrome, context: str) -> dict[str, Any]:
@@ -175,6 +241,7 @@ def run() -> None:
             )
             time.sleep(0.25)
 
+            _assert_route_contract(driver)
             inner_width = int(driver.execute_script("return window.innerWidth"))
             search_visible = _visible(driver, ".global-search--questions")
             scope_visible = _visible(
@@ -217,7 +284,9 @@ def run() -> None:
 
             for route in ROUTES:
                 _activate_route(driver, route)
-                metrics = _assert_no_global_overflow(driver, f"{label}/{route}")
+                context = f"{label}/{route}"
+                metrics = _assert_no_global_overflow(driver, context)
+                _drain_console(driver, context, report)
                 viewport_record["routes"][route] = metrics
 
                 if route in {"dashboard", "settings"}:
@@ -245,7 +314,9 @@ def run() -> None:
                 "document.documentElement.setAttribute('data-theme', 'dark')"
             )
             _activate_route(driver, "dashboard")
-            _assert_no_global_overflow(driver, f"{label}/dashboard-dark")
+            dark_context = f"{label}/dashboard-dark"
+            _assert_no_global_overflow(driver, dark_context)
+            _drain_console(driver, dark_context, report)
             viewport_record.setdefault("screenshots", []).append(
                 _screenshot(driver, f"{label}-dashboard-dark")
             )
@@ -255,19 +326,7 @@ def run() -> None:
 
             report["viewports"].append(viewport_record)
 
-        report["console"] = driver.get_log("browser")
-        severe = [
-            item
-            for item in report["console"]
-            if str(item.get("level", "")).upper() == "SEVERE"
-            and "favicon" not in str(item.get("message", "")).lower()
-        ]
-        if severe:
-            report["severeConsole"] = severe
-            raise AssertionError(
-                "Chrome registrou erro(s) SEVERE: "
-                + " | ".join(str(item.get("message", ""))[:300] for item in severe[:5])
-            )
+        _drain_console(driver, "final", report)
     finally:
         if driver is not None:
             try:
