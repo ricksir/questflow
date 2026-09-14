@@ -999,6 +999,7 @@ function renderDashboardData(data, { cached = false } = {}) {
     <small>${escapeHtml(item.detail)}</small>
   </article>`).join('');
   renderLearningPulsePanel(data);
+  renderQuestAiInsightPanel(data);
   renderStudyCommandPanel(data);
   loadAdaptiveDecisionPanel().catch(()=>undefined);
   renderAdaptivePanel(data);
@@ -1071,6 +1072,68 @@ function renderLearningPulsePanel(data) {
   panel.querySelectorAll('[data-pulse-subject-key]').forEach((row) => row.addEventListener('click', () => openSubjectAnalyticsModal(context, row.dataset.pulseSubjectKey)));
 }
 
+function renderQuestAiInsightPanel(data) {
+  const panel = $('#questAiInsightPanel');
+  if (!panel) return;
+  const context = analyticsBuildContext(data);
+  const activity = data.activity_summary || {};
+  const candidates = context.prioritized.filter((item) => item.studied || item.has_answers);
+  const top = candidates[0] || context.prioritized[0] || null;
+  const topName = top ? textOrMissing(top.subject || top.materia, 'matéria prioritária') : '';
+  const attempts = numberOrZero(activity.attempts);
+  const due = numberOrZero(context.dueTotal);
+  const recent = context.recentWeighted;
+  const retention = context.retentionWeighted;
+  const coverage = context.studiedCoverage;
+
+  let headline = 'Forme a primeira evidência para personalizar o seu estudo';
+  let explanation = 'O QuestFlow ainda precisa de respostas suficientes para comparar memória, desempenho e cobertura com segurança.';
+  let action = 'Iniciar sessão diagnóstica';
+
+  if (attempts && top) {
+    const reason = (Array.isArray(top.priority_reasons) ? top.priority_reasons[0] : '') || 'é a prioridade mais alta calculada neste momento';
+    if (due > 0) {
+      headline = 'Recupere ' + topName + ' antes de avançar';
+      explanation = formatNumber(due) + ' revisão(ões) estão no ponto de recuperação e ' + reason + '.';
+      action = 'Começar revisão recomendada';
+    } else if (recent != null && Number(recent) < 65) {
+      headline = 'Consolide ' + topName + ' antes de aumentar o ritmo';
+      explanation = 'O desempenho recente consolidado está em ' + analyticsPct(recent) + ' e ' + reason + '.';
+      action = 'Abrir sessão de consolidação';
+    } else if (coverage != null && Number(coverage) < 60) {
+      headline = 'Amplie a cobertura sem perder ' + topName + ' de vista';
+      explanation = 'A cobertura estudada está em ' + analyticsPct(coverage) + '. O melhor próximo passo é avançar o escopo mantendo a matéria prioritária na rotação.';
+      action = 'Continuar plano adaptativo';
+    } else {
+      headline = 'Mantenha ' + topName + ' na rotação inteligente';
+      explanation = 'Seu histórico já permite uma recomendação confiável. Continue o ciclo de questões e revisões para preservar retenção e estabilidade.';
+      action = 'Continuar estudo';
+    }
+  }
+
+  panel.innerHTML = '<div class="quest-ai-insight-grid">'
+    + '<section class="quest-ai-message">'
+    + '<div class="quest-ai-avatar" aria-hidden="true">Q</div>'
+    + '<div class="quest-ai-copy">'
+    + '<span>Síntese do Learning Engine</span>'
+    + '<h3>' + escapeHtml(headline) + '</h3>'
+    + '<p>' + escapeHtml(explanation) + '</p>'
+    + '<div class="quest-ai-actions">'
+    + '<button class="button button--primary" type="button" data-quest-ai-study>' + escapeHtml(action) + '</button>'
+    + '<button class="button button--secondary" type="button" data-quest-ai-tutor>Perguntar ao Tutor</button>'
+    + '<button class="button button--ghost" type="button" data-quest-ai-analytics>Ver diagnóstico</button>'
+    + '</div></div></section>'
+    + '<section class="quest-ai-signals" aria-label="Sinais usados no insight">'
+    + '<div><span>Desempenho recente</span><strong>' + analyticsPct(recent) + '</strong><small>' + (attempts ? formatNumber(attempts) + ' resposta(s) no histórico' : 'aguardando respostas') + '</small></div>'
+    + '<div><span>Retenção estimada</span><strong>' + analyticsPct(retention) + '</strong><small>' + (due ? formatNumber(due) + ' revisão(ões) vencidas' : 'memória sem pendência crítica') + '</small></div>'
+    + '<div><span>Cobertura estudada</span><strong>' + analyticsPct(coverage) + '</strong><small>' + (top ? 'foco atual: ' + escapeHtml(topName) : 'aguardando escopo estudado') + '</small></div>'
+    + '</section></div>';
+
+  panel.querySelector('[data-quest-ai-study]')?.addEventListener('click', () => navigate('recommend'));
+  panel.querySelector('[data-quest-ai-tutor]')?.addEventListener('click', () => navigate('tutor'));
+  panel.querySelector('[data-quest-ai-analytics]')?.addEventListener('click', () => navigate('visualanalytics'));
+}
+
 function renderStudyCommandPanel(data) {
   const panel = $('#studyCommandPanel'); if(!panel) return;
   const a=data.activity_summary||{}; const subjects=Array.isArray(data.subjects)?data.subjects:[];
@@ -1096,6 +1159,7 @@ async function loadDashboard({ force = false } = {}) {
   } else {
     renderSkeletonCards($('#metricGrid'));
     if ($('#learningPulsePanel')) $('#learningPulsePanel').innerHTML = '<div class="skeleton" style="height:15rem"></div>';
+    if ($('#questAiInsightPanel')) $('#questAiInsightPanel').innerHTML = '<div class="skeleton" style="height:9rem"></div>';
     $('#adaptivePanel').innerHTML = '<div class="skeleton" style="height:7rem"></div>';
     if ($('#visualAnalyticsPanel')) $('#visualAnalyticsPanel').innerHTML = '<div class="skeleton" style="height:18rem"></div>';
     $('#flowHealthPanel').innerHTML = '<div class="skeleton" style="height:7rem"></div>';
@@ -1122,6 +1186,7 @@ async function loadDashboard({ force = false } = {}) {
     setSystemStatus('Painel indisponível; interface continua ativa', 'warning');
     $('#metricGrid').innerHTML = emptyStateHtml({ title: 'O painel demorou mais que o esperado', text: error.message, button: '<button class="button button--secondary" id="retryDashboardInline">Tentar novamente</button>' });
     if ($('#learningPulsePanel')) $('#learningPulsePanel').innerHTML = emptyStateHtml({ text: 'O pulso de aprendizagem será recalculado na próxima tentativa.' });
+    if ($('#questAiInsightPanel')) $('#questAiInsightPanel').innerHTML = emptyStateHtml({ text: 'O insight contextual será reconstruído assim que os dados do painel voltarem a carregar.' });
     $('#retryDashboardInline')?.addEventListener('click', loadDashboard, { once: true });
     $('#adaptivePanel').innerHTML = emptyStateHtml({ text: 'Os dados adaptativos serão carregados na próxima tentativa.' });
     if ($('#visualAnalyticsPanel')) $('#visualAnalyticsPanel').innerHTML = emptyStateHtml({ text: 'O painel visual será carregado na próxima tentativa.' });
