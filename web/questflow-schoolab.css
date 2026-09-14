@@ -1934,3 +1934,140 @@ html[data-theme="dark"] .page[data-page="review"] .virtual-row.is-selected {
     margin-inline: 0;
   }
 }
+
+/* Corrections & not-studied triage: separate bank quality from study planning with Schoolab semantics. */
+.page[data-page="corrections"] > .page-header {
+  margin-bottom: 1.25rem;
+}
+
+.page[data-page="corrections"] .corrections-overview {
+  gap: 1rem;
+}
+
+.page[data-page="corrections"] .corrections-overview article {
+  min-height: 7.8rem;
+  padding: 1rem 1.1rem;
+  border-color: color-mix(in srgb, var(--qf-sky-500) 26%, var(--border-subtle));
+  background:
+    radial-gradient(circle at 100% 0%, rgba(85,169,214,.09), transparent 16rem),
+    var(--surface-panel);
+  box-shadow: var(--shadow-1);
+}
+
+.page[data-page="corrections"] .corrections-overview article.is-study {
+  border-color: color-mix(in srgb, var(--qf-gold-500) 30%, var(--border-subtle));
+  background:
+    radial-gradient(circle at 100% 0%, rgba(243,181,74,.12), transparent 16rem),
+    var(--surface-panel);
+}
+
+.page[data-page="corrections"] .corrections-overview span {
+  color: var(--text-muted);
+  letter-spacing: .08em;
+}
+
+.page[data-page="corrections"] .corrections-overview strong {
+  color: var(--qf-ink-900);
+}
+
+.page[data-page="corrections"] .corrections-section--editorial {
+  border-color: color-mix(in srgb, var(--qf-sky-500) 28%, var(--border-subtle));
+}
+
+.page[data-page="corrections"] .corrections-section--study {
+  border-color: color-mix(in srgb, var(--qf-gold-500) 30%, var(--border-subtle));
+}
+
+.page[data-page="corrections"] .corrections-section--editorial .panel-header {
+  background: linear-gradient(90deg, rgba(85,169,214,.08), transparent 62%);
+}
+
+.page[data-page="corrections"] .corrections-section--study .panel-header {
+  background: linear-gradient(90deg, rgba(243,181,74,.11), transparent 62%);
+}
+
+.page[data-page="corrections"] .correction-kind--editorial {
+  color: var(--qf-sky-500) !important;
+  border-color: color-mix(in srgb, var(--qf-sky-500) 34%, var(--border-subtle)) !important;
+  background: color-mix(in srgb, var(--qf-sky-500) 10%, var(--surface-panel)) !important;
+}
+
+.page[data-page="corrections"] .correction-kind--study {
+  color: #8b651b !important;
+  border-color: color-mix(in srgb, var(--qf-gold-500) 38%, var(--border-subtle)) !important;
+  background: color-mix(in srgb, var(--qf-gold-soft) 58%, var(--surface-panel)) !important;
+}
+
+.not-studied-modal .not-studied-callout {
+  border-left-color: var(--qf-gold-500);
+  background: color-mix(in srgb, var(--qf-gold-soft) 48%, var(--surface-panel));
+}
+
+.not-studied-modal .not-studied-callout strong {
+  color: #8b651b;
+}
+
+.not-studied-modal .not-studied-meta-grid > div {
+  border-color: var(--border-subtle);
+  background: color-mix(in srgb, var(--qf-warm-100) 58%, var(--surface-panel));
+}
+
+.not-studied-modal .not-studied-question {
+  border-color: color-mix(in srgb, var(--qf-sky-500) 24%, var(--border-subtle));
+  background: color-mix(in srgb, var(--qf-sky-500) 6%, var(--surface-panel));
+}
+
+.not-studied-modal .not-studied-guidance {
+  border-color: color-mix(in srgb, var(--qf-teal-500) 26%, var(--border-subtle));
+  background: color-mix(in srgb, var(--qf-teal-soft) 44%, var(--surface-panel));
+}
+
+.not-studied-modal .not-studied-guidance strong {
+  color: #187b68;
+}
+
+html[data-theme="dark"] .page[data-page="corrections"] .corrections-overview article,
+html[data-theme="dark"] .page[data-page="corrections"] .corrections-overview article.is-study,
+html[data-theme="dark"] .not-studied-modal .not-studied-callout,
+html[data-theme="dark"] .not-studied-modal .not-studied-meta-grid > div,
+html[data-theme="dark"] .not-studied-modal .not-studied-question,
+html[data-theme="dark"] .not-studied-modal .not-studied-guidance {
+  background: var(--surface-panel);
+}
+
+html[data-theme="dark"] .page[data-page="corrections"] .corrections-overview strong {
+  color: var(--text-primary);
+}
+
+html[data-theme="dark"] .page[data-page="corrections"] .correction-kind--study,
+html[data-theme="dark"] .not-studied-modal .not-studied-callout strong {
+  color: #f3c86a !important;
+}
+
+html[data-theme="dark"] .not-studied-modal .not-studied-guidance strong {
+  color: #62d8bf;
+}
+
+@media (prefers-color-scheme: dark) {
+  html[data-theme="system"] .page[data-page="corrections"] .corrections-overview article,
+  html[data-theme="system"] .page[data-page="corrections"] .corrections-overview article.is-study,
+  html[data-theme="system"] .not-studied-modal .not-studied-callout,
+  html[data-theme="system"] .not-studied-modal .not-studied-meta-grid > div,
+  html[data-theme="system"] .not-studied-modal .not-studied-question,
+  html[data-theme="system"] .not-studied-modal .not-studied-guidance {
+    background: var(--surface-panel);
+  }
+
+  html[data-theme="system"] .page[data-page="corrections"] .corrections-overview strong {
+    color: var(--text-primary);
+  }
+
+  html[data-theme="system"] .page[data-page="corrections"] .correction-kind--study,
+  html[data-theme="system"] .not-studied-modal .not-studied-callout strong {
+    color: #f3c86a !important;
+  }
+
+  html[data-theme="system"] .not-studied-modal .not-studied-guidance strong {
+    color: #62d8bf;
+  }
+}
