@@ -173,6 +173,7 @@ export function Button({ title, onPress, disabled, tone = 'primary' }: { title: 
   return (
     <Pressable
       accessibilityRole="button"
+      accessibilityState={{ disabled: Boolean(disabled) }}
       disabled={disabled}
       onPress={onPress}
       style={({ pressed }) => [styles.button, styles[`button_${tone}`], pressed && styles.pressed, disabled && styles.disabled]}
@@ -239,7 +240,7 @@ const styles = StyleSheet.create({
   stateCopy: { flex: 1, gap: 2 },
   stateTitle: { color: palette.text, fontSize: 14, fontWeight: '900' },
   stateDetail: { color: palette.muted, fontSize: 12, lineHeight: 18 },
-  stateAction: { minHeight: 38, justifyContent: 'center', paddingHorizontal: 12, borderRadius: 12, backgroundColor: palette.surface2, borderWidth: 1, borderColor: palette.border },
+  stateAction: { minHeight: 44, justifyContent: 'center', paddingHorizontal: 12, borderRadius: 12, backgroundColor: palette.surface2, borderWidth: 1, borderColor: palette.border },
   stateActionText: { color: palette.text, fontSize: 12, fontWeight: '900' },
   labelRow: { gap: 4, borderRadius: 14, paddingVertical: 10, paddingHorizontal: 12, backgroundColor: palette.white04, borderWidth: 1, borderColor: palette.white04 },
   labelRowLabel: { color: palette.muted, fontSize: 11, fontWeight: '800', textTransform: 'uppercase', letterSpacing: 0.55 },
