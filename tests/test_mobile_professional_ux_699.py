@@ -29,6 +29,15 @@ class MobileProfessionalUX699Tests(unittest.TestCase):
         self.assertNotIn("Retomar questões no Telegram", today)
         self.assertNotIn("Pausar questões no Telegram", today)
 
+    def test_running_question_explains_selection_without_technical_noise(self):
+        questions = (self.root / "mobile" / "app" / "(tabs)" / "questions.tsx").read_text(encoding="utf-8")
+        self.assertIn("POR QUE ESTA QUESTÃO?", questions)
+        self.assertIn("current.selection?.reason", questions)
+        self.assertIn("QuestFlow explica", questions)
+        self.assertIn("current.selection.topic_transfer", questions)
+        self.assertNotIn("Estratégia:", questions)
+        self.assertNotIn("Plano ", questions)
+
     def test_profile_is_study_only_and_does_not_surface_technical_diagnostics(self):
         profile = (self.root / "mobile" / "app" / "(tabs)" / "profile.tsx").read_text(encoding="utf-8")
         self.assertIn("MEU ESTUDO", profile)
