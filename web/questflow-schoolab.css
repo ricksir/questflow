@@ -2803,3 +2803,87 @@ html[data-theme="dark"] .settings-page .settings-danger-panel .danger-zone-body 
     bottom: .4rem;
   }
 }
+
+
+/* Global question search: make the scope explicit without changing search behavior. */
+.global-search--questions {
+  min-width: clamp(18rem, 28vw, 30rem);
+  gap: .55rem;
+  padding: .42rem .52rem;
+  border-color: color-mix(in srgb, var(--qf-gold-500) 18%, var(--border-subtle));
+  border-radius: .9rem;
+  background: color-mix(in srgb, var(--qf-warm-100) 72%, var(--surface-panel));
+  box-shadow: 0 7px 20px rgba(31,35,55,.04);
+}
+
+.global-search--questions .global-search__icon {
+  color: var(--qf-gold-600);
+  font-size: 1rem;
+}
+
+.global-search--questions .global-search__scope {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.55rem;
+  padding: .18rem .5rem;
+  border: 1px solid color-mix(in srgb, var(--qf-gold-500) 26%, var(--border-subtle));
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--qf-gold-soft) 28%, var(--surface-panel));
+  color: color-mix(in srgb, var(--qf-gold-600) 78%, var(--text-primary));
+  font-size: .72rem;
+  font-weight: 750;
+  letter-spacing: .01em;
+  white-space: nowrap;
+}
+
+.global-search--questions input {
+  min-width: 0;
+  width: 100%;
+  background: transparent;
+}
+
+.global-search--questions kbd {
+  border-color: color-mix(in srgb, var(--qf-sky-500) 20%, var(--border-subtle));
+  background: color-mix(in srgb, var(--qf-sky-500) 6%, var(--surface-panel));
+  color: var(--text-secondary);
+}
+
+.global-search--questions:focus-within {
+  border-color: var(--qf-gold-500);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--qf-gold-500) 18%, transparent), 0 10px 24px rgba(31,35,55,.06);
+}
+
+html[data-theme="dark"] .global-search--questions,
+html[data-theme="dark"] .global-search--questions .global-search__scope,
+html[data-theme="dark"] .global-search--questions kbd {
+  background: var(--surface-panel);
+}
+
+@media (prefers-color-scheme: dark) {
+  html[data-theme="system"] .global-search--questions,
+  html[data-theme="system"] .global-search--questions .global-search__scope,
+  html[data-theme="system"] .global-search--questions kbd {
+    background: var(--surface-panel);
+  }
+}
+
+@media (max-width: 64rem) {
+  .global-search--questions {
+    min-width: 13.5rem;
+  }
+
+  .global-search--questions .global-search__scope {
+    display: none;
+  }
+}
+
+@media (max-width: 48rem) {
+  .global-search--questions {
+    min-width: 10.5rem;
+    flex: 1 1 11rem;
+  }
+
+  .global-search--questions kbd {
+    display: none;
+  }
+}
