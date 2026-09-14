@@ -1398,7 +1398,7 @@ export default function QuestionsScreen() {
                 </View>
                 <Muted>Tempo usado nas métricas: {feedback.timing.active_response_seconds == null ? 'não elegível' : formatDuration(feedback.timing.active_response_seconds)} • qualidade: {feedback.timing.quality}</Muted>
                 {coach ? (
-                  <View style={[styles.resultCoachCard, styles[`resultCoach${coach.tone[0].toUpperCase() + coach.tone.slice(1) as 'Success' | 'Warning' | 'Danger' | 'Info'}`]]}>
+                  <View style={[styles.resultCoachCard, coach.tone === 'success' ? styles.resultCoachSuccess : coach.tone === 'danger' ? styles.resultCoachDanger : coach.tone === 'warning' ? styles.resultCoachWarning : styles.resultCoachInfo]}>
                     <Text style={styles.resultCoachEyebrow}>✦ {coach.eyebrow}</Text>
                     <Text style={styles.resultCoachTitle}>{coach.title}</Text>
                     <Text style={styles.resultCoachDetail}>{coach.detail}</Text>
