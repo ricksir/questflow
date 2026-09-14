@@ -108,8 +108,11 @@ class ModularArchitectureTests(unittest.TestCase):
         operation_names = {item["name"] for item in contract["operations"]}
         self.assertIn("questions.list", operation_names)
         self.assertIn("questions.create", operation_names)
+        self.assertIn("questions.update", operation_names)
         create_contract = next(item for item in contract["operations"] if item["name"] == "questions.create")
+        update_contract = next(item for item in contract["operations"] if item["name"] == "questions.update")
         self.assertTrue(create_contract["mutating"])
+        self.assertTrue(update_contract["mutating"])
         result = self.api.dispatch_studio_v1("questions.list", {"limit": 10})
         self.assertTrue(result["ok"])
         self.assertEqual(result["contract"], "questflow.studio.v1")
@@ -131,6 +134,37 @@ class ModularArchitectureTests(unittest.TestCase):
         self.assertTrue(legacy_uid)
         self.assertEqual(legacy["question"]["database_uid"], legacy_uid)
         self.assertNotEqual(studio_uid, legacy_uid)
+
+    def test_question_save_is_available_in_studio_v1_and_legacy_facade(self) -> None:
+        created = self.api.create_manual_question()
+        self.assertTrue(created["ok"])
+        uid = str(created["uid"])
+        original = dict(self.api.get_question(uid)["question"])
+
+        studio_payload = dict(original)
+        studio_payload["enunciado"] = "Enunciado salvo pelo Studio v1"
+        studio = self.api.dispatch_studio_v1(
+            "questions.update",
+            {"uid": uid, "question": studio_payload, "approve": False},
+        )
+        self.assertTrue(studio["ok"])
+        self.assertEqual(studio["operation"], "questions.update")
+        self.assertEqual(studio["data"]["question"]["enunciado"], "Enunciado salvo pelo Studio v1")
+        self.assertIn("stats", studio["data"])
+        self.assertIn("code_change", studio["data"])
+        self.assertIn("curation", studio["data"])
+
+        legacy_payload = dict(studio["data"]["question"])
+        legacy_payload["enunciado"] = "Enunciado salvo pela fachada legada"
+        legacy = self.api.save_question(uid, legacy_payload, True)
+        self.assertTrue(legacy["ok"])
+        self.assertEqual(legacy["question"]["enunciado"], "Enunciado salvo pela fachada legada")
+        self.assertEqual(legacy["question"]["revisao"]["status"], "aprovado")
+
+        persisted = self.api.get_question(uid)
+        self.assertTrue(persisted["ok"])
+        self.assertEqual(persisted["question"]["enunciado"], "Enunciado salvo pela fachada legada")
+        self.assertEqual(persisted["question"]["revisao"]["status"], "aprovado")
 
     def test_question_detail_is_equivalent_between_studio_v1_and_legacy_facade(self) -> None:
         created = self.api.create_manual_question()
@@ -216,13 +250,38 @@ class ModularArchitectureTests(unittest.TestCase):
                 create_payload["data"]["uid"],
             )
 
+            created_uid = str(create_payload["data"]["uid"])
+            update_question = dict(create_payload["data"]["question"])
+            update_question["enunciado"] = "Atualização HTTP Studio v1"
+            update_request = urllib.request.Request(
+                f"{server.base_url}/api/v1/studio/questions/{urllib.parse.quote(created_uid, safe='')}",
+                data=json.dumps({
+                    "question": update_question,
+                    "approve": False,
+                }, ensure_ascii=False).encode("utf-8"),
+                headers={
+                    "X-QuestFlow-Token": server.token,
+                    "Content-Type": "application/json",
+                },
+                method="POST",
+            )
+            with urllib.request.urlopen(update_request, timeout=5) as response:
+                update_payload = json.loads(response.read().decode("utf-8"))
+            self.assertTrue(update_payload["ok"])
+            self.assertEqual(update_payload["contract"], "questflow.studio.v1")
+            self.assertEqual(update_payload["operation"], "questions.update")
+            self.assertEqual(update_payload["data"]["question"]["database_uid"], created_uid)
+            self.assertEqual(update_payload["data"]["question"]["enunciado"], "Atualização HTTP Studio v1")
+            self.assertIn("stats", update_payload["data"])
+            self.assertIn("curation", update_payload["data"])
+
             with urllib.request.urlopen(f"{server.base_url}/modules/bootstrap.js", timeout=5) as response:
                 frontend = response.read().decode("utf-8")
             self.assertIn("typed-route-modules-v1", frontend)
         finally:
             server.stop()
 
-    def test_review_list_and_detail_use_studio_v1_with_legacy_fallback(self) -> None:
+    def test_review_read_create_and_save_use_studio_v1_with_legacy_fallback(self) -> None:
         script = (Path(__file__).resolve().parents[1] / "web" / "app.js").read_text(encoding="utf-8")
         self.assertIn("async studioGet(path, fallbackMethod = '', fallbackArgs = [])", script)
         self.assertIn("/api/v1/studio/", script)
@@ -249,6 +308,14 @@ class ModularArchitectureTests(unittest.TestCase):
         self.assertIn("'create_manual_question'", create_question)
         self.assertNotIn("bridge.call('create_manual_question'", create_question)
         self.assertIn("async studioPost(path, payload = {}, fallbackMethod = '', fallbackArgs = [])", script)
+
+        save_start = script.index("async function saveCurrentQuestion")
+        save_end = script.index("function clearQuestionEditor", save_start)
+        save_question = script[save_start:save_end]
+        self.assertIn("bridge.studioPost(", save_question)
+        self.assertIn("encodeURIComponent(state.currentUid)", save_question)
+        self.assertIn("'save_question'", save_question)
+        self.assertNotIn("bridge.call('save_question'", save_question)
 
     def test_fsrs_kt_irt_and_analytics_are_declared_rebuildable(self) -> None:
         architecture = self.api.get_engine_architecture()["architecture"]
