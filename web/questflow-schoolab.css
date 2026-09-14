@@ -1558,3 +1558,166 @@ html[data-theme="dark"] .page[data-page="recommend"] .stage4-recommendation-rank
     width: 100%;
   }
 }
+
+/* QuestFlow Mobile Studio: align device management with the shared Schoolab visual system. */
+.nav-item--mobile {
+  border-color: rgba(243,181,74,.18);
+  background: linear-gradient(90deg, rgba(243,181,74,.10), rgba(33,184,154,.04));
+}
+
+.nav-item--mobile .nav-icon {
+  color: var(--qf-gold-500);
+}
+
+.mobile-studio-page {
+  --mobile-blue: var(--qf-sky-500);
+  --mobile-cyan: var(--qf-teal-500);
+  --mobile-violet: var(--qf-gold-500);
+}
+
+.mobile-studio-page .mobile-studio-hero {
+  border-color: color-mix(in srgb, var(--qf-gold-500) 34%, var(--border-subtle));
+  background:
+    radial-gradient(circle at 88% 12%, rgba(33,184,154,.14), transparent 31%),
+    radial-gradient(circle at 8% 115%, rgba(243,181,74,.16), transparent 38%),
+    linear-gradient(135deg, var(--qf-warm-100), var(--surface-panel));
+  box-shadow: var(--shadow-1);
+}
+
+.mobile-studio-page .mobile-studio-hero__copy h2 {
+  color: var(--qf-ink-900);
+}
+
+.mobile-studio-page .mobile-studio-hero__copy p {
+  color: var(--text-secondary);
+}
+
+.mobile-studio-page .mobile-studio-kicker {
+  color: var(--qf-gold-600);
+}
+
+.mobile-studio-page .mobile-phone-shape {
+  border-color: color-mix(in srgb, var(--qf-ink-900) 78%, var(--qf-gold-500));
+  background:
+    radial-gradient(circle at 50% 0%, rgba(243,181,74,.17), transparent 32%),
+    linear-gradient(160deg, var(--qf-ink-900), var(--qf-ink-950));
+  box-shadow: 0 18px 35px rgba(22,26,47,.18), inset 0 0 0 5px rgba(255,255,255,.035);
+}
+
+.mobile-studio-page .mobile-phone-shape::before {
+  background: rgba(255,255,255,.60);
+}
+
+.mobile-studio-page .mobile-phone-shape span {
+  background: linear-gradient(90deg, var(--qf-gold-500), var(--qf-teal-500));
+}
+
+.mobile-studio-page .mobile-phone-shape span:nth-child(2) {
+  background: linear-gradient(90deg, var(--qf-sky-500), var(--qf-teal-500));
+}
+
+.mobile-studio-page .mobile-local-panel {
+  border-color: color-mix(in srgb, var(--qf-gold-500) 28%, var(--border-subtle));
+}
+
+.mobile-studio-page .mobile-help-panel {
+  border-color: color-mix(in srgb, var(--qf-sky-500) 24%, var(--border-subtle));
+}
+
+.mobile-studio-page .mobile-toggle-card {
+  border-color: color-mix(in srgb, var(--qf-gold-500) 25%, var(--border-subtle));
+  background: color-mix(in srgb, var(--qf-gold-soft) 32%, var(--surface-panel));
+}
+
+.mobile-studio-page .mobile-steps > div > span {
+  color: var(--qf-ink-900);
+  background: linear-gradient(145deg, #f7c768, var(--qf-gold-500));
+  box-shadow: 0 8px 18px rgba(220,151,46,.16);
+}
+
+.mobile-studio-page .mobile-steps > div:nth-child(2) > span {
+  color: #fff;
+  background: linear-gradient(145deg, #3ac9aa, var(--qf-teal-500));
+  box-shadow: 0 8px 18px rgba(33,184,154,.14);
+}
+
+.mobile-studio-page .mobile-steps > div:nth-child(3) > span {
+  color: #fff;
+  background: linear-gradient(145deg, #72b9df, var(--qf-sky-500));
+  box-shadow: 0 8px 18px rgba(85,169,214,.14);
+}
+
+.mobile-studio-page .mobile-foundation-panel {
+  border-color: color-mix(in srgb, var(--qf-teal-500) 26%, var(--border-subtle));
+}
+
+.mobile-studio-page .mobile-foundation-metric {
+  border-color: var(--border-subtle);
+  background: var(--surface-panel);
+  box-shadow: none;
+}
+
+.mobile-studio-page .mobile-foundation-metric::before {
+  background: linear-gradient(180deg, var(--qf-gold-500), var(--qf-teal-500));
+}
+
+.mobile-studio-page .mobile-pairing-card {
+  border-color: color-mix(in srgb, var(--qf-teal-500) 24%, var(--border-subtle));
+  background:
+    radial-gradient(circle at 100% 0%, rgba(33,184,154,.08), transparent 22rem),
+    color-mix(in srgb, var(--qf-teal-soft) 34%, var(--surface-panel));
+}
+
+.mobile-studio-page .mobile-pairing-copy code {
+  color: var(--qf-ink-900);
+  background: color-mix(in srgb, var(--qf-warm-100) 72%, var(--surface-panel));
+  border: 1px solid var(--border-subtle);
+}
+
+.mobile-studio-page .mobile-device-item {
+  border-color: var(--border-subtle);
+  background: color-mix(in srgb, var(--qf-warm-100) 54%, var(--surface-panel));
+}
+
+.mobile-studio-page .mobile-device-item:hover,
+.mobile-studio-page .mobile-device-item:focus-within {
+  border-color: color-mix(in srgb, var(--qf-gold-500) 38%, var(--border-subtle));
+  background: color-mix(in srgb, var(--qf-gold-soft) 20%, var(--surface-panel));
+}
+
+.mobile-studio-page .mobile-cloud-advanced {
+  border-color: color-mix(in srgb, var(--qf-sky-500) 22%, var(--border-subtle));
+  background: var(--surface-panel);
+}
+
+.mobile-studio-page .mobile-cloud-advanced > summary {
+  background: color-mix(in srgb, var(--qf-warm-100) 50%, var(--surface-panel));
+}
+
+html[data-theme="dark"] .mobile-studio-page .mobile-studio-hero,
+html[data-theme="dark"] .mobile-studio-page .mobile-pairing-card,
+html[data-theme="dark"] .mobile-studio-page .mobile-toggle-card,
+html[data-theme="dark"] .mobile-studio-page .mobile-device-item,
+html[data-theme="dark"] .mobile-studio-page .mobile-cloud-advanced > summary {
+  background: var(--surface-subtle);
+}
+
+html[data-theme="dark"] .mobile-studio-page .mobile-studio-hero__copy h2,
+html[data-theme="dark"] .mobile-studio-page .mobile-pairing-copy code {
+  color: var(--text-primary);
+}
+
+@media (prefers-color-scheme: dark) {
+  html[data-theme="system"] .mobile-studio-page .mobile-studio-hero,
+  html[data-theme="system"] .mobile-studio-page .mobile-pairing-card,
+  html[data-theme="system"] .mobile-studio-page .mobile-toggle-card,
+  html[data-theme="system"] .mobile-studio-page .mobile-device-item,
+  html[data-theme="system"] .mobile-studio-page .mobile-cloud-advanced > summary {
+    background: var(--surface-subtle);
+  }
+
+  html[data-theme="system"] .mobile-studio-page .mobile-studio-hero__copy h2,
+  html[data-theme="system"] .mobile-studio-page .mobile-pairing-copy code {
+    color: var(--text-primary);
+  }
+}

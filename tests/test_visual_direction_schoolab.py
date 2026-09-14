@@ -91,6 +91,17 @@ class SchoolabAprovaCheckmateUiTests(unittest.TestCase):
         self.assertIn("field.dispatchEvent(new Event('change'", self.script)
         self.assertIn('.tutor-quick-prompts', self.theme)
 
+    def test_mobile_studio_uses_shared_schoolab_visual_language(self):
+        self.assertIn('class="page mobile-studio-page"', self.html)
+        self.assertIn('.mobile-studio-page {', self.theme)
+        self.assertIn('--mobile-blue: var(--qf-sky-500)', self.theme)
+        self.assertIn('--mobile-cyan: var(--qf-teal-500)', self.theme)
+        self.assertIn('--mobile-violet: var(--qf-gold-500)', self.theme)
+        self.assertIn('.mobile-studio-page .mobile-studio-hero', self.theme)
+        self.assertIn('.mobile-studio-page .mobile-foundation-metric::before', self.theme)
+        self.assertIn('.mobile-studio-page .mobile-cloud-advanced', self.theme)
+        self.assertIn('html[data-theme="dark"] .mobile-studio-page .mobile-studio-hero', self.theme)
+
     def test_checkmate_analytics_bento_is_decision_first(self):
         self.assertIn('Analytics de estudo', self.html)
         self.assertIn('Seu aprendizado em números', self.html)
