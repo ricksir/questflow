@@ -53,6 +53,13 @@ class SchoolabAprovaCheckmateUiTests(unittest.TestCase):
         self.assertIn('Histórico operacional', self.html)
         self.assertNotIn('QuestFlow Score', self.script)
 
+    def test_visual_layer_respects_keyboard_and_reduced_motion(self):
+        self.assertIn(':focus-visible', self.theme)
+        self.assertIn('outline: 3px solid var(--focus-ring)', self.theme)
+        self.assertIn('@media (prefers-reduced-motion: reduce)', self.theme)
+        self.assertIn('animation-duration: .001ms !important', self.theme)
+        self.assertIn('transition-duration: .001ms !important', self.theme)
+
     def test_tutor_has_contextual_quick_actions(self):
         self.assertIn('data-tutor-quick-prompt', self.html)
         self.assertIn('Explique ultra-fácil', self.html)
