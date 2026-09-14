@@ -291,7 +291,7 @@ const styles = StyleSheet.create({
   sectionGap: { gap: 10 },
   priorityHeading: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'flex-end', justifyContent: 'space-between', gap: 10 },
   subjectHeading: { flexDirection: 'row', alignItems: 'center', gap: 10 },
-  rankBadge: { width: 28, height: 28, borderRadius: 10, alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255,122,24,0.14)', borderWidth: 1, borderColor: 'rgba(255,122,24,0.32)' },
+  rankBadge: { width: 28, height: 28, borderRadius: 10, alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(243,181,74,0.18)', borderWidth: 1, borderColor: 'rgba(220,151,46,0.28)' },
   rankBadgeText: { color: palette.primary, fontSize: 12, fontWeight: '900' },
   subject: { color: palette.text, fontSize: 16, fontWeight: '800', flex: 1 },
   accuracy: { color: palette.text, fontWeight: '900' },
