@@ -1323,3 +1323,106 @@ html[data-theme="dark"] .page[data-page="dashboard"] #recentActivity .table-link
     color: var(--text-primary);
   }
 }
+
+/* Tutor contextual actions: fast study intents inspired by contextual SaaS assistants. */
+.page--tutor .tutor-workspace-panel {
+  background:
+    radial-gradient(circle at 100% 0%, rgba(85,169,214,.05), transparent 26rem),
+    var(--surface-panel);
+}
+
+.page--tutor .tutor-question-selector,
+.page--tutor .tutor-controls {
+  border-radius: 1rem;
+}
+
+.tutor-quick-prompts {
+  display: grid;
+  gap: .55rem;
+  padding: .9rem;
+  border: 1px solid color-mix(in srgb, var(--qf-sky-500) 18%, var(--border-subtle));
+  border-radius: .9rem;
+  background: color-mix(in srgb, var(--qf-sky-500) 4%, var(--surface-panel));
+}
+
+.tutor-quick-prompts > span {
+  color: var(--text-muted);
+  font-size: .7rem;
+  font-weight: 850;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.tutor-quick-prompts > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem;
+}
+
+.tutor-quick-prompts button {
+  min-height: 2.35rem;
+  padding: .48rem .72rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 999px;
+  color: var(--text-primary);
+  background: var(--surface-panel);
+  font: inherit;
+  font-size: .76rem;
+  font-weight: 750;
+  cursor: pointer;
+  transition: border-color var(--duration-fast), background var(--duration-fast), transform var(--duration-fast);
+}
+
+.tutor-quick-prompts button:hover:not(:disabled),
+.tutor-quick-prompts button:focus-visible:not(:disabled) {
+  border-color: var(--qf-gold-500);
+  background: var(--qf-gold-soft);
+  transform: translateY(-1px);
+}
+
+.tutor-quick-prompts button:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+
+.page--tutor .diagnosis-card {
+  border-color: color-mix(in srgb, var(--qf-teal-500) 20%, var(--border-subtle));
+  background:
+    radial-gradient(circle at 100% 0%, rgba(33,184,154,.07), transparent 18rem),
+    color-mix(in srgb, var(--qf-warm-100) 44%, var(--surface-panel));
+}
+
+.page--tutor .tutor-provider-box {
+  border-color: var(--border-subtle);
+  background: color-mix(in srgb, var(--qf-warm-100) 52%, var(--surface-panel));
+}
+
+html[data-theme="dark"] .tutor-quick-prompts,
+html[data-theme="dark"] .page--tutor .diagnosis-card,
+html[data-theme="dark"] .page--tutor .tutor-provider-box {
+  background: var(--surface-subtle);
+}
+
+html[data-theme="dark"] .tutor-quick-prompts button {
+  background: var(--surface-panel);
+}
+
+@media (prefers-color-scheme: dark) {
+  html[data-theme="system"] .tutor-quick-prompts,
+  html[data-theme="system"] .page--tutor .diagnosis-card,
+  html[data-theme="system"] .page--tutor .tutor-provider-box {
+    background: var(--surface-subtle);
+  }
+}
+
+@media (max-width: 42rem) {
+  .tutor-quick-prompts > div {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .tutor-quick-prompts button {
+    width: 100%;
+    text-align: left;
+  }
+}
