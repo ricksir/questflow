@@ -1,7 +1,6 @@
 /* QuestFlow visual direction — Schoolab refinement + Aprova.ai study UX + Checkmate analytics.
    This layer intentionally overrides legacy presentation without changing product data or contracts. */
 
-@layer questflow-reference {
   :root {
     /* Schoolab-inspired warm educational palette (adapted from the published visual style guide). */
     --qf-ink-950: #161a2f;
@@ -296,5 +295,285 @@
     .page {
       padding-inline: clamp(2rem, 3vw, 3.25rem);
     }
+  }
+
+/* Compatibility bridge for the legacy 6.22 visual layer loaded immediately before this file. */
+:root {
+  --qf622-canvas: var(--qf-warm-50);
+  --qf622-rail: var(--qf-ink-900);
+  --qf622-surface: var(--qf-white);
+  --qf622-raised: var(--qf-warm-100);
+  --qf622-line: var(--qf-border);
+  --qf622-orange: var(--qf-gold-500);
+  --qf622-cyan: var(--qf-teal-500);
+  --qf622-violet: var(--qf-sky-500);
+  --qf622-green: var(--qf-teal-500);
+  --qf622-ink: var(--qf-text);
+  --qf622-muted: var(--qf-muted);
+
+  /* Aliases still used by older QuestFlow sections. */
+  --surface-1: var(--qf-white);
+  --surface-2: var(--qf-warm-100);
+  --surface-muted: var(--qf-warm-100);
+  --surface-raised: var(--qf-white);
+  --border: var(--qf-border);
+  --text: var(--qf-text);
+  --muted: var(--qf-muted);
+}
+
+html[data-theme="light"],
+html[data-theme="system"] {
+  color-scheme: light;
+  --surface-canvas: var(--qf-warm-50);
+  --surface-panel: var(--qf-white);
+  --surface-1: var(--qf-white);
+  --surface-2: var(--qf-warm-100);
+  --surface-raised: var(--qf-white);
+  --surface-muted: var(--qf-warm-100);
+  --border: var(--qf-border);
+  --border-subtle: var(--qf-border);
+  --text: var(--qf-text);
+  --text-primary: var(--qf-text);
+  --text-secondary: #5f6577;
+  --text-muted: var(--qf-muted);
+  --muted: var(--qf-muted);
+  --accent: var(--qf-gold-500);
+}
+
+@media (prefers-color-scheme: dark) {
+  html[data-theme="system"] {
+    color-scheme: dark;
+    --surface-canvas: #111528;
+    --surface-panel: #181d33;
+    --surface-1: #181d33;
+    --surface-2: #202640;
+    --surface-raised: #252c48;
+    --surface-muted: #202640;
+    --border: #313954;
+    --border-subtle: #313954;
+    --text: #fbfaf6;
+    --text-primary: #fbfaf6;
+    --text-secondary: #c7c4bb;
+    --text-muted: #9e9b94;
+    --muted: #9e9b94;
+    --accent: #f3b54a;
+  }
+}
+
+body {
+  background: var(--surface-canvas);
+  color: var(--text-primary);
+}
+
+.app-shell {
+  background: var(--surface-canvas);
+}
+
+.app-stage {
+  border-color: var(--border-subtle);
+  background: var(--surface-canvas);
+  box-shadow: 0 18px 48px rgba(31,35,55,.08);
+}
+
+#workspace {
+  background:
+    radial-gradient(circle at 90% 0%, rgba(243,181,74,.065), transparent 30rem),
+    radial-gradient(circle at 6% 35%, rgba(33,184,154,.035), transparent 28rem),
+    var(--surface-canvas);
+}
+
+.breadcrumbs {
+  color: var(--text-secondary);
+}
+
+.global-search {
+  background: var(--surface-subtle);
+  border-color: var(--border-subtle);
+  box-shadow: none;
+}
+
+.icon-button,
+.segmented-control {
+  color: var(--text-secondary);
+  background: var(--surface-subtle);
+  border-color: var(--border-subtle);
+}
+
+.page .panel {
+  border-color: var(--border-subtle);
+  background: var(--surface-panel);
+  box-shadow: var(--shadow-1);
+}
+
+.panel-header {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--qf-warm-100) 58%, transparent), transparent);
+  border-bottom-color: var(--border-subtle);
+}
+
+.button--secondary {
+  color: var(--text-primary);
+  background: var(--surface-panel);
+  border-color: var(--border-strong);
+}
+
+input,
+select,
+textarea {
+  color: var(--text-primary);
+  background: var(--surface-panel);
+  border-color: var(--border-strong);
+}
+
+html[data-theme="dark"] body,
+@media (prefers-color-scheme: dark) {
+}
+
+/* Home: Aprova.ai-style action hierarchy expressed with QuestFlow real data. */
+.page[data-page="dashboard"] {
+  --dashboard-gap: clamp(.9rem, 1.25vw, 1.25rem);
+}
+
+.page[data-page="dashboard"] > .dashboard-welcome {
+  min-height: auto;
+  padding: .35rem 0 .5rem;
+  margin-bottom: var(--dashboard-gap);
+  border-bottom: 0;
+}
+
+.dashboard-welcome h1 {
+  font-size: clamp(2rem, 2.8vw, 3.15rem) !important;
+  line-height: 1.02;
+  max-width: none;
+}
+
+.dashboard-welcome p:not(.eyebrow) {
+  max-width: 58rem;
+  color: var(--text-secondary);
+  font-size: .98rem;
+}
+
+.dashboard-priority-card {
+  margin-bottom: var(--dashboard-gap);
+  border-color: color-mix(in srgb, var(--qf-gold-500) 34%, var(--border-subtle)) !important;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(243,181,74,.11), transparent 28rem),
+    radial-gradient(circle at 72% 100%, rgba(33,184,154,.055), transparent 24rem),
+    var(--surface-panel) !important;
+}
+
+.dashboard-priority-card > .panel-header {
+  border-bottom-color: color-mix(in srgb, var(--qf-gold-500) 20%, var(--border-subtle));
+}
+
+.dashboard-priority-card .learning-pulse-action {
+  border-color: color-mix(in srgb, var(--qf-gold-500) 38%, var(--border-subtle));
+  background:
+    linear-gradient(150deg, var(--qf-gold-soft), color-mix(in srgb, var(--surface-panel) 92%, var(--qf-gold-soft)));
+}
+
+.dashboard-priority-card .learning-pulse-action h3 {
+  color: var(--qf-ink-900);
+  font-size: clamp(1.35rem, 1.6vw, 1.85rem);
+}
+
+.dashboard-priority-card .learning-session-plan {
+  background: rgba(255,255,255,.62);
+  border: 1px solid rgba(220,151,46,.14);
+}
+
+.dashboard-priority-card .learning-session-plan strong {
+  color: var(--qf-gold-600);
+}
+
+.dashboard-priority-card .learning-pulse-chart,
+.dashboard-priority-card .learning-pulse-retention,
+.dashboard-priority-card .learning-pulse-focus {
+  background: color-mix(in srgb, var(--qf-warm-100) 42%, var(--surface-panel));
+}
+
+.dashboard-priority-card .learning-retention-ring {
+  background: conic-gradient(var(--qf-teal-500) calc(var(--pulse-value) * 1%), color-mix(in srgb, var(--border-subtle) 72%, transparent) 0);
+  box-shadow: 0 0 2.4rem rgba(33,184,154,.11);
+}
+
+.dashboard-today-card {
+  margin-bottom: var(--dashboard-gap);
+}
+
+.dashboard-today-card .today-project {
+  border-color: color-mix(in srgb, var(--qf-gold-500) 22%, var(--border-subtle));
+  background: var(--qf-gold-soft);
+}
+
+.dashboard-today-card .today-project > span,
+.dashboard-today-card .today-project small {
+  color: #7d6c4b;
+}
+
+.dashboard-today-card .today-kpis > div,
+.dashboard-today-card .today-task {
+  border-color: var(--border-subtle);
+  background: color-mix(in srgb, var(--qf-warm-100) 55%, var(--surface-panel));
+}
+
+.dashboard-today-card .today-task:hover,
+.dashboard-today-card .today-task:focus-visible {
+  border-color: var(--qf-gold-500);
+  box-shadow: 0 9px 22px rgba(31,35,55,.06);
+}
+
+.dashboard-today-card .today-task__number {
+  color: var(--qf-ink-900);
+  background: var(--qf-gold-500);
+}
+
+.dashboard-metric-grid {
+  gap: .8rem;
+  margin-bottom: var(--dashboard-gap);
+}
+
+.dashboard-metric-grid .metric-card {
+  min-height: 7.8rem;
+  border: 1px solid var(--border-subtle);
+  border-top: 1px solid var(--border-subtle);
+  background: var(--surface-panel);
+}
+
+.dashboard-metric-grid .metric-card::before {
+  display: block;
+}
+
+.dashboard-metric-grid .metric-card:nth-child(4n + 1)::before { background: var(--qf-sky-500); }
+.dashboard-metric-grid .metric-card:nth-child(4n + 2)::before { background: var(--qf-teal-500); }
+.dashboard-metric-grid .metric-card:nth-child(4n + 3)::before { background: var(--qf-sky-500); }
+.dashboard-metric-grid .metric-card:nth-child(4n + 4)::before { background: var(--qf-gold-500); }
+
+.page[data-page="dashboard"] > .study-command-panel,
+.page[data-page="dashboard"] > .adaptive-decision-panel,
+.page[data-page="dashboard"] > .database-health-panel,
+.page[data-page="dashboard"] > .trail-guide-dashboard,
+.page[data-page="dashboard"] > .dashboard-grid {
+  margin-top: var(--dashboard-gap);
+}
+
+@media (max-width: 64rem) {
+  .today-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .today-kpis {
+    grid-template-columns: repeat(2, minmax(0,1fr));
+  }
+}
+
+@media (max-width: 40rem) {
+  .today-kpis {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-priority-card .panel-header,
+  .dashboard-today-card .panel-header {
+    align-items: flex-start;
+    flex-direction: column;
   }
 }
