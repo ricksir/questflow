@@ -1914,8 +1914,8 @@ async function loadAiAudit() {
   if (!target) return;
   target.innerHTML = '<div class="skeleton" style="height:6rem"></div>';
   try {
-    const result = await bridge.call('get_ai_audit', 30);
-    if (!result.ok) throw new Error(result.error || 'Não foi possível carregar a auditoria de IA.');
+    const result = await bridge.studioGet('governance/ai/audit?limit=30', 'get_ai_audit', [30]);
+    if (result?.ok === false) throw new Error(result.error || 'Não foi possível carregar a auditoria de IA.');
     renderTutorGovernance(result.summary || {});
     const items = Array.isArray(result.items) ? result.items : [];
     target.innerHTML = items.length ? `<div class="ai-audit-list">${items.map((item) => `<article class="ai-audit-row" data-ai-interaction="${escapeHtml(item.id)}">
@@ -1933,8 +1933,12 @@ async function loadAiAudit() {
 async function showAiInteractionAudit(interactionId) {
   if (!interactionId) return;
   try {
-    const result = await bridge.call('get_ai_interaction', interactionId);
-    if (!result.ok) throw new Error(result.error || 'Interação não encontrada.');
+    const result = await bridge.studioGet(
+      `governance/ai/interactions/${encodeURIComponent(interactionId)}`,
+      'get_ai_interaction',
+      [interactionId],
+    );
+    if (result?.ok === false) throw new Error(result.error || 'Interação não encontrada.');
     const item = result.interaction || {};
     const evaluation = item.evaluation?.details || item.evaluation || {};
     const sources = Array.isArray(item.sources) ? item.sources : [];

@@ -520,6 +520,18 @@ class QuestFlowLocalServer:
                             "session_id": unquote(parsed.path[len(simulation_prefix):]),
                         })
                         return
+                    if parsed.path == "/api/v1/studio/governance/ai/audit":
+                        query = parse_qs(parsed.query, keep_blank_values=True)
+                        self._studio_v1_result("governance.ai.audit.list", {
+                            "limit": (query.get("limit") or [20])[0],
+                        })
+                        return
+                    interaction_prefix = "/api/v1/studio/governance/ai/interactions/"
+                    if parsed.path.startswith(interaction_prefix):
+                        self._studio_v1_result("governance.ai.interactions.get", {
+                            "interaction_id": unquote(parsed.path[len(interaction_prefix):]),
+                        })
+                        return
                     if parsed.path == "/api/v1/studio/questions":
                         query = parse_qs(parsed.query, keep_blank_values=True)
                         payload = {
