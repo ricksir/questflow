@@ -66,6 +66,7 @@ class StudioUseCaseDispatcher:
         remove_image: Callable[[str], dict[str, Any]] | None = None,
         list_subjects: Callable[[], dict[str, Any]] | None = None,
         get_classification_options: Callable[[str, str], dict[str, Any]] | None = None,
+        update_classification: Callable[[str, dict[str, Any]], dict[str, Any]] | None = None,
     ) -> None:
         self.catalog = catalog
         self.architecture = architecture
@@ -78,6 +79,7 @@ class StudioUseCaseDispatcher:
         self.remove_image = remove_image
         self.list_subjects = list_subjects
         self.get_classification_options = get_classification_options
+        self.update_classification = update_classification
         self._definitions: dict[str, UseCaseDefinition] = {}
         self._register_defaults()
 
@@ -99,6 +101,7 @@ class StudioUseCaseDispatcher:
         self.register(UseCaseDefinition("questions.delete", self._questions_delete, mutating=True, module="editorial_bank"))
         self.register(UseCaseDefinition("questions.annul", self._questions_annul, mutating=True, module="editorial_bank"))
         self.register(UseCaseDefinition("questions.image.remove", self._questions_image_remove, mutating=True, module="editorial_bank"))
+        self.register(UseCaseDefinition("questions.classification.update", self._questions_classification_update, mutating=True, module="editorial_bank"))
         self.register(UseCaseDefinition("taxonomy.subjects.list", self._taxonomy_subjects_list, module="editorial_bank"))
         self.register(UseCaseDefinition("taxonomy.classification.options", self._taxonomy_classification_options, module="editorial_bank"))
         self.register(UseCaseDefinition("questions.source.settings", self._source_settings, module="editorial_bank"))
@@ -269,6 +272,26 @@ class StudioUseCaseDispatcher:
         if result.get("ok") is False:
             raise UseCaseError(
                 str(result.get("error") or "Não foi possível remover a imagem."),
+                code=str(result.get("code") or "validation_error"),
+                status=int(result.get("status") or 400),
+            )
+        return {key: value for key, value in result.items() if key != "ok"}
+
+    def _questions_classification_update(self, payload: dict[str, Any]) -> dict[str, Any]:
+        uid = str(payload.get("uid") or payload.get("id") or "").strip()
+        classification = payload.get("classification")
+        if not uid:
+            raise UseCaseError("Informe o identificador da questão.", code="validation_error")
+        if not isinstance(classification, dict):
+            raise UseCaseError("Dados de classificação inválidos.", code="validation_error")
+        if self.update_classification is None:
+            raise UseCaseError("Correção de classificação indisponível.", code="unavailable", status=503)
+        result = self.update_classification(uid, classification)
+        if not isinstance(result, dict):
+            raise UseCaseError("Correção de classificação retornou um resultado inválido.", code="internal_error", status=500)
+        if result.get("ok") is False:
+            raise UseCaseError(
+                str(result.get("error") or "Não foi possível salvar a classificação."),
                 code=str(result.get("code") or "validation_error"),
                 status=int(result.get("status") or 400),
             )

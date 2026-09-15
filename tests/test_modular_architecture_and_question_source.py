@@ -114,6 +114,7 @@ class ModularArchitectureTests(unittest.TestCase):
         self.assertIn("questions.image.remove", operation_names)
         self.assertIn("taxonomy.subjects.list", operation_names)
         self.assertIn("taxonomy.classification.options", operation_names)
+        self.assertIn("questions.classification.update", operation_names)
         create_contract = next(item for item in contract["operations"] if item["name"] == "questions.create")
         update_contract = next(item for item in contract["operations"] if item["name"] == "questions.update")
         delete_contract = next(item for item in contract["operations"] if item["name"] == "questions.delete")
@@ -121,6 +122,7 @@ class ModularArchitectureTests(unittest.TestCase):
         remove_image_contract = next(item for item in contract["operations"] if item["name"] == "questions.image.remove")
         subjects_contract = next(item for item in contract["operations"] if item["name"] == "taxonomy.subjects.list")
         classification_options_contract = next(item for item in contract["operations"] if item["name"] == "taxonomy.classification.options")
+        classification_update_contract = next(item for item in contract["operations"] if item["name"] == "questions.classification.update")
         self.assertTrue(create_contract["mutating"])
         self.assertTrue(update_contract["mutating"])
         self.assertTrue(delete_contract["mutating"])
@@ -128,6 +130,7 @@ class ModularArchitectureTests(unittest.TestCase):
         self.assertTrue(remove_image_contract["mutating"])
         self.assertFalse(subjects_contract["mutating"])
         self.assertFalse(classification_options_contract["mutating"])
+        self.assertTrue(classification_update_contract["mutating"])
         result = self.api.dispatch_studio_v1("questions.list", {"limit": 10})
         self.assertTrue(result["ok"])
         self.assertEqual(result["contract"], "questflow.studio.v1")
@@ -418,6 +421,31 @@ class ModularArchitectureTests(unittest.TestCase):
             self.assertEqual(update_payload["data"]["question"]["enunciado"], "Atualização HTTP Studio v1")
             self.assertIn("stats", update_payload["data"])
             self.assertIn("curation", update_payload["data"])
+
+            classification_update_request = urllib.request.Request(
+                f"{server.base_url}/api/v1/studio/questions/{urllib.parse.quote(created_uid, safe='')}/classification",
+                data=json.dumps({
+                    "classification": {
+                        "materia": "AUDITORIA",
+                        "aula": "Aula 01",
+                        "task_id": "",
+                    },
+                }, ensure_ascii=False).encode("utf-8"),
+                headers={
+                    "X-QuestFlow-Token": server.token,
+                    "Content-Type": "application/json",
+                },
+                method="POST",
+            )
+            with urllib.request.urlopen(classification_update_request, timeout=5) as response:
+                classification_update_payload = json.loads(response.read().decode("utf-8"))
+            self.assertTrue(classification_update_payload["ok"])
+            self.assertEqual(classification_update_payload["contract"], "questflow.studio.v1")
+            self.assertEqual(classification_update_payload["operation"], "questions.classification.update")
+            self.assertEqual(classification_update_payload["module"], "editorial_bank")
+            self.assertEqual(classification_update_payload["data"]["question"]["materia"], "AUDITORIA")
+            self.assertEqual(classification_update_payload["data"]["question"]["aula_planilha"], "Aula 01")
+            self.assertIn("stats", classification_update_payload["data"])
 
             annul_request = urllib.request.Request(
                 f"{server.base_url}/api/v1/studio/questions/{urllib.parse.quote(created_uid, safe='')}/annul",
