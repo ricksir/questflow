@@ -1401,7 +1401,7 @@ async function showCurationAttention(kind = 'curation', label = 'Fila de atenç�
       if (!window.confirm('Concluir sua revisão desta questão e retirá-la da fila de Curadoria? A nota editorial continuará mostrando eventuais enriquecimentos opcionais.')) return;
       setBusy(btn, true, 'Concluindo revisão');
       try {
-        const completed = await bridge.call('complete_curation_review', uid, 'Revisão humana pela Curadoria');
+        const completed = await completeCurationReview(uid, 'Revisão humana pela Curadoria');
         if (!completed?.ok) throw new Error(completed?.error || 'Não foi possível concluir a revisão.');
         toast('Revisão concluída. A questão saiu da fila de Curadoria.', 'success');
         if (completed.summary) renderBankIntelligence(completed.summary);
@@ -4707,7 +4707,7 @@ async function saveCurrentQuestion(approve = false) {
 
     let finalResult = result;
     if (completingCuration) {
-      const completion = await bridge.call('complete_curation_review', state.currentUid, 'Revisão humana pelo editor da Curadoria');
+      const completion = await completeCurationReview(state.currentUid, 'Revisão humana pelo editor da Curadoria');
       if (!completion?.ok) {
         state.currentQuestion = structuredClone(result.question);
         state.originalQuestion = structuredClone(result.question);
@@ -5624,6 +5624,25 @@ async function getBankClassificationOptions(subject = '', lesson = '') {
     'get_bank_classification_options',
     [normalizedSubject, normalizedLesson],
   );
+}
+
+
+async function completeCurationReview(uid, reviewer = '') {
+  const normalizedUid = String(uid || '').trim();
+  const normalizedReviewer = String(reviewer || '');
+  if (!normalizedUid) throw new Error('Questão não informada para concluir a Curadoria.');
+  if (!bridge.ready) await bridge.init('complete_curation_review');
+
+  let result;
+  if (bridge.httpMode) {
+    result = await bridge.studioPost(
+      'use-cases/curation/review/complete',
+      { uid: normalizedUid, reviewer: normalizedReviewer },
+    );
+  } else {
+    result = await bridge.call('complete_curation_review', normalizedUid, normalizedReviewer);
+  }
+  return result?.ok === false ? result : { ok: true, ...(result || {}) };
 }
 
 async function loadBankFixOptions({ resetLesson = false } = {}) {
