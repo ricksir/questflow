@@ -5862,8 +5862,12 @@ async function openBankFixQuestion(uid) {
   const questionUid = String(uid || '').trim();
   if (!questionUid) return;
   try {
-    const result = await bridge.call('get_question', questionUid);
-    if (!result?.ok || !result.question) throw new Error(result?.error || 'Questão não encontrada.');
+    const result = await bridge.studioGet(
+      `questions/${encodeURIComponent(questionUid)}`,
+      'get_question',
+      [questionUid],
+    );
+    if (!result?.question) throw new Error('Questão não encontrada.');
     const question = result.question;
     const currentMatter = question.materia || '';
     const currentLesson = question.aula_planilha || '';
@@ -5935,8 +5939,16 @@ async function openBankFixQuestion(uid) {
         });
         $('#bankFixModalDelete', layer).addEventListener('click', async () => {
           if (!window.confirm(`Excluir definitivamente a questão ${question.codigo_origem || ''}?\n\nEla será removida do banco e deixará de contar na cobertura dos estudos.`)) return;
-          const deleted = await bridge.call('delete_question', questionUid);
-          if (!deleted?.ok) return toast(deleted?.error || 'Não foi possível excluir a questão.', 'error');
+          try {
+            await bridge.studioPost(
+              `questions/${encodeURIComponent(questionUid)}/delete`,
+              {},
+              'delete_question',
+              [questionUid],
+            );
+          } catch (error) {
+            return toast(error.message || 'Não foi possível excluir a questão.', 'error');
+          }
           closeModal();
           toast('Questão excluída do banco. A cobertura foi recalculada.', 'success');
           await Promise.allSettled([loadBankFix(), loadCoverage({ sync: false }), refreshBootstrap()]);
@@ -5951,8 +5963,16 @@ async function openBankFixQuestion(uid) {
 async function deleteBankFixQuestion(uid, code = '') {
   if (!uid) return;
   if (!window.confirm(`Excluir definitivamente a questão ${code || ''}?\n\nEla será removida do banco e deixará de contar na matéria/aula atual.`)) return;
-  const result = await bridge.call('delete_question', uid);
-  if (!result?.ok) return toast(result?.error || 'Não foi possível excluir a questão.', 'error');
+  try {
+    await bridge.studioPost(
+      `questions/${encodeURIComponent(uid)}/delete`,
+      {},
+      'delete_question',
+      [uid],
+    );
+  } catch (error) {
+    return toast(error.message || 'Não foi possível excluir a questão.', 'error');
+  }
   toast('Questão excluída. Banco e cobertura atualizados.', 'success');
   await Promise.allSettled([loadBankFix(), loadCoverage({ sync: false }), refreshBootstrap()]);
 }
