@@ -4332,7 +4332,7 @@ async function ensureMatterOptions(currentValue = '') {
     return state.taxonomy.materias;
   }
   if (!state.taxonomyLoading) {
-    state.taxonomyLoading = bridge.call('list_materias')
+    state.taxonomyLoading = bridge.studioGet('taxonomy/subjects', 'list_materias')
       .then((result) => {
         const items = Array.isArray(result?.items) ? result.items.filter(Boolean) : [];
         state.taxonomy = { ...(state.taxonomy || {}), loaded: true, materias: items };
