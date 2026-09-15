@@ -488,6 +488,13 @@ class QuestFlowLocalServer:
                     if parsed.path == "/api/v1/studio/taxonomy/subjects":
                         self._studio_v1_result("taxonomy.subjects.list")
                         return
+                    if parsed.path == "/api/v1/studio/taxonomy/classification-options":
+                        query = parse_qs(parsed.query, keep_blank_values=True)
+                        self._studio_v1_result("taxonomy.classification.options", {
+                            "subject": (query.get("subject") or [""])[0],
+                            "lesson": (query.get("lesson") or [""])[0],
+                        })
+                        return
                     if parsed.path == "/api/v1/studio/questions":
                         query = parse_qs(parsed.query, keep_blank_values=True)
                         payload = {
