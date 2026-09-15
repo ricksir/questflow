@@ -604,6 +604,10 @@ class QuestFlowLocalServer:
                             request_body["uid"] = unquote(question_suffix[:-len("/image/remove")])
                             self._studio_v1_result("questions.image.remove", request_body)
                             return
+                        if question_suffix.endswith("/classification"):
+                            request_body["uid"] = unquote(question_suffix[:-len("/classification")])
+                            self._studio_v1_result("questions.classification.update", request_body)
+                            return
                         request_body["uid"] = unquote(question_suffix)
                         self._studio_v1_result("questions.update", request_body)
                         return
