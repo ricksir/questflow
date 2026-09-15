@@ -291,6 +291,7 @@ class QuestFlowWebApi:
                     list_subjects=self._list_materias_data,
                     get_classification_options=self._get_bank_classification_options_data,
                     update_classification=self._update_question_classification_data,
+                    organize_lesson_group=self._organize_bank_lesson_group_data,
                 )
                 # 6.11.0: Observabilidade/Quality Gates saem do AI Engine e passam
                 # a um serviço de controle dedicado com worker serial e Snapshot Store.
@@ -1563,7 +1564,7 @@ class QuestFlowWebApi:
             return result
         return {"ok": True, **_jsonable(result.get("data") or {})}
 
-    def organize_bank_lesson_group(self, payload: dict) -> dict:
+    def _organize_bank_lesson_group_data(self, payload: dict) -> dict:
         """Normalize every question in a subject/lesson group and save its canonical title."""
         self._ensure_core()
         assert self.commands is not None and self.queries is not None and self.study is not None
@@ -1588,6 +1589,12 @@ class QuestFlowWebApi:
             "group": _jsonable(result),
             "stats": self.queries.stats(),
         }
+
+    def organize_bank_lesson_group(self, payload: dict) -> dict:
+        result = self.dispatch_studio_v1("taxonomy.lesson_group.organize", payload)
+        if not result.get("ok"):
+            return result
+        return {"ok": True, **_jsonable(result.get("data") or {})}
 
     # -------------------------- modelo de aprendizagem 6.0 ----------------
     def get_learning_model(self) -> dict:
