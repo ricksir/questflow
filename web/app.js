@@ -2877,8 +2877,13 @@ async function loadQuestionIntelligence(uid = state.currentUid, { scanDuplicates
   const panel = $('#questionIntelligencePanel');
   if (panel) panel.innerHTML = '<div class="skeleton" style="height:5rem"></div>';
   try {
-    const result = await bridge.call('get_question_intelligence', uid, scanDuplicates);
-    if (!result.ok) throw new Error(result.error || 'Falha ao analisar a questão.');
+    const result = await bridge.studioPost(
+      `questions/${encodeURIComponent(uid)}/intelligence`,
+      { scan_duplicates: Boolean(scanDuplicates) },
+      'get_question_intelligence',
+      [uid, scanDuplicates],
+    );
+    if (result?.ok === false) throw new Error(result.error || 'Falha ao analisar a questão.');
     if (uid !== state.currentUid) return;
     renderQuestionIntelligence(result.intelligence || {});
   } catch (error) {
@@ -2906,8 +2911,12 @@ async function showAiCommentaryBrief() {
 async function showKnowledgeGraph() {
   if (!state.currentUid) return;
   try {
-    const result = await bridge.call('get_question_knowledge_graph', state.currentUid);
-    if (!result.ok) throw new Error(result.error || 'Não foi possível montar o grafo da questão.');
+    const result = await bridge.studioGet(
+      `questions/${encodeURIComponent(state.currentUid)}/knowledge-graph`,
+      'get_question_knowledge_graph',
+      [state.currentUid],
+    );
+    if (result?.ok === false) throw new Error(result.error || 'Não foi possível montar o grafo da questão.');
     const graph = result.graph || {};
     const nodes = Array.isArray(graph.nodes) ? graph.nodes : [];
     const edges = Array.isArray(graph.edges) ? graph.edges : [];
@@ -2928,8 +2937,13 @@ async function showHybridEvidence() {
   try {
     const question = state.originalQuestion || {};
     const query = [question.materia, question.assunto, question.enunciado].filter(Boolean).join(' ').slice(0, 2600);
-    const result = await bridge.call('get_rag_context', state.currentUid, query, 10);
-    if (!result.ok) throw new Error(result.error || 'Não foi possível recuperar evidências.');
+    const params = new URLSearchParams({ query, limit: '10' });
+    const result = await bridge.studioGet(
+      `questions/${encodeURIComponent(state.currentUid)}/rag-context?${params.toString()}`,
+      'get_rag_context',
+      [state.currentUid, query, 10],
+    );
+    if (result?.ok === false) throw new Error(result.error || 'Não foi possível recuperar evidências.');
     const retrieval = result.retrieval || {};
     const items = Array.isArray(retrieval.items) ? retrieval.items : [];
     openModal({

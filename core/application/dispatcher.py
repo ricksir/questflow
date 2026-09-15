@@ -115,6 +115,9 @@ class StudioUseCaseDispatcher:
         self.register(UseCaseDefinition("learning.simulations.get", self._learning_simulation_get, module="learning"))
         self.register(UseCaseDefinition("governance.ai.audit.list", self._governance_ai_audit_list, module="governance"))
         self.register(UseCaseDefinition("governance.ai.interactions.get", self._governance_ai_interaction_get, module="governance"))
+        self.register(UseCaseDefinition("questions.intelligence.refresh", self._question_intelligence_refresh, mutating=True, module="editorial_bank"))
+        self.register(UseCaseDefinition("knowledge.questions.graph", self._knowledge_question_graph, module="knowledge"))
+        self.register(UseCaseDefinition("knowledge.rag.context", self._knowledge_rag_context, module="knowledge"))
         self.register(UseCaseDefinition("questions.source.settings", self._source_settings, module="editorial_bank"))
         self.register(UseCaseDefinition("questions.source.save", self._source_save, mutating=True, module="editorial_bank"))
         self.register(UseCaseDefinition("questions.source.test", self._source_test, module="editorial_bank"))
@@ -471,6 +474,59 @@ class StudioUseCaseDispatcher:
         if not isinstance(interaction, dict):
             raise UseCaseError("Interação de IA retornou um resultado inválido.", code="internal_error", status=500)
         return {"interaction": interaction}
+
+    def _question_intelligence_refresh(self, payload: dict[str, Any]) -> dict[str, Any]:
+        uid = str(payload.get("uid") or payload.get("id") or "").strip()
+        if not uid:
+            raise UseCaseError("Informe o identificador da questão.", code="validation_error")
+        try:
+            editorial = self.architecture.modules.get("editorial_bank").instance
+            learner = self.architecture.modules.get("learner_model").instance
+        except KeyError as error:
+            raise UseCaseError("Inteligência da questão indisponível.", code="unavailable", status=503) from error
+        if editorial is None or not callable(getattr(editorial, "intelligence", None)):
+            raise UseCaseError("Inteligência editorial indisponível.", code="unavailable", status=503)
+        if learner is None or not callable(getattr(learner, "question_state", None)):
+            raise UseCaseError("Learner Model indisponível.", code="unavailable", status=503)
+        intelligence = editorial.intelligence(uid, scan_duplicates=bool(payload.get("scan_duplicates", True)))
+        if not isinstance(intelligence, dict):
+            raise UseCaseError("Inteligência da questão retornou um resultado inválido.", code="internal_error", status=500)
+        intelligence["learning_model"] = learner.question_state(uid)
+        return {"intelligence": intelligence}
+
+    def _knowledge_question_graph(self, payload: dict[str, Any]) -> dict[str, Any]:
+        uid = str(payload.get("uid") or payload.get("id") or "").strip()
+        if not uid:
+            raise UseCaseError("Informe o identificador da questão.", code="validation_error")
+        try:
+            knowledge = self.architecture.modules.get("knowledge").instance
+        except KeyError as error:
+            raise UseCaseError("Módulo de conhecimento indisponível.", code="unavailable", status=503) from error
+        if knowledge is None or not callable(getattr(knowledge, "graph", None)):
+            raise UseCaseError("Grafo de conhecimento indisponível.", code="unavailable", status=503)
+        graph = knowledge.graph(uid)
+        if not isinstance(graph, dict):
+            raise UseCaseError("Grafo de conhecimento retornou um resultado inválido.", code="internal_error", status=500)
+        return {"graph": graph}
+
+    def _knowledge_rag_context(self, payload: dict[str, Any]) -> dict[str, Any]:
+        uid = str(payload.get("uid") or payload.get("id") or "").strip()
+        if not uid:
+            raise UseCaseError("Informe o identificador da questão.", code="validation_error")
+        try:
+            knowledge = self.architecture.modules.get("knowledge").instance
+        except KeyError as error:
+            raise UseCaseError("Módulo de conhecimento indisponível.", code="unavailable", status=503) from error
+        if knowledge is None or not callable(getattr(knowledge, "retrieve", None)):
+            raise UseCaseError("Contexto RAG indisponível.", code="unavailable", status=503)
+        retrieval = knowledge.retrieve(
+            uid,
+            str(payload.get("query") or ""),
+            limit=max(1, min(20, int(payload.get("limit") or 8))),
+        )
+        if not isinstance(retrieval, dict):
+            raise UseCaseError("Contexto RAG retornou um resultado inválido.", code="internal_error", status=500)
+        return {"retrieval": retrieval}
 
     def _source_settings(self, _payload: dict[str, Any]) -> dict[str, Any]:
         return self.catalog.public_settings()
