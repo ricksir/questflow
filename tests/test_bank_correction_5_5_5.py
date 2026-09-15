@@ -269,6 +269,20 @@ class BankCorrection555Tests(unittest.TestCase):
         self.assertIn("'organize_bank_lesson_group'", organize_group)
         self.assertNotIn("bridge.call('organize_bank_lesson_group'", js)
         self.assertIn("groupBankFixQuestions", js)
+
+        load_start = js.index("async function loadBankFix")
+        load_end = js.index("function bankFixTaskLabel", load_start)
+        load_bank_fix = js[load_start:load_end]
+        self.assertIn("bridge.studioGet(", load_bank_fix)
+        self.assertIn("questions?", load_bank_fix)
+        self.assertIn("query.toString()", load_bank_fix)
+        self.assertIn("'list_questions'", load_bank_fix)
+        self.assertIn("search,", load_bank_fix)
+        self.assertIn("status,", load_bank_fix)
+        self.assertIn("subject,", load_bank_fix)
+        self.assertIn("lesson,", load_bank_fix)
+        self.assertNotIn("bridge.call(", load_bank_fix)
+
         render_slice = js[js.index("function renderBankFixTable"):js.index("async function loadBankFix")]
         self.assertNotIn("PDF origem", render_slice)
         self.assertNotIn("Pág.", render_slice)
