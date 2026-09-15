@@ -113,6 +113,8 @@ class StudioUseCaseDispatcher:
         self.register(UseCaseDefinition("knowledge.semantic.summary", self._knowledge_semantic_summary, module="knowledge"))
         self.register(UseCaseDefinition("learning.recommendations.dashboard", self._learning_recommendations_dashboard, module="learning"))
         self.register(UseCaseDefinition("learning.simulations.get", self._learning_simulation_get, module="learning"))
+        self.register(UseCaseDefinition("governance.ai.audit.list", self._governance_ai_audit_list, module="governance"))
+        self.register(UseCaseDefinition("governance.ai.interactions.get", self._governance_ai_interaction_get, module="governance"))
         self.register(UseCaseDefinition("questions.source.settings", self._source_settings, module="editorial_bank"))
         self.register(UseCaseDefinition("questions.source.save", self._source_save, mutating=True, module="editorial_bank"))
         self.register(UseCaseDefinition("questions.source.test", self._source_test, module="editorial_bank"))
@@ -436,6 +438,39 @@ class StudioUseCaseDispatcher:
         if not isinstance(simulation, dict):
             raise UseCaseError("Simulado adaptativo retornou um resultado inválido.", code="internal_error", status=500)
         return {"simulation": simulation}
+
+    def _governance_ai_audit_list(self, payload: dict[str, Any]) -> dict[str, Any]:
+        try:
+            governance = self.architecture.modules.get("governance").instance
+        except KeyError as error:
+            raise UseCaseError("Governança de IA indisponível.", code="unavailable", status=503) from error
+        if (
+            governance is None
+            or not callable(getattr(governance, "dashboard", None))
+            or not callable(getattr(governance, "recent_audit", None))
+        ):
+            raise UseCaseError("Auditoria de IA indisponível.", code="unavailable", status=503)
+        limit = max(1, min(100, int(payload.get("limit") or 20)))
+        summary = governance.dashboard()
+        items = governance.recent_audit(limit=limit)
+        if not isinstance(summary, dict) or not isinstance(items, list):
+            raise UseCaseError("Auditoria de IA retornou um resultado inválido.", code="internal_error", status=500)
+        return {"summary": summary, "items": items}
+
+    def _governance_ai_interaction_get(self, payload: dict[str, Any]) -> dict[str, Any]:
+        interaction_id = str(payload.get("interaction_id") or payload.get("id") or "").strip()
+        if not interaction_id:
+            raise UseCaseError("Informe a interação de IA.", code="validation_error")
+        try:
+            governance = self.architecture.modules.get("governance").instance
+        except KeyError as error:
+            raise UseCaseError("Governança de IA indisponível.", code="unavailable", status=503) from error
+        if governance is None or not callable(getattr(governance, "interaction", None)):
+            raise UseCaseError("Auditoria de interação indisponível.", code="unavailable", status=503)
+        interaction = governance.interaction(interaction_id)
+        if not isinstance(interaction, dict):
+            raise UseCaseError("Interação de IA retornou um resultado inválido.", code="internal_error", status=500)
+        return {"interaction": interaction}
 
     def _source_settings(self, _payload: dict[str, Any]) -> dict[str, Any]:
         return self.catalog.public_settings()
