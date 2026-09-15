@@ -67,6 +67,7 @@ class StudioUseCaseDispatcher:
         list_subjects: Callable[[], dict[str, Any]] | None = None,
         get_classification_options: Callable[[str, str], dict[str, Any]] | None = None,
         update_classification: Callable[[str, dict[str, Any]], dict[str, Any]] | None = None,
+        organize_lesson_group: Callable[[dict[str, Any]], dict[str, Any]] | None = None,
     ) -> None:
         self.catalog = catalog
         self.architecture = architecture
@@ -80,6 +81,7 @@ class StudioUseCaseDispatcher:
         self.list_subjects = list_subjects
         self.get_classification_options = get_classification_options
         self.update_classification = update_classification
+        self.organize_lesson_group = organize_lesson_group
         self._definitions: dict[str, UseCaseDefinition] = {}
         self._register_defaults()
 
@@ -104,6 +106,7 @@ class StudioUseCaseDispatcher:
         self.register(UseCaseDefinition("questions.classification.update", self._questions_classification_update, mutating=True, module="editorial_bank"))
         self.register(UseCaseDefinition("taxonomy.subjects.list", self._taxonomy_subjects_list, module="editorial_bank"))
         self.register(UseCaseDefinition("taxonomy.classification.options", self._taxonomy_classification_options, module="editorial_bank"))
+        self.register(UseCaseDefinition("taxonomy.lesson_group.organize", self._taxonomy_lesson_group_organize, mutating=True, module="editorial_bank"))
         self.register(UseCaseDefinition("questions.source.settings", self._source_settings, module="editorial_bank"))
         self.register(UseCaseDefinition("questions.source.save", self._source_save, mutating=True, module="editorial_bank"))
         self.register(UseCaseDefinition("questions.source.test", self._source_test, module="editorial_bank"))
@@ -322,6 +325,20 @@ class StudioUseCaseDispatcher:
         if result.get("ok") is False:
             raise UseCaseError(
                 str(result.get("error") or "Não foi possível carregar as opções de classificação."),
+                code=str(result.get("code") or "validation_error"),
+                status=int(result.get("status") or 400),
+            )
+        return {key: value for key, value in result.items() if key != "ok"}
+
+    def _taxonomy_lesson_group_organize(self, payload: dict[str, Any]) -> dict[str, Any]:
+        if self.organize_lesson_group is None:
+            raise UseCaseError("Organização de aula indisponível.", code="unavailable", status=503)
+        result = self.organize_lesson_group(dict(payload))
+        if not isinstance(result, dict):
+            raise UseCaseError("Organização de aula retornou um resultado inválido.", code="internal_error", status=500)
+        if result.get("ok") is False:
+            raise UseCaseError(
+                str(result.get("error") or "Não foi possível organizar a aula."),
                 code=str(result.get("code") or "validation_error"),
                 status=int(result.get("status") or 400),
             )
