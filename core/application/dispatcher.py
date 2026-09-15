@@ -107,6 +107,7 @@ class StudioUseCaseDispatcher:
         self.register(UseCaseDefinition("taxonomy.subjects.list", self._taxonomy_subjects_list, module="editorial_bank"))
         self.register(UseCaseDefinition("taxonomy.classification.options", self._taxonomy_classification_options, module="editorial_bank"))
         self.register(UseCaseDefinition("taxonomy.lesson_group.organize", self._taxonomy_lesson_group_organize, mutating=True, module="editorial_bank"))
+        self.register(UseCaseDefinition("curation.review.complete", self._curation_review_complete, mutating=True, module="editorial_bank"))
         self.register(UseCaseDefinition("questions.source.settings", self._source_settings, module="editorial_bank"))
         self.register(UseCaseDefinition("questions.source.save", self._source_save, mutating=True, module="editorial_bank"))
         self.register(UseCaseDefinition("questions.source.test", self._source_test, module="editorial_bank"))
@@ -339,6 +340,28 @@ class StudioUseCaseDispatcher:
         if result.get("ok") is False:
             raise UseCaseError(
                 str(result.get("error") or "Não foi possível organizar a aula."),
+                code=str(result.get("code") or "validation_error"),
+                status=int(result.get("status") or 400),
+            )
+        return {key: value for key, value in result.items() if key != "ok"}
+
+    def _curation_review_complete(self, payload: dict[str, Any]) -> dict[str, Any]:
+        uid = str(payload.get("uid") or payload.get("id") or "").strip()
+        reviewer = str(payload.get("reviewer") or "").strip()
+        if not uid:
+            raise UseCaseError("Informe o identificador da questão.", code="validation_error")
+        try:
+            editorial = self.architecture.modules.get("editorial_bank").instance
+        except KeyError as error:
+            raise UseCaseError("Módulo editorial indisponível.", code="unavailable", status=503) from error
+        if editorial is None or not callable(getattr(editorial, "complete_review", None)):
+            raise UseCaseError("Conclusão de curadoria indisponível.", code="unavailable", status=503)
+        result = editorial.complete_review(uid, reviewer=reviewer)
+        if not isinstance(result, dict):
+            raise UseCaseError("Conclusão de curadoria retornou um resultado inválido.", code="internal_error", status=500)
+        if result.get("ok") is False:
+            raise UseCaseError(
+                str(result.get("error") or "Não foi possível concluir a revisão."),
                 code=str(result.get("code") or "validation_error"),
                 status=int(result.get("status") or 400),
             )
