@@ -31,13 +31,13 @@ class StudioV1CurationReviewTests(unittest.TestCase):
         self.temp.cleanup()
 
     @staticmethod
-    def _question(code: str) -> dict:
+    def _question(code: str, *, critical_ok: bool = True) -> dict:
         statement = "Considere a situação apresentada e assinale a alternativa correta segundo a legislação aplicável ao caso concreto."
         return {
             "id": code,
             "codigo_origem": code,
             "fingerprint": hashlib.sha256((code + statement).encode()).hexdigest(),
-            "materia": "DIREITO TRIBUTÁRIO",
+            "materia": "DIREITO TRIBUTÁRIO" if critical_ok else "",
             "aula_planilha": "Aula 05",
             "assunto": "Sujeitos da obrigação tributária",
             "assuntos": ["Sujeitos da obrigação tributária"],
@@ -59,9 +59,9 @@ class StudioV1CurationReviewTests(unittest.TestCase):
             "comentario_meta": {"origem": "manual_nao_classificado"},
         }
 
-    def _import_question(self, code: str) -> str:
+    def _import_question(self, code: str, *, critical_ok: bool = True) -> str:
         db = QuestFlowDatabase(self.db_path)
-        db.import_extraction({"source_file": "prova.pdf", "questions": [self._question(code)]})
+        db.import_extraction({"source_file": "prova.pdf", "questions": [self._question(code, critical_ok=critical_ok)]})
         db.rebuild_bank_intelligence_derived()
         with db.connect() as connection:
             row = connection.execute("SELECT uid FROM questions WHERE source_code=?", (code,)).fetchone()
@@ -116,6 +116,35 @@ class StudioV1CurationReviewTests(unittest.TestCase):
             self.assertEqual(payload["data"]["intelligence"]["curation_status"], "pronta")
         finally:
             server.stop()
+
+
+    def test_blocked_review_keeps_business_details_in_studio_v1(self) -> None:
+        uid = self._import_question("Q-STUDIO-CURATION-BLOCK", critical_ok=False)
+        result = self.api.dispatch_studio_v1(
+            "curation.review.complete",
+            {"uid": uid, "reviewer": "Revisão humana bloqueada"},
+        )
+        self.assertTrue(result["ok"])
+        self.assertEqual(result["operation"], "curation.review.complete")
+        self.assertFalse(result["data"]["ok"])
+        self.assertIn("Matéria informada", result["data"].get("blocking_missing", []))
+
+    def test_frontend_uses_studio_v1_with_legacy_fallback_and_keeps_blockers(self) -> None:
+        javascript = (Path(__file__).resolve().parents[1] / "web" / "app.js").read_text(encoding="utf-8")
+        helper_start = javascript.index("async function completeCurationReview")
+        helper_end = javascript.index("async function loadBankFixOptions", helper_start)
+        helper = javascript[helper_start:helper_end]
+
+        self.assertIn("bridge.studioPost(", helper)
+        self.assertIn("'use-cases/curation/review/complete'", helper)
+        self.assertIn("bridge.call('complete_curation_review'", helper)
+        self.assertEqual(javascript.count("bridge.call('complete_curation_review'"), 1)
+        self.assertIn("await completeCurationReview(uid, 'Revisão humana pela Curadoria')", javascript)
+        self.assertIn(
+            "await completeCurationReview(state.currentUid, 'Revisão humana pelo editor da Curadoria')",
+            javascript,
+        )
+        self.assertIn("completion?.blocking_missing", javascript)
 
 
 if __name__ == "__main__":
