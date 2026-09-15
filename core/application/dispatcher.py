@@ -113,6 +113,8 @@ class StudioUseCaseDispatcher:
         self.register(UseCaseDefinition("knowledge.semantic.summary", self._knowledge_semantic_summary, module="knowledge"))
         self.register(UseCaseDefinition("learning.recommendations.dashboard", self._learning_recommendations_dashboard, module="learning"))
         self.register(UseCaseDefinition("learning.simulations.get", self._learning_simulation_get, module="learning"))
+        self.register(UseCaseDefinition("governance.gold.dashboard", self._governance_gold_dashboard, module="governance"))
+        self.register(UseCaseDefinition("governance.ai.telemetry", self._governance_ai_telemetry, module="governance"))
         self.register(UseCaseDefinition("governance.ai.audit.list", self._governance_ai_audit_list, module="governance"))
         self.register(UseCaseDefinition("governance.ai.interactions.get", self._governance_ai_interaction_get, module="governance"))
         self.register(UseCaseDefinition("questions.intelligence.refresh", self._question_intelligence_refresh, mutating=True, module="editorial_bank"))
@@ -441,6 +443,35 @@ class StudioUseCaseDispatcher:
         if not isinstance(simulation, dict):
             raise UseCaseError("Simulado adaptativo retornou um resultado inválido.", code="internal_error", status=500)
         return {"simulation": simulation}
+
+    def _governance_gold_dashboard(self, _payload: dict[str, Any]) -> dict[str, Any]:
+        try:
+            governance = self.architecture.modules.get("governance").instance
+        except KeyError as error:
+            raise UseCaseError("Governança de IA indisponível.", code="unavailable", status=503) from error
+        if (
+            governance is None
+            or not callable(getattr(governance, "gold_dashboard", None))
+            or not callable(getattr(governance, "gold_questions", None))
+        ):
+            raise UseCaseError("Conjunto ouro indisponível.", code="unavailable", status=503)
+        summary = governance.gold_dashboard()
+        items = governance.gold_questions(active_only=True)
+        if not isinstance(summary, dict) or not isinstance(items, list):
+            raise UseCaseError("Conjunto ouro retornou um resultado inválido.", code="internal_error", status=500)
+        return {"summary": summary, "items": items}
+
+    def _governance_ai_telemetry(self, payload: dict[str, Any]) -> dict[str, Any]:
+        try:
+            governance = self.architecture.modules.get("governance").instance
+        except KeyError as error:
+            raise UseCaseError("Governança de IA indisponível.", code="unavailable", status=503) from error
+        if governance is None or not callable(getattr(governance, "provider_telemetry", None)):
+            raise UseCaseError("Telemetria de IA indisponível.", code="unavailable", status=503)
+        telemetry = governance.provider_telemetry(days=max(1, min(365, int(payload.get("days") or 30))))
+        if not isinstance(telemetry, dict):
+            raise UseCaseError("Telemetria de IA retornou um resultado inválido.", code="internal_error", status=500)
+        return {"telemetry": telemetry}
 
     def _governance_ai_audit_list(self, payload: dict[str, Any]) -> dict[str, Any]:
         try:

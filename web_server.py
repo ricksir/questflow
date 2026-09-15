@@ -526,6 +526,15 @@ class QuestFlowLocalServer:
                             "limit": (query.get("limit") or [20])[0],
                         })
                         return
+                    if parsed.path == "/api/v1/studio/governance/ai/telemetry":
+                        query = parse_qs(parsed.query, keep_blank_values=True)
+                        self._studio_v1_result("governance.ai.telemetry", {
+                            "days": (query.get("days") or [30])[0],
+                        })
+                        return
+                    if parsed.path == "/api/v1/studio/governance/gold/dashboard":
+                        self._studio_v1_result("governance.gold.dashboard")
+                        return
                     interaction_prefix = "/api/v1/studio/governance/ai/interactions/"
                     if parsed.path.startswith(interaction_prefix):
                         self._studio_v1_result("governance.ai.interactions.get", {
