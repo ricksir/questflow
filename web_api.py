@@ -290,6 +290,7 @@ class QuestFlowWebApi:
                     remove_image=self._remove_image_record,
                     list_subjects=self._list_materias_data,
                     get_classification_options=self._get_bank_classification_options_data,
+                    update_classification=self._update_question_classification_data,
                 )
                 # 6.11.0: Observabilidade/Quality Gates saem do AI Engine e passam
                 # a um serviço de controle dedicado com worker serial e Snapshot Store.
@@ -1401,7 +1402,7 @@ class QuestFlowWebApi:
             return result
         return {"ok": True, **_jsonable(result.get("data") or {})}
 
-    def update_question_classification(self, uid: str, payload: dict) -> dict:
+    def _update_question_classification_data(self, uid: str, payload: dict) -> dict:
         """Correct subject/lesson and optionally bind the question to an exact spreadsheet task.
 
         This method intentionally keeps the stable question UID and study history.  Only
@@ -1552,6 +1553,15 @@ class QuestFlowWebApi:
             "stats": self.queries.stats(),
             "coverage_assignment": _jsonable(assignment),
         }
+
+    def update_question_classification(self, uid: str, payload: dict) -> dict:
+        result = self.dispatch_studio_v1(
+            "questions.classification.update",
+            {"uid": uid, "classification": payload},
+        )
+        if not result.get("ok"):
+            return result
+        return {"ok": True, **_jsonable(result.get("data") or {})}
 
     def organize_bank_lesson_group(self, payload: dict) -> dict:
         """Normalize every question in a subject/lesson group and save its canonical title."""
