@@ -188,17 +188,20 @@ class BankCorrection555Tests(unittest.TestCase):
         second["assuntos"] = ["Conceito de tributos"]
         self.api.commands.update(uid_b, second)
 
-        result = self.api.organize_bank_lesson_group(
+        result = self.api.dispatch_studio_v1(
+            "taxonomy.lesson_group.organize",
             {
                 "source_matter": "Direito Tributário",
                 "source_lesson": "00",
                 "materia": "DIREITO TRIBUTÁRIO",
                 "aula": "Aula 00",
                 "titulo_aula": "CONCEITO DE TRIBUTOS",
-            }
+            },
         )
         self.assertTrue(result["ok"])
-        self.assertEqual(result["group"]["updated"], 2)
+        self.assertEqual(result["operation"], "taxonomy.lesson_group.organize")
+        self.assertEqual(result["module"], "editorial_bank")
+        self.assertEqual(result["data"]["group"]["updated"], 2)
         saved_a = self.api.queries.get(uid_a)
         saved_b = self.api.queries.get(uid_b)
         saved_c = self.api.queries.get(uid_c)
@@ -258,6 +261,13 @@ class BankCorrection555Tests(unittest.TestCase):
         self.assertIn("'get_bank_classification_options'", classification_options)
         self.assertNotIn("bridge.call('get_bank_classification_options'", js)
         self.assertIn("organize_bank_lesson_group", js)
+        group_start = js.index("function openBankFixLessonGroup")
+        group_end = js.index("async function loadBankFix", group_start)
+        organize_group = js[group_start:group_end]
+        self.assertIn("bridge.studioPost(", organize_group)
+        self.assertIn("taxonomy/lesson-group/organize", organize_group)
+        self.assertIn("'organize_bank_lesson_group'", organize_group)
+        self.assertNotIn("bridge.call('organize_bank_lesson_group'", js)
         self.assertIn("groupBankFixQuestions", js)
         render_slice = js[js.index("function renderBankFixTable"):js.index("async function loadBankFix")]
         self.assertNotIn("PDF origem", render_slice)

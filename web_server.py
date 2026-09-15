@@ -611,6 +611,9 @@ class QuestFlowLocalServer:
                         request_body["uid"] = unquote(question_suffix)
                         self._studio_v1_result("questions.update", request_body)
                         return
+                    if parsed.path == "/api/v1/studio/taxonomy/lesson-group/organize":
+                        self._studio_v1_result("taxonomy.lesson_group.organize", request_body)
+                        return
                     if parsed.path == "/api/v1/studio/question-source":
                         self._studio_v1_result("questions.source.save", request_body)
                         return

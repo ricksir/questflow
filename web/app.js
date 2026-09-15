@@ -5792,14 +5792,19 @@ function openBankFixLessonGroup(subject, group) {
         }
         setBusy(button, true, 'Organizando aula');
         try {
-          const result = await bridge.call('organize_bank_lesson_group', {
+          const payload = {
             source_matter: sourceMatter,
             source_lesson: sourceLesson,
             materia,
             aula,
             titulo_aula: titulo,
-          });
-          if (!result?.ok) throw new Error(result?.error || 'Não foi possível organizar a aula.');
+          };
+          const result = await bridge.studioPost(
+            'taxonomy/lesson-group/organize',
+            payload,
+            'organize_bank_lesson_group',
+            [payload],
+          );
           closeModal();
           const count = numberOrZero(result.group?.updated);
           toast(`${formatNumber(count)} questão(ões) organizadas em ${result.group?.subject || materia} • ${result.group?.lesson || aula}.`, 'success', 8000);

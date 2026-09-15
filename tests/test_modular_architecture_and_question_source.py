@@ -115,6 +115,7 @@ class ModularArchitectureTests(unittest.TestCase):
         self.assertIn("taxonomy.subjects.list", operation_names)
         self.assertIn("taxonomy.classification.options", operation_names)
         self.assertIn("questions.classification.update", operation_names)
+        self.assertIn("taxonomy.lesson_group.organize", operation_names)
         create_contract = next(item for item in contract["operations"] if item["name"] == "questions.create")
         update_contract = next(item for item in contract["operations"] if item["name"] == "questions.update")
         delete_contract = next(item for item in contract["operations"] if item["name"] == "questions.delete")
@@ -123,6 +124,7 @@ class ModularArchitectureTests(unittest.TestCase):
         subjects_contract = next(item for item in contract["operations"] if item["name"] == "taxonomy.subjects.list")
         classification_options_contract = next(item for item in contract["operations"] if item["name"] == "taxonomy.classification.options")
         classification_update_contract = next(item for item in contract["operations"] if item["name"] == "questions.classification.update")
+        lesson_group_contract = next(item for item in contract["operations"] if item["name"] == "taxonomy.lesson_group.organize")
         self.assertTrue(create_contract["mutating"])
         self.assertTrue(update_contract["mutating"])
         self.assertTrue(delete_contract["mutating"])
@@ -131,6 +133,7 @@ class ModularArchitectureTests(unittest.TestCase):
         self.assertFalse(subjects_contract["mutating"])
         self.assertFalse(classification_options_contract["mutating"])
         self.assertTrue(classification_update_contract["mutating"])
+        self.assertTrue(lesson_group_contract["mutating"])
         result = self.api.dispatch_studio_v1("questions.list", {"limit": 10})
         self.assertTrue(result["ok"])
         self.assertEqual(result["contract"], "questflow.studio.v1")
@@ -360,6 +363,31 @@ class ModularArchitectureTests(unittest.TestCase):
             self.assertIn("subjects", classification_payload["data"])
             self.assertIn("lessons", classification_payload["data"])
             self.assertIn("tasks", classification_payload["data"])
+
+            lesson_group_request = urllib.request.Request(
+                f"{server.base_url}/api/v1/studio/taxonomy/lesson-group/organize",
+                data=json.dumps({
+                    "source_matter": "HTTP ORIGEM",
+                    "source_lesson": "Aula 90",
+                    "materia": "HTTP DESTINO",
+                    "aula": "Aula 91",
+                    "titulo_aula": "GRUPO HTTP",
+                }, ensure_ascii=False).encode("utf-8"),
+                headers={
+                    "X-QuestFlow-Token": server.token,
+                    "Content-Type": "application/json",
+                },
+                method="POST",
+            )
+            with urllib.request.urlopen(lesson_group_request, timeout=5) as response:
+                lesson_group_payload = json.loads(response.read().decode("utf-8"))
+            self.assertTrue(lesson_group_payload["ok"])
+            self.assertEqual(lesson_group_payload["contract"], "questflow.studio.v1")
+            self.assertEqual(lesson_group_payload["operation"], "taxonomy.lesson_group.organize")
+            self.assertEqual(lesson_group_payload["module"], "editorial_bank")
+            self.assertEqual(lesson_group_payload["data"]["group"]["updated"], 0)
+            self.assertEqual(lesson_group_payload["data"]["group"]["subject"], "HTTP DESTINO")
+            self.assertEqual(lesson_group_payload["data"]["group"]["lesson"], "Aula 91")
 
             created = self.api.create_manual_question()
             self.assertTrue(created["ok"])
