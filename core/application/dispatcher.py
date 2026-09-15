@@ -64,6 +64,7 @@ class StudioUseCaseDispatcher:
         delete_question: Callable[[str], dict[str, Any]] | None = None,
         annul_question: Callable[[str, str], dict[str, Any]] | None = None,
         remove_image: Callable[[str], dict[str, Any]] | None = None,
+        list_subjects: Callable[[], dict[str, Any]] | None = None,
     ) -> None:
         self.catalog = catalog
         self.architecture = architecture
@@ -74,6 +75,7 @@ class StudioUseCaseDispatcher:
         self.delete_question = delete_question
         self.annul_question = annul_question
         self.remove_image = remove_image
+        self.list_subjects = list_subjects
         self._definitions: dict[str, UseCaseDefinition] = {}
         self._register_defaults()
 
@@ -95,6 +97,7 @@ class StudioUseCaseDispatcher:
         self.register(UseCaseDefinition("questions.delete", self._questions_delete, mutating=True, module="editorial_bank"))
         self.register(UseCaseDefinition("questions.annul", self._questions_annul, mutating=True, module="editorial_bank"))
         self.register(UseCaseDefinition("questions.image.remove", self._questions_image_remove, mutating=True, module="editorial_bank"))
+        self.register(UseCaseDefinition("taxonomy.subjects.list", self._taxonomy_subjects_list, module="editorial_bank"))
         self.register(UseCaseDefinition("questions.source.settings", self._source_settings, module="editorial_bank"))
         self.register(UseCaseDefinition("questions.source.save", self._source_save, mutating=True, module="editorial_bank"))
         self.register(UseCaseDefinition("questions.source.test", self._source_test, module="editorial_bank"))
@@ -263,6 +266,20 @@ class StudioUseCaseDispatcher:
         if result.get("ok") is False:
             raise UseCaseError(
                 str(result.get("error") or "Não foi possível remover a imagem."),
+                code=str(result.get("code") or "validation_error"),
+                status=int(result.get("status") or 400),
+            )
+        return {key: value for key, value in result.items() if key != "ok"}
+
+    def _taxonomy_subjects_list(self, _payload: dict[str, Any]) -> dict[str, Any]:
+        if self.list_subjects is None:
+            raise UseCaseError("Listagem de matérias indisponível.", code="unavailable", status=503)
+        result = self.list_subjects()
+        if not isinstance(result, dict):
+            raise UseCaseError("Listagem de matérias retornou um resultado inválido.", code="internal_error", status=500)
+        if result.get("ok") is False:
+            raise UseCaseError(
+                str(result.get("error") or "Não foi possível listar as matérias."),
                 code=str(result.get("code") or "validation_error"),
                 status=int(result.get("status") or 400),
             )
