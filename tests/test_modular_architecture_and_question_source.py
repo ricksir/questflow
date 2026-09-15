@@ -113,18 +113,21 @@ class ModularArchitectureTests(unittest.TestCase):
         self.assertIn("questions.annul", operation_names)
         self.assertIn("questions.image.remove", operation_names)
         self.assertIn("taxonomy.subjects.list", operation_names)
+        self.assertIn("taxonomy.classification.options", operation_names)
         create_contract = next(item for item in contract["operations"] if item["name"] == "questions.create")
         update_contract = next(item for item in contract["operations"] if item["name"] == "questions.update")
         delete_contract = next(item for item in contract["operations"] if item["name"] == "questions.delete")
         annul_contract = next(item for item in contract["operations"] if item["name"] == "questions.annul")
         remove_image_contract = next(item for item in contract["operations"] if item["name"] == "questions.image.remove")
         subjects_contract = next(item for item in contract["operations"] if item["name"] == "taxonomy.subjects.list")
+        classification_options_contract = next(item for item in contract["operations"] if item["name"] == "taxonomy.classification.options")
         self.assertTrue(create_contract["mutating"])
         self.assertTrue(update_contract["mutating"])
         self.assertTrue(delete_contract["mutating"])
         self.assertTrue(annul_contract["mutating"])
         self.assertTrue(remove_image_contract["mutating"])
         self.assertFalse(subjects_contract["mutating"])
+        self.assertFalse(classification_options_contract["mutating"])
         result = self.api.dispatch_studio_v1("questions.list", {"limit": 10})
         self.assertTrue(result["ok"])
         self.assertEqual(result["contract"], "questflow.studio.v1")
@@ -144,6 +147,27 @@ class ModularArchitectureTests(unittest.TestCase):
         self.assertTrue(legacy["ok"])
         self.assertEqual(legacy["items"], studio["data"]["items"])
         self.assertEqual(legacy["count"], studio["data"]["count"])
+
+    def test_classification_options_are_available_in_studio_v1_and_legacy_facade(self) -> None:
+        studio = self.api.dispatch_studio_v1(
+            "taxonomy.classification.options",
+            {"subject": "", "lesson": ""},
+        )
+        legacy = self.api.get_bank_classification_options("", "")
+
+        self.assertTrue(studio["ok"])
+        self.assertEqual(studio["operation"], "taxonomy.classification.options")
+        self.assertEqual(studio["module"], "editorial_bank")
+        self.assertIn("subjects", studio["data"])
+        self.assertIn("lessons", studio["data"])
+        self.assertIn("tasks", studio["data"])
+
+        self.assertTrue(legacy["ok"])
+        self.assertEqual(legacy["subjects"], studio["data"]["subjects"])
+        self.assertEqual(legacy["bank_subjects"], studio["data"]["bank_subjects"])
+        self.assertEqual(legacy["lessons"], studio["data"]["lessons"])
+        self.assertEqual(legacy["bank_lessons"], studio["data"]["bank_lessons"])
+        self.assertEqual(legacy["tasks"], studio["data"]["tasks"])
 
     def test_manual_question_creation_is_available_in_studio_v1_and_legacy_facade(self) -> None:
         studio = self.api.dispatch_studio_v1("questions.create", {})
@@ -319,6 +343,20 @@ class ModularArchitectureTests(unittest.TestCase):
             self.assertEqual(subjects_payload["operation"], "taxonomy.subjects.list")
             self.assertEqual(subjects_payload["module"], "editorial_bank")
             self.assertIsInstance(subjects_payload["data"]["items"], list)
+
+            classification_request = urllib.request.Request(
+                f"{server.base_url}/api/v1/studio/taxonomy/classification-options?subject=&lesson=",
+                headers={"X-QuestFlow-Token": server.token},
+            )
+            with urllib.request.urlopen(classification_request, timeout=5) as response:
+                classification_payload = json.loads(response.read().decode("utf-8"))
+            self.assertTrue(classification_payload["ok"])
+            self.assertEqual(classification_payload["contract"], "questflow.studio.v1")
+            self.assertEqual(classification_payload["operation"], "taxonomy.classification.options")
+            self.assertEqual(classification_payload["module"], "editorial_bank")
+            self.assertIn("subjects", classification_payload["data"])
+            self.assertIn("lessons", classification_payload["data"])
+            self.assertIn("tasks", classification_payload["data"])
 
             created = self.api.create_manual_question()
             self.assertTrue(created["ok"])
