@@ -231,6 +231,26 @@ class BankCorrection555Tests(unittest.TestCase):
         self.assertNotIn("Pág.", render_slice)
         self.assertIn("Editor completo", js)
         self.assertIn("Excluir", js)
+
+        open_start = js.index("async function openBankFixQuestion")
+        open_end = js.index("async function deleteBankFixQuestion", open_start)
+        open_question = js[open_start:open_end]
+        self.assertIn("bridge.studioGet(", open_question)
+        self.assertIn("questions/${encodeURIComponent(questionUid)}", open_question)
+        self.assertIn("'get_question'", open_question)
+        self.assertNotIn("bridge.call('get_question'", open_question)
+        self.assertIn("bridge.studioPost(", open_question)
+        self.assertIn("/delete", open_question)
+        self.assertIn("'delete_question'", open_question)
+        self.assertNotIn("bridge.call('delete_question'", open_question)
+
+        delete_start = js.index("async function deleteBankFixQuestion")
+        delete_end = js.index("function bindBankFixRows", delete_start)
+        delete_question = js[delete_start:delete_end]
+        self.assertIn("bridge.studioPost(", delete_question)
+        self.assertIn("questions/${encodeURIComponent(uid)}/delete", delete_question)
+        self.assertIn("'delete_question'", delete_question)
+        self.assertNotIn("bridge.call('delete_question'", delete_question)
         self.assertIn(".bank-fix-lesson-body .data-table", css)
         self.assertIn("table-layout: fixed", css)
         self.assertIn(".bank-fix-lesson-body .data-table-wrap", css)
