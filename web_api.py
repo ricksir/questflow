@@ -288,6 +288,7 @@ class QuestFlowWebApi:
                     delete_question=self._delete_question_record,
                     annul_question=self._annul_question_record,
                     remove_image=self._remove_image_record,
+                    list_subjects=self._list_materias_data,
                 )
                 # 6.11.0: Observabilidade/Quality Gates saem do AI Engine e passam
                 # a um serviço de controle dedicado com worker serial e Snapshot Store.
@@ -1298,7 +1299,7 @@ class QuestFlowWebApi:
             return {"ok": False, "error": str(error)}
         return {"ok": True, "currency": _jsonable(item)}
 
-    def list_materias(self) -> dict:
+    def _list_materias_data(self) -> dict:
         """Return subjects from both the spreadsheet taxonomy and the active bank.
 
         The initial shell is intentionally lightweight and may be painted before
@@ -1324,6 +1325,12 @@ class QuestFlowWebApi:
             key=lambda item: item.casefold(),
         )
         return {"ok": True, "items": unique, "count": len(unique)}
+
+    def list_materias(self) -> dict:
+        result = self.dispatch_studio_v1("taxonomy.subjects.list", {})
+        if not result.get("ok"):
+            return result
+        return {"ok": True, **_jsonable(result.get("data") or {})}
 
     def get_bank_classification_options(self, subject: str = "", lesson: str = "") -> dict:
         """Return bank/taxonomy facets used by the correction workspace."""
