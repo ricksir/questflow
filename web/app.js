@@ -2061,7 +2061,7 @@ async function loadStage5Page(uid = '') {
     }
     renderStage5SourcePool(workspace.source_pool || []);
     renderLegislationTimeline(workspace.legislation || []);
-    const gold = await bridge.call('get_gold_dashboard');
+    const gold = await bridge.studioGet('governance/gold/dashboard', 'get_gold_dashboard');
     renderGoldPanel(gold.summary || workspace.gold || {}, gold.items || []);
     const latestDraft = (workspace.drafts || [])[0];
     if (latestDraft && state.stage5DraftId === latestDraft.id) renderStage5Draft(latestDraft);
@@ -2149,7 +2149,7 @@ async function addSelectedGoldQuestion() {
   try {
     const result = await bridge.call('add_gold_question', state.stage5SelectedUid, '', 'Incluída manualmente pela Etapa 5.');
     if (!result.ok) throw new Error(result.error || 'Não foi possível adicionar ao conjunto ouro.');
-    const gold = await bridge.call('get_gold_dashboard');
+    const gold = await bridge.studioGet('governance/gold/dashboard', 'get_gold_dashboard');
     renderGoldPanel(gold.summary || result.summary || {}, gold.items || []);
     toast('Questão adicionada ao conjunto ouro permanente.', 'success');
   } catch (error) { toast(error.message,'error'); }
@@ -2161,7 +2161,7 @@ async function runGoldRegression() {
   try {
     const result = await bridge.call('run_gold_regression', 50);
     if (!result.ok) throw new Error(result.error || 'Falha na regressão da IA.');
-    const gold = await bridge.call('get_gold_dashboard');
+    const gold = await bridge.studioGet('governance/gold/dashboard', 'get_gold_dashboard');
     renderGoldPanel(gold.summary || result.summary || {}, gold.items || [], result.result || null);
     toast(`Regressão concluída: ${Number(result.result?.average_score || 0).toFixed(0)}/100.`, 'success');
   } catch (error) { toast(error.message,'error'); }
@@ -6692,7 +6692,7 @@ async function loadAiPrivacySettings(){try{const r=await bridge.call('get_ai_pri
 async function saveAiPrivacySettings(){const b=$('#saveAiPrivacySettings');setBusy(b,true,'Salvando privacidade');try{const payload={mode:$('#aiPrivacyMode')?.value||'balanced',share_taxonomy:Boolean($('#aiShareTaxonomy')?.checked),share_statement:Boolean($('#aiShareStatement')?.checked),share_alternatives:Boolean($('#aiShareAlternatives')?.checked),share_official_answer:Boolean($('#aiShareAnswer')?.checked),share_rag:Boolean($('#aiShareRag')?.checked),share_binary_media:Boolean($('#aiShareBinaryMedia')?.checked),share_learner_summary:Boolean($('#aiShareLearner')?.checked),share_user_prompt:Boolean($('#aiShareUserPrompt')?.checked),share_personal_notes:Boolean($('#aiShareNotes')?.checked),confirm_before_external:true};const r=await bridge.call('save_ai_privacy_settings',payload);if(!r.ok)throw new Error(r.error||'Falha ao salvar privacidade.');state.aiPrivacySettings=r.settings||{};renderAiPrivacySettings(r.settings||{});toast('Centro de Privacidade salvo.','success');await loadTutorPrivacyPreview();}catch(e){toast(e.message,'error');}finally{setBusy(b,false);}}
 
 function renderAiTelemetry(t={}){const target=$('#aiTelemetryBody');if(!target)return;const items=Array.isArray(t.items)?t.items:[];const money=Number(t.estimated_cost_usd||0);target.innerHTML=`<div class="ai-telemetry-summary"><div><span>Chamadas</span><strong>${formatNumber(t.calls||0)}</strong></div><div><span>Entrada</span><strong>${formatNumber(t.input_tokens||0)} tok</strong></div><div><span>Saída</span><strong>${formatNumber(t.output_tokens||0)} tok</strong></div><div><span>Latência média</span><strong>${Math.round(Number(t.avg_latency_ms||0))} ms</strong></div><div><span>Custo estimado</span><strong>${money?`US$ ${money.toFixed(4)}`:'não configurado'}</strong></div></div>${items.length?`<div class="ai-telemetry-list">${items.map(x=>`<div class="ai-telemetry-row"><div><strong>${escapeHtml(x.provider||'')}</strong><small>${escapeHtml(x.model||'')}</small></div><span>${x.calls||0} chamadas · ${Number(x.success_rate||0).toFixed(0)}%</span><span>${Math.round(Number(x.avg_latency_ms||0))} ms</span><span>${formatNumber((x.input_tokens||0)+(x.output_tokens||0))} tok</span><span>${x.prompt_injection_flags||0} alerta(s)</span></div>`).join('')}</div>`:`<div class="network-note">A telemetria começa a aparecer depois das primeiras chamadas REST de IA. ${escapeHtml(t.cost_note||'')}</div>`}`;}
-async function loadAiTelemetry(){try{const r=await bridge.call('get_ai_telemetry',30);if(r?.ok)renderAiTelemetry(r.telemetry||{});}catch(_){}}
+async function loadAiTelemetry(){try{const r=await bridge.studioGet('governance/ai/telemetry?days=30','get_ai_telemetry',[30]);if(r?.ok)renderAiTelemetry(r.telemetry||{});}catch(_){}}
 
 async function loadTutorPrivacyPreview(){const target=$('#tutorPrivacyPreview');if(!target)return;const external=Boolean($('#tutorOnlineAi')?.checked);if(!external){target.innerHTML='<small>Modo local: nenhum conteúdo é enviado a terceiros.</small>';return;}if(!state.tutorSelectedUid){target.innerHTML='<small>Selecione uma questão para visualizar o que será enviado.</small>';return;}try{const mode=$('input[name="tutorMode"]:checked')?.value||'professor';const prompt=$('#tutorUserPrompt')?.value||'';const r=await bridge.call('get_ai_privacy_preview',state.tutorSelectedUid,mode,prompt);if(!r?.ok)throw new Error(r?.error||'Falha');const p=r.preview||{};const shared=(p.fields||[]).filter(x=>x.shared).map(x=>x.field);const blocked=(p.fields||[]).filter(x=>!x.shared).map(x=>x.field);target.innerHTML=`<strong>Prévia de privacidade · ${escapeHtml(p.mode||'')}</strong><small>Enviado: ${escapeHtml(shared.join(', ')||'nada')}.</small><small>Não enviado: ${escapeHtml(blocked.join(', ')||'nenhum campo')}.</small>${r.security?.sources_with_signals?`<small>⚠ ${r.security.sources_with_signals} fonte(s) com sinais de prompt injection serão sanitizadas.</small>`:''}`;}catch(_){target.innerHTML='<small>Não foi possível montar a prévia; o modo local continua disponível.</small>';}}
 
