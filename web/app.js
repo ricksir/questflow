@@ -5828,14 +5828,22 @@ async function loadBankFix() {
     if (state.bankFixOptionsSubject !== requestedMatter || !(state.bankFixOptions?.bank_subjects || state.bankFixOptions?.subjects || []).length) {
       await loadBankFixOptions();
     }
-    const result = await bridge.call(
+    const search = $('#bankFixSearch')?.value || '';
+    const status = $('#bankFixStatus')?.value || 'todos';
+    const subject = $('#bankFixMatter')?.value || '';
+    const lesson = $('#bankFixLesson')?.value || '';
+    const query = new URLSearchParams({
+      search,
+      status,
+      offset: '0',
+      limit: '2000',
+      subject,
+      lesson,
+    });
+    const result = await bridge.studioGet(
+      `questions?${query.toString()}`,
       'list_questions',
-      $('#bankFixSearch')?.value || '',
-      $('#bankFixStatus')?.value || 'todos',
-      0,
-      2000,
-      $('#bankFixMatter')?.value || '',
-      $('#bankFixLesson')?.value || '',
+      [search, status, 0, 2000, subject, lesson],
     );
     if (requestId !== state.bankFixRequestId) return;
     state.bankFixQuestions = result.items || [];
