@@ -546,7 +546,21 @@ class QuestFlowLocalServer:
                         return
                     prefix = "/api/v1/studio/questions/"
                     if parsed.path.startswith(prefix):
-                        self._studio_v1_result("questions.get", {"uid": unquote(parsed.path[len(prefix):])})
+                        question_suffix = parsed.path[len(prefix):]
+                        if question_suffix.endswith("/knowledge-graph"):
+                            self._studio_v1_result("knowledge.questions.graph", {
+                                "uid": unquote(question_suffix[:-len("/knowledge-graph")]),
+                            })
+                            return
+                        if question_suffix.endswith("/rag-context"):
+                            query = parse_qs(parsed.query, keep_blank_values=True)
+                            self._studio_v1_result("knowledge.rag.context", {
+                                "uid": unquote(question_suffix[:-len("/rag-context")]),
+                                "query": (query.get("query") or [""])[0],
+                                "limit": (query.get("limit") or [8])[0],
+                            })
+                            return
+                        self._studio_v1_result("questions.get", {"uid": unquote(question_suffix)})
                         return
                     self._send_json(HTTPStatus.NOT_FOUND, {"ok": False, "error": "Rota Studio v1 não encontrada."})
                     return
@@ -629,6 +643,10 @@ class QuestFlowLocalServer:
                     question_prefix = "/api/v1/studio/questions/"
                     if parsed.path.startswith(question_prefix):
                         question_suffix = parsed.path[len(question_prefix):]
+                        if question_suffix.endswith("/intelligence"):
+                            request_body["uid"] = unquote(question_suffix[:-len("/intelligence")])
+                            self._studio_v1_result("questions.intelligence.refresh", request_body)
+                            return
                         if question_suffix.endswith("/delete"):
                             request_body["uid"] = unquote(question_suffix[:-len("/delete")])
                             self._studio_v1_result("questions.delete", request_body)
