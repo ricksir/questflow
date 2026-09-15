@@ -289,6 +289,7 @@ class QuestFlowWebApi:
                     annul_question=self._annul_question_record,
                     remove_image=self._remove_image_record,
                     list_subjects=self._list_materias_data,
+                    get_classification_options=self._get_bank_classification_options_data,
                 )
                 # 6.11.0: Observabilidade/Quality Gates saem do AI Engine e passam
                 # a um serviço de controle dedicado com worker serial e Snapshot Store.
@@ -1332,7 +1333,7 @@ class QuestFlowWebApi:
             return result
         return {"ok": True, **_jsonable(result.get("data") or {})}
 
-    def get_bank_classification_options(self, subject: str = "", lesson: str = "") -> dict:
+    def _get_bank_classification_options_data(self, subject: str = "", lesson: str = "") -> dict:
         """Return bank/taxonomy facets used by the correction workspace."""
         self._ensure_core()
         assert self.queries is not None
@@ -1390,6 +1391,15 @@ class QuestFlowWebApi:
             "bank_lessons": bank_lessons,
             "tasks": _jsonable(task_options),
         }
+
+    def get_bank_classification_options(self, subject: str = "", lesson: str = "") -> dict:
+        result = self.dispatch_studio_v1(
+            "taxonomy.classification.options",
+            {"subject": subject, "lesson": lesson},
+        )
+        if not result.get("ok"):
+            return result
+        return {"ok": True, **_jsonable(result.get("data") or {})}
 
     def update_question_classification(self, uid: str, payload: dict) -> dict:
         """Correct subject/lesson and optionally bind the question to an exact spreadsheet task.
