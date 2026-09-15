@@ -495,6 +495,19 @@ class QuestFlowLocalServer:
                             "lesson": (query.get("lesson") or [""])[0],
                         })
                         return
+                    if parsed.path == "/api/v1/studio/editorial/bank/summary":
+                        self._studio_v1_result("editorial.bank.summary")
+                        return
+                    if parsed.path == "/api/v1/studio/editorial/curation/attention":
+                        query = parse_qs(parsed.query, keep_blank_values=True)
+                        self._studio_v1_result("editorial.curation.attention", {
+                            "kind": (query.get("kind") or ["curation"])[0],
+                            "limit": (query.get("limit") or [100])[0],
+                        })
+                        return
+                    if parsed.path == "/api/v1/studio/knowledge/semantic/summary":
+                        self._studio_v1_result("knowledge.semantic.summary")
+                        return
                     if parsed.path == "/api/v1/studio/questions":
                         query = parse_qs(parsed.query, keep_blank_values=True)
                         payload = {
