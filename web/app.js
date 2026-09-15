@@ -5929,12 +5929,17 @@ async function openBankFixQuestion(uid) {
           const button = event.currentTarget;
           setBusy(button, true, 'Salvando classificação');
           try {
-            const saved = await bridge.call('update_question_classification', questionUid, {
+            const classification = {
               materia: matterSelect.value,
               aula: lessonSelect.value,
               task_id: taskSelect.value,
-            });
-            if (!saved?.ok) throw new Error(saved?.error || 'Não foi possível salvar a classificação.');
+            };
+            const saved = await bridge.studioPost(
+              `questions/${encodeURIComponent(questionUid)}/classification`,
+              { classification },
+              'update_question_classification',
+              [questionUid, classification],
+            );
             closeModal();
             const assigned = saved.coverage_assignment;
             const detail = assigned
