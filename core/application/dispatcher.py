@@ -107,7 +107,10 @@ class StudioUseCaseDispatcher:
         self.register(UseCaseDefinition("taxonomy.subjects.list", self._taxonomy_subjects_list, module="editorial_bank"))
         self.register(UseCaseDefinition("taxonomy.classification.options", self._taxonomy_classification_options, module="editorial_bank"))
         self.register(UseCaseDefinition("taxonomy.lesson_group.organize", self._taxonomy_lesson_group_organize, mutating=True, module="editorial_bank"))
+        self.register(UseCaseDefinition("editorial.bank.summary", self._editorial_bank_summary, module="editorial_bank"))
+        self.register(UseCaseDefinition("editorial.curation.attention", self._editorial_curation_attention, module="editorial_bank"))
         self.register(UseCaseDefinition("curation.review.complete", self._curation_review_complete, mutating=True, module="editorial_bank"))
+        self.register(UseCaseDefinition("knowledge.semantic.summary", self._knowledge_semantic_summary, module="knowledge"))
         self.register(UseCaseDefinition("questions.source.settings", self._source_settings, module="editorial_bank"))
         self.register(UseCaseDefinition("questions.source.save", self._source_save, mutating=True, module="editorial_bank"))
         self.register(UseCaseDefinition("questions.source.test", self._source_test, module="editorial_bank"))
@@ -365,6 +368,45 @@ class StudioUseCaseDispatcher:
             # o usuário sem converter a decisão editorial em erro de transporte.
             return dict(result)
         return {key: value for key, value in result.items() if key != "ok"}
+
+    def _editorial_bank_summary(self, _payload: dict[str, Any]) -> dict[str, Any]:
+        try:
+            editorial = self.architecture.modules.get("editorial_bank").instance
+        except KeyError as error:
+            raise UseCaseError("Módulo editorial indisponível.", code="unavailable", status=503) from error
+        if editorial is None or not callable(getattr(editorial, "summary", None)):
+            raise UseCaseError("Inteligência editorial indisponível.", code="unavailable", status=503)
+        summary = editorial.summary()
+        if not isinstance(summary, dict):
+            raise UseCaseError("Inteligência editorial retornou um resultado inválido.", code="internal_error", status=500)
+        return {"summary": summary}
+
+    def _editorial_curation_attention(self, payload: dict[str, Any]) -> dict[str, Any]:
+        try:
+            editorial = self.architecture.modules.get("editorial_bank").instance
+        except KeyError as error:
+            raise UseCaseError("Módulo editorial indisponível.", code="unavailable", status=503) from error
+        if editorial is None or not callable(getattr(editorial, "attention", None)):
+            raise UseCaseError("Fila de atenção editorial indisponível.", code="unavailable", status=503)
+        result = editorial.attention(
+            str(payload.get("kind") or "curation"),
+            limit=int(payload.get("limit") or 100),
+        )
+        if not isinstance(result, dict):
+            raise UseCaseError("Fila de atenção editorial retornou um resultado inválido.", code="internal_error", status=500)
+        return result
+
+    def _knowledge_semantic_summary(self, _payload: dict[str, Any]) -> dict[str, Any]:
+        try:
+            knowledge = self.architecture.modules.get("knowledge").instance
+        except KeyError as error:
+            raise UseCaseError("Módulo de conhecimento indisponível.", code="unavailable", status=503) from error
+        if knowledge is None or not callable(getattr(knowledge, "summary", None)):
+            raise UseCaseError("Índice semântico indisponível.", code="unavailable", status=503)
+        summary = knowledge.summary()
+        if not isinstance(summary, dict):
+            raise UseCaseError("Índice semântico retornou um resultado inválido.", code="internal_error", status=500)
+        return {"summary": summary}
 
     def _source_settings(self, _payload: dict[str, Any]) -> dict[str, Any]:
         return self.catalog.public_settings()

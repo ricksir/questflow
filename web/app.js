@@ -1374,8 +1374,13 @@ async function showCurationAttention(kind = 'curation', label = 'Fila de atenç�
   try {
     const refreshed = await bridge.call('refresh_bank_intelligence');
     if (refreshed?.ok && refreshed.summary) renderBankIntelligence(refreshed.summary);
-    const result = await bridge.call('get_curation_attention', kind, 150);
-    if (!result?.ok) throw new Error(result?.error || 'Não foi possível abrir a fila de atenção.');
+    const query = new URLSearchParams({ kind: String(kind || 'curation'), limit: '150' });
+    const result = await bridge.studioGet(
+      `editorial/curation/attention?${query.toString()}`,
+      'get_curation_attention',
+      [kind, 150],
+    );
+    if (result?.ok === false) throw new Error(result?.error || 'Não foi possível abrir a fila de atenção.');
     const items = Array.isArray(result.items) ? result.items : [];
     const total = Number(result.total || items.length);
     const note = kind === 'difficulty'
@@ -1430,8 +1435,8 @@ async function loadBankIntelligence() {
   if (metrics) renderSkeletonCards(metrics);
   if (overview) overview.innerHTML = '<div class="skeleton" style="height:16rem"></div>';
   try {
-    const result = await bridge.call('get_bank_intelligence');
-    if (!result.ok) throw new Error(result.error || 'Não foi possível ler a curadoria do banco.');
+    const result = await bridge.studioGet('editorial/bank/summary', 'get_bank_intelligence');
+    if (result?.ok === false) throw new Error(result.error || 'Não foi possível ler a curadoria do banco.');
     renderBankIntelligence(result.summary || {});
   } catch (error) {
     if (overview) overview.innerHTML = emptyStateHtml({ title: 'Curadoria indisponível', text: error.message });
@@ -1458,8 +1463,8 @@ async function loadSemanticIndex() {
   const target = $('#semanticIndexOverview');
   if (target) target.innerHTML = '<div class="skeleton" style="height:8rem"></div>';
   try {
-    const result = await bridge.call('get_semantic_index_summary');
-    if (!result.ok) throw new Error(result.error || 'Não foi possível ler o índice semântico.');
+    const result = await bridge.studioGet('knowledge/semantic/summary', 'get_semantic_index_summary');
+    if (result?.ok === false) throw new Error(result.error || 'Não foi possível ler o índice semântico.');
     renderSemanticIndex(result.summary || {});
   } catch (error) {
     if (target) target.innerHTML = emptyStateHtml({ title: 'Índice indisponível', text: error.message, compact: true });
