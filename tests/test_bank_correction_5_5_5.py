@@ -224,6 +224,13 @@ class BankCorrection555Tests(unittest.TestCase):
         self.assertIn('id="bankFixLesson"', html)
         self.assertIn("get_bank_classification_options", js)
         self.assertIn("update_question_classification", js)
+        options_start = js.index("async function getBankClassificationOptions")
+        options_end = js.index("async function loadBankFixOptions", options_start)
+        classification_options = js[options_start:options_end]
+        self.assertIn("bridge.studioGet(", classification_options)
+        self.assertIn("taxonomy/classification-options?", classification_options)
+        self.assertIn("'get_bank_classification_options'", classification_options)
+        self.assertNotIn("bridge.call('get_bank_classification_options'", js)
         self.assertIn("organize_bank_lesson_group", js)
         self.assertIn("groupBankFixQuestions", js)
         render_slice = js[js.index("function renderBankFixTable"):js.index("async function loadBankFix")]

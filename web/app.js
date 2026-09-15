@@ -5612,14 +5612,28 @@ function renderCoverage() {
 }
 
 
+async function getBankClassificationOptions(subject = '', lesson = '') {
+  const normalizedSubject = String(subject || '');
+  const normalizedLesson = String(lesson || '');
+  const query = new URLSearchParams({
+    subject: normalizedSubject,
+    lesson: normalizedLesson,
+  });
+  return bridge.studioGet(
+    `taxonomy/classification-options?${query.toString()}`,
+    'get_bank_classification_options',
+    [normalizedSubject, normalizedLesson],
+  );
+}
+
 async function loadBankFixOptions({ resetLesson = false } = {}) {
   const matterSelect = $('#bankFixMatter');
   const lessonSelect = $('#bankFixLesson');
   if (!matterSelect || !lessonSelect) return;
   const currentMatter = matterSelect.value || '';
   const currentLesson = resetLesson ? '' : (lessonSelect.value || '');
-  const result = await bridge.call('get_bank_classification_options', currentMatter, '');
-  if (!result?.ok) throw new Error(result?.error || 'Não foi possível carregar as matérias e aulas do banco.');
+  const result = await getBankClassificationOptions(currentMatter, '');
+  if (!result) throw new Error('Não foi possível carregar as matérias e aulas do banco.');
   state.bankFixOptions = result;
   state.bankFixOptionsSubject = currentMatter;
   const filterSubjects = result.bank_subjects || result.subjects || [];
@@ -5872,7 +5886,7 @@ async function openBankFixQuestion(uid) {
     const currentMatter = question.materia || '';
     const currentLesson = question.aula_planilha || '';
     const currentTaskId = question.classificacao_planilha?.contexto_task_id || question.contexto_importacao_estudos?.task_id || '';
-    const options = await bridge.call('get_bank_classification_options', currentMatter, currentLesson);
+    const options = await getBankClassificationOptions(currentMatter, currentLesson);
     const subjects = options.subjects || [];
     const statement = String(question.enunciado || '').trim();
     const preview = statement.length > 520 ? `${statement.slice(0, 520)}…` : statement;
@@ -5897,12 +5911,12 @@ async function openBankFixQuestion(uid) {
         const taskSelect = $('#bankFixEditTask', layer);
 
         matterSelect.addEventListener('change', async () => {
-          const refreshed = await bridge.call('get_bank_classification_options', matterSelect.value, '');
+          const refreshed = await getBankClassificationOptions(matterSelect.value, '');
           updateBankFixModalLessons(layer, refreshed, '');
           updateBankFixModalTasks(layer, [], '');
         });
         lessonSelect.addEventListener('change', async () => {
-          const refreshed = await bridge.call('get_bank_classification_options', matterSelect.value, lessonSelect.value);
+          const refreshed = await getBankClassificationOptions(matterSelect.value, lessonSelect.value);
           updateBankFixModalTasks(layer, refreshed.tasks || [], '');
         });
         taskSelect.addEventListener('change', () => {
