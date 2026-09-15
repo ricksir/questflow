@@ -360,11 +360,10 @@ class StudioUseCaseDispatcher:
         if not isinstance(result, dict):
             raise UseCaseError("Conclusão de curadoria retornou um resultado inválido.", code="internal_error", status=500)
         if result.get("ok") is False:
-            raise UseCaseError(
-                str(result.get("error") or "Não foi possível concluir a revisão."),
-                code=str(result.get("code") or "validation_error"),
-                status=int(result.get("status") or 400),
-            )
+            # Pendências de curadoria são um resultado de negócio válido.
+            # Mantemos blocking_missing e demais detalhes para o Studio orientar
+            # o usuário sem converter a decisão editorial em erro de transporte.
+            return dict(result)
         return {key: value for key, value in result.items() if key != "ok"}
 
     def _source_settings(self, _payload: dict[str, Any]) -> dict[str, Any]:
