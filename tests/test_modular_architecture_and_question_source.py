@@ -112,21 +112,38 @@ class ModularArchitectureTests(unittest.TestCase):
         self.assertIn("questions.delete", operation_names)
         self.assertIn("questions.annul", operation_names)
         self.assertIn("questions.image.remove", operation_names)
+        self.assertIn("taxonomy.subjects.list", operation_names)
         create_contract = next(item for item in contract["operations"] if item["name"] == "questions.create")
         update_contract = next(item for item in contract["operations"] if item["name"] == "questions.update")
         delete_contract = next(item for item in contract["operations"] if item["name"] == "questions.delete")
         annul_contract = next(item for item in contract["operations"] if item["name"] == "questions.annul")
         remove_image_contract = next(item for item in contract["operations"] if item["name"] == "questions.image.remove")
+        subjects_contract = next(item for item in contract["operations"] if item["name"] == "taxonomy.subjects.list")
         self.assertTrue(create_contract["mutating"])
         self.assertTrue(update_contract["mutating"])
         self.assertTrue(delete_contract["mutating"])
         self.assertTrue(annul_contract["mutating"])
         self.assertTrue(remove_image_contract["mutating"])
+        self.assertFalse(subjects_contract["mutating"])
         result = self.api.dispatch_studio_v1("questions.list", {"limit": 10})
         self.assertTrue(result["ok"])
         self.assertEqual(result["contract"], "questflow.studio.v1")
         self.assertEqual(result["module"], "editorial_bank")
         self.assertEqual(result["data"]["meta"]["provider"], "local")
+
+    def test_subject_listing_is_available_in_studio_v1_and_legacy_facade(self) -> None:
+        studio = self.api.dispatch_studio_v1("taxonomy.subjects.list", {})
+        legacy = self.api.list_materias()
+
+        self.assertTrue(studio["ok"])
+        self.assertEqual(studio["operation"], "taxonomy.subjects.list")
+        self.assertEqual(studio["module"], "editorial_bank")
+        self.assertIsInstance(studio["data"]["items"], list)
+        self.assertEqual(studio["data"]["count"], len(studio["data"]["items"]))
+
+        self.assertTrue(legacy["ok"])
+        self.assertEqual(legacy["items"], studio["data"]["items"])
+        self.assertEqual(legacy["count"], studio["data"]["count"])
 
     def test_manual_question_creation_is_available_in_studio_v1_and_legacy_facade(self) -> None:
         studio = self.api.dispatch_studio_v1("questions.create", {})
@@ -291,6 +308,18 @@ class ModularArchitectureTests(unittest.TestCase):
             self.assertEqual(questions_payload["module"], "editorial_bank")
             self.assertIn("items", questions_payload["data"])
 
+            subjects_request = urllib.request.Request(
+                f"{server.base_url}/api/v1/studio/taxonomy/subjects",
+                headers={"X-QuestFlow-Token": server.token},
+            )
+            with urllib.request.urlopen(subjects_request, timeout=5) as response:
+                subjects_payload = json.loads(response.read().decode("utf-8"))
+            self.assertTrue(subjects_payload["ok"])
+            self.assertEqual(subjects_payload["contract"], "questflow.studio.v1")
+            self.assertEqual(subjects_payload["operation"], "taxonomy.subjects.list")
+            self.assertEqual(subjects_payload["module"], "editorial_bank")
+            self.assertIsInstance(subjects_payload["data"]["items"], list)
+
             created = self.api.create_manual_question()
             self.assertTrue(created["ok"])
             uid = str(created["uid"])
@@ -438,6 +467,12 @@ class ModularArchitectureTests(unittest.TestCase):
         self.assertIn("bridge.studioGet(", load_questions)
         self.assertIn("'list_questions'", load_questions)
         self.assertNotIn("bridge.call('list_questions'", load_questions)
+
+        subjects_start = script.index("async function ensureMatterOptions")
+        subjects_end = script.index("async function selectQuestion", subjects_start)
+        subject_options = script[subjects_start:subjects_end]
+        self.assertIn("bridge.studioGet('taxonomy/subjects', 'list_materias')", subject_options)
+        self.assertNotIn("bridge.call('list_materias'", subject_options)
 
         detail_start = script.index("async function selectQuestion")
         detail_end = script.index("const metadataFields", detail_start)
