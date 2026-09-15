@@ -111,6 +111,8 @@ class StudioUseCaseDispatcher:
         self.register(UseCaseDefinition("editorial.curation.attention", self._editorial_curation_attention, module="editorial_bank"))
         self.register(UseCaseDefinition("curation.review.complete", self._curation_review_complete, mutating=True, module="editorial_bank"))
         self.register(UseCaseDefinition("knowledge.semantic.summary", self._knowledge_semantic_summary, module="knowledge"))
+        self.register(UseCaseDefinition("learning.recommendations.dashboard", self._learning_recommendations_dashboard, module="learning"))
+        self.register(UseCaseDefinition("learning.simulations.get", self._learning_simulation_get, module="learning"))
         self.register(UseCaseDefinition("questions.source.settings", self._source_settings, module="editorial_bank"))
         self.register(UseCaseDefinition("questions.source.save", self._source_save, mutating=True, module="editorial_bank"))
         self.register(UseCaseDefinition("questions.source.test", self._source_test, module="editorial_bank"))
@@ -407,6 +409,33 @@ class StudioUseCaseDispatcher:
         if not isinstance(summary, dict):
             raise UseCaseError("Índice semântico retornou um resultado inválido.", code="internal_error", status=500)
         return {"summary": summary}
+
+    def _learning_recommendations_dashboard(self, payload: dict[str, Any]) -> dict[str, Any]:
+        try:
+            learning = self.architecture.modules.get("learning").instance
+        except KeyError as error:
+            raise UseCaseError("Learning Engine indisponível.", code="unavailable", status=503) from error
+        if learning is None or not callable(getattr(learning, "recommendation_dashboard", None)):
+            raise UseCaseError("Recomendador indisponível.", code="unavailable", status=503)
+        dashboard = learning.recommendation_dashboard(mode=str(payload.get("mode") or "equilibrado"))
+        if not isinstance(dashboard, dict):
+            raise UseCaseError("Recomendador retornou um resultado inválido.", code="internal_error", status=500)
+        return {"dashboard": dashboard}
+
+    def _learning_simulation_get(self, payload: dict[str, Any]) -> dict[str, Any]:
+        session_id = str(payload.get("session_id") or payload.get("id") or "").strip()
+        if not session_id:
+            raise UseCaseError("Informe a sessão do simulado.", code="validation_error")
+        try:
+            learning = self.architecture.modules.get("learning").instance
+        except KeyError as error:
+            raise UseCaseError("Learning Engine indisponível.", code="unavailable", status=503) from error
+        if learning is None or not callable(getattr(learning, "simulation", None)):
+            raise UseCaseError("Simulado adaptativo indisponível.", code="unavailable", status=503)
+        simulation = learning.simulation(session_id)
+        if not isinstance(simulation, dict):
+            raise UseCaseError("Simulado adaptativo retornou um resultado inválido.", code="internal_error", status=500)
+        return {"simulation": simulation}
 
     def _source_settings(self, _payload: dict[str, Any]) -> dict[str, Any]:
         return self.catalog.public_settings()

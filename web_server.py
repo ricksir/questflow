@@ -508,6 +508,18 @@ class QuestFlowLocalServer:
                     if parsed.path == "/api/v1/studio/knowledge/semantic/summary":
                         self._studio_v1_result("knowledge.semantic.summary")
                         return
+                    if parsed.path == "/api/v1/studio/learning/recommendations":
+                        query = parse_qs(parsed.query, keep_blank_values=True)
+                        self._studio_v1_result("learning.recommendations.dashboard", {
+                            "mode": (query.get("mode") or ["equilibrado"])[0],
+                        })
+                        return
+                    simulation_prefix = "/api/v1/studio/learning/simulations/"
+                    if parsed.path.startswith(simulation_prefix):
+                        self._studio_v1_result("learning.simulations.get", {
+                            "session_id": unquote(parsed.path[len(simulation_prefix):]),
+                        })
+                        return
                     if parsed.path == "/api/v1/studio/questions":
                         query = parse_qs(parsed.query, keep_blank_values=True)
                         payload = {

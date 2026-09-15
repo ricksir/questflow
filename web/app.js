@@ -1763,6 +1763,16 @@ function renderRecommendationDashboard(data = {}) {
   }
 }
 
+async function getRecommendationDashboard(mode = 'equilibrado') {
+  const normalizedMode = String(mode || 'equilibrado');
+  const query = new URLSearchParams({ mode: normalizedMode });
+  return bridge.studioGet(
+    `learning/recommendations?${query.toString()}`,
+    'get_recommendation_dashboard',
+    [normalizedMode],
+  );
+}
+
 async function loadRecommendationPage() {
   const metrics = $('#recommendationMetrics');
   const list = $('#recommendationList');
@@ -1770,8 +1780,8 @@ async function loadRecommendationPage() {
   if (list) list.innerHTML = '<div class="skeleton" style="height:12rem"></div>';
   try {
     const mode = $('#recommendationMode')?.value || 'equilibrado';
-    const result = await bridge.call('get_recommendation_dashboard', mode);
-    if (!result.ok) throw new Error(result.error || 'Não foi possível calcular as recomendações.');
+    const result = await getRecommendationDashboard(mode);
+    if (result?.ok === false) throw new Error(result.error || 'Não foi possível calcular as recomendações.');
     renderRecommendationDashboard(result.dashboard || result.data || result);
     const activeId = state.adaptiveSimulationId || result.dashboard?.active_simulation?.id || result.active_simulation?.id;
     if (activeId) await resumeAdaptiveSimulation(activeId, { quiet: true });
@@ -1808,8 +1818,12 @@ async function resumeAdaptiveSimulation(sessionId = '', { quiet = false } = {}) 
   const id = String(sessionId || $('#resumeAdaptiveSimulation')?.dataset.sessionId || state.adaptiveSimulationId || '').trim();
   if (!id) return;
   try {
-    const result = await bridge.call('get_adaptive_simulation', id);
-    if (!result.ok) throw new Error(result.error || 'Não foi possível retomar o simulado.');
+    const result = await bridge.studioGet(
+      `learning/simulations/${encodeURIComponent(id)}`,
+      'get_adaptive_simulation',
+      [id],
+    );
+    if (result?.ok === false) throw new Error(result.error || 'Não foi possível retomar o simulado.');
     const simulation = result.simulation || result.data || result;
     state.adaptiveSimulationId = simulation.session?.id || id;
     renderAdaptiveSimulation(simulation);
@@ -1877,8 +1891,8 @@ async function submitAdaptiveSimulationAnswer() {
     state.adaptiveSimulationId = simulation.session?.id || state.adaptiveSimulationId;
     state.adaptiveSimulationQuestionUid = null;
     renderAdaptiveSimulation(simulation, simulation.feedback || null);
-    const dash = await bridge.call('get_recommendation_dashboard', $('#recommendationMode')?.value || 'equilibrado');
-    if (dash.ok) renderRecommendationDashboard(dash.dashboard || dash.data || dash);
+    const dash = await getRecommendationDashboard($('#recommendationMode')?.value || 'equilibrado');
+    if (dash?.ok !== false) renderRecommendationDashboard(dash.dashboard || dash.data || dash);
   } catch (error) { toast(error.message, 'error', 7000); setBusy(button, false); }
 }
 
