@@ -116,6 +116,32 @@ class BankCorrection555Tests(unittest.TestCase):
         self.assertEqual(by_task["TRILHA 2:85"]["bank_question_count"], 0)
         self.assertEqual(result["coverage_assignment"]["task_id"], "TRILHA 1:31")
 
+    def test_exact_task_correction_is_available_in_studio_v1(self) -> None:
+        uid = self._question()
+        result = self.api.dispatch_studio_v1(
+            "questions.classification.update",
+            {
+                "uid": uid,
+                "classification": {
+                    "materia": "FLUÊNCIA EM DADOS",
+                    "aula": "Aula 01",
+                    "task_id": "TRILHA 1:31",
+                },
+            },
+        )
+        self.assertTrue(result["ok"])
+        self.assertEqual(result["operation"], "questions.classification.update")
+        self.assertEqual(result["module"], "editorial_bank")
+        self.assertEqual(result["data"]["coverage_assignment"]["task_id"], "TRILHA 1:31")
+
+        assert self.api.queries is not None
+        saved = self.api.queries.get(uid)
+        assert saved is not None
+        self.assertEqual(saved["materia"], "FLUÊNCIA EM DADOS")
+        self.assertEqual(saved["aula_planilha"], "Aula 01")
+        self.assertEqual(saved["classificacao_planilha"]["contexto_task_id"], "TRILHA 1:31")
+        self.assertEqual(saved["contexto_importacao_estudos"]["task_id"], "TRILHA 1:31")
+
     def test_manual_subject_lesson_change_drops_stale_exact_reference(self) -> None:
         uid = self._question()
         result = self.api.update_question_classification(
@@ -250,6 +276,9 @@ class BankCorrection555Tests(unittest.TestCase):
         self.assertIn("/delete", open_question)
         self.assertIn("'delete_question'", open_question)
         self.assertNotIn("bridge.call('delete_question'", open_question)
+        self.assertIn("/classification", open_question)
+        self.assertIn("'update_question_classification'", open_question)
+        self.assertNotIn("bridge.call('update_question_classification'", open_question)
 
         delete_start = js.index("async function deleteBankFixQuestion")
         delete_end = js.index("function bindBankFixRows", delete_start)
