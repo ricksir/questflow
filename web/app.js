@@ -2134,8 +2134,13 @@ async function saveLegislationVersion() {
     effective_from: $('#legEffectiveFrom')?.value || '', effective_to: $('#legEffectiveTo')?.value || '', text_content: $('#legText')?.value || '',
   };
   try {
-    const result = await bridge.call('create_legislation_version', payload);
-    if (!result.ok) throw new Error(result.error || 'Não foi possível salvar a versão legislativa.');
+    const result = await bridge.studioPost(
+      'editorial/legislation/versions',
+      payload,
+      'create_legislation_version',
+      [payload],
+    );
+    if (result?.ok === false) throw new Error(result.error || 'Não foi possível salvar a versão legislativa.');
     toast('Versão legislativa salva e indexada no Knowledge Engine.', 'success');
     await loadStage5Page(state.stage5SelectedUid || '');
   } catch (error) { toast(error.message, 'error'); }
@@ -2147,8 +2152,13 @@ async function resolveLegislationVersion() {
   const target = $('#legResolveResult');
   if (!key || !date) { toast('Informe a chave canônica e a data que deseja consultar.', 'warning'); return; }
   try {
-    const result = await bridge.call('resolve_legislation_version', key, date);
-    if (!result.ok) throw new Error(result.error || 'Falha ao resolver a vigência.');
+    const query = new URLSearchParams({ canonical_key: key, reference_date: date });
+    const result = await bridge.studioGet(
+      `editorial/legislation/versions/resolve?${query.toString()}`,
+      'resolve_legislation_version',
+      [key, date],
+    );
+    if (result?.ok === false) throw new Error(result.error || 'Falha ao resolver a vigência.');
     const item = result.version;
     if (target) target.innerHTML = item ? `<div class="stage5-resolved-version"><strong>${escapeHtml(item.title || key)}</strong><span>Versão vigente em ${escapeHtml(date)}: ${escapeHtml(item.effective_from || '—')} → ${escapeHtml(item.effective_to || 'atual')}</span><p>${escapeHtml(String(item.text_content || '').slice(0,900))}</p></div>` : '<p class="warning-note">Nenhuma versão cadastrada cobre essa data.</p>';
   } catch (error) { if (target) target.textContent = error.message; toast(error.message,'error'); }
