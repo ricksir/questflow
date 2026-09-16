@@ -2043,8 +2043,14 @@ async function loadStage5Page(uid = '') {
   const target = $('#stage5SourcePool');
   if (target) target.innerHTML = '<div class="skeleton" style="height:8rem"></div>';
   try {
-    const result = await bridge.call('get_stage5_workspace', uid || state.stage5SelectedUid || '');
-    if (!result.ok) throw new Error(result.error || 'Não foi possível carregar a Etapa 5.');
+    const selectedUid = uid || state.stage5SelectedUid || '';
+    const query = new URLSearchParams({ uid: selectedUid });
+    const result = await bridge.studioGet(
+      `generation/workspace?${query.toString()}`,
+      'get_stage5_workspace',
+      [selectedUid],
+    );
+    if (result?.ok === false) throw new Error(result.error || 'Não foi possível carregar a Etapa 5.');
     const workspace = result.workspace || {};
     state.stage5LastWorkspace = workspace;
     state.stage5SelectedUid = workspace.selected?.uid || state.stage5SelectedUid || null;
@@ -2090,8 +2096,12 @@ async function generateStage5Draft() {
     toast('Rascunho gerado e submetido ao segundo modelo de validação.', 'success');
     await loadStage5Page(state.stage5SelectedUid || '');
     if (state.stage5DraftId) {
-      const refreshed = await bridge.call('get_generation_draft', state.stage5DraftId);
-      if (refreshed.ok) renderStage5Draft(refreshed.draft || {});
+      const refreshed = await bridge.studioGet(
+        `generation/drafts/${encodeURIComponent(state.stage5DraftId)}`,
+        'get_generation_draft',
+        [state.stage5DraftId],
+      );
+      if (refreshed?.ok !== false && refreshed?.draft) renderStage5Draft(refreshed.draft);
     }
   } catch (error) { toast(error.message, 'error'); }
   finally { if (button) button.disabled = false; }
