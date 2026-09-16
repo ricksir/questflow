@@ -505,6 +505,13 @@ class QuestFlowLocalServer:
                             "limit": (query.get("limit") or [100])[0],
                         })
                         return
+                    if parsed.path == "/api/v1/studio/editorial/legislation/versions/resolve":
+                        query = parse_qs(parsed.query, keep_blank_values=True)
+                        self._studio_v1_result("editorial.legislation.versions.resolve", {
+                            "canonical_key": (query.get("canonical_key") or [""])[0],
+                            "reference_date": (query.get("reference_date") or [""])[0],
+                        })
+                        return
                     if parsed.path == "/api/v1/studio/knowledge/semantic/summary":
                         self._studio_v1_result("knowledge.semantic.summary")
                         return
@@ -660,6 +667,9 @@ class QuestFlowLocalServer:
                             return
                     if parsed.path == "/api/v1/studio/questions":
                         self._studio_v1_result("questions.create", request_body)
+                        return
+                    if parsed.path == "/api/v1/studio/editorial/legislation/versions":
+                        self._studio_v1_result("editorial.legislation.versions.upsert", request_body)
                         return
                     question_prefix = "/api/v1/studio/questions/"
                     if parsed.path.startswith(question_prefix):

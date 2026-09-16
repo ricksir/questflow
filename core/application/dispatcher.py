@@ -109,6 +109,8 @@ class StudioUseCaseDispatcher:
         self.register(UseCaseDefinition("taxonomy.lesson_group.organize", self._taxonomy_lesson_group_organize, mutating=True, module="editorial_bank"))
         self.register(UseCaseDefinition("editorial.bank.summary", self._editorial_bank_summary, module="editorial_bank"))
         self.register(UseCaseDefinition("editorial.curation.attention", self._editorial_curation_attention, module="editorial_bank"))
+        self.register(UseCaseDefinition("editorial.legislation.versions.upsert", self._editorial_legislation_version_upsert, mutating=True, module="editorial_bank"))
+        self.register(UseCaseDefinition("editorial.legislation.versions.resolve", self._editorial_legislation_version_resolve, module="editorial_bank"))
         self.register(UseCaseDefinition("curation.review.complete", self._curation_review_complete, mutating=True, module="editorial_bank"))
         self.register(UseCaseDefinition("knowledge.semantic.summary", self._knowledge_semantic_summary, module="knowledge"))
         self.register(UseCaseDefinition("learning.recommendations.dashboard", self._learning_recommendations_dashboard, module="learning"))
@@ -358,6 +360,39 @@ class StudioUseCaseDispatcher:
                 status=int(result.get("status") or 400),
             )
         return {key: value for key, value in result.items() if key != "ok"}
+
+    def _editorial_legislation_version_upsert(self, payload: dict[str, Any]) -> dict[str, Any]:
+        try:
+            editorial = self.architecture.modules.get("editorial_bank").instance
+        except KeyError as error:
+            raise UseCaseError("Banco Editorial indisponível.", code="unavailable", status=503) from error
+        if (
+            editorial is None
+            or not callable(getattr(editorial, "upsert_legislation", None))
+            or not callable(getattr(editorial, "legislation_summary", None))
+        ):
+            raise UseCaseError("Gestão legislativa indisponível.", code="unavailable", status=503)
+        version = editorial.upsert_legislation(payload)
+        summary = editorial.legislation_summary()
+        if not isinstance(version, dict) or not isinstance(summary, dict):
+            raise UseCaseError("Gestão legislativa retornou um resultado inválido.", code="internal_error", status=500)
+        return {"version": version, "summary": summary}
+
+    def _editorial_legislation_version_resolve(self, payload: dict[str, Any]) -> dict[str, Any]:
+        canonical_key = str(payload.get("canonical_key") or "").strip()
+        reference_date = str(payload.get("reference_date") or "").strip()
+        if not canonical_key or not reference_date:
+            raise UseCaseError("Informe a chave canônica e a data de referência.", code="validation_error")
+        try:
+            editorial = self.architecture.modules.get("editorial_bank").instance
+        except KeyError as error:
+            raise UseCaseError("Banco Editorial indisponível.", code="unavailable", status=503) from error
+        if editorial is None or not callable(getattr(editorial, "resolve_legislation", None)):
+            raise UseCaseError("Resolução legislativa indisponível.", code="unavailable", status=503)
+        version = editorial.resolve_legislation(canonical_key, reference_date)
+        if version is not None and not isinstance(version, dict):
+            raise UseCaseError("Resolução legislativa retornou um resultado inválido.", code="internal_error", status=500)
+        return {"version": version}
 
     def _curation_review_complete(self, payload: dict[str, Any]) -> dict[str, Any]:
         uid = str(payload.get("uid") or payload.get("id") or "").strip()
