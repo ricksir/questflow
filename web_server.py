@@ -541,6 +541,18 @@ class QuestFlowLocalServer:
                             "interaction_id": unquote(parsed.path[len(interaction_prefix):]),
                         })
                         return
+                    if parsed.path == "/api/v1/studio/generation/workspace":
+                        query = parse_qs(parsed.query, keep_blank_values=True)
+                        self._studio_v1_result("generation.workspace.get", {
+                            "uid": (query.get("uid") or [""])[0],
+                        })
+                        return
+                    generation_draft_prefix = "/api/v1/studio/generation/drafts/"
+                    if parsed.path.startswith(generation_draft_prefix):
+                        self._studio_v1_result("generation.drafts.get", {
+                            "draft_id": unquote(parsed.path[len(generation_draft_prefix):]),
+                        })
+                        return
                     if parsed.path == "/api/v1/studio/questions":
                         query = parse_qs(parsed.query, keep_blank_values=True)
                         payload = {
