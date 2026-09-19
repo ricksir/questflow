@@ -116,6 +116,8 @@ class StudioUseCaseDispatcher:
         self.register(UseCaseDefinition("learning.recommendations.dashboard", self._learning_recommendations_dashboard, module="learning"))
         self.register(UseCaseDefinition("learning.simulations.get", self._learning_simulation_get, module="learning"))
         self.register(UseCaseDefinition("governance.gold.dashboard", self._governance_gold_dashboard, module="governance"))
+        self.register(UseCaseDefinition("governance.gold.questions.add", self._governance_gold_question_add, mutating=True, module="ai"))
+        self.register(UseCaseDefinition("governance.gold.regressions.run", self._governance_gold_regression_run, mutating=True, module="ai"))
         self.register(UseCaseDefinition("governance.ai.telemetry", self._governance_ai_telemetry, module="governance"))
         self.register(UseCaseDefinition("governance.ai.audit.list", self._governance_ai_audit_list, module="governance"))
         self.register(UseCaseDefinition("governance.ai.interactions.get", self._governance_ai_interaction_get, module="governance"))
@@ -500,6 +502,49 @@ class StudioUseCaseDispatcher:
         if not isinstance(summary, dict) or not isinstance(items, list):
             raise UseCaseError("Conjunto ouro retornou um resultado inválido.", code="internal_error", status=500)
         return {"summary": summary, "items": items}
+
+    def _governance_gold_question_add(self, payload: dict[str, Any]) -> dict[str, Any]:
+        uid = str(payload.get("uid") or payload.get("question_uid") or "").strip()
+        if not uid:
+            raise UseCaseError("Informe a questão para o conjunto ouro.", code="validation_error")
+        try:
+            ai = self.architecture.modules.get("ai").instance
+            governance = self.architecture.modules.get("governance").instance
+        except KeyError as error:
+            raise UseCaseError("Governança de IA indisponível.", code="unavailable", status=503) from error
+        if ai is None or not callable(getattr(ai, "add_gold_question", None)):
+            raise UseCaseError("Inclusão no conjunto ouro indisponível.", code="unavailable", status=503)
+        if governance is None or not callable(getattr(governance, "gold_dashboard", None)):
+            raise UseCaseError("Conjunto ouro indisponível.", code="unavailable", status=503)
+        gold = ai.add_gold_question(
+            uid,
+            label=str(payload.get("label") or ""),
+            notes=str(payload.get("notes") or ""),
+        )
+        summary = governance.gold_dashboard()
+        if not isinstance(gold, dict) or not isinstance(summary, dict):
+            raise UseCaseError("Inclusão no conjunto ouro retornou um resultado inválido.", code="internal_error", status=500)
+        return {"gold": gold, "summary": summary}
+
+    def _governance_gold_regression_run(self, payload: dict[str, Any]) -> dict[str, Any]:
+        try:
+            limit = max(1, min(200, int(payload.get("limit") or 50)))
+        except (TypeError, ValueError) as error:
+            raise UseCaseError("Limite de regressão inválido.", code="validation_error") from error
+        try:
+            ai = self.architecture.modules.get("ai").instance
+            governance = self.architecture.modules.get("governance").instance
+        except KeyError as error:
+            raise UseCaseError("Governança de IA indisponível.", code="unavailable", status=503) from error
+        if ai is None or not callable(getattr(ai, "run_gold_regression", None)):
+            raise UseCaseError("Regressão do conjunto ouro indisponível.", code="unavailable", status=503)
+        if governance is None or not callable(getattr(governance, "gold_dashboard", None)):
+            raise UseCaseError("Conjunto ouro indisponível.", code="unavailable", status=503)
+        result = ai.run_gold_regression(limit=limit)
+        summary = governance.gold_dashboard()
+        if not isinstance(result, dict) or not isinstance(summary, dict):
+            raise UseCaseError("Regressão do conjunto ouro retornou um resultado inválido.", code="internal_error", status=500)
+        return {"result": result, "summary": summary}
 
     def _governance_ai_telemetry(self, payload: dict[str, Any]) -> dict[str, Any]:
         try:
