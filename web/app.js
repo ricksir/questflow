@@ -2088,8 +2088,13 @@ async function generateStage5Draft() {
   const button = $('#generateControlledQuestion');
   if (button) button.disabled = true;
   try {
-    const result = await bridge.call('generate_controlled_question', payload);
-    if (!result.ok) throw new Error(result.error || 'Falha na geração controlada.');
+    const result = await bridge.studioPost(
+      'generation/drafts',
+      payload,
+      'generate_controlled_question',
+      [payload],
+    );
+    if (result?.ok === false) throw new Error(result.error || 'Falha na geração controlada.');
     const draft = result.draft || {};
     state.stage5DraftId = draft.id || null;
     renderStage5Draft(draft);
@@ -2110,8 +2115,13 @@ async function generateStage5Draft() {
 async function reviewStage5Draft(decision) {
   if (!state.stage5DraftId) return;
   try {
-    const result = await bridge.call('review_generation_draft', state.stage5DraftId, decision, 'Decisão humana realizada na Etapa 5.');
-    if (!result.ok) throw new Error(result.error || 'Não foi possível registrar a decisão.');
+    const result = await bridge.studioPost(
+      `generation/drafts/${encodeURIComponent(state.stage5DraftId)}/review`,
+      { decision, note: 'Decisão humana realizada na Etapa 5.' },
+      'review_generation_draft',
+      [state.stage5DraftId, decision, 'Decisão humana realizada na Etapa 5.'],
+    );
+    if (result?.ok === false) throw new Error(result.error || 'Não foi possível registrar a decisão.');
     renderStage5Draft(result.draft || {});
     toast(decision === 'aprovar' ? 'Rascunho aprovado. A publicação no banco continua sendo uma ação separada.' : 'Rascunho rejeitado.', decision === 'aprovar' ? 'success' : 'warning');
   } catch (error) { toast(error.message, 'error'); }
@@ -2120,8 +2130,13 @@ async function reviewStage5Draft(decision) {
 async function publishStage5Draft() {
   if (!state.stage5DraftId) return;
   try {
-    const result = await bridge.call('publish_generation_draft', state.stage5DraftId);
-    if (!result.ok) throw new Error(result.error || 'Não foi possível publicar.');
+    const result = await bridge.studioPost(
+      `generation/drafts/${encodeURIComponent(state.stage5DraftId)}/publish`,
+      {},
+      'publish_generation_draft',
+      [state.stage5DraftId],
+    );
+    if (result?.ok === false) throw new Error(result.error || 'Não foi possível publicar.');
     renderStage5Draft(result.draft || {});
     toast(`Questão ${result.published?.question?.codigo_origem || ''} publicada no Banco Editorial.`, 'success');
   } catch (error) { toast(error.message, 'error'); }

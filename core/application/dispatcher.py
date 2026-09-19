@@ -121,6 +121,9 @@ class StudioUseCaseDispatcher:
         self.register(UseCaseDefinition("governance.ai.interactions.get", self._governance_ai_interaction_get, module="governance"))
         self.register(UseCaseDefinition("generation.workspace.get", self._generation_workspace_get, module="ai"))
         self.register(UseCaseDefinition("generation.drafts.get", self._generation_draft_get, module="governance"))
+        self.register(UseCaseDefinition("generation.drafts.create", self._generation_draft_create, mutating=True, module="ai"))
+        self.register(UseCaseDefinition("generation.drafts.review", self._generation_draft_review, mutating=True, module="governance"))
+        self.register(UseCaseDefinition("generation.drafts.publish", self._generation_draft_publish, mutating=True, module="ai"))
         self.register(UseCaseDefinition("questions.intelligence.refresh", self._question_intelligence_refresh, mutating=True, module="editorial_bank"))
         self.register(UseCaseDefinition("knowledge.questions.graph", self._knowledge_question_graph, module="knowledge"))
         self.register(UseCaseDefinition("knowledge.rag.context", self._knowledge_rag_context, module="knowledge"))
@@ -569,6 +572,60 @@ class StudioUseCaseDispatcher:
         if not isinstance(draft, dict):
             raise UseCaseError("Rascunho de geração retornou um resultado inválido.", code="internal_error", status=500)
         return {"draft": draft}
+
+    def _generation_draft_create(self, payload: dict[str, Any]) -> dict[str, Any]:
+        try:
+            ai = self.architecture.modules.get("ai").instance
+        except KeyError as error:
+            raise UseCaseError("AI Engine indisponível.", code="unavailable", status=503) from error
+        if ai is None or not callable(getattr(ai, "generate_controlled_question", None)):
+            raise UseCaseError("Geração controlada indisponível.", code="unavailable", status=503)
+        result = ai.generate_controlled_question(
+            seed_uid=str(payload.get("seed_uid") or ""),
+            source_chunk_ids=list(payload.get("source_chunk_ids") or []),
+            question_type=str(payload.get("question_type") or "multipla_escolha"),
+            board_style=str(payload.get("board_style") or ""),
+            subject=str(payload.get("subject") or ""),
+            topic=str(payload.get("topic") or ""),
+            exam_date=str(payload.get("exam_date") or ""),
+        )
+        if not isinstance(result, dict):
+            raise UseCaseError("Geração controlada retornou um resultado inválido.", code="internal_error", status=500)
+        return {key: value for key, value in result.items() if key != "ok"}
+
+    def _generation_draft_review(self, payload: dict[str, Any]) -> dict[str, Any]:
+        draft_id = str(payload.get("draft_id") or payload.get("id") or "").strip()
+        if not draft_id:
+            raise UseCaseError("Informe o rascunho de geração.", code="validation_error")
+        try:
+            governance = self.architecture.modules.get("governance").instance
+        except KeyError as error:
+            raise UseCaseError("Governança de IA indisponível.", code="unavailable", status=503) from error
+        if governance is None or not callable(getattr(governance, "review_generation_draft", None)):
+            raise UseCaseError("Revisão de geração indisponível.", code="unavailable", status=503)
+        draft = governance.review_generation_draft(
+            draft_id,
+            decision=str(payload.get("decision") or ""),
+            note=str(payload.get("note") or ""),
+        )
+        if not isinstance(draft, dict):
+            raise UseCaseError("Revisão de geração retornou um resultado inválido.", code="internal_error", status=500)
+        return {"draft": draft}
+
+    def _generation_draft_publish(self, payload: dict[str, Any]) -> dict[str, Any]:
+        draft_id = str(payload.get("draft_id") or payload.get("id") or "").strip()
+        if not draft_id:
+            raise UseCaseError("Informe o rascunho de geração.", code="validation_error")
+        try:
+            ai = self.architecture.modules.get("ai").instance
+        except KeyError as error:
+            raise UseCaseError("AI Engine indisponível.", code="unavailable", status=503) from error
+        if ai is None or not callable(getattr(ai, "publish_generation_draft", None)):
+            raise UseCaseError("Publicação de geração indisponível.", code="unavailable", status=503)
+        result = ai.publish_generation_draft(draft_id)
+        if not isinstance(result, dict):
+            raise UseCaseError("Publicação de geração retornou um resultado inválido.", code="internal_error", status=500)
+        return result
 
     def _question_intelligence_refresh(self, payload: dict[str, Any]) -> dict[str, Any]:
         uid = str(payload.get("uid") or payload.get("id") or "").strip()
