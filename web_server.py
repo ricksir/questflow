@@ -671,6 +671,20 @@ class QuestFlowLocalServer:
                     if parsed.path == "/api/v1/studio/editorial/legislation/versions":
                         self._studio_v1_result("editorial.legislation.versions.upsert", request_body)
                         return
+                    if parsed.path == "/api/v1/studio/generation/drafts":
+                        self._studio_v1_result("generation.drafts.create", request_body)
+                        return
+                    generation_draft_prefix = "/api/v1/studio/generation/drafts/"
+                    if parsed.path.startswith(generation_draft_prefix):
+                        draft_suffix = parsed.path[len(generation_draft_prefix):]
+                        if draft_suffix.endswith("/review"):
+                            request_body["draft_id"] = unquote(draft_suffix[:-len("/review")])
+                            self._studio_v1_result("generation.drafts.review", request_body)
+                            return
+                        if draft_suffix.endswith("/publish"):
+                            request_body["draft_id"] = unquote(draft_suffix[:-len("/publish")])
+                            self._studio_v1_result("generation.drafts.publish", request_body)
+                            return
                     question_prefix = "/api/v1/studio/questions/"
                     if parsed.path.startswith(question_prefix):
                         question_suffix = parsed.path[len(question_prefix):]
