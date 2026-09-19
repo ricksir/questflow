@@ -674,6 +674,12 @@ class QuestFlowLocalServer:
                     if parsed.path == "/api/v1/studio/generation/drafts":
                         self._studio_v1_result("generation.drafts.create", request_body)
                         return
+                    if parsed.path == "/api/v1/studio/governance/gold/questions":
+                        self._studio_v1_result("governance.gold.questions.add", request_body)
+                        return
+                    if parsed.path == "/api/v1/studio/governance/gold/regressions":
+                        self._studio_v1_result("governance.gold.regressions.run", request_body)
+                        return
                     generation_draft_prefix = "/api/v1/studio/generation/drafts/"
                     if parsed.path.startswith(generation_draft_prefix):
                         draft_suffix = parsed.path[len(generation_draft_prefix):]

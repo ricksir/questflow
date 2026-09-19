@@ -2182,8 +2182,13 @@ async function resolveLegislationVersion() {
 async function addSelectedGoldQuestion() {
   if (!state.stage5SelectedUid) return;
   try {
-    const result = await bridge.call('add_gold_question', state.stage5SelectedUid, '', 'Incluída manualmente pela Etapa 5.');
-    if (!result.ok) throw new Error(result.error || 'Não foi possível adicionar ao conjunto ouro.');
+    const result = await bridge.studioPost(
+      'governance/gold/questions',
+      { uid: state.stage5SelectedUid, label: '', notes: 'Incluída manualmente pela Etapa 5.' },
+      'add_gold_question',
+      [state.stage5SelectedUid, '', 'Incluída manualmente pela Etapa 5.'],
+    );
+    if (result?.ok === false) throw new Error(result.error || 'Não foi possível adicionar ao conjunto ouro.');
     const gold = await bridge.studioGet('governance/gold/dashboard', 'get_gold_dashboard');
     renderGoldPanel(gold.summary || result.summary || {}, gold.items || []);
     toast('Questão adicionada ao conjunto ouro permanente.', 'success');
@@ -2194,8 +2199,13 @@ async function runGoldRegression() {
   const button = $('#runGoldRegression');
   if (button) button.disabled = true;
   try {
-    const result = await bridge.call('run_gold_regression', 50);
-    if (!result.ok) throw new Error(result.error || 'Falha na regressão da IA.');
+    const result = await bridge.studioPost(
+      'governance/gold/regressions',
+      { limit: 50 },
+      'run_gold_regression',
+      [50],
+    );
+    if (result?.ok === false) throw new Error(result.error || 'Falha na regressão da IA.');
     const gold = await bridge.studioGet('governance/gold/dashboard', 'get_gold_dashboard');
     renderGoldPanel(gold.summary || result.summary || {}, gold.items || [], result.result || null);
     toast(`Regressão concluída: ${Number(result.result?.average_score || 0).toFixed(0)}/100.`, 'success');
@@ -2690,7 +2700,7 @@ async function loadRetrievalObservability() {
       const uid=button.dataset.addObservabilityGold||''; if(!uid) return;
       if(!window.confirm('Adicionar esta questão ao conjunto Ouro? Esta é uma aprovação humana explícita.')) return;
       setBusy(button,true,'Adicionando');
-      try { const result=await bridge.call('add_gold_question',uid,'',`Incluída manualmente pela Observabilidade QuestFlow ${o.release||state.bootstrap?.app?.version||''}.`); if(!result?.ok) throw new Error(result?.error||'Falha ao adicionar Questão Ouro.'); toast('Questão adicionada ao conjunto Ouro.','success'); await loadRetrievalObservability(); }
+      try { const notes=`Incluída manualmente pela Observabilidade QuestFlow ${o.release||state.bootstrap?.app?.version||''}.`; const result=await bridge.studioPost('governance/gold/questions',{uid,label:'',notes},'add_gold_question',[uid,'',notes]); if(result?.ok===false) throw new Error(result?.error||'Falha ao adicionar Questão Ouro.'); toast('Questão adicionada ao conjunto Ouro.','success'); await loadRetrievalObservability(); }
       catch(error){toast(error.message,'error',7000);} finally{setBusy(button,false);}
     }));
   } catch(error) { if(target) target.innerHTML=emptyStateHtml({title:'Observabilidade indisponível',text:error.message,compact:true}); }
