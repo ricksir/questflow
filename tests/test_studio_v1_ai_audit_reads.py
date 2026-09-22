@@ -52,6 +52,8 @@ class StudioV1AiAuditReadTests(unittest.TestCase):
             with self.subTest(operation=operation):
                 self.assertEqual(definitions[operation]["module"], "governance")
                 self.assertFalse(definitions[operation]["mutating"])
+        self.assertEqual(definitions["governance.ai.interactions.review"]["module"], "governance")
+        self.assertTrue(definitions["governance.ai.interactions.review"]["mutating"])
 
     def test_dispatcher_matches_existing_governance_facades(self) -> None:
         legacy_audit = self.api.get_ai_audit(10)
@@ -74,11 +76,20 @@ class StudioV1AiAuditReadTests(unittest.TestCase):
         )
 
     def test_missing_interaction_returns_validation_error(self) -> None:
-        result = self.api.dispatch_studio_v1("governance.ai.interactions.get", {})
+        for operation in ("governance.ai.interactions.get", "governance.ai.interactions.review"):
+            with self.subTest(operation=operation):
+                result = self.api.dispatch_studio_v1(operation, {})
+                self.assertFalse(result["ok"])
+                self.assertEqual(result["code"], "validation_error")
+                self.assertEqual(result["status"], 400)
 
-        self.assertFalse(result["ok"])
-        self.assertEqual(result["code"], "validation_error")
-        self.assertEqual(result["status"], 400)
+    def test_dispatcher_reviews_ai_interaction(self) -> None:
+        result = self.api.dispatch_studio_v1(
+            "governance.ai.interactions.review",
+            {"interaction_id": self.interaction_id, "decision": "aprovar", "note": "Revisão Studio v1."},
+        )
+        self.assertTrue(result["ok"])
+        self.assertEqual(result["data"]["review"]["status"], "aprovado")
 
     def test_authenticated_get_routes_return_ai_audit_payloads(self) -> None:
         server = QuestFlowLocalServer(
@@ -111,6 +122,22 @@ class StudioV1AiAuditReadTests(unittest.TestCase):
                     self.assertTrue(payload["ok"])
                     self.assertEqual(payload["contract"], "questflow.studio.v1")
                     self.assertEqual(payload["operation"], operation)
+
+            review_request = urllib.request.Request(
+                f"{server.base_url}/api/v1/studio/governance/ai/interactions/"
+                f"{urllib.parse.quote(self.interaction_id)}/review",
+                data=json.dumps({"decision": "rejeitar", "note": "Revisão HTTP."}).encode("utf-8"),
+                headers={
+                    "Content-Type": "application/json",
+                    "X-QuestFlow-Token": server.token,
+                },
+                method="POST",
+            )
+            with urllib.request.urlopen(review_request, timeout=5) as response:
+                review = json.loads(response.read().decode("utf-8"))
+            self.assertTrue(review["ok"])
+            self.assertEqual(review["operation"], "governance.ai.interactions.review")
+            self.assertEqual(review["data"]["review"]["status"], "rejeitado")
         finally:
             server.stop()
 
@@ -120,7 +147,8 @@ class StudioV1AiAuditReadTests(unittest.TestCase):
         self.assertIn("bridge.studioGet('governance/ai/audit?limit=30', 'get_ai_audit', [30])", javascript)
         self.assertIn("`governance/ai/interactions/${encodeURIComponent(interactionId)}`", javascript)
         self.assertIn("'get_ai_interaction'", javascript)
-        for method in ("get_ai_audit", "get_ai_interaction"):
+        self.assertIn("`governance/ai/interactions/${encodeURIComponent(state.tutorInteractionId)}/review`", javascript)
+        for method in ("get_ai_audit", "get_ai_interaction", "review_ai_interaction"):
             self.assertNotIn(f"bridge.call('{method}'", javascript)
 
 

@@ -685,6 +685,13 @@ class QuestFlowLocalServer:
                     if parsed.path == "/api/v1/studio/governance/gold/regressions":
                         self._studio_v1_result("governance.gold.regressions.run", request_body)
                         return
+                    interaction_prefix = "/api/v1/studio/governance/ai/interactions/"
+                    if parsed.path.startswith(interaction_prefix) and parsed.path.endswith("/review"):
+                        request_body["interaction_id"] = unquote(
+                            parsed.path[len(interaction_prefix):-len("/review")]
+                        )
+                        self._studio_v1_result("governance.ai.interactions.review", request_body)
+                        return
                     if parsed.path == "/api/v1/studio/learning/simulations":
                         self._studio_v1_result("learning.simulations.start", request_body)
                         return

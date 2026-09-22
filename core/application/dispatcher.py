@@ -124,6 +124,7 @@ class StudioUseCaseDispatcher:
         self.register(UseCaseDefinition("governance.ai.telemetry", self._governance_ai_telemetry, module="governance"))
         self.register(UseCaseDefinition("governance.ai.audit.list", self._governance_ai_audit_list, module="governance"))
         self.register(UseCaseDefinition("governance.ai.interactions.get", self._governance_ai_interaction_get, module="governance"))
+        self.register(UseCaseDefinition("governance.ai.interactions.review", self._governance_ai_interaction_review, mutating=True, module="governance"))
         self.register(UseCaseDefinition("generation.workspace.get", self._generation_workspace_get, module="ai"))
         self.register(UseCaseDefinition("generation.drafts.get", self._generation_draft_get, module="governance"))
         self.register(UseCaseDefinition("generation.drafts.create", self._generation_draft_create, mutating=True, module="ai"))
@@ -646,6 +647,25 @@ class StudioUseCaseDispatcher:
         if not isinstance(interaction, dict):
             raise UseCaseError("Interação de IA retornou um resultado inválido.", code="internal_error", status=500)
         return {"interaction": interaction}
+
+    def _governance_ai_interaction_review(self, payload: dict[str, Any]) -> dict[str, Any]:
+        interaction_id = str(payload.get("interaction_id") or payload.get("id") or "").strip()
+        if not interaction_id:
+            raise UseCaseError("Informe a interação de IA.", code="validation_error")
+        try:
+            governance = self.architecture.modules.get("governance").instance
+        except KeyError as error:
+            raise UseCaseError("Governança de IA indisponível.", code="unavailable", status=503) from error
+        if governance is None or not callable(getattr(governance, "review_interaction", None)):
+            raise UseCaseError("Revisão de interação indisponível.", code="unavailable", status=503)
+        review = governance.review_interaction(
+            interaction_id,
+            decision=str(payload.get("decision") or ""),
+            note=str(payload.get("note") or ""),
+        )
+        if not isinstance(review, dict):
+            raise UseCaseError("Revisão de interação retornou um resultado inválido.", code="internal_error", status=500)
+        return {"review": review}
 
     def _generation_workspace_get(self, payload: dict[str, Any]) -> dict[str, Any]:
         try:

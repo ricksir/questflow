@@ -2472,7 +2472,12 @@ async function generateTutorAnswer() {
 async function reviewTutorInteraction(decision) {
   if (!state.tutorInteractionId) return;
   try {
-    const result = await bridge.call('review_ai_interaction', state.tutorInteractionId, decision, 'Decisão realizada na tela Tutor IA.');
+    const result = await bridge.studioPost(
+      `governance/ai/interactions/${encodeURIComponent(state.tutorInteractionId)}/review`,
+      { decision, note: 'Decisão realizada na tela Tutor IA.' },
+      'review_ai_interaction',
+      [state.tutorInteractionId, decision, 'Decisão realizada na tela Tutor IA.'],
+    );
     if (!result.ok) throw new Error(result.error || 'Não foi possível registrar a decisão humana.');
     toast(decision === 'aprovar' ? 'Rascunho aprovado e registrado na auditoria.' : 'Rascunho rejeitado e preservado para auditoria.', decision === 'aprovar' ? 'success' : 'warning');
     await loadAiAudit();
@@ -3064,7 +3069,12 @@ async function assistCommentaryWithAi() {
         if (sourceField) sourceField.value = 'ia_assistida';
         if (result.interaction_id) {
           try {
-            await bridge.call('review_ai_interaction', result.interaction_id, 'aprovar', 'Rascunho aceito explicitamente na Curadoria como explicação; a questão ainda requer salvamento editorial.');
+            await bridge.studioPost(
+              `governance/ai/interactions/${encodeURIComponent(result.interaction_id)}/review`,
+              { decision: 'aprovar', note: 'Rascunho aceito explicitamente na Curadoria como explicação; a questão ainda requer salvamento editorial.' },
+              'review_ai_interaction',
+              [result.interaction_id, 'aprovar', 'Rascunho aceito explicitamente na Curadoria como explicação; a questão ainda requer salvamento editorial.'],
+            );
           } catch (auditError) { console.warn('Auditoria da aceitação do rascunho:', auditError); }
         }
         markDirty(); autoResize($('#explanationInput')); updateCharacterCounts(); closeModal();
@@ -4849,7 +4859,12 @@ async function saveCurrentQuestion(approve = false) {
     state.dirty = false;
     if (state.pendingEditorialAiInteractionId && (completingCuration || approve)) {
       try {
-        await bridge.call('review_ai_interaction', state.pendingEditorialAiInteractionId, 'aprovar', 'Explicação pesquisada no Google conferida e salva explicitamente pelo usuário no editor.');
+        await bridge.studioPost(
+          `governance/ai/interactions/${encodeURIComponent(state.pendingEditorialAiInteractionId)}/review`,
+          { decision: 'aprovar', note: 'Explicação pesquisada no Google conferida e salva explicitamente pelo usuário no editor.' },
+          'review_ai_interaction',
+          [state.pendingEditorialAiInteractionId, 'aprovar', 'Explicação pesquisada no Google conferida e salva explicitamente pelo usuário no editor.'],
+        );
       } catch (auditError) { console.warn('Auditoria da revisão humana do comentário Google:', auditError); }
       state.pendingEditorialAiInteractionId = null;
     }
