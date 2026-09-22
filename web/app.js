@@ -2923,7 +2923,13 @@ function renderQuestionIntelligence(intelligence = {}) {
     await selectQuestion(uid);
   }));
   $$('[data-confirm-duplicate]', panel).forEach((button) => button.addEventListener('click', async () => {
-    const result = await bridge.call('resolve_duplicate_candidate', button.dataset.confirmDuplicate, true);
+    const candidateId = button.dataset.confirmDuplicate;
+    const result = await bridge.studioPost(
+      `questions/duplicates/${encodeURIComponent(candidateId)}/resolve`,
+      { duplicate: true },
+      'resolve_duplicate_candidate',
+      [candidateId, true],
+    );
     if (result?.ok) {
       toast('Candidato marcado como duplicata. Nenhuma questão foi apagada.', 'success');
       await loadQuestionIntelligence(state.selectedQuestionUid, false);
@@ -2934,7 +2940,13 @@ function renderQuestionIntelligence(intelligence = {}) {
   }));
 
   $$('[data-dismiss-duplicate]', panel).forEach((button) => button.addEventListener('click', async () => {
-    const result = await bridge.call('resolve_duplicate_candidate', button.dataset.dismissDuplicate, false);
+    const candidateId = button.dataset.dismissDuplicate;
+    const result = await bridge.studioPost(
+      `questions/duplicates/${encodeURIComponent(candidateId)}/resolve`,
+      { duplicate: false },
+      'resolve_duplicate_candidate',
+      [candidateId, false],
+    );
     if (result.ok) { toast('Candidato descartado sem remover nenhuma questão.', 'success'); await loadQuestionIntelligence(state.currentUid, { scanDuplicates: false }); }
   }));
 }
@@ -2961,7 +2973,11 @@ async function loadQuestionIntelligence(uid = state.currentUid, { scanDuplicates
 async function showAiCommentaryBrief() {
   if (!state.currentUid) return;
   try {
-    const result = await bridge.call('get_ai_commentary_brief', state.currentUid);
+    const result = await bridge.studioGet(
+      `questions/${encodeURIComponent(state.currentUid)}/ai-commentary-brief`,
+      'get_ai_commentary_brief',
+      [state.currentUid],
+    );
     if (!result.ok) throw new Error(result.error || 'Não foi possível montar o contexto.');
     const brief = result.brief || {};
     const context = brief.context || {};

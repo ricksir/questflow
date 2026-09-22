@@ -588,6 +588,11 @@ class QuestFlowLocalServer:
                                 "limit": (query.get("limit") or [8])[0],
                             })
                             return
+                        if question_suffix.endswith("/ai-commentary-brief"):
+                            self._studio_v1_result("questions.ai.commentary.brief", {
+                                "uid": unquote(question_suffix[:-len("/ai-commentary-brief")]),
+                            })
+                            return
                         self._studio_v1_result("questions.get", {"uid": unquote(question_suffix)})
                         return
                     self._send_json(HTTPStatus.NOT_FOUND, {"ok": False, "error": "Rota Studio v1 não encontrada."})
@@ -708,6 +713,13 @@ class QuestFlowLocalServer:
                     question_prefix = "/api/v1/studio/questions/"
                     if parsed.path.startswith(question_prefix):
                         question_suffix = parsed.path[len(question_prefix):]
+                        duplicate_prefix = "duplicates/"
+                        if question_suffix.startswith(duplicate_prefix) and question_suffix.endswith("/resolve"):
+                            request_body["candidate_id"] = unquote(
+                                question_suffix[len(duplicate_prefix):-len("/resolve")]
+                            )
+                            self._studio_v1_result("questions.duplicates.resolve", request_body)
+                            return
                         if question_suffix.endswith("/intelligence"):
                             request_body["uid"] = unquote(question_suffix[:-len("/intelligence")])
                             self._studio_v1_result("questions.intelligence.refresh", request_body)

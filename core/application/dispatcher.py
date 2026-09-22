@@ -130,6 +130,8 @@ class StudioUseCaseDispatcher:
         self.register(UseCaseDefinition("generation.drafts.review", self._generation_draft_review, mutating=True, module="governance"))
         self.register(UseCaseDefinition("generation.drafts.publish", self._generation_draft_publish, mutating=True, module="ai"))
         self.register(UseCaseDefinition("questions.intelligence.refresh", self._question_intelligence_refresh, mutating=True, module="editorial_bank"))
+        self.register(UseCaseDefinition("questions.duplicates.resolve", self._question_duplicate_resolve, mutating=True, module="editorial_bank"))
+        self.register(UseCaseDefinition("questions.ai.commentary.brief", self._question_ai_commentary_brief, module="ai"))
         self.register(UseCaseDefinition("knowledge.questions.graph", self._knowledge_question_graph, module="knowledge"))
         self.register(UseCaseDefinition("knowledge.rag.context", self._knowledge_rag_context, module="knowledge"))
         self.register(UseCaseDefinition("questions.source.settings", self._source_settings, module="editorial_bank"))
@@ -744,6 +746,37 @@ class StudioUseCaseDispatcher:
             raise UseCaseError("Inteligência da questão retornou um resultado inválido.", code="internal_error", status=500)
         intelligence["learning_model"] = learner.question_state(uid)
         return {"intelligence": intelligence}
+
+    def _question_duplicate_resolve(self, payload: dict[str, Any]) -> dict[str, Any]:
+        candidate_id = str(payload.get("candidate_id") or payload.get("id") or "").strip()
+        if not candidate_id:
+            raise UseCaseError("Informe o candidato a duplicidade.", code="validation_error")
+        try:
+            editorial = self.architecture.modules.get("editorial_bank").instance
+        except KeyError as error:
+            raise UseCaseError("Inteligência editorial indisponível.", code="unavailable", status=503) from error
+        if editorial is None or not callable(getattr(editorial, "resolve_duplicate", None)):
+            raise UseCaseError("Resolução de duplicidades indisponível.", code="unavailable", status=503)
+        duplicate = bool(payload.get("duplicate", False))
+        return {
+            "ok": bool(editorial.resolve_duplicate(candidate_id, duplicate=duplicate)),
+            "status": "confirmado" if duplicate else "descartado",
+        }
+
+    def _question_ai_commentary_brief(self, payload: dict[str, Any]) -> dict[str, Any]:
+        uid = str(payload.get("uid") or payload.get("id") or "").strip()
+        if not uid:
+            raise UseCaseError("Informe o identificador da questão.", code="validation_error")
+        try:
+            ai = self.architecture.modules.get("ai").instance
+        except KeyError as error:
+            raise UseCaseError("AI Engine indisponível.", code="unavailable", status=503) from error
+        if ai is None or not callable(getattr(ai, "editorial_commentary_brief", None)):
+            raise UseCaseError("Brief editorial de IA indisponível.", code="unavailable", status=503)
+        brief = ai.editorial_commentary_brief(uid)
+        if not isinstance(brief, dict):
+            raise UseCaseError("Brief editorial de IA retornou um resultado inválido.", code="internal_error", status=500)
+        return {"brief": brief}
 
     def _knowledge_question_graph(self, payload: dict[str, Any]) -> dict[str, Any]:
         uid = str(payload.get("uid") or payload.get("id") or "").strip()

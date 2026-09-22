@@ -67,6 +67,10 @@ class StudioV1QuestionIntelligenceTests(unittest.TestCase):
 
         self.assertEqual(definitions["questions.intelligence.refresh"]["module"], "editorial_bank")
         self.assertTrue(definitions["questions.intelligence.refresh"]["mutating"])
+        self.assertEqual(definitions["questions.duplicates.resolve"]["module"], "editorial_bank")
+        self.assertTrue(definitions["questions.duplicates.resolve"]["mutating"])
+        self.assertEqual(definitions["questions.ai.commentary.brief"]["module"], "ai")
+        self.assertFalse(definitions["questions.ai.commentary.brief"]["mutating"])
         for operation in ("knowledge.questions.graph", "knowledge.rag.context"):
             with self.subTest(operation=operation):
                 self.assertEqual(definitions[operation]["module"], "knowledge")
@@ -98,11 +102,25 @@ class StudioV1QuestionIntelligenceTests(unittest.TestCase):
         self.assertTrue(studio_rag["ok"])
         self.assertEqual(studio_rag["data"], {"retrieval": legacy_rag["retrieval"]})
 
+        legacy_brief = self.api.get_ai_commentary_brief(self.uid)
+        studio_brief = self.api.dispatch_studio_v1("questions.ai.commentary.brief", {"uid": self.uid})
+        self.assertTrue(studio_brief["ok"])
+        self.assertEqual(studio_brief["data"], {"brief": legacy_brief["brief"]})
+
+        duplicate = self.api.dispatch_studio_v1(
+            "questions.duplicates.resolve",
+            {"candidate_id": "missing-candidate", "duplicate": True},
+        )
+        self.assertTrue(duplicate["ok"])
+        self.assertEqual(duplicate["data"], {"ok": False, "status": "confirmado"})
+
     def test_missing_question_identifiers_return_validation_errors(self) -> None:
         for operation in (
             "questions.intelligence.refresh",
             "knowledge.questions.graph",
             "knowledge.rag.context",
+            "questions.ai.commentary.brief",
+            "questions.duplicates.resolve",
         ):
             with self.subTest(operation=operation):
                 result = self.api.dispatch_studio_v1(operation, {})
@@ -135,6 +153,10 @@ class StudioV1QuestionIntelligenceTests(unittest.TestCase):
 
             cases = (
                 (
+                    f"/api/v1/studio/questions/{encoded_uid}/ai-commentary-brief",
+                    "questions.ai.commentary.brief",
+                ),
+                (
                     f"/api/v1/studio/questions/{encoded_uid}/knowledge-graph",
                     "knowledge.questions.graph",
                 ),
@@ -155,6 +177,21 @@ class StudioV1QuestionIntelligenceTests(unittest.TestCase):
                     self.assertTrue(payload["ok"])
                     self.assertEqual(payload["contract"], "questflow.studio.v1")
                     self.assertEqual(payload["operation"], operation)
+
+            duplicate_request = urllib.request.Request(
+                f"{server.base_url}/api/v1/studio/questions/duplicates/missing-candidate/resolve",
+                data=json.dumps({"duplicate": False}).encode("utf-8"),
+                headers={
+                    "Content-Type": "application/json",
+                    "X-QuestFlow-Token": server.token,
+                },
+                method="POST",
+            )
+            with urllib.request.urlopen(duplicate_request, timeout=5) as response:
+                duplicate = json.loads(response.read().decode("utf-8"))
+            self.assertTrue(duplicate["ok"])
+            self.assertEqual(duplicate["operation"], "questions.duplicates.resolve")
+            self.assertEqual(duplicate["data"], {"ok": False, "status": "descartado"})
         finally:
             server.stop()
 
@@ -164,7 +201,15 @@ class StudioV1QuestionIntelligenceTests(unittest.TestCase):
         self.assertIn("`questions/${encodeURIComponent(uid)}/intelligence`", javascript)
         self.assertIn("`questions/${encodeURIComponent(state.currentUid)}/knowledge-graph`", javascript)
         self.assertIn("`questions/${encodeURIComponent(state.currentUid)}/rag-context?${params.toString()}`", javascript)
-        for method in ("get_question_intelligence", "get_question_knowledge_graph", "get_rag_context"):
+        self.assertIn("`questions/duplicates/${encodeURIComponent(candidateId)}/resolve`", javascript)
+        self.assertIn("`questions/${encodeURIComponent(state.currentUid)}/ai-commentary-brief`", javascript)
+        for method in (
+            "get_question_intelligence",
+            "get_question_knowledge_graph",
+            "get_rag_context",
+            "resolve_duplicate_candidate",
+            "get_ai_commentary_brief",
+        ):
             with self.subTest(method=method):
                 self.assertIn(f"'{method}'", javascript)
                 self.assertNotIn(f"bridge.call('{method}'", javascript)
