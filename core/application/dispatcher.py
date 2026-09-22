@@ -115,6 +115,9 @@ class StudioUseCaseDispatcher:
         self.register(UseCaseDefinition("knowledge.semantic.summary", self._knowledge_semantic_summary, module="knowledge"))
         self.register(UseCaseDefinition("learning.recommendations.dashboard", self._learning_recommendations_dashboard, module="learning"))
         self.register(UseCaseDefinition("learning.simulations.get", self._learning_simulation_get, module="learning"))
+        self.register(UseCaseDefinition("learning.simulations.start", self._learning_simulation_start, mutating=True, module="learning"))
+        self.register(UseCaseDefinition("learning.simulations.answers.submit", self._learning_simulation_answer_submit, mutating=True, module="learning"))
+        self.register(UseCaseDefinition("learning.simulations.abandon", self._learning_simulation_abandon, mutating=True, module="learning"))
         self.register(UseCaseDefinition("governance.gold.dashboard", self._governance_gold_dashboard, module="governance"))
         self.register(UseCaseDefinition("governance.gold.questions.add", self._governance_gold_question_add, mutating=True, module="ai"))
         self.register(UseCaseDefinition("governance.gold.regressions.run", self._governance_gold_regression_run, mutating=True, module="ai"))
@@ -484,6 +487,57 @@ class StudioUseCaseDispatcher:
         simulation = learning.simulation(session_id)
         if not isinstance(simulation, dict):
             raise UseCaseError("Simulado adaptativo retornou um resultado inválido.", code="internal_error", status=500)
+        return {"simulation": simulation}
+
+    def _learning_simulation_start(self, payload: dict[str, Any]) -> dict[str, Any]:
+        try:
+            learning = self.architecture.modules.get("learning").instance
+        except KeyError as error:
+            raise UseCaseError("Learning Engine indisponível.", code="unavailable", status=503) from error
+        if learning is None or not callable(getattr(learning, "start_simulation", None)):
+            raise UseCaseError("Simulado adaptativo indisponível.", code="unavailable", status=503)
+        simulation = learning.start_simulation(payload)
+        if not isinstance(simulation, dict):
+            raise UseCaseError("Simulado adaptativo retornou um resultado inválido.", code="internal_error", status=500)
+        return {"simulation": simulation}
+
+    def _learning_simulation_answer_submit(self, payload: dict[str, Any]) -> dict[str, Any]:
+        session_id = str(payload.get("session_id") or payload.get("id") or "").strip()
+        if not session_id:
+            raise UseCaseError("Informe a sessão do simulado.", code="validation_error")
+        if "selected_index" not in payload:
+            raise UseCaseError("Informe a alternativa selecionada.", code="validation_error")
+        try:
+            learning = self.architecture.modules.get("learning").instance
+        except KeyError as error:
+            raise UseCaseError("Learning Engine indisponível.", code="unavailable", status=503) from error
+        if learning is None or not callable(getattr(learning, "submit_simulation_answer", None)):
+            raise UseCaseError("Resposta do simulado indisponível.", code="unavailable", status=503)
+        simulation = learning.submit_simulation_answer(
+            session_id,
+            int(payload.get("selected_index")),
+            response_seconds=payload.get("response_seconds"),
+            confidence=str(payload.get("confidence") or ""),
+            perceived_difficulty=str(payload.get("perceived_difficulty") or ""),
+            learning_gap=payload.get("learning_gap"),
+        )
+        if not isinstance(simulation, dict):
+            raise UseCaseError("Resposta do simulado retornou um resultado inválido.", code="internal_error", status=500)
+        return {"simulation": simulation}
+
+    def _learning_simulation_abandon(self, payload: dict[str, Any]) -> dict[str, Any]:
+        session_id = str(payload.get("session_id") or payload.get("id") or "").strip()
+        if not session_id:
+            raise UseCaseError("Informe a sessão do simulado.", code="validation_error")
+        try:
+            learning = self.architecture.modules.get("learning").instance
+        except KeyError as error:
+            raise UseCaseError("Learning Engine indisponível.", code="unavailable", status=503) from error
+        if learning is None or not callable(getattr(learning, "abandon_simulation", None)):
+            raise UseCaseError("Encerramento do simulado indisponível.", code="unavailable", status=503)
+        simulation = learning.abandon_simulation(session_id)
+        if not isinstance(simulation, dict):
+            raise UseCaseError("Encerramento do simulado retornou um resultado inválido.", code="internal_error", status=500)
         return {"simulation": simulation}
 
     def _governance_gold_dashboard(self, _payload: dict[str, Any]) -> dict[str, Any]:

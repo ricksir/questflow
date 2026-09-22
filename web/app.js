@@ -1802,8 +1802,13 @@ async function startAdaptiveSimulation() {
       subjects: subject ? [subject] : [],
       board: $('#simulationBoard')?.value || '',
     };
-    const result = await bridge.call('start_adaptive_simulation', payload);
-    if (!result.ok) throw new Error(result.error || 'Não foi possível iniciar o simulado.');
+    const result = await bridge.studioPost(
+      'learning/simulations',
+      payload,
+      'start_adaptive_simulation',
+      [payload],
+    );
+    if (result?.ok === false) throw new Error(result.error || 'Não foi possível iniciar o simulado.');
     const simulation = result.simulation || result.data || result;
     state.adaptiveSimulationId = simulation.session?.id || null;
     state.adaptiveSimulationQuestionUid = null;
@@ -1882,11 +1887,23 @@ async function submitAdaptiveSimulationAnswer() {
   setBusy(button, true, 'Atualizando modelos e escolhendo a próxima questão');
   try {
     const seconds = state.adaptiveSimulationStartedAt ? Math.max(1, (Date.now() - state.adaptiveSimulationStartedAt) / 1000) : null;
-    const result = await bridge.call(
-      'submit_adaptive_simulation_answer', state.adaptiveSimulationId, Number(selected.value), seconds,
-      $('#adaptiveConfidence')?.value || '', $('#adaptiveDifficulty')?.value || '', Boolean($('#adaptiveLearningGap')?.checked)
+    const answerPayload = {
+      selected_index: Number(selected.value),
+      response_seconds: seconds,
+      confidence: $('#adaptiveConfidence')?.value || '',
+      perceived_difficulty: $('#adaptiveDifficulty')?.value || '',
+      learning_gap: Boolean($('#adaptiveLearningGap')?.checked),
+    };
+    const result = await bridge.studioPost(
+      `learning/simulations/${encodeURIComponent(state.adaptiveSimulationId)}/answers`,
+      answerPayload,
+      'submit_adaptive_simulation_answer',
+      [
+        state.adaptiveSimulationId, answerPayload.selected_index, answerPayload.response_seconds,
+        answerPayload.confidence, answerPayload.perceived_difficulty, answerPayload.learning_gap,
+      ],
     );
-    if (!result.ok) throw new Error(result.error || 'Não foi possível registrar a resposta.');
+    if (result?.ok === false) throw new Error(result.error || 'Não foi possível registrar a resposta.');
     const simulation = result.simulation || result.data || result;
     state.adaptiveSimulationId = simulation.session?.id || state.adaptiveSimulationId;
     state.adaptiveSimulationQuestionUid = null;
@@ -1900,8 +1917,13 @@ async function abandonAdaptiveSimulation() {
   if (!state.adaptiveSimulationId) return;
   if (!window.confirm('Encerrar este simulado? As respostas já registradas permanecem no seu histórico de aprendizagem.')) return;
   try {
-    const result = await bridge.call('abandon_adaptive_simulation', state.adaptiveSimulationId);
-    if (!result.ok) throw new Error(result.error || 'Não foi possível encerrar o simulado.');
+    const result = await bridge.studioPost(
+      `learning/simulations/${encodeURIComponent(state.adaptiveSimulationId)}/abandon`,
+      {},
+      'abandon_adaptive_simulation',
+      [state.adaptiveSimulationId],
+    );
+    if (result?.ok === false) throw new Error(result.error || 'Não foi possível encerrar o simulado.');
     const simulation = result.simulation || result.data || result;
     renderAdaptiveSimulation(simulation);
     state.adaptiveSimulationId = null;

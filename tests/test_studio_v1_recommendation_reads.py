@@ -75,6 +75,20 @@ class StudioV1RecommendationReadTests(unittest.TestCase):
                 self.assertEqual(definitions[operation]["module"], "learning")
                 self.assertFalse(definitions[operation]["mutating"])
 
+    def test_contract_exposes_simulation_lifecycle_as_mutating(self) -> None:
+        definitions = {
+            item["name"]: item
+            for item in self.api.get_studio_contract_v1()["operations"]
+        }
+        for operation in (
+            "learning.simulations.start",
+            "learning.simulations.answers.submit",
+            "learning.simulations.abandon",
+        ):
+            with self.subTest(operation=operation):
+                self.assertEqual(definitions[operation]["module"], "learning")
+                self.assertTrue(definitions[operation]["mutating"])
+
     def test_dispatcher_matches_existing_learning_engine_facades(self) -> None:
         legacy_dashboard = self.api.get_recommendation_dashboard("diagnostico")
         studio_dashboard = self.api.dispatch_studio_v1(
@@ -99,6 +113,49 @@ class StudioV1RecommendationReadTests(unittest.TestCase):
         self.assertFalse(result["ok"])
         self.assertEqual(result["code"], "validation_error")
         self.assertEqual(result["status"], 400)
+
+    def test_dispatcher_runs_simulation_lifecycle(self) -> None:
+        started = self.api.dispatch_studio_v1(
+            "learning.simulations.start",
+            {"mode": "equilibrado", "target_count": 5},
+        )
+        self.assertTrue(started["ok"])
+        session_id = str(started["data"]["simulation"]["session"]["id"])
+
+        answered = self.api.dispatch_studio_v1(
+            "learning.simulations.answers.submit",
+            {
+                "session_id": session_id,
+                "selected_index": 0,
+                "response_seconds": 12.5,
+                "confidence": "certeza",
+                "perceived_difficulty": "facil",
+                "learning_gap": False,
+            },
+        )
+        self.assertTrue(answered["ok"])
+        self.assertEqual(answered["data"]["simulation"]["session"]["answered_count"], 1)
+        self.assertTrue(answered["data"]["simulation"]["feedback"]["is_correct"])
+
+        abandoned = self.api.dispatch_studio_v1(
+            "learning.simulations.abandon",
+            {"session_id": session_id},
+        )
+        self.assertTrue(abandoned["ok"])
+        self.assertEqual(abandoned["data"]["simulation"]["session"]["status"], "abandonado")
+
+    def test_simulation_lifecycle_validation_errors_use_studio_contract(self) -> None:
+        cases = (
+            ("learning.simulations.answers.submit", {}),
+            ("learning.simulations.answers.submit", {"session_id": "sessao"}),
+            ("learning.simulations.abandon", {}),
+        )
+        for operation, payload in cases:
+            with self.subTest(operation=operation, payload=payload):
+                result = self.api.dispatch_studio_v1(operation, payload)
+                self.assertFalse(result["ok"])
+                self.assertEqual(result["code"], "validation_error")
+                self.assertEqual(result["status"], 400)
 
     def test_authenticated_get_routes_return_learning_payloads(self) -> None:
         session_id = self._start_simulation()
@@ -134,6 +191,53 @@ class StudioV1RecommendationReadTests(unittest.TestCase):
         finally:
             server.stop()
 
+    def test_authenticated_post_routes_run_simulation_lifecycle(self) -> None:
+        server = QuestFlowLocalServer(
+            self.api,
+            Path(__file__).resolve().parents[1] / "web",
+            preferred_port=0,
+        )
+        server.start()
+        try:
+            def post(path: str, payload: dict) -> dict:
+                request = urllib.request.Request(
+                    f"{server.base_url}{path}",
+                    data=json.dumps(payload).encode("utf-8"),
+                    headers={
+                        "Content-Type": "application/json",
+                        "X-QuestFlow-Token": server.token,
+                    },
+                    method="POST",
+                )
+                with urllib.request.urlopen(request, timeout=10) as response:
+                    return json.loads(response.read().decode("utf-8"))
+
+            started = post(
+                "/api/v1/studio/learning/simulations",
+                {"mode": "equilibrado", "target_count": 5},
+            )
+            self.assertTrue(started["ok"])
+            self.assertEqual(started["operation"], "learning.simulations.start")
+            session_id = str(started["data"]["simulation"]["session"]["id"])
+            encoded_id = urllib.parse.quote(session_id)
+
+            answered = post(
+                f"/api/v1/studio/learning/simulations/{encoded_id}/answers",
+                {"selected_index": 0, "response_seconds": 8, "confidence": "certeza"},
+            )
+            self.assertTrue(answered["ok"])
+            self.assertEqual(answered["operation"], "learning.simulations.answers.submit")
+
+            abandoned = post(
+                f"/api/v1/studio/learning/simulations/{encoded_id}/abandon",
+                {},
+            )
+            self.assertTrue(abandoned["ok"])
+            self.assertEqual(abandoned["contract"], "questflow.studio.v1")
+            self.assertEqual(abandoned["operation"], "learning.simulations.abandon")
+        finally:
+            server.stop()
+
     def test_frontend_uses_studio_get_with_legacy_fallbacks(self) -> None:
         javascript = (Path(__file__).resolve().parents[1] / "web" / "app.js").read_text(encoding="utf-8")
 
@@ -143,6 +247,16 @@ class StudioV1RecommendationReadTests(unittest.TestCase):
         self.assertIn("'get_adaptive_simulation'", javascript)
         self.assertEqual(javascript.count("getRecommendationDashboard("), 3)
         for method in ("get_recommendation_dashboard", "get_adaptive_simulation"):
+            self.assertNotIn(f"bridge.call('{method}'", javascript)
+        self.assertIn("'learning/simulations'", javascript)
+        self.assertIn("`learning/simulations/${encodeURIComponent(state.adaptiveSimulationId)}/answers`", javascript)
+        self.assertIn("`learning/simulations/${encodeURIComponent(state.adaptiveSimulationId)}/abandon`", javascript)
+        for method in (
+            "start_adaptive_simulation",
+            "submit_adaptive_simulation_answer",
+            "abandon_adaptive_simulation",
+        ):
+            self.assertIn(f"'{method}'", javascript)
             self.assertNotIn(f"bridge.call('{method}'", javascript)
 
 
