@@ -680,6 +680,20 @@ class QuestFlowLocalServer:
                     if parsed.path == "/api/v1/studio/governance/gold/regressions":
                         self._studio_v1_result("governance.gold.regressions.run", request_body)
                         return
+                    if parsed.path == "/api/v1/studio/learning/simulations":
+                        self._studio_v1_result("learning.simulations.start", request_body)
+                        return
+                    simulation_prefix = "/api/v1/studio/learning/simulations/"
+                    if parsed.path.startswith(simulation_prefix):
+                        simulation_suffix = parsed.path[len(simulation_prefix):]
+                        if simulation_suffix.endswith("/answers"):
+                            request_body["session_id"] = unquote(simulation_suffix[:-len("/answers")])
+                            self._studio_v1_result("learning.simulations.answers.submit", request_body)
+                            return
+                        if simulation_suffix.endswith("/abandon"):
+                            request_body["session_id"] = unquote(simulation_suffix[:-len("/abandon")])
+                            self._studio_v1_result("learning.simulations.abandon", request_body)
+                            return
                     generation_draft_prefix = "/api/v1/studio/generation/drafts/"
                     if parsed.path.startswith(generation_draft_prefix):
                         draft_suffix = parsed.path[len(generation_draft_prefix):]
